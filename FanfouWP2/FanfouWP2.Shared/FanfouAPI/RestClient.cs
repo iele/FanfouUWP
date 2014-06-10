@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -86,31 +86,56 @@ namespace FanfouWP2.FanfouAPI
                 using (var response = await client.GetAsync(new Uri(baseUrl + "/" + url)))
                 {
                     var result = await response.Content.ReadAsStringAsync();
+                    response.EnsureSuccessStatusCode();
                     string[] content = result.Split(new char[] { '=', '&' });
                     this.token = content[1];
                     this.tokenSecret = content[3];
                 }
             }
         }
+
         public async Task<string> GetRequest(string url, Parameters parameters)
         {
             using (var client = new HttpClient())
             {
                 var urlStr = baseUrl + "/" + url;
-                client.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
-                var oauth = generateOAuthHeader(parameters, url);
-                client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
                 var str = "?";
                 foreach (var i in parameters.Items)
                 {
                     str += WebUtility.UrlEncode(i.Key) + "=" + WebUtility.UrlEncode(i.Value) + "&";
                 }
+
+                var oauth = generateOAuthHeader(parameters, url);
+                client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
+
                 str = str.Substring(0, str.Length - 1);
                 using (var response = await client.GetAsync(new Uri(urlStr + str)))
                 {
-                    return await response.Content.ReadAsStringAsync();
+                    var result = await response.Content.ReadAsStringAsync();
+                    response.EnsureSuccessStatusCode();
+                    return result;
                 }
+            }
+        }
+        public async Task<T> GetRequestObject<T>(string url, Parameters parameters) where T : Item
+        {
+            var ds = new DataContractJsonSerializer(typeof(T));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await GetRequest(url, parameters))))
+            {
+                var obj = ds.ReadObject(ms) as T;
+                return obj;
+            }
+        }
+
+        public async Task<List<T>> GetRequestObjectCollection<T>(string url, Parameters parameters)
+            where T : Item
+        {
+            var ds = new DataContractJsonSerializer(typeof(List<T>));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await GetRequest(url, parameters))))
+            {
+                var obj = ds.ReadObject(ms) as List<T>;
+                return obj;
             }
         }
 

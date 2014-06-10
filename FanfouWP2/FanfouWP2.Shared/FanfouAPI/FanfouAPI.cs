@@ -237,11 +237,19 @@ namespace FanfouWP2.FanfouAPI
             this.username = username;
             this.password = password;
 
-            var client = new RestClient(FanfouConsts.BASE_URL, FanfouConsts.CONSUMER_KEY,FanfouConsts.CONSUMER_SECRET);
-            await client.Login(FanfouConsts.ACCESS_TOKEN, username,password);
+            try
+            {
+                var client = new RestClient(FanfouConsts.BASE_URL, FanfouConsts.CONSUMER_KEY, FanfouConsts.CONSUMER_SECRET);
+                await client.Login(FanfouConsts.ACCESS_TOKEN, username, password);
 
-            this.oauthToken = client.token;
-            this.oauthSecret = client.tokenSecret;            
+                this.oauthToken = client.token;
+                this.oauthSecret = client.tokenSecret;
+                LoginSuccess(this, new EventArgs());
+            }
+            catch (Exception e) {
+                var args = new FailedEventArgs();
+                LoginFailed(this, args);
+            }
         }
 
 
@@ -272,16 +280,22 @@ namespace FanfouWP2.FanfouAPI
         }
         public async void StatusHomeTimeline(int count = 20, RefreshMode mode = RefreshMode.New, string since_id = "", string max_id = "", string refresh_id = "")
         {
-            var client = GetClient();
-            var parameters = new Parameters();
-            parameters.Add("count", count.ToString());
-            if (since_id != "")
-                parameters.Add("since_id", since_id);
-            if (max_id != "")
-                parameters.Add("max_id", max_id);
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("count", count.ToString());
+                if (since_id != "")
+                    parameters.Add("since_id", since_id);
+                if (max_id != "")
+                    parameters.Add("max_id", max_id);
 
-            var result = await client.GetRequest(FanfouConsts.STATUS_HOME_TIMELINE, parameters);
-            result.ToCharArray();
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_HOME_TIMELINE, parameters);
+                HomeTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e) {
+                HomeTimelineSuccess(this, new FailedEventArgs());
+            }
         }
 
         public void StatusPublicTimeline(int count)

@@ -103,6 +103,32 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="ItemControl\StatusItemControl.xaml.cs">
+      <DependentUpon>StatusItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\ValueConverter\BoolToFavoritedConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\CountToVisibilityCOnverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\DateToTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\DisplayImageToVisibilityConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\HtmlToTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\ImageSourceToCacheConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\ImageSourceToCacheWithWifiConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\IntToMsgCountStringConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\NullToVisibilityConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\ReplyToNameConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\RetweetToNameConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\SexToIconConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\SourceToTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\StatusToFillColorConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\TextToLeftCountTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\TextToReplyTextConverter.cs" />
+    <Compile Include="TimelinePage.xaml.cs">
+      <DependentUpon>TimelinePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -121,10 +147,21 @@
     <Content Include="Assets\StoreLogo.scale-100.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ItemControl\StatusItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimelinePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

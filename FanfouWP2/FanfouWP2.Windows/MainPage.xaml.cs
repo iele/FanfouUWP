@@ -22,17 +22,23 @@ namespace FanfouWP2
         public MainPage()
         {
             this.InitializeComponent();
-           
+
+            FanfouAPI.FanfouAPI.Instance.LoginSuccess += Instance_LoginSuccess;
+            FanfouAPI.FanfouAPI.Instance.LoginFailed += Instance_LoginFailed;
+        }
+
+        void Instance_LoginFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_LoginSuccess(object sender, EventArgs e)
+        {
+            Frame.Navigate(typeof(TimelinePage));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FanfouAPI.FanfouAPI.Instance.Login("elephas", "myelephas");
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline();
         }
     }
 }

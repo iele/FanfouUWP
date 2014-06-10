@@ -7,7 +7,7 @@ namespace FanfouWP2.FanfouAPI
     public partial class XAuthHelper
     {
         public static Random RndSeed = new Random();
-        public static byte[] CreateHMAC(byte[] key, byte[] data)
+        public static byte[] CreateHMAC(byte[] data, byte[] key)
         {
             var crypt = Windows.Security.Cryptography.Core.MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
             var keyBuffer = Windows.Security.Cryptography.CryptographicBuffer.CreateFromByteArray(key);
@@ -23,7 +23,7 @@ namespace FanfouWP2.FanfouAPI
 
         public static string GenerateSignature(string secret, string tokenSecret, string requestMethod, string requestUrl, Parameters parameters)
         {
-            StringBuilder data = new StringBuilder(100);
+            StringBuilder data = new StringBuilder(1024);
             data.AppendFormat("{0}&{1}&", requestMethod.ToUpper(), UrlEncode(requestUrl));
 
             if (parameters != null)
@@ -33,7 +33,7 @@ namespace FanfouWP2.FanfouAPI
             }
 
             var key = string.Format("{0}&{1}", UrlEncode(secret), UrlEncode(tokenSecret));
-            var hashBytes = CreateHMAC(Encoding.Unicode.GetBytes(data.ToString()), Encoding.Unicode.GetBytes(key));
+            var hashBytes = CreateHMAC(Encoding.UTF8.GetBytes(data.ToString()), Encoding.UTF8.GetBytes(key));
 
             return UrlEncode(Convert.ToBase64String(hashBytes));
         }
