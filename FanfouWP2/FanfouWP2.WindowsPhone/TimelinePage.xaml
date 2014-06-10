@@ -9,29 +9,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:itemcontrol="using:FanfouWP2.ItemControl"
-    mc:Ignorable="d">
+    xmlns:selector ="using:FanfouWP2.ItemControl.TemplateSelector"
+    mc:Ignorable="d" FontFamily="Microsoft YaHei" NavigationCacheMode="Required">
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
-        <!--
-            此页所显示的分组项的集合，绑定到完整
-            项列表的子集，因为无法虚拟化组中的项
-        -->
+
         <CollectionViewSource
             x:Name="groupedItemsViewSource"
             Source="{Binding Groups}"
             IsSourceGrouped="true"
             ItemsPath="TopItems"/>
 
-        <!-- TODO:  如果在 App.xaml 中声明了键 AppName，则删除此行-->
-        <x:String x:Key="AppName">我的应用程序</x:String>
-    </Page.Resources>
+        <x:String x:Key="AppName">我的消息</x:String>
 
-    <!--
-        此网格用作定义以下两行的页的根面板: 
-        * 第 0 行包含后退按钮和页标题
-        * 第 1 行包含页布局的其余部分
-    -->
+        <DataTemplate x:Key="StatusItemControl">
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
+        </DataTemplate>
+      
+       </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -53,24 +50,40 @@
             Grid.RowSpan="2"
             Padding="116,137,40,46"
             SelectionMode="None"
-            IsSwipeEnabled="True" ItemsSource="{Binding statuses}">
+            IsSwipeEnabled="False" ItemsSource="{Binding statuses}" IsItemClickEnabled="True" ItemClick="itemGridView_ItemClick" ItemTemplate="{StaticResource StatusItemControl}">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,80,0"/>
+                    <VariableSizedWrapGrid Orientation="Vertical"></VariableSizedWrapGrid>
                 </ItemsPanelTemplate>
-             </GridView.ItemsPanel>
-            <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <itemcontrol:StatusItemControl DataContext="{Binding}"/>
-                    </DataTemplate>
-            </GridView.ItemTemplate>
+            </GridView.ItemsPanel>
+            <GridView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,2">
+                                <Button Foreground="{ThemeResource ApplicationHeaderForegroundThemeBrush}"
+                                    AutomationProperties.Name="Group Title"
+                                    Style="{StaticResource TextBlockButtonStyle}" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" Margin="0,-11,10,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-11,0,10" Style="{StaticResource SubheaderTextBlockStyle}" TextWrapping="NoWrap" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </GridView.GroupStyle>
         </GridView>
 
         <!-- 后退按钮和页标题-->
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
              <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Global User Interface" FontSize="64"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei" FontSize="64"/>
         </Grid>
-        <GridView Margin="0" Grid.Row="1"/>
     </Grid>
 </Page>

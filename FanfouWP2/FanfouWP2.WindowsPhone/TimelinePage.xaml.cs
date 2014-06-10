@@ -56,7 +56,9 @@ namespace FanfouWP2
         {
             var statuses = sender as List<Status>;
             foreach (var item in statuses)
+            {
                 homeTimeline.Add(item);
+            }
         }
 
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -71,7 +73,7 @@ namespace FanfouWP2
         {
             navigationHelper.OnNavigatedTo(e);
 
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline();
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -80,5 +82,12 @@ namespace FanfouWP2
         }
 
         #endregion
+
+
+        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as Status;
+            Frame.Navigate(typeof(StatusPage), item);
+        }
     }
 }

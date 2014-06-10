@@ -19,8 +19,6 @@ namespace FanfouWP2.FanfouAPI
         public string username;
         public string password;
 
-        public enum RefreshMode { New, Behind, Back, Center };
-
         public delegate void LoginSuccessHandler(object sender, EventArgs e);
         public delegate void LoginFailedHandler(object sender, FailedEventArgs e);
         public delegate void VerifyCredentialsSuccessHandler(object sender, EventArgs e);
@@ -278,7 +276,7 @@ namespace FanfouWP2.FanfouAPI
         {
         
         }
-        public async void StatusHomeTimeline(int count = 20, RefreshMode mode = RefreshMode.New, string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusHomeTimeline(int count = 20, string since_id = "", string max_id = "", string refresh_id = "")
         {
             try
             {
@@ -294,17 +292,49 @@ namespace FanfouWP2.FanfouAPI
                 HomeTimelineSuccess(result, new EventArgs());
             }
             catch (Exception e) {
-                HomeTimelineSuccess(this, new FailedEventArgs());
+                HomeTimelineFailed(this, new FailedEventArgs());
             }
         }
 
-        public void StatusPublicTimeline(int count)
+        public async void StatusPublicTimeline(int count = 20, string since_id = "", string max_id = "", string refresh_id = "")
         {
-         
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("count", count.ToString());
+                if (since_id != "")
+                    parameters.Add("since_id", since_id);
+                if (max_id != "")
+                    parameters.Add("max_id", max_id);
+
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_PUBLIC_TIMELINE, parameters);
+                PublicTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                PublicTimelineFailed(this, new FailedEventArgs());
+            }
         }
-        public void StatusMentionTimeline(int count, RefreshMode mode = RefreshMode.New, string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusMentionTimeline(int count,  string since_id = "", string max_id = "", string refresh_id = "")
         {
-            
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("count", count.ToString());
+                if (since_id != "")
+                    parameters.Add("since_id", since_id);
+                if (max_id != "")
+                    parameters.Add("max_id", max_id);
+
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_MENTION_TIMELINE, parameters);
+                MentionTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                MentionTimelineFailed(this, new FailedEventArgs());
+            }
         }
         public void FavoritesCreate(string id)
         {

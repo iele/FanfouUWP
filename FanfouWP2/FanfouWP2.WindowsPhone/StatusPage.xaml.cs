@@ -13,17 +13,17 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Collections.ObjectModel;
 using FanfouWP2.FanfouAPI;
 
 namespace FanfouWP2
 {
-    public sealed partial class TimelinePage : Page
+    public sealed partial class StatusPage : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private ObservableCollection<Status> homeTimeline = new ObservableCollection<Status>();
+        private Status status;
+
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
@@ -31,49 +31,27 @@ namespace FanfouWP2
 
         public NavigationHelper NavigationHelper
         {
-            get
-            {
-                return this.navigationHelper;
-            }
+            get { return this.navigationHelper; }
         }
 
-        public TimelinePage()
+        public StatusPage()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
-
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_HomeTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_HomeTimelineFailed;
-        }
-
-        void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
-        {
-
-        }
-
-        void Instance_HomeTimelineSuccess(object sender, EventArgs e)
-        {
-            var statuses = sender as List<Status>;
-            foreach (var item in statuses)
-            {
-                homeTimeline.Add(item);
-            }
         }
 
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.defaultViewModel["statuses"] = homeTimeline;
+            var status = e.NavigationParameter as Status;
+
+            this.defaultViewModel["status"] = status;
         }
 
         #region NavigationHelper 注册
-
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
-
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -82,12 +60,5 @@ namespace FanfouWP2
         }
 
         #endregion
-
-
-        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as Status;
-            Frame.Navigate(typeof(StatusPage), item);
-        }
     }
 }

@@ -1,0 +1,78 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="FanfouWP2.StatusPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:common="using:FanfouWP2.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" FontFamily="Microsoft YaHei"
+   xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter">
+    <Page.Resources>
+        <ResourceDictionary>
+            <converter:HtmlToTextConverter x:Key="HtmlToTextConverter" />
+            <converter:SourceToTextConverter  x:Key="SourceToTextConverter" />
+            <converter:DateToTextConverter  x:Key="DateToTextConverter" />
+            <converter:StatusToFillColorConverter x:Key="StatusToFillColorConverter" />
+            <converter:NullToVisibilityConverter  x:Key="NullToVisibilityConverter" />
+            <converter:ReplyToNameConverter x:Key="ReplyToNameConverter" />
+            <converter:RetweetToNameConverter  x:Key="RetweetToNameConverter" />
+            <converter:ImageSourceToCacheConverter  x:Key="ImageSourceToCacheConverter" />
+            <converter:BoolToFavoritedConverter  x:Key="BoolToFavoritedConverter" />
+            <converter:DisplayImageToVisibilityConverter x:Key="DisplayImageToVisibilityConverter" />
+        </ResourceDictionary>
+
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" x:Name="contentRegion">
+           <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>  
+		<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,10,0"/>
+        	<StackPanel VerticalAlignment="Top" Margin="132,36,20,0" Orientation="Horizontal">
+        		<TextBlock Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" Padding="0"  FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF7A7A7A"/>
+        		<TextBlock Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" Padding="5,0,0,0" FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF7A7A7A"/>
+        		<TextBlock Padding="5,0,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="#FF7A7A7A" Visibility="{Binding status.favorited, Converter={StaticResource NullToVisibilityConverter}}" x:Name="fav"/>
+        		<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="#FF7A7A7A" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
+        		<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="#FF7A7A7A" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+        	</StackPanel>
+        	<Image Margin="132,10,10,20" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Margin="39,59,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        VerticalAlignment="Top"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+            <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="12,30,12,12" RadiusX="5" Grid.Column="1">
+                <Rectangle.Fill>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding status.user.profile_image_url_large}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <TextBlock x:Name="pageTitle" Text="{Binding status.user.screen_name}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="2" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei"/>
+        </Grid>
+    </Grid>
+</Page>

@@ -16,6 +16,7 @@
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>FanfouWP2.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <ExpressionBlendVersion>12.0.50320.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -110,6 +111,8 @@
     <Compile Include="ItemControl\StatusItemControl.xaml.cs">
       <DependentUpon>StatusItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItemControl\TemplateSelector\ConversationItemTemplateSelector.cs" />
+    <Compile Include="ItemControl\TemplateSelector\MessageItemTemplateSelector.cs" />
     <Compile Include="ItemControl\ValueConverter\BoolToFavoritedConverter.cs" />
     <Compile Include="ItemControl\ValueConverter\CountToVisibilityCOnverter.cs" />
     <Compile Include="ItemControl\ValueConverter\DateToTextConverter.cs" />
@@ -126,6 +129,9 @@
     <Compile Include="ItemControl\ValueConverter\StatusToFillColorConverter.cs" />
     <Compile Include="ItemControl\ValueConverter\TextToLeftCountTextConverter.cs" />
     <Compile Include="ItemControl\ValueConverter\TextToReplyTextConverter.cs" />
+    <Compile Include="StatusPage.xaml.cs">
+      <DependentUpon>StatusPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TimelinePage.xaml.cs">
       <DependentUpon>TimelinePage.xaml</DependentUpon>
     </Compile>
@@ -151,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="StatusPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TimelinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
