@@ -1,0 +1,68 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="FanfouWP2.HubPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:common="using:FanfouWP2.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:itemcontrol="using:FanfouWP2.ItemControl" FontFamily="Microsoft YaHei"
+    mc:Ignorable="d" NavigationCacheMode="Required">
+
+    <Page.Resources>
+        <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
+
+        <!-- TODO:  如果在 App.xaml 中声明了键 AppName，则删除此行-->
+        <x:String x:Key="AppName">我的应用程序</x:String>
+
+        <DataTemplate x:Key="StatusItemControl">
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
+        </DataTemplate>
+
+    </Page.Resources>
+
+    <!--
+        此网格充当页的根面板。
+    -->
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Hub SectionHeaderClick="Hub_SectionHeaderClick">
+            <Hub.Header>
+                <!-- 后退按钮和页标题 -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top" FontFamily="Microsoft YaHei"/>
+                </Grid>
+            </Hub.Header>
+
+            <HubSection Width="780" Margin="0,0,80,0">
+                <HubSection.Background>
+                    <ImageBrush Stretch="UniformToFill" />
+                </HubSection.Background>
+            </HubSection>
+            <HubSection Header="我的消息" IsHeaderInteractive="True" x:Name="statusesHubSection">
+                <DataTemplate>
+                    <GridView x:Name="statusesGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}">
+                    </GridView>
+                </DataTemplate>
+            </HubSection>
+
+            <HubSection Header="提及我的" IsHeaderInteractive="True" x:Name="mentionsHubSection">
+                <DataTemplate>
+                    <GridView x:Name="mentionsGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="mentionsGridView_ItemClick" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource StatusItemControl}">
+                    </GridView>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+    </Grid>
+</Page>

@@ -42,8 +42,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>  
-		<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,10,0"/>
-        	<StackPanel VerticalAlignment="Top" Margin="132,36,20,0" Orientation="Horizontal">
+		<TextBlock Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,10,0"/>
+        	<StackPanel VerticalAlignment="Top" Margin="132,10,20,0" Orientation="Horizontal" Grid.Row="1">
         		<TextBlock Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" Padding="0"  FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF7A7A7A"/>
         		<TextBlock Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" Padding="5,0,0,0" FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF7A7A7A"/>
         		<TextBlock Padding="5,0,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="#FF7A7A7A" Visibility="{Binding status.favorited, Converter={StaticResource NullToVisibilityConverter}}" x:Name="fav"/>

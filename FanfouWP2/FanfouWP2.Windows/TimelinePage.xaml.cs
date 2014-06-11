@@ -64,6 +64,8 @@ namespace FanfouWP2
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             this.defaultViewModel["statuses"] = homeTimeline;
+       
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
         }
 
         #region NavigationHelper 注册
@@ -72,9 +74,7 @@ namespace FanfouWP2
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
-
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
-        }
+         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

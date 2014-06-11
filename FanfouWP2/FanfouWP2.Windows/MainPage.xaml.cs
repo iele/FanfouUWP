@@ -33,7 +33,7 @@ namespace FanfouWP2
 
         void Instance_LoginSuccess(object sender, EventArgs e)
         {
-            Frame.Navigate(typeof(TimelinePage));
+            Frame.Navigate(typeof(HubPage));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

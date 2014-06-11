@@ -54,6 +54,7 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}" FontSize="16" Margin="10,0"/>
             <Image Source="{Binding photo.largeurl}" Margin="0,10,0,0" Grid.Row="1" Tapped="RectangleImage_Tapped" VerticalAlignment="Top" Stretch="UniformToFill"/>
         </Grid>
-        <Rectangle Margin="0" StrokeThickness="2" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="{ThemeResource AppBarSeparatorForegroundThemeBrush}"/>
+        <Rectangle Grid.ColumnSpan="2" Fill="#FF46CDCD" HorizontalAlignment="Left" Grid.RowSpan="2" Stroke="Black" Width="2" StrokeThickness="0"/>
+        <Rectangle Fill="#FF46CDCD" HorizontalAlignment="Left" Margin="0" Stroke="Black" Width="3" StrokeThickness="0"/>
     </Grid>
 </UserControl>
