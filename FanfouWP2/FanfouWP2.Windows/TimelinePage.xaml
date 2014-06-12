@@ -29,7 +29,13 @@
       
        </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF71CAE0" Offset="0"/>
+                <GradientStop Color="#FFACDAE5" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>

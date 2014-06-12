@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using FanfouWP2.Common;
-using Windows.Foundation;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using FanfouWP2.FanfouAPI;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using FanfouWP2.Utils;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace FanfouWP2
 {
@@ -56,7 +49,8 @@ namespace FanfouWP2
         }
 
         void Instance_HomeTimelineSuccess(object sender, EventArgs e)
-        {     
+        {
+            this.homeTimeline.Clear();
             foreach (var item in sender as List<Status>)
             {
                 this.homeTimeline.Add(item);

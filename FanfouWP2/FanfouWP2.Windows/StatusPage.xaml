@@ -25,7 +25,13 @@
         </ResourceDictionary>
 
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF71CAE0" Offset="0"/>
+                <GradientStop Color="#FFACDAE5" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -55,13 +61,13 @@
         				<EntranceThemeTransition/>
         			</TransitionCollection>
         		</StackPanel.Transitions>
-        		<TextBlock Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" Padding="0"  FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF7A7A7A"/>
-        		<TextBlock Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" Padding="5,0,0,0" FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FF7A7A7A"/>
-        		<TextBlock Padding="5,0,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="#FF7A7A7A" Visibility="{Binding status.favorited, Converter={StaticResource NullToVisibilityConverter}}" x:Name="fav"/>
-        		<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="#FF7A7A7A" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
-        		<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="#FF7A7A7A" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+        		<TextBlock Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" Padding="0"  FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
+        		<TextBlock Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" Padding="5,0,0,0" FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
+        		<TextBlock Padding="5,0,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.favorited, Converter={StaticResource NullToVisibilityConverter}}" x:Name="fav"/>
+        		<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
+        		<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
         	</StackPanel>
-        	<Image Margin="132,10,10,20" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+        	<Image Margin="132,10,10,20" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None">
         		<Image.Transitions>
         			<TransitionCollection>
         				<EntranceThemeTransition/>

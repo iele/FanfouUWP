@@ -14,19 +14,23 @@
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
-        <!-- TODO:  如果在 App.xaml 中声明了键 AppName，则删除此行-->
-        <x:String x:Key="AppName">我的应用程序</x:String>
+        <x:String x:Key="AppName">饭窗</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
             <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
         </DataTemplate>
-
     </Page.Resources>
 
     <!--
         此网格充当页的根面板。
     -->
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF71CAE0" Offset="0"/>
+                <GradientStop Color="#FFACDAE5" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -45,10 +49,63 @@
                 </Grid>
             </Hub.Header>
 
-            <HubSection Width="780" Margin="0,0,80,0">
-                <HubSection.Background>
-                    <ImageBrush Stretch="UniformToFill" />
-                </HubSection.Background>
+            <HubSection Margin="0,0,10,0">
+                <HubSection.Resources>
+                    <DataTemplate x:Key="MainDataTemplate">
+                        <Grid Width="300">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Stroke="White" Width="64" Height="64" Margin="10" StrokeThickness="2">
+                                <Ellipse.Fill>
+                                    <ImageBrush Stretch="Fill" ImageSource="{Binding currentUser.profile_image_url_large}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock Margin="10,0" TextWrapping="Wrap" Text="{Binding currentUser.screen_name}" Grid.Column="1" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height= "1*"/>
+                                    <RowDefinition Height= "1*"/>
+                                    <RowDefinition Height= "1*"/>
+                                    <RowDefinition Height= "1*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0">
+                                        <StackPanel Margin="0" Orientation="Vertical">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" Foreground="White" FontSize="24"/>
+                                            <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding currentUser.statuses_count}" VerticalAlignment="Top" FontSize="36"/>
+                                        </StackPanel>
+                                        <StackPanel Margin="0" Orientation="Vertical">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top" Foreground="White" FontSize="24"/>
+                                            <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding currentUser.favourites_count}" VerticalAlignment="Top" FontSize="36"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" >
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top" Foreground="White" FontSize="24"/>
+                                            <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding currentUser.followers_count}"  VerticalAlignment="Top" FontSize="36"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top" Foreground="White" FontSize="24"/>
+                                            <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding currentUser.friends_count}"  VerticalAlignment="Top" FontSize="36"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button x:Name="StatusButton" Content="我的消息" HorizontalAlignment="Stretch" Margin="10,10,10,0" VerticalAlignment="Top" Grid.Row="1" Height="64" Click="StatusButton_Click" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="Normal"/>
+                                <Button x:Name="MentionButton" Content="提及我的" HorizontalAlignment="Stretch" Height="64" Margin="10,10,10,0" VerticalAlignment="Top" Grid.Row="2" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="Normal"/>
+                                <Button x:Name="PublicButton" Content="随便看看" HorizontalAlignment="Stretch" Height="64" Margin="10,10,10,0" VerticalAlignment="Top" Grid.Row="3" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="Normal"/>
+                                <Button x:Name="SearchButton" Content="时间线搜索" HorizontalAlignment="Stretch" Height="64" Margin="10,10,10,0" VerticalAlignment="Top" Grid.Row="4" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="Normal"/>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </HubSection.Resources>
+                <StaticResource ResourceKey="MainDataTemplate"/>
             </HubSection>
             <HubSection Header="我的消息" IsHeaderInteractive="True" x:Name="statusesHubSection">
                 <DataTemplate>
@@ -64,5 +121,13 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
+        <Button Content="" HorizontalAlignment="Right" Margin="0,50,50,0" VerticalAlignment="Top" Width="60" Height="60">
+        	<Button.Foreground>
+        		<ImageBrush Stretch="Fill" ImageSource="Assets/search-512.png"/>
+        	</Button.Foreground>
+        	<Button.Background>
+        		<ImageBrush Stretch="Fill" ImageSource="Assets/search-512.png"/>
+        	</Button.Background>
+        </Button>
     </Grid>
 </Page>

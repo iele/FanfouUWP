@@ -22,6 +22,7 @@ namespace FanfouWP2
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        private User currentUser = new User();
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
 
@@ -82,9 +83,12 @@ namespace FanfouWP2
         {
             this.defaultViewModel["statuses"] = statuses;
             this.defaultViewModel["mentions"] = mentions;
-
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20);
+         
+            currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
+            this.defaultViewModel["currentUser"] = currentUser;
+            
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(30, 1);
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(30);
         }
 
         #region NavigationHelper 注册
@@ -132,6 +136,11 @@ namespace FanfouWP2
             {
                 Frame.Navigate(typeof(TimelinePage));
             }
+        }
+
+        private void StatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TimelinePage));
         }
 
     }

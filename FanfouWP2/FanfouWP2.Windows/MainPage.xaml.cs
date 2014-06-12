@@ -25,6 +25,17 @@ namespace FanfouWP2
 
             FanfouAPI.FanfouAPI.Instance.LoginSuccess += Instance_LoginSuccess;
             FanfouAPI.FanfouAPI.Instance.LoginFailed += Instance_LoginFailed;
+            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
+            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
+        }
+
+        void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
+        {
+            Frame.Navigate(typeof(HubPage));
         }
 
         void Instance_LoginFailed(object sender, FailedEventArgs e)
@@ -33,7 +44,7 @@ namespace FanfouWP2
 
         void Instance_LoginSuccess(object sender, EventArgs e)
         {
-            Frame.Navigate(typeof(HubPage));
+            FanfouAPI.FanfouAPI.Instance.VerifyCredentials();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

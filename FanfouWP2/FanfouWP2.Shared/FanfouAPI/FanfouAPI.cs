@@ -19,6 +19,8 @@ namespace FanfouWP2.FanfouAPI
         public string username;
         public string password;
 
+        public User currentUser { get; private set; }
+
         public delegate void LoginSuccessHandler(object sender, EventArgs e);
         public delegate void LoginFailedHandler(object sender, FailedEventArgs e);
         public delegate void VerifyCredentialsSuccessHandler(object sender, EventArgs e);
@@ -252,10 +254,20 @@ namespace FanfouWP2.FanfouAPI
         }
 
 
-        public void VerifyCredentials()
+        public async void VerifyCredentials()
         {
-
+            try
+            {
+                var result = await GetClient().GetRequestObject<User>(FanfouConsts.VERIFY_CREDENTIALS);
+                this.currentUser = result;
+                VerifyCredentialsSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                VerifyCredentialsFailed(this, new FailedEventArgs());
+            }
         }
+
         #endregion
         #region status
         public void StatusUpdate(string status, string in_reply_to_status_id = "", string in_reply_to_user_id = "", string repost_status_id = "", string location = "")

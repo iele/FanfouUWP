@@ -94,16 +94,22 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async Task<string> GetRequest(string url, Parameters parameters)
+        public async Task<string> GetRequest(string url, Parameters parameters = null)
         {
             using (var client = new HttpClient())
             {
                 var urlStr = baseUrl + "/" + url;
 
                 var str = "?";
-                foreach (var i in parameters.Items)
+                if (parameters != null)
                 {
-                    str += WebUtility.UrlEncode(i.Key) + "=" + WebUtility.UrlEncode(i.Value) + "&";
+                    foreach (var i in parameters.Items)
+                    {
+                        str += WebUtility.UrlEncode(i.Key) + "=" + WebUtility.UrlEncode(i.Value) + "&";
+                    }
+                }
+                else {
+                    parameters = new Parameters();
                 }
 
                 var oauth = generateOAuthHeader(parameters, url);
@@ -118,7 +124,7 @@ namespace FanfouWP2.FanfouAPI
                 }
             }
         }
-        public async Task<T> GetRequestObject<T>(string url, Parameters parameters) where T : Item
+        public async Task<T> GetRequestObject<T>(string url, Parameters parameters = null) where T : Item
         {
             var ds = new DataContractJsonSerializer(typeof(T));
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await GetRequest(url, parameters))))
@@ -128,7 +134,7 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async Task<List<T>> GetRequestObjectCollection<T>(string url, Parameters parameters)
+        public async Task<List<T>> GetRequestObjectCollection<T>(string url, Parameters parameters = null)
             where T : Item
         {
             var ds = new DataContractJsonSerializer(typeof(List<T>));
