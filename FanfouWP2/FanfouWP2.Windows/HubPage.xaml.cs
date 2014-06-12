@@ -15,13 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-//“中心页”项模板在 http://go.microsoft.com/fwlink/?LinkId=321224 上有介绍
-
 namespace FanfouWP2
 {
-    /// <summary>
-    /// 显示分组的项集合的页。
-    /// </summary>
     public sealed partial class HubPage : Page
     {
         private NavigationHelper navigationHelper;
@@ -30,18 +25,11 @@ namespace FanfouWP2
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
 
-        /// <summary>
-        /// 可将其更改为强类型视图模型。
-        /// </summary>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
-        /// <summary>
-        /// NavigationHelper 在每页上用于协助导航和
-        /// 进程生命期管理
-        /// </summary>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
@@ -91,28 +79,14 @@ namespace FanfouWP2
         }
 
 
-        /// <summary>
-        /// 使用在导航过程中传递的内容填充页。  在从以前的会话
-        /// 重新创建页时，也会提供任何已保存状态。
-        /// </summary>
-        /// <param name="sender">
-        /// 事件的来源; 通常为 <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">事件数据，其中既提供在最初请求此页时传递给
-        /// <see cref="Frame.Navigate(Type, Object)"/> 的导航参数，又提供
-        /// 此页在以前会话期间保留的状态的
-        /// 字典。 首次访问页面时，该状态将为 null。</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO:  将可绑定组集合分配到 this.DefaultViewModel["Groups"]    
             this.defaultViewModel["statuses"] = statuses;
             this.defaultViewModel["mentions"] = mentions;
 
             FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20);
             FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20);
         }
-
-
 
         #region NavigationHelper 注册
 
