@@ -202,7 +202,7 @@ namespace FanfouWP2.FanfouAPI
         }
         public FanfouAPI()
         {
-       
+
         }
 
         private int[] CountIndex = { 100, 300, 500, 1000 };
@@ -222,12 +222,12 @@ namespace FanfouWP2.FanfouAPI
         #region account
         public void AccountNotification()
         {
-          
+
         }
 
         public void AccountUpdateProfile(string url = "", string location = "", string description = "", string name = "", string email = "")
         {
-           
+
         }
 
         public async void Login(string username, string password)
@@ -244,7 +244,8 @@ namespace FanfouWP2.FanfouAPI
                 this.oauthSecret = client.tokenSecret;
                 LoginSuccess(this, new EventArgs());
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 var args = new FailedEventArgs();
                 LoginFailed(this, args);
             }
@@ -253,7 +254,7 @@ namespace FanfouWP2.FanfouAPI
 
         public void VerifyCredentials()
         {
-           
+
         }
         #endregion
         #region status
@@ -261,38 +262,43 @@ namespace FanfouWP2.FanfouAPI
         {
         }
 
-     
+
         public void StatusDestroy(string id)
         {
-        
+
         }
 
         public void StatusContextTimeline(string id)
         {
-          
+
         }
 
         public void StatusUserTimeline(int count, string user_id)
         {
-        
+
         }
-        public async void StatusHomeTimeline(int count = 20, string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusHomeTimeline(int count, int page, string since_id = "", string max_id = "")
         {
             try
             {
                 var client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("count", count.ToString());
+                if (page > 0)
+                    parameters.Add("page", page);
                 if (since_id != "")
                     parameters.Add("since_id", since_id);
                 if (max_id != "")
                     parameters.Add("max_id", max_id);
 
                 var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_HOME_TIMELINE, parameters);
-                HomeTimelineSuccess(result, new EventArgs());
+                if (HomeTimelineSuccess != null)
+                    HomeTimelineSuccess(result, new EventArgs());
             }
-            catch (Exception e) {
-                HomeTimelineFailed(this, new FailedEventArgs());
+            catch (Exception e)
+            {
+                if (HomeTimelineFailed != null)
+                    HomeTimelineFailed(this, new FailedEventArgs());
             }
         }
 
@@ -316,7 +322,7 @@ namespace FanfouWP2.FanfouAPI
                 PublicTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void StatusMentionTimeline(int count,  string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusMentionTimeline(int count, string since_id = "", string max_id = "", string refresh_id = "")
         {
             try
             {
@@ -338,28 +344,28 @@ namespace FanfouWP2.FanfouAPI
         }
         public void FavoritesCreate(string id)
         {
-           
+
         }
 
         public void FavoritesDestroy(string id)
         {
-         
+
         }
 
         #endregion
         #region search
         public void SearchTimeline(string q, int count = 60, string max_id = "")
         {
-           
+
         }
 
         public void SearchUserTimeline(string q, string id = "", int count = 60, string max_id = "")
         {
-       
+
         }
         public void SearchUser(string q, int count = 60, int page = 0)
         {
-     
+
         }
 
         public void TrendsList()
@@ -368,27 +374,27 @@ namespace FanfouWP2.FanfouAPI
 
         public void TaggedList(string id)
         {
-           
+
         }
 
         public void Tagged(string tag)
         {
-         
+
         }
 
         public void SavedSearchList()
         {
-         
+
         }
         #endregion
         #region user
         public void UsersShow(string id)
         {
-           
+
         }
         public void UsersFollowers(string id, int count = 60, int page = 1)
         {
-           
+
         }
 
         public void UsersFriends(string id, int count = 60, int page = 1)
@@ -398,15 +404,15 @@ namespace FanfouWP2.FanfouAPI
         #region friendship
         public void FriendshipCreate(string id)
         {
-       
+
         }
         public void FriendshipDestroy(string id)
         {
-           
+
         }
         public void FriendshipRequests(int page = 1)
         {
-            
+
         }
 
         public void FriendshipAccept(string id)
@@ -415,38 +421,38 @@ namespace FanfouWP2.FanfouAPI
 
         public void FriendshipDeny(string id)
         {
-     
+
         }
         public void FriendshipExists(string user_a, string user_b)
         {
-          
+
         }
         #endregion
         #region photo
         public void PhotosUserTimeline(string id, int count = 60)
         {
-           
+
         }
         public void PhotoUpload(string status, WriteableBitmap photo, string location = "")
         {
         }
 
-    
+
         #endregion
         #region direct
         public void DirectMessagesConversationList(int page = 1, int count = 20)
         {
-           
+
         }
 
         public void DirectMessagesConversation(string id, int count = 60, int page = 1)
         {
-       
+
         }
 
         public void DirectMessagesNew(string user, string text, string in_reply_to_id)
         {
-           
+
         }
         #endregion
 

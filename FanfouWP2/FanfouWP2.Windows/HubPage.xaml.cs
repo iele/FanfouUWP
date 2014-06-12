@@ -65,7 +65,6 @@ namespace FanfouWP2
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void Instance_HomeTimelineSuccess(object sender, EventArgs e)
@@ -84,7 +83,7 @@ namespace FanfouWP2
             this.defaultViewModel["statuses"] = statuses;
             this.defaultViewModel["mentions"] = mentions;
 
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20);
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
             FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20);
         }
 
