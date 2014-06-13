@@ -3,16 +3,8 @@ using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace FanfouWP2
@@ -141,6 +133,16 @@ namespace FanfouWP2
         private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(TimelinePage));
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+        }
+
+        private void sendBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = false;
         }
 
     }
