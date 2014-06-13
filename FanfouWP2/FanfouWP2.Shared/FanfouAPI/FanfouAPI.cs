@@ -289,7 +289,7 @@ namespace FanfouWP2.FanfouAPI
         {
 
         }
-        public async void StatusHomeTimeline(int count, int page, string since_id = "", string max_id = "")
+        public async void StatusHomeTimeline(int count, int page = 1, string since_id = "", string max_id = "")
         {
             try
             {

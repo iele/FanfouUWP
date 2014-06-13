@@ -121,13 +121,8 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
-        <Button Content="" HorizontalAlignment="Right" Margin="0,50,50,0" VerticalAlignment="Top" Width="60" Height="60">
-        	<Button.Foreground>
-        		<ImageBrush Stretch="Fill" ImageSource="Assets/search-512.png"/>
-        	</Button.Foreground>
-        	<Button.Background>
-        		<ImageBrush Stretch="Fill" ImageSource="Assets/search-512.png"/>
-        	</Button.Background>
+        <Button HorizontalAlignment="Right" Margin="0,50,50,0" VerticalAlignment="Top" Width="76" Height="60" BorderBrush="#00682222" Foreground="Transparent">
+            <Image Stretch="Fill" Source="Assets/search-512.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Button>
     </Grid>
 </Page>
