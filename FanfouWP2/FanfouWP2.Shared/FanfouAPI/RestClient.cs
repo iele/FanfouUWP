@@ -108,7 +108,8 @@ namespace FanfouWP2.FanfouAPI
                         str += WebUtility.UrlEncode(i.Key) + "=" + WebUtility.UrlEncode(i.Value) + "&";
                     }
                 }
-                else {
+                else
+                {
                     parameters = new Parameters();
                 }
 
@@ -149,16 +150,39 @@ namespace FanfouWP2.FanfouAPI
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-                client.DefaultRequestHeaders.Add("Method", "POST");
-                var content = new HttpStringContent("", Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                var urlStr = baseUrl + "/" + url;
+               
+                var oauth = generateOAuthHeader(parameters, url);
+                client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
+
+                var content = new HttpFormUrlEncodedContent(parameters.Items);
                 using (var response = await client.PostAsync(new Uri(baseUrl + "/" + url), content))
                 {
-                    return await response.Content.ReadAsStringAsync();
+                    var result = await response.Content.ReadAsStringAsync();
+                    response.EnsureSuccessStatusCode();
+                    return result;
                 }
             }
         }
 
+        public async Task<T> PostRequestObject<T>(string url, Parameters parameters = null) where T : Item
+        {
+            var ds = new DataContractJsonSerializer(typeof(T));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await PostRequest(url, parameters))))
+            {
+                var obj = ds.ReadObject(ms) as T;
+                return obj;
+            }
+        }
+        public async Task<List<T>> PostRequestObjectCollection<T>(string url, Parameters parameters = null) where T : Item
+        {
+            var ds = new DataContractJsonSerializer(typeof(List<T>));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await PostRequest(url, parameters))))
+            {
+                var obj = ds.ReadObject(ms) as List<T>;
+                return obj;
+            }
+        }
         public async Task<string> PostRequestWithFile(string url, Parameters parameters, Stream file)
         {
             using (var client = new HttpClient())

@@ -270,8 +270,31 @@ namespace FanfouWP2.FanfouAPI
 
         #endregion
         #region status
-        public void StatusUpdate(string status, string in_reply_to_status_id = "", string in_reply_to_user_id = "", string repost_status_id = "", string location = "")
+        public async void StatusUpdate(string status, string in_reply_to_status_id = "", string in_reply_to_user_id = "", string repost_status_id = "", string location = "")
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("status", status);
+                if (in_reply_to_status_id != "")
+                    parameters.Add("in_reply_to_status_id", in_reply_to_status_id);
+                if (in_reply_to_user_id != "")
+                    parameters.Add("in_reply_to_user_id", in_reply_to_user_id);
+                if (repost_status_id != "")
+                    parameters.Add("repost_status_id", repost_status_id);
+                if (location != "")
+                    parameters.Add("location", location);
+
+                var result = await client.PostRequestObject<Status>(FanfouConsts.STATUS_UPDATE, parameters);
+                if (StatusUpdateSuccess != null)
+                    StatusUpdateSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (StatusUpdateFailed != null)
+                    StatusUpdateFailed(this, new FailedEventArgs());
+            }
         }
 
 
@@ -314,13 +337,15 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void StatusPublicTimeline(int count = 20, string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusPublicTimeline(int count = 20, int page = 1, string since_id = "", string max_id = "", string refresh_id = "")
         {
             try
             {
                 var client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("count", count.ToString());
+                if (page > 0)
+                    parameters.Add("page", page);
                 if (since_id != "")
                     parameters.Add("since_id", since_id);
                 if (max_id != "")
@@ -334,13 +359,15 @@ namespace FanfouWP2.FanfouAPI
                 PublicTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void StatusMentionTimeline(int count, string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusMentionTimeline(int count, int page = 1, string since_id = "", string max_id = "", string refresh_id = "")
         {
             try
             {
                 var client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("count", count.ToString());
+                if (page > 0)
+                    parameters.Add("page", page);
                 if (since_id != "")
                     parameters.Add("since_id", since_id);
                 if (max_id != "")

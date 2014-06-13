@@ -17,6 +17,7 @@ namespace FanfouWP2
         private User currentUser = new User();
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
+        private ObservableCollection<Status> publics = new ObservableCollection<Status>();
 
         public ObservableDictionary DefaultViewModel
         {
@@ -39,15 +40,48 @@ namespace FanfouWP2
 
             FanfouAPI.FanfouAPI.Instance.MentionTimelineSuccess += Instance_MentionTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.MentionTimelineFailed += Instance_MentionTimelineFailed;
+
+            FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_PublicTimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_PublicTimelineFailed;
+
+            FanfouAPI.FanfouAPI.Instance.StatusUpdateSuccess += Instance_StatusUpdateSuccess;
+            FanfouAPI.FanfouAPI.Instance.StatusUpdateFailed += Instance_StatusUpdateFailed;
+        }
+
+        void Instance_StatusUpdateSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_StatusUpdateFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_PublicTimelineSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<Status>;
+            this.publics.Clear();
+            foreach (var item in ss)
+            {
+                this.publics.Add(item);
+            }
         }
 
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
         {
-            throw new NotImplementedException();
+            loading.Visibility = Visibility.Collapsed;
         }
 
         private void Instance_MentionTimelineSuccess(object sender, EventArgs e)
         {
+            loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             this.mentions.Clear();
             foreach (var item in ss)
@@ -58,10 +92,12 @@ namespace FanfouWP2
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
         {
+            loading.Visibility = Visibility.Collapsed;
         }
 
         private void Instance_HomeTimelineSuccess(object sender, EventArgs e)
         {
+            loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             this.statuses.Clear();
             foreach (var item in ss)
@@ -75,12 +111,14 @@ namespace FanfouWP2
         {
             this.defaultViewModel["statuses"] = statuses;
             this.defaultViewModel["mentions"] = mentions;
-         
+            this.defaultViewModel["publics"] = publics;
+
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             this.defaultViewModel["currentUser"] = currentUser;
-            
+
+            loading.Visibility = Visibility.Visible;
             FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(30, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(30);
+            this.defaultViewModel["hubSectionHeader"] = "我的消息";
         }
 
         #region NavigationHelper 注册
@@ -118,23 +156,6 @@ namespace FanfouWP2
             Frame.Navigate(typeof(StatusPage), item);
         }
 
-        private void Hub_SectionHeaderClick(object sender, HubSectionHeaderClickEventArgs e)
-        {
-            if (e.Section == this.statusesHubSection)
-            {
-                Frame.Navigate(typeof(TimelinePage));
-            }
-            else if (e.Section == this.mentionsHubSection)
-            {
-                Frame.Navigate(typeof(TimelinePage));
-            }
-        }
-
-        private void StatusButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(TimelinePage));
-        }
-
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             this.sendPopup.IsOpen = true;
@@ -143,6 +164,39 @@ namespace FanfouWP2
         private void sendBackButton_Click(object sender, RoutedEventArgs e)
         {
             this.sendPopup.IsOpen = false;
+        }
+        private void publicGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as Status;
+            Frame.Navigate(typeof(StatusPage), item);
+        }
+        private void StatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(30);
+            this.defaultViewModel["hubSectionHeader"] = "我的消息";
+            mainHubSection.ContentTemplate = StatusDataTemplate;
+        }
+
+        private void MentionButton_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(30);
+            this.defaultViewModel["hubSectionHeader"] = "提及我的";
+            mainHubSection.ContentTemplate = MentionDataTemplate;
+        }
+        private void PublicButton_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(30);
+            this.defaultViewModel["hubSectionHeader"] = "随便看看";
+            mainHubSection.ContentTemplate = PublicDataTemplate;
+        }
+        private void sendStatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            if (textBox.Text.Length > 0 && textBox.Text.Length <= 140)
+                FanfouAPI.FanfouAPI.Instance.StatusUpdate(textBox.Text);
         }
 
     }
