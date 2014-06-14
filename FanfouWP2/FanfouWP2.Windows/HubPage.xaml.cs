@@ -51,6 +51,8 @@ namespace FanfouWP2
         void Instance_StatusUpdateSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
+            this.textBox.Text = "";
+            this.sendPopup.IsOpen = false;
         }
 
         void Instance_StatusUpdateFailed(object sender, FailedEventArgs e)
@@ -197,6 +199,10 @@ namespace FanfouWP2
             loading.Visibility = Visibility.Visible;
             if (textBox.Text.Length > 0 && textBox.Text.Length <= 140)
                 FanfouAPI.FanfouAPI.Instance.StatusUpdate(textBox.Text);
+        }
+
+        private void pageRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
         }
 
     }

@@ -244,12 +244,14 @@ namespace FanfouWP2.FanfouAPI
 
                 this.oauthToken = client.token;
                 this.oauthSecret = client.tokenSecret;
-                LoginSuccess(this, new EventArgs());
+                if (LoginSuccess != null)
+                    LoginSuccess(this, new EventArgs());
             }
             catch (Exception e)
             {
                 var args = new FailedEventArgs();
-                LoginFailed(this, args);
+                if (LoginFailed != null)
+                    LoginFailed(this, args);
             }
         }
 
@@ -260,11 +262,13 @@ namespace FanfouWP2.FanfouAPI
             {
                 var result = await GetClient().GetRequestObject<User>(FanfouConsts.VERIFY_CREDENTIALS);
                 this.currentUser = result;
-                VerifyCredentialsSuccess(result, new EventArgs());
+                if (VerifyCredentialsSuccess != null)
+                    VerifyCredentialsSuccess(result, new EventArgs());
             }
             catch (Exception e)
             {
-                VerifyCredentialsFailed(this, new FailedEventArgs());
+                if (VerifyCredentialsFailed != null)
+                    VerifyCredentialsFailed(this, new FailedEventArgs());
             }
         }
 
@@ -352,11 +356,13 @@ namespace FanfouWP2.FanfouAPI
                     parameters.Add("max_id", max_id);
 
                 var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_PUBLIC_TIMELINE, parameters);
-                PublicTimelineSuccess(result, new EventArgs());
+                if (PublicTimelineSuccess != null)
+                    PublicTimelineSuccess(result, new EventArgs());
             }
             catch (Exception e)
             {
-                PublicTimelineFailed(this, new FailedEventArgs());
+                if (PublicTimelineFailed != null)
+                    PublicTimelineFailed(this, new FailedEventArgs());
             }
         }
         public async void StatusMentionTimeline(int count, int page = 1, string since_id = "", string max_id = "", string refresh_id = "")
@@ -374,11 +380,13 @@ namespace FanfouWP2.FanfouAPI
                     parameters.Add("max_id", max_id);
 
                 var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_MENTION_TIMELINE, parameters);
-                MentionTimelineSuccess(result, new EventArgs());
+                if (MentionTimelineSuccess != null)
+                    MentionTimelineSuccess(result, new EventArgs());
             }
             catch (Exception e)
             {
-                MentionTimelineFailed(this, new FailedEventArgs());
+                if (MentionTimelineFailed != null)
+                    MentionTimelineFailed(this, new FailedEventArgs());
             }
         }
         public void FavoritesCreate(string id)

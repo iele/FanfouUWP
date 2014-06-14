@@ -33,7 +33,7 @@ namespace FanfouWP2.FanfouAPI
             }
 
             var key = string.Format("{0}&{1}", UrlEncode(secret), UrlEncode(tokenSecret));
-            var hashBytes = CreateHMAC(Encoding.UTF8.GetBytes(data.ToString()), Encoding.UTF8.GetBytes(key));
+           var hashBytes = CreateHMAC(Encoding.UTF8.GetBytes(data.ToString()), Encoding.UTF8.GetBytes(key));
 
             return UrlEncode(Convert.ToBase64String(hashBytes));
         }
