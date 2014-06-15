@@ -156,7 +156,7 @@ namespace FanfouWP2.FanfouAPI
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
                 var content = new HttpFormUrlEncodedContent(parameters.Items);
-                using (var response = await client.PostAsync(new Uri(baseUrl + "/" + url), content))
+                using (var response = await client.PostAsync(new Uri(urlStr), content))
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     response.EnsureSuccessStatusCode();
