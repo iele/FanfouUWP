@@ -25,13 +25,7 @@
         </ResourceDictionary>
 
     </Page.Resources>
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF71CAE0" Offset="0"/>
-                <GradientStop Color="#FFACDAE5" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Grid Background="#FF8DE8FF">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -48,7 +42,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>  
-		<TextBlock Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,10,0">
+		<TextBlock Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,10,0" IsTextSelectionEnabled="True">
 			<TextBlock.Transitions>
 				<TransitionCollection>
 					<EntranceThemeTransition/>
@@ -67,7 +61,7 @@
         		<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
         		<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
         	</StackPanel>
-        	<Image Margin="132,10,10,20" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None">
+        	<Image Margin="132,10,10,20" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" Stretch="None" VerticalAlignment="Top">
         		<Image.Transitions>
         			<TransitionCollection>
         				<EntranceThemeTransition/>
@@ -80,7 +74,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Margin="39,59,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
@@ -88,7 +82,7 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-            <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="12,30,12,12" RadiusX="5" Grid.Column="1">
+            <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="12,60,12,12" RadiusX="5" Grid.Column="1">
             	<Rectangle.Transitions>
             		<TransitionCollection>
             			<EntranceThemeTransition/>
@@ -100,7 +94,8 @@
             </Rectangle>
 
             <TextBlock x:Name="pageTitle" Text="{Binding status.user.screen_name}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="2" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,40" FontFamily="Microsoft YaHei"/>
         </Grid>
+        <Rectangle Fill="#FF00CCFF" Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10"/>
     </Grid>
 </Page>

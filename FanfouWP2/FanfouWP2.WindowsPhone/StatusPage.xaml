@@ -59,14 +59,14 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-             <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="12,30,12,12" RadiusX="5" Grid.Column="1">
+             <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="12,60,12,12" RadiusX="5" Grid.Column="1">
                 <Rectangle.Fill>
                     <ImageBrush Stretch="UniformToFill" ImageSource="{Binding status.user.profile_image_url_large}"/>
                 </Rectangle.Fill>
             </Rectangle>
 
             <TextBlock x:Name="pageTitle" Text="{Binding status.user.screen_name}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="2" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,40" FontFamily="Microsoft YaHei"/>
         </Grid>
     </Grid>
 </Page>

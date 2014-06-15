@@ -8,7 +8,7 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     x:Class="FanfouWP2.ItemControl.StatusItemControl"
     mc:Ignorable="d"
-    d:DesignHeight="300"
+    d:DesignHeight="600"
     d:DesignWidth="400" Background="White" FontFamily="Microsoft YaHei">
     <UserControl.Resources >
         <ResourceDictionary>

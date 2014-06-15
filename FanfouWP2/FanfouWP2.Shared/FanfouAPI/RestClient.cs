@@ -50,7 +50,7 @@ namespace FanfouWP2.FanfouAPI
             xauth += oParameters.Items[oParameters.Items.Count - 1].Key + "=\"" + oParameters.Items[oParameters.Items.Count - 1].Value + '"';
             return xauth;
         }
-        private string generateOAuthHeader(Parameters parameters, string url)
+        private string generateOAuthHeader(Parameters parameters, string url, string method)
         {
             Parameters oParameters = new Parameters();
             oParameters.Add("oauth_consumer_key", consumer);
@@ -63,7 +63,7 @@ namespace FanfouWP2.FanfouAPI
             foreach (var p in parameters.Items)
                 oParameters.Add(p.Key, p.Value);
 
-            oParameters.Add("oauth_signature", XAuthHelper.GenerateSignature(secret, tokenSecret, "GET", baseUrl + "/" + url, oParameters));
+            oParameters.Add("oauth_signature", XAuthHelper.GenerateSignature(secret, tokenSecret, method, baseUrl + "/" + url, oParameters));
 
             foreach (var p in parameters.Items)
                 oParameters.Items.Remove(p);
@@ -113,7 +113,7 @@ namespace FanfouWP2.FanfouAPI
                     parameters = new Parameters();
                 }
 
-                var oauth = generateOAuthHeader(parameters, url);
+                var oauth = generateOAuthHeader(parameters, url, "GET");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
                 str = str.Substring(0, str.Length - 1);
@@ -152,7 +152,7 @@ namespace FanfouWP2.FanfouAPI
             {
                 var urlStr = baseUrl + "/" + url;
                
-                var oauth = generateOAuthHeader(parameters, url);
+                var oauth = generateOAuthHeader(parameters, url, "POST");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
                 var content = new HttpFormUrlEncodedContent(parameters.Items);

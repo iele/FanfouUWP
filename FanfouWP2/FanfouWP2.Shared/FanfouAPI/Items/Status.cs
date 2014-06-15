@@ -16,7 +16,7 @@ namespace FanfouWP2.FanfouAPI
         [DataMember(Name = "id", IsRequired = true)]
         public string id { get; set; }
         [DataMember(Name = "rawid", IsRequired = false)]
-        public string rawid { get; set; }
+        public UInt64 rawid { get; set; }
 
         [DataMember(Name = "text", IsRequired = false)]
         public string text { get; set; }

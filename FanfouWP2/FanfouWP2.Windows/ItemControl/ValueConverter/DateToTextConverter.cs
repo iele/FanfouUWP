@@ -33,7 +33,7 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 }
                 if (ts.Days != 0)
                 {
-                    if (ts.Days < 30)
+                    if (ts.Days < 60)
                         return ts.Days.ToString() + "天";
                     else
                         return datetime.Year + "年" + datetime.Month + "月" + datetime.Day + "日";

@@ -33,5 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Items\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Parameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\XAuthHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\VisualHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\StatusesReform.cs" />
   </ItemGroup>
 </Project>
