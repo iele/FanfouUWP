@@ -231,19 +231,21 @@ namespace FanfouWP2
         {
             if (mainHubSection.ContentTemplate == this.StatusDataTemplate)
             {
-                if (this.statuses.Count != 0)
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id: this.statuses.Last().id);
+                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.STATUSES);
             }
             if (mainHubSection.ContentTemplate == this.MentionDataTemplate)
             {
-                if (this.mentions.Count != 0)
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, max_id: this.mentions.Last().id);
+                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.MENTIONS);
             }
             if (mainHubSection.ContentTemplate == this.PublicDataTemplate)
             {
-                if (this.publics.Count != 0)
-                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, max_id: this.publics.Last().id);
+                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.PUBLICS);
             }
+        }
+
+        private void pageRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
         }
 
     }

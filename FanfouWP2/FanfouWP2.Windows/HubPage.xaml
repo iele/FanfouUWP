@@ -9,13 +9,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:itemcontrol="using:FanfouWP2.ItemControl" FontFamily="Microsoft YaHei"
-    mc:Ignorable="d" NavigationCacheMode="Required" Background="#FF00CCFF" BorderBrush="#FF00CCFF">
+    mc:Ignorable="d" NavigationCacheMode="Required" Background="#FF00CCFF" BorderBrush="#FF00CCFF" SizeChanged="pageRoot_SizeChanged">
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
-            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="280"/>
         </DataTemplate>
     
         <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">

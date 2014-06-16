@@ -1,0 +1,59 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="FanfouWP2.TimelinePage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:common="using:FanfouWP2.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:itemcontrol="using:FanfouWP2.ItemControl"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="StatusItemControl">
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="280"/>
+        </DataTemplate>
+    </Page.Resources>
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
+    <Grid Background="#FF8DE8FF">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <GridView x:Name="statusesGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1">
+
+        </GridView>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        VerticalAlignment="Top"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+            <TextBlock x:Name="pageTitle" Text="{Binding title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei"/>
+        </Grid>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Global User Interface"/>
+        <Rectangle Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF00CCFF"/>
+    </Grid>
+</Page>
