@@ -20,30 +20,21 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FanfouWP2
 {
-    /// <summary>
-    /// 基本页，提供大多数应用程序通用的特性。
-    /// </summary>
     public sealed partial class TimelinePage : Page
     {
 
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
-   
-        public enum PageType { STATUSES, MENTIONS, PUBLICS };
+        private ObservableCollection<ObservableCollection<Status>> statuses = new ObservableCollection<ObservableCollection<Status>>();
 
-        /// <summary>
-        /// 可将其更改为强类型视图模型。
-        /// </summary>
+        public enum PageType { STATUSES, MENTIONS, PUBLICS };
+        private PageType currentType;
+
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
-        /// <summary>
-        /// NavigationHelper 在每页上用于协助导航和
-        /// 进程生命期管理
-        /// </summary>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
@@ -57,100 +48,57 @@ namespace FanfouWP2
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
 
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_HomeTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_HomeTimelineFailed;
+            FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_TimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_TimelineFailed;
 
-            FanfouAPI.FanfouAPI.Instance.MentionTimelineSuccess += Instance_MentionTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.MentionTimelineFailed += Instance_MentionTimelineFailed;
+            FanfouAPI.FanfouAPI.Instance.MentionTimelineSuccess += Instance_TimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.MentionTimelineFailed += Instance_TimelineFailed;
 
-            FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_PublicTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_PublicTimelineFailed;
+            FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_TimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_TimelineFailed;
         }
 
-        void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
+        void Instance_TimelineFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
         }
 
-        void Instance_PublicTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            foreach (var item in ss)
-                this.statuses.Add(item);
-        }
-
-        private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-        }
-
-        private void Instance_MentionTimelineSuccess(object sender, EventArgs e)
+        void Instance_TimelineSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            foreach (var item in ss)
-                this.statuses.Add(item);
+            statuses.Add(new ObservableCollection<Status>(ss));
         }
 
-        private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-        }
-
-        private void Instance_HomeTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            foreach (var item in ss)
-                this.statuses.Add(item);
-        }
-
-        /// <summary>
-        ///使用在导航过程中传递的内容填充页。 在从以前的会话
-        /// 重新创建页时，也会提供任何已保存状态。
-        /// </summary>
-        /// <param name="sender">
-        /// 事件的来源; 通常为 <see cref="NavigationHelper"/>
-        /// </param>
-        /// <param name="e">事件数据，其中既提供在最初请求此页时传递给
-        /// <see cref="Frame.Navigate(Type, Object)"/> 的导航参数，又提供
-        /// 此页在以前会话期间保留的状态的
-        /// 的字典。 首次访问页面时，该状态将为 null。</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             this.defaultViewModel["statuses"] = statuses;
-            
+
+            currentType = (PageType)e.NavigationParameter;
+
+            loading.Visibility = Visibility.Visible;
+
             switch ((PageType)e.NavigationParameter)
             {
                 case PageType.STATUSES:
-                  FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
-                  this.defaultViewModel["title"] = "我的消息";
-                  break;
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
+                    this.defaultViewModel["title"] = "我的消息";
+                    break;
                 case PageType.MENTIONS:
-                   FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60); 
-                  this.defaultViewModel["title"] = "提及我的";
-                   break;
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
+                    this.defaultViewModel["title"] = "提及我的";
+                    break;
                 case PageType.PUBLICS:
-                   FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
-                  this.defaultViewModel["title"] = "随便看看";
-                   break;
+                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                    this.defaultViewModel["title"] = "随便看看";
+                    break;
                 default:
                     break;
-
             }
-
-           
         }
 
-        /// <summary>
-        /// 保留与此页关联的状态，以防挂起应用程序或
-        /// 从导航缓存中放弃此页。  值必须符合
-        /// <see cref="SuspensionManager.SessionState"/> 的序列化要求。
-        /// </summary>
-        ///<param name="sender">事件的来源；通常为 <see cref="NavigationHelper"/></param>
-        ///<param name="e">提供要使用可序列化状态填充的空字典
-        ///的事件数据。</param>
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
@@ -180,7 +128,70 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            var item = e.ClickedItem as Status;
+            Frame.Navigate(typeof(StatusPage), item);
+        }
 
+        private void flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1 && this.flipView.SelectedIndex >= 1)
+            {
+                loading.Visibility = Visibility.Visible;
+                switch (currentType)
+                {
+                    case PageType.STATUSES:
+                        FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, this.flipView.Items.Count() + 1);
+                        break;
+                    case PageType.MENTIONS:
+                        FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, this.flipView.Items.Count() + 1);
+                        break;
+                    case PageType.PUBLICS:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.statuses.Clear();
+            loading.Visibility = Visibility.Visible;
+
+            switch (currentType)
+            {
+                case PageType.STATUSES:
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
+                    this.defaultViewModel["title"] = "我的消息";
+                    break;
+                case PageType.MENTIONS:
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
+                    this.defaultViewModel["title"] = "提及我的";
+                    break;
+                case PageType.PUBLICS:
+                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                    this.defaultViewModel["title"] = "随便看看";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void LeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.flipView.SelectedIndex > 0)
+                this.flipView.SelectedIndex--;
+        }
+
+        private void RightButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.flipView.SelectedIndex < this.flipView.Items.Count() - 1)
+                this.flipView.SelectedIndex++;
+        }
+        private void flipView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
         }
     }
 }

@@ -91,7 +91,7 @@
                                     <RowDefinition Height= "1*"/>
                                     <RowDefinition Height= "1*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                <StackPanel Margin="0,0,0,10" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
                                     <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0">
                                         <StackPanel Margin="0" Orientation="Vertical">
                                             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" FontSize="24"/>
@@ -126,11 +126,11 @@
                 <StaticResource ResourceKey="StatusDataTemplate"/>
             </HubSection>
         </Hub>
-        <StackPanel Margin="0,27,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel Margin="0,30,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
             <AppBarButton x:Name="RefreshButton" HorizontalAlignment="Right" IsCompact="True" Click="RefreshButton_Click"  FontFamily="Global User Interface" Icon="Refresh"/>
-            <AppBarButton x:Name="MoreButton" HorizontalAlignment="Right" IsCompact="True" Click="MoreButton_Click" Margin="10,0,0,0" Icon="More"/>
-            <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Global User Interface" Margin="10,0,0,0"/>
-            <AppBarButton x:Name="SearchButton" HorizontalAlignment="Right" Icon="Zoom" IsCompact="True" Margin="10,0,0,0"/>
+            <AppBarButton x:Name="MoreButton" HorizontalAlignment="Right" IsCompact="True" Click="MoreButton_Click" Margin="0" Icon="More"/>
+            <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Global User Interface" Margin="0"/>
+            <AppBarButton x:Name="SearchButton" HorizontalAlignment="Right" Icon="Zoom" IsCompact="True" Margin="0"/>
         </StackPanel>
         <Popup x:Name="sendPopup" RequestedTheme="Dark">
             <Grid x:Name="grid" Background="#BF000000" Width="{Binding ActualWidth, ElementName=pageRoot}" Height="{Binding ActualHeight, ElementName=pageRoot}">

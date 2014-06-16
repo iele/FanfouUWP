@@ -14,14 +14,9 @@
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="280"/>
-        </DataTemplate>
+        </DataTemplate>     
     </Page.Resources>
 
-    <!--
-        This grid acts as a root panel for the page that defines two rows:
-        * Row 0 contains the back button and page title
-        * Row 1 contains the rest of the page layout
-    -->
     <Grid Background="#FF8DE8FF">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -29,31 +24,38 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
-        <GridView x:Name="statusesGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1">
+        <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding statuses}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <GridView ItemsSource="{Binding}" ItemTemplate="{StaticResource StatusItemControl}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei"/>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
 
-        </GridView>
-
-        <!-- Back button and page title -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+            <Button x:Name="backButton" Margin="39,40,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
             <TextBlock x:Name="pageTitle" Text="{Binding title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,46" FontFamily="Microsoft YaHei" FontSize="40"/>
+            <StackPanel Grid.Column="1" Margin="0,26,40,0" Orientation="Horizontal" HorizontalAlignment="Right">
+            	<AppBarButton HorizontalAlignment="Right" Icon="Sync" x:Name="RefreshButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="RefreshButton_Click"/>
+            	<AppBarButton HorizontalAlignment="Right" Icon="Previous" x:Name="LeftButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="LeftButton_Click"/>
+            	<AppBarButton HorizontalAlignment="Right" Icon="Next" x:Name="RightButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="RightButton_Click"/>
+            </StackPanel>
         </Grid>
-        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Global User Interface"/>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
         <Rectangle Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF00CCFF"/>
     </Grid>
 </Page>

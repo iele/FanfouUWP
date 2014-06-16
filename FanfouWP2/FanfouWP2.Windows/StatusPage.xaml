@@ -32,7 +32,7 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -76,13 +76,13 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Margin="39,59,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+            <Button x:Name="backButton" Margin="39,40,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-            <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="12,60,12,12" RadiusX="5" Grid.Column="1">
+            <Rectangle Height="52" StrokeThickness="0" Width="52" RadiusY="5" Canvas.ZIndex="2" Margin="10,29,10,27" RadiusX="5" Grid.Column="1">
             	<Rectangle.Transitions>
             		<TransitionCollection>
             			<EntranceThemeTransition/>
@@ -94,7 +94,7 @@
             </Rectangle>
 
             <TextBlock x:Name="pageTitle" Text="{Binding status.user.screen_name}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="2" 
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,40" FontFamily="Microsoft YaHei"/>
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,46" FontFamily="Microsoft YaHei" FontSize="40"/>
         </Grid>
         <Rectangle Fill="#FF00CCFF" Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10"/>
     </Grid>
