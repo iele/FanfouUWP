@@ -91,6 +91,8 @@ namespace FanfouWP2
                     this.defaultViewModel["title"] = "提及我的";
                     break;
                 case PageType.PUBLICS:
+                    this.LeftButton.Visibility = Visibility.Collapsed;
+                    this.RightButton.Visibility = Visibility.Collapsed;
                     FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
                     this.defaultViewModel["title"] = "随便看看";
                     break;

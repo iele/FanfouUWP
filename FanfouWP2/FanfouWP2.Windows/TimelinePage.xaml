@@ -13,7 +13,7 @@
 
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
-            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="280"/>
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>     
     </Page.Resources>
 
@@ -56,6 +56,5 @@
             </StackPanel>
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
-        <Rectangle Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF00CCFF"/>
     </Grid>
 </Page>

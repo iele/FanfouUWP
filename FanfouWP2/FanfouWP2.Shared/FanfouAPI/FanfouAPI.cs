@@ -55,9 +55,9 @@ namespace FanfouWP2.FanfouAPI
         public delegate void PublicTimelineFailedHandler(object sender, FailedEventArgs e);
         public delegate void MentionTimelineSuccessHandler(object sender, EventArgs e);
         public delegate void MentionTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void UserTimelineSuccessHandler(object sender, UserTimelineEventArgs<Status> e);
+        public delegate void UserTimelineSuccessHandler(object sender, EventArgs e);
         public delegate void UserTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void ContextTimelineSuccessHandler(object sender, UserTimelineEventArgs<Status> e);
+        public delegate void ContextTimelineSuccessHandler(object sender, EventArgs e);
         public delegate void ContextTimelineFailedHandler(object sender, FailedEventArgs e);
 
         public event HomeTimelineSuccessHandler HomeTimelineSuccess;
@@ -307,14 +307,49 @@ namespace FanfouWP2.FanfouAPI
 
         }
 
-        public void StatusContextTimeline(string id)
+        public async void StatusContextTimeline(string id)
         {
-
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+           
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUSES_CONTEXT_TIMELINE, parameters);
+                if (ContextTimelineSuccess != null)
+                    ContextTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (ContextTimelineFailed != null)
+                    ContextTimelineFailed(this, new FailedEventArgs());
+            }
         }
 
-        public void StatusUserTimeline(int count, string user_id)
+        public async void StatusUserTimeline(string id, int count, int page = 1, string since_id = "", string max_id = "")
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                parameters.Add("count", count.ToString());
+                if (page > 0)
+                    parameters.Add("page", page);
+                if (since_id != "")
+                    parameters.Add("since_id", since_id);
+                if (max_id != "")
+                    parameters.Add("max_id", max_id);
 
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_USER_TIMELINE, parameters);
+                if (UserTimelineSuccess != null)
+                    UserTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (UserTimelineFailed != null)
+                    UserTimelineFailed(this, new FailedEventArgs());
+            }
         }
         public async void StatusHomeTimeline(int count, int page = 1, string since_id = "", string max_id = "")
         {
@@ -437,7 +472,7 @@ namespace FanfouWP2.FanfouAPI
         #region user
         public void UsersShow(string id)
         {
-
+           
         }
         public void UsersFollowers(string id, int count = 60, int page = 1)
         {

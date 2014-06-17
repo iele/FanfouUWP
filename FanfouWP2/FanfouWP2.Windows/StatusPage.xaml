@@ -9,7 +9,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" FontFamily="Microsoft YaHei"
-   xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter">
+    xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
+    xmlns:itemcontrol="using:FanfouWP2.ItemControl">
     <Page.Resources>
         <ResourceDictionary>
             <converter:HtmlToTextConverter x:Key="HtmlToTextConverter" />
@@ -22,10 +23,23 @@
             <converter:ImageSourceToCacheConverter  x:Key="ImageSourceToCacheConverter" />
             <converter:BoolToFavoritedConverter  x:Key="BoolToFavoritedConverter" />
             <converter:DisplayImageToVisibilityConverter x:Key="DisplayImageToVisibilityConverter" />
-        </ResourceDictionary>
 
+            <DataTemplate x:Key="StatusItemControl">
+                <itemcontrol:StatusItemControl  DataContext="{Binding}" Height="260" Width="500" />
+            </DataTemplate>
+        </ResourceDictionary>
     </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar Background="#FF00CCFF" BorderBrush="#FF00CCFF">
+            <AppBarButton Icon="Accept" Label="AppBarButton"/>
+            <AppBarButton Icon="Cancel" Label="AppBarButton"/>
+        </CommandBar>
+    </Page.BottomAppBar>
     <Grid Background="#FF8DE8FF">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="500"/>
+        </Grid.ColumnDefinitions>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -37,37 +51,42 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1" x:Name="contentRegion">
-           <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>  
-		<TextBlock Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,10,0" IsTextSelectionEnabled="True">
-			<TextBlock.Transitions>
-				<TransitionCollection>
-					<EntranceThemeTransition/>
-				</TransitionCollection>
-			</TextBlock.Transitions>
-		</TextBlock>
-        	<StackPanel VerticalAlignment="Top" Margin="132,10,20,0" Orientation="Horizontal" Grid.Row="1">
-        		<StackPanel.Transitions>
-        			<TransitionCollection>
-        				<EntranceThemeTransition/>
-        			</TransitionCollection>
-        		</StackPanel.Transitions>
-        		<TextBlock Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" Padding="0"  FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
-        		<TextBlock Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" Padding="5,0,0,0" FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
-        		<TextBlock Padding="5,0,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.favorited, Converter={StaticResource NullToVisibilityConverter}}" x:Name="fav"/>
-        		<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
-        		<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
-        	</StackPanel>
-        	<Image Margin="132,10,10,20" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" Stretch="None" VerticalAlignment="Top">
-        		<Image.Transitions>
-        			<TransitionCollection>
-        				<EntranceThemeTransition/>
-        			</TransitionCollection>
-        		</Image.Transitions>
-        	</Image>
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition/>
+        	</Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,9,0" IsTextSelectionEnabled="True" Height="28">
+                <TextBlock.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition/>
+                    </TransitionCollection>
+                </TextBlock.Transitions>
+            </TextBlock>
+            <StackPanel VerticalAlignment="Top" Margin="132,10,19,0" Orientation="Horizontal" Grid.Row="1" Height="29">
+                <StackPanel.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition/>
+                    </TransitionCollection>
+                </StackPanel.Transitions>
+                <TextBlock Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" Padding="0"  FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
+                <TextBlock Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" Padding="5,0,0,0" FontSize="21.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
+                <TextBlock Padding="5,0,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.favorited, Converter={StaticResource NullToVisibilityConverter}}" x:Name="fav"/>
+                <TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
+                <TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+            </StackPanel>
+            <Image Margin="132,10,0,0" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" Stretch="None" VerticalAlignment="Top" Height="0" Width="0">
+                <Image.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition/>
+                    </TransitionCollection>
+                </Image.Transitions>
+            </Image>
+            <GridView Visibility="Collapsed" Margin="0,10" Padding="10,0" ItemTemplate="{StaticResource StatusItemControl}" ItemsSource="{Binding context}" Grid.Row="3"/>
         </Grid>
 
         <Grid>
@@ -83,11 +102,11 @@
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
             <Rectangle Height="52" StrokeThickness="0" Width="52" RadiusY="5" Canvas.ZIndex="2" Margin="10,29,10,27" RadiusX="5" Grid.Column="1">
-            	<Rectangle.Transitions>
-            		<TransitionCollection>
-            			<EntranceThemeTransition/>
-            		</TransitionCollection>
-            	</Rectangle.Transitions>
+                <Rectangle.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition/>
+                    </TransitionCollection>
+                </Rectangle.Transitions>
                 <Rectangle.Fill>
                     <ImageBrush Stretch="UniformToFill" ImageSource="{Binding status.user.profile_image_url_large}"/>
                 </Rectangle.Fill>
@@ -96,6 +115,7 @@
             <TextBlock x:Name="pageTitle" Text="{Binding status.user.screen_name}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="2" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,46" FontFamily="Microsoft YaHei" FontSize="40"/>
         </Grid>
-        <Rectangle Fill="#FF00CCFF" Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10"/>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" Grid.ColumnSpan="2" Height="6" Visibility="Collapsed"/>
+        <ListView Grid.Column="1" Margin="10,0" Grid.RowSpan="2" ItemTemplate="{StaticResource StatusItemControl}" ItemsSource="{Binding statuses}"/>
     </Grid>
 </Page>

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using FanfouWP2.FanfouAPI;
+using System.Collections.ObjectModel;
 
 namespace FanfouWP2
 {
@@ -23,6 +24,8 @@ namespace FanfouWP2
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         private Status status;
+        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private ObservableCollection<Status> context = new ObservableCollection<Status>();
 
         public ObservableDictionary DefaultViewModel
         {
@@ -39,13 +42,57 @@ namespace FanfouWP2
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+
+            FanfouAPI.FanfouAPI.Instance.ContextTimelineSuccess += Instance_ContextTimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.ContextTimelineFailed += Instance_ContextTimelineFailed;
+            FanfouAPI.FanfouAPI.Instance.UserTimelineSuccess += Instance_UserTimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.UserTimelineFailed += Instance_UserTimelineFailed;
+        }
+
+        void Instance_UserTimelineFailed(object sender, FailedEventArgs e)
+        {
+            this.loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_UserTimelineSuccess(object sender, EventArgs e)
+        {
+            this.loading.Visibility = Visibility.Collapsed; 
+            var ss = sender as List<Status>;
+            foreach (var item in ss)
+            {
+                this.statuses.Add(item);
+            }
+        }
+
+        void Instance_ContextTimelineFailed(object sender, FailedEventArgs e)
+        {
+            this.loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_ContextTimelineSuccess(object sender, EventArgs e)
+        {
+            this.loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<Status>;           
+            foreach (var item in ss) 
+            {
+                this.context.Add(item);
+            }
         }
 
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            var status = e.NavigationParameter as Status;
+            status = e.NavigationParameter as Status;
 
             this.defaultViewModel["status"] = status;
+            this.defaultViewModel["statuses"] = statuses;
+            this.defaultViewModel["context"] = context;
+
+            this.loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(this.status.user.id, 20);      
+            if (this.status.in_reply_to_status_id != "" || this.status.in_reply_to_screen_name != "")
+            {
+                FanfouAPI.FanfouAPI.Instance.StatusContextTimeline(this.status.id);
+            }
         }
 
         #region NavigationHelper 注册

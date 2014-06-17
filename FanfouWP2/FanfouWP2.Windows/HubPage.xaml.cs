@@ -53,7 +53,12 @@ namespace FanfouWP2
 
         void Instance_StatusUpdateSuccess(object sender, EventArgs e)
         {
-            loading.Visibility = Visibility.Collapsed;
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60);
+            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
+            this.textBox.Text = "";
+            this.sendPopup.IsOpen = false;
         }
 
         void Instance_StatusUpdateFailed(object sender, FailedEventArgs e)
