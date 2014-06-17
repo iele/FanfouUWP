@@ -70,6 +70,7 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
+            this.publics.Clear();
             foreach (var item in ss)
                 this.publics.Add(item);
         }
@@ -83,6 +84,7 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
+            this.mentions.Clear();
             foreach (var item in ss)
                 this.mentions.Add(item);
         }
@@ -96,6 +98,7 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
+            this.statuses.Clear();
             foreach (var item in ss)
                 this.statuses.Add(item);
         }
@@ -168,12 +171,7 @@ namespace FanfouWP2
         private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            if (this.statuses.Count == 0)
-                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
-            else
-            {
-                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, since_id: this.statuses.First().id);
-            }
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
             this.defaultViewModel["hubHeader"] = "我的消息";
             mainHubSection.ContentTemplate = StatusDataTemplate;
         }
@@ -181,23 +179,14 @@ namespace FanfouWP2
         private void MentionButton_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            if (this.mentions.Count == 0)
-                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60);
-            else
-            {
-                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, since_id: this.mentions.First().id);
-            } this.defaultViewModel["hubHeader"] = "提及我的";
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60);
+            this.defaultViewModel["hubHeader"] = "提及我的";
             mainHubSection.ContentTemplate = MentionDataTemplate;
         }
         private void PublicButton_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            if (this.publics.Count == 0)
-                FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
-            else
-            {
-                FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, since_id: this.publics.First().id);
-            }
+            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
             this.defaultViewModel["hubHeader"] = "随便看看";
             mainHubSection.ContentTemplate = PublicDataTemplate;
         }
@@ -210,19 +199,18 @@ namespace FanfouWP2
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+
+            loading.Visibility = Visibility.Visible;
             if (mainHubSection.ContentTemplate == this.StatusDataTemplate)
             {
-                this.statuses.Clear();
                 FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
             }
             if (mainHubSection.ContentTemplate == this.MentionDataTemplate)
             {
-                this.mentions.Clear();
                 FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60);
             }
             if (mainHubSection.ContentTemplate == this.PublicDataTemplate)
             {
-                this.publics.Clear();
                 FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
             }
         }
