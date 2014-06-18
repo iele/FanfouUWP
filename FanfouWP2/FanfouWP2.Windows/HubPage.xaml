@@ -9,6 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:itemcontrol="using:FanfouWP2.ItemControl" FontFamily="Microsoft YaHei"
+    xmlns:customcontrol="using:FanfouWP2.CustomControl"
     mc:Ignorable="d" NavigationCacheMode="Required" Background="#FF00CCFF" BorderBrush="#FF00CCFF" SizeChanged="pageRoot_SizeChanged">
 
     <Page.Resources>
@@ -19,17 +20,32 @@
         </DataTemplate>
     
         <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">
-            <GridView x:Name="statusesGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"/>
+            <GridView x:Name="statusesGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"/>
         </DataTemplate>
         <DataTemplate x:Key="MentionDataTemplate" x:Name="MentionDataTemplate">
-            <GridView x:Name="mentionsGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="mentionsGridView_ItemClick" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource StatusItemControl}">
+            <GridView x:Name="mentionsGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource StatusItemControl}">
             </GridView>
         </DataTemplate>
         <DataTemplate x:Key="PublicDataTemplate" x:Name="PublicDataTemplate">
-            <GridView x:Name="publicGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="publicGridView_ItemClick" ItemsSource="{Binding publics}" ItemTemplate="{StaticResource StatusItemControl}">
+            <GridView x:Name="publicGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding publics}" ItemTemplate="{StaticResource StatusItemControl}">
             </GridView>
         </DataTemplate>
     </Page.Resources>
+	<Page.BottomAppBar>
+		<CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" IsOpen="True" Visibility="Collapsed">
+			<CommandBar.SecondaryCommands>
+				<AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
+			</CommandBar.SecondaryCommands>
+			<AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料"/>
+			<AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
+			<AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
+			<AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
+				<AppBarButton.Icon>
+					<SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
+				</AppBarButton.Icon>
+			</AppBarButton>
+		</CommandBar>
+	</Page.BottomAppBar>
 	<Page.TopAppBar>
 		<AppBar Height="90" Background="#FF00CCFF" BorderBrush="#FF00CCFF">
 			<StackPanel Orientation="Horizontal" Margin="0,5">
@@ -127,44 +143,21 @@
             </HubSection>
         </Hub>
         <StackPanel Margin="0,30,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <AppBarButton x:Name="RefreshButton" HorizontalAlignment="Right" IsCompact="True" Click="RefreshButton_Click"  FontFamily="Global User Interface" Icon="Refresh"/>
+            <AppBarButton x:Name="RefreshButton" HorizontalAlignment="Right" IsCompact="True" Click="RefreshButton_Click"  FontFamily="Microsoft Yahei" Icon="Refresh"/>
             <AppBarButton x:Name="MoreButton" HorizontalAlignment="Right" IsCompact="True" Click="MoreButton_Click" Margin="0" Icon="More"/>
-            <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Global User Interface" Margin="0"/>
+            <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Microsoft Yahei" Margin="0"/>
             <AppBarButton x:Name="SearchButton" HorizontalAlignment="Right" Icon="Zoom" IsCompact="True" Margin="0"/>
         </StackPanel>
-        <Popup x:Name="sendPopup" RequestedTheme="Dark">
-            <Grid x:Name="grid" Background="#BF000000" Width="{Binding ActualWidth, ElementName=pageRoot}" Height="{Binding ActualHeight, ElementName=pageRoot}">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="3*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1" Grid.Row="1">
-                    <Grid.Transitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition/>
-                        </TransitionCollection>
-                    </Grid.Transitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <AppBarButton x:Name="sendBackButton" HorizontalAlignment="Stretch" Icon="Back" Label="AppBarButton" VerticalAlignment="Top" Margin="10,10,10,0" IsCompact="True" Click="sendBackButton_Click"/>
-                    <TextBox x:Name="textBox"  Margin="0" TextWrapping="Wrap" InputScope="Chat" AcceptsReturn="True" PlaceholderText="你在做什么？" Grid.Column="1"/>
-                    <Button x:Name="sendStatusButton" Content="发送" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,10" Click="sendStatusButton_Click"/>
-                </Grid>
-            </Grid>
-        </Popup>
-        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Global User Interface"/>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft Yahei"/>
         <Rectangle Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF00CCFF"/>
+        <Popup x:Name="sendPopup" IsOpen="False">
+            <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
+            	<Grid.ColumnDefinitions>
+            		<ColumnDefinition/>
+            		<ColumnDefinition Width="Auto"/>
+            	</Grid.ColumnDefinitions>
+        		<customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
+        	</Grid>
+        </Popup>
     </Grid>
 </Page>

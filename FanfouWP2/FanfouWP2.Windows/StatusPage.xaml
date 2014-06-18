@@ -25,20 +25,28 @@
             <converter:DisplayImageToVisibilityConverter x:Key="DisplayImageToVisibilityConverter" />
 
             <DataTemplate x:Key="StatusItemControl">
-                <itemcontrol:StatusItemControl  DataContext="{Binding}" Height="260" Width="500" />
+                <itemcontrol:StatusItemControl  DataContext="{Binding}" Height="260"/>
             </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar Background="#FF00CCFF" BorderBrush="#FF00CCFF">
-            <AppBarButton Icon="Accept" Label="AppBarButton"/>
-            <AppBarButton Icon="Cancel" Label="AppBarButton"/>
+        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" IsOpen="True" Visibility="Collapsed">
+            <CommandBar.SecondaryCommands>
+                <AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
+            </CommandBar.SecondaryCommands>
+            <AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料"/>
+            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
+            <AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
+            <AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
+                <AppBarButton.Icon>
+                    <SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid Background="#FF8DE8FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="500"/>
         </Grid.ColumnDefinitions>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -51,23 +59,37 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1" x:Name="contentRegion">
-        	<Grid.ColumnDefinitions>
-        		<ColumnDefinition/>
-        	</Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,9,0" IsTextSelectionEnabled="True" Height="28">
+            <TextBlock x:Name="contextTextBlock" TextWrapping="Wrap" Text="当前消息的上下文" Margin="10,0" FontSize="24" Foreground="Gray" Grid.Column="1" Visibility="Collapsed">
+        		<TextBlock.Transitions>
+        			<TransitionCollection>
+        				<EntranceThemeTransition/>
+        			</TransitionCollection>
+        		</TextBlock.Transitions>
+        	</TextBlock>
+            <ListView Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Auto" IsItemClickEnabled="True" SelectionMode="None" BorderThickness="0,10,0,0" Margin="10,0,10,10" Grid.Column="1" Grid.RowSpan="3" Grid.Row="1" ItemsSource="{Binding context}" ItemTemplate="{StaticResource StatusItemControl}">
+            	<ListView.ItemContainerStyle>
+            		<Style TargetType="ListViewItem">
+            			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            		</Style>
+            	</ListView.ItemContainerStyle>
+            </ListView>
+            <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding status.text}" FontSize="21.333" Margin="132,0,9,0" IsTextSelectionEnabled="True">
                 <TextBlock.Transitions>
                     <TransitionCollection>
                         <EntranceThemeTransition/>
                     </TransitionCollection>
                 </TextBlock.Transitions>
             </TextBlock>
-            <StackPanel VerticalAlignment="Top" Margin="132,10,19,0" Orientation="Horizontal" Grid.Row="1" Height="29">
+            <StackPanel Margin="132,10,19,0" Orientation="Horizontal" Grid.Row="1">
                 <StackPanel.Transitions>
                     <TransitionCollection>
                         <EntranceThemeTransition/>
@@ -79,14 +101,13 @@
                 <TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
                 <TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
             </StackPanel>
-            <Image Margin="132,10,0,0" Source="{Binding status.photo.largeurl}" Grid.Row="2" HorizontalAlignment="Left" Stretch="None" VerticalAlignment="Top" Height="0" Width="0">
+            <Image Margin="132,10,10,10" Source="{Binding status.photo.largeurl}" HorizontalAlignment="Stretch" Stretch="None" VerticalAlignment="Stretch" Grid.Row="2">
                 <Image.Transitions>
                     <TransitionCollection>
                         <EntranceThemeTransition/>
                     </TransitionCollection>
                 </Image.Transitions>
             </Image>
-            <GridView Visibility="Collapsed" Margin="0,10" Padding="10,0" ItemTemplate="{StaticResource StatusItemControl}" ItemsSource="{Binding context}" Grid.Row="3"/>
         </Grid>
 
         <Grid>
@@ -116,6 +137,5 @@
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,46" FontFamily="Microsoft YaHei" FontSize="40"/>
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" Grid.ColumnSpan="2" Height="6" Visibility="Collapsed"/>
-        <ListView Grid.Column="1" Margin="10,0" Grid.RowSpan="2" ItemTemplate="{StaticResource StatusItemControl}" ItemsSource="{Binding statuses}"/>
     </Grid>
 </Page>

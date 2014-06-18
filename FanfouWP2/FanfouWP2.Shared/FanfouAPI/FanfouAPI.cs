@@ -207,8 +207,6 @@ namespace FanfouWP2.FanfouAPI
 
         }
 
-        private int[] CountIndex = { 100, 600, 500, 1000 };
-
         private RestClient GetClient()
         {
             if (oauthToken != null && oauthSecret != null)

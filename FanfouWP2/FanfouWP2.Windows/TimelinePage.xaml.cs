@@ -27,7 +27,7 @@ namespace FanfouWP2
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private ObservableCollection<ObservableCollection<Status>> statuses = new ObservableCollection<ObservableCollection<Status>>();
 
-        public enum PageType { STATUSES, MENTIONS, PUBLICS };
+        public enum PageType { Statuses, Mentions, Publics };
         private PageType currentType;
 
         public ObservableDictionary DefaultViewModel
@@ -80,17 +80,17 @@ namespace FanfouWP2
 
             switch ((PageType)e.NavigationParameter)
             {
-                case PageType.STATUSES:
+                case PageType.Statuses:
                     FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
                     FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
                     this.defaultViewModel["title"] = "我的消息";
                     break;
-                case PageType.MENTIONS:
+                case PageType.Mentions:
                     FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
                     FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
                     this.defaultViewModel["title"] = "提及我的";
                     break;
-                case PageType.PUBLICS:
+                case PageType.Publics:
                     this.LeftButton.Visibility = Visibility.Collapsed;
                     this.RightButton.Visibility = Visibility.Collapsed;
                     FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
@@ -141,13 +141,13 @@ namespace FanfouWP2
                 loading.Visibility = Visibility.Visible;
                 switch (currentType)
                 {
-                    case PageType.STATUSES:
+                    case PageType.Statuses:
                         FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, this.flipView.Items.Count() + 1);
                         break;
-                    case PageType.MENTIONS:
+                    case PageType.Mentions:
                         FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, this.flipView.Items.Count() + 1);
                         break;
-                    case PageType.PUBLICS:
+                    case PageType.Publics:
                         break;
                     default:
                         break;
@@ -162,17 +162,17 @@ namespace FanfouWP2
 
             switch (currentType)
             {
-                case PageType.STATUSES:
+                case PageType.Statuses:
                     FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
                     FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
                     this.defaultViewModel["title"] = "我的消息";
                     break;
-                case PageType.MENTIONS:
+                case PageType.Mentions:
                     FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
                     FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
                     this.defaultViewModel["title"] = "提及我的";
                     break;
-                case PageType.PUBLICS:
+                case PageType.Publics:
                     FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
                     this.defaultViewModel["title"] = "随便看看";
                     break;
@@ -194,6 +194,40 @@ namespace FanfouWP2
         }
         private void flipView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+        }
+
+        private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as GridView).SelectedIndex != -1)
+            {
+                commandBar.Visibility = Visibility.Visible;
+                commandBar.IsOpen = true;
+            }
+            else
+            {
+                commandBar.IsOpen = false;
+                commandBar.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FavButton1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ReplyButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RepostButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

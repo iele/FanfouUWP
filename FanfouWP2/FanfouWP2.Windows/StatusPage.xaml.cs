@@ -72,6 +72,7 @@ namespace FanfouWP2
         void Instance_ContextTimelineSuccess(object sender, EventArgs e)
         {
             this.loading.Visibility = Visibility.Collapsed;
+            this.contextTextBlock.Visibility = Visibility.Visible;
             var ss = sender as List<Status>;           
             foreach (var item in ss) 
             {
@@ -107,5 +108,25 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FavButton1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RepostButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ReplyButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -16,6 +16,21 @@
             <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>     
     </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" IsOpen="True" Visibility="Collapsed">
+            <CommandBar.SecondaryCommands>
+                <AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
+            </CommandBar.SecondaryCommands>
+            <AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料"/>
+            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
+            <AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
+            <AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
+                <AppBarButton.Icon>
+                    <SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="#FF8DE8FF">
         <Grid.ChildrenTransitions>
@@ -28,10 +43,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding statuses}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged">
+        <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding statuses}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged" Background="Transparent">
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <GridView ItemsSource="{Binding}" ItemTemplate="{StaticResource StatusItemControl}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei"/>
+                    <GridView ItemsSource="{Binding}" ItemTemplate="{StaticResource StatusItemControl}" SelectionMode="Single" SelectionChanged="GridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei"/>
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>

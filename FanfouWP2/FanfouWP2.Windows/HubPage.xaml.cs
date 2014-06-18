@@ -22,6 +22,7 @@ namespace FanfouWP2
         private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
         private ObservableCollection<Status> publics = new ObservableCollection<Status>();
 
+        private Status currentSelection;
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
@@ -47,23 +48,30 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_PublicTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_PublicTimelineFailed;
 
-            FanfouAPI.FanfouAPI.Instance.StatusUpdateSuccess += Instance_StatusUpdateSuccess;
-            FanfouAPI.FanfouAPI.Instance.StatusUpdateFailed += Instance_StatusUpdateFailed;
+            this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
+            this.send.StatusUpdateFailed += send_StatusUpdateFailed;
         }
 
-        void Instance_StatusUpdateSuccess(object sender, EventArgs e)
+        void send_StatusUpdateFailed(object sender, FailedEventArgs e)
         {
-            loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60);
-            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
-            this.textBox.Text = "";
+        }
+
+        void send_StatusUpdateSuccess(object sender, EventArgs e)
+        {
             this.sendPopup.IsOpen = false;
-        }
-
-        void Instance_StatusUpdateFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
+            loading.Visibility = Visibility.Visible;
+            if (mainHubSection.ContentTemplate == this.StatusDataTemplate)
+            {
+                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60);
+            }
+            if (mainHubSection.ContentTemplate == this.MentionDataTemplate)
+            {
+                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60);
+            }
+            if (mainHubSection.ContentTemplate == this.PublicDataTemplate)
+            {
+                FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
+            }
         }
 
         void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
@@ -147,12 +155,6 @@ namespace FanfouWP2
 
         #endregion
 
-        private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as Status;
-            Frame.Navigate(typeof(StatusPage), item);
-        }
-
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var item = e.ClickedItem as Status;
@@ -162,16 +164,6 @@ namespace FanfouWP2
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             this.sendPopup.IsOpen = true;
-        }
-
-        private void sendBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.sendPopup.IsOpen = false;
-        }
-        private void publicGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as Status;
-            Frame.Navigate(typeof(StatusPage), item);
         }
         private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
@@ -194,12 +186,6 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
             this.defaultViewModel["hubHeader"] = "随便看看";
             mainHubSection.ContentTemplate = PublicDataTemplate;
-        }
-        private void sendStatusButton_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-            if (textBox.Text.Length > 0 && textBox.Text.Length <= 140)
-                FanfouAPI.FanfouAPI.Instance.StatusUpdate(textBox.Text);
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -224,21 +210,63 @@ namespace FanfouWP2
         {
             if (mainHubSection.ContentTemplate == this.StatusDataTemplate)
             {
-                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.STATUSES);
+                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.Statuses);
             }
             if (mainHubSection.ContentTemplate == this.MentionDataTemplate)
             {
-                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.MENTIONS);
+                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.Mentions);
             }
             if (mainHubSection.ContentTemplate == this.PublicDataTemplate)
             {
-                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.PUBLICS);
+                Frame.Navigate(typeof(TimelinePage), FanfouWP2.TimelinePage.PageType.Publics);
             }
         }
 
         private void pageRoot_SizeChanged(object sender, SizeChangedEventArgs e)
         {
 
+        }
+
+        private void statusesGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentSelection = (sender as GridView).SelectedItem as Status;
+            if ((sender as GridView).SelectedIndex != -1)
+            {
+                commandBar.Visibility = Visibility.Visible;
+                commandBar.IsOpen = true;
+            }
+            else
+            {
+                commandBar.IsOpen = false;
+                commandBar.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ReplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentSelection);
+        }
+
+        private void RepostButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentSelection);
+        }
+
+        private void FavButton1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void send_BackClick(object sender, BackClickEventArgs e)
+        {
+            this.sendPopup.IsOpen = false;
         }
 
     }
