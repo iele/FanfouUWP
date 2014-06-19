@@ -29,6 +29,7 @@ namespace FanfouWP2
 
         public enum PageType { Statuses, Mentions, Publics };
         private PageType currentType;
+        private Status currentSelection;
 
         public ObservableDictionary DefaultViewModel
         {
@@ -198,6 +199,7 @@ namespace FanfouWP2
 
         private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            currentSelection = (sender as GridView).SelectedItem as Status;
             if ((sender as GridView).SelectedIndex != -1)
             {
                 commandBar.Visibility = Visibility.Visible;
@@ -222,12 +224,24 @@ namespace FanfouWP2
 
         private void ReplyButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentSelection);
         }
 
         private void RepostButton_Click(object sender, RoutedEventArgs e)
         {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentSelection);
+        }
 
+        private void send_BackClick(object sender, BackClickEventArgs e)
+        {
+            this.sendPopup.IsOpen = false;
+        }
+
+        private void UserButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage), currentSelection.user);
         }
     }
 }

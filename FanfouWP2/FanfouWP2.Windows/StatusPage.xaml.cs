@@ -119,14 +119,25 @@ namespace FanfouWP2
 
         }
 
-        private void RepostButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ReplyButton_Click(object sender, RoutedEventArgs e)
         {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, this.status);
+        }
 
+        private void RepostButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, this.status);
+        }
+        private void send_BackClick(object sender, BackClickEventArgs e)
+        {
+            this.sendPopup.IsOpen = false;
+        }
+
+        private void UserButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage), status.user);
         }
     }
 }

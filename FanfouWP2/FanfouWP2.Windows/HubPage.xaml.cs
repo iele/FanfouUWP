@@ -269,5 +269,10 @@ namespace FanfouWP2
             this.sendPopup.IsOpen = false;
         }
 
+        private void UserButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage), currentSelection.user);
+        }
+
     }
 }

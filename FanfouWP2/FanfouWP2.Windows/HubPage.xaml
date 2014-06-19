@@ -16,9 +16,9 @@
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
-            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="280"/>
         </DataTemplate>
-    
+
         <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">
             <GridView x:Name="statusesGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"/>
         </DataTemplate>
@@ -31,31 +31,31 @@
             </GridView>
         </DataTemplate>
     </Page.Resources>
-	<Page.BottomAppBar>
-		<CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" IsOpen="True" Visibility="Collapsed">
-			<CommandBar.SecondaryCommands>
-				<AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
-			</CommandBar.SecondaryCommands>
-			<AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料"/>
-			<AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
-			<AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
-			<AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
-				<AppBarButton.Icon>
-					<SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
-				</AppBarButton.Icon>
-			</AppBarButton>
-		</CommandBar>
-	</Page.BottomAppBar>
-	<Page.TopAppBar>
-		<AppBar Height="90" Background="#FF00CCFF" BorderBrush="#FF00CCFF">
-			<StackPanel Orientation="Horizontal" Margin="0,5">
-				<Button Content="个人中心" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,10,10,10" FontFamily="Microsoft YaHei"/>
-				<Button Content="私信" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="0,10,10,10" FontFamily="Microsoft YaHei"/>
-				<Button Content="收藏" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="0,10,10,10" FontFamily="Microsoft YaHei"/>
-				<Button Content="设置" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="0,10,10,10" FontFamily="Microsoft YaHei"/>
-			</StackPanel>
-		</AppBar>
-	</Page.TopAppBar>
+    <Page.BottomAppBar>
+        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" Visibility="Collapsed">
+            <CommandBar.SecondaryCommands>
+                <AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
+            </CommandBar.SecondaryCommands>
+            <AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料" Click="UserButton_Click"/>
+            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
+            <AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
+            <AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
+                <AppBarButton.Icon>
+                    <SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+    <Page.TopAppBar>
+        <AppBar Height="90" Background="#FF00CCFF" BorderBrush="#FF00CCFF">
+            <StackPanel Orientation="Horizontal">
+        		<Button Content="个人中心" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei" Height="60"/>
+        		<Button Content="私信" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Height="60"/>
+        		<Button Content="收藏" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Height="60"/>
+        		<Button Content="设置" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Height="60"/>
+        	</StackPanel>
+        </AppBar>
+    </Page.TopAppBar>
 
     <!--
         此网格充当页的根面板。
@@ -91,7 +91,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.ColumnSpan="2" Margin="0,20,0,10" Width="250">
-                                <StackPanel Margin="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left">
                                     <Ellipse Stroke="LightGray" Height="64" StrokeThickness="2" Margin="0,0,0,20" HorizontalAlignment="Center" Width="64">
                                         <Ellipse.Fill>
                                             <ImageBrush Stretch="Fill" ImageSource="{Binding currentUser.profile_image_url_large}"/>
@@ -107,7 +107,7 @@
                                     <RowDefinition Height= "1*"/>
                                     <RowDefinition Height= "1*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Margin="0,0,0,10" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                <StackPanel Margin="0,0,0,10" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0">
                                         <StackPanel Margin="0" Orientation="Vertical">
                                             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" FontSize="24"/>
@@ -152,12 +152,12 @@
         <Rectangle Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF00CCFF"/>
         <Popup x:Name="sendPopup" IsOpen="False">
             <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
-            	<Grid.ColumnDefinitions>
-            		<ColumnDefinition/>
-            		<ColumnDefinition Width="Auto"/>
-            	</Grid.ColumnDefinitions>
-        		<customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
-        	</Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
+            </Grid>
         </Popup>
     </Grid>
 </Page>

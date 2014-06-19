@@ -49,7 +49,11 @@ namespace FanfouWP2.CustomControl
             else if (mode == SendMode.Repose)
             {
                 this.Title = "转发消息";
-                this.send.Text = ("转：@" + (data as Status).user.screen_name + " " + (data as Status).text).Substring(0, 140);
+                var text = "转：@" + (data as Status).user.screen_name + " " + (data as Status).text;
+                if (text.Length <= 140)
+                    this.send.Text = text;
+                else
+                    this.send.Text = text.Substring(0, 140);
             }
             else if (mode == SendMode.ReplyUser)
             {
