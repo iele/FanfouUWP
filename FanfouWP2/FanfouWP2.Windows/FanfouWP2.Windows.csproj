@@ -117,6 +117,9 @@
     <Compile Include="HubPage.xaml.cs">
       <DependentUpon>HubPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItemControl\UserItemControl.xaml.cs">
+      <DependentUpon>UserItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ItemControl\StatusItemControl.xaml.cs">
       <DependentUpon>StatusItemControl.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
     <Page Include="HubPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemControl\UserItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ItemControl\StatusItemControl.xaml">
       <SubType>Designer</SubType>

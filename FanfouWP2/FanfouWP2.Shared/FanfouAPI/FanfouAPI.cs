@@ -117,9 +117,9 @@ namespace FanfouWP2.FanfouAPI
 
         public delegate void UsersShowSuccessHandler(object sender, EventArgs e);
         public delegate void UsersShowFailedHandler(object sender, FailedEventArgs e);
-        public delegate void UsersFollowersSuccessHandler(object sender, UserTimelineEventArgs<User> e);
+        public delegate void UsersFollowersSuccessHandler(object sender, EventArgs e);
         public delegate void UsersFollowersFailedHandler(object sender, FailedEventArgs e);
-        public delegate void UsersFriendsSuccessHandler(object sender, UserTimelineEventArgs<User> e);
+        public delegate void UsersFriendsSuccessHandler(object sender, EventArgs e);
         public delegate void UsersFriendsFailedHandler(object sender, FailedEventArgs e);
 
         public event UsersShowSuccessHandler UsersShowSuccess;
@@ -312,7 +312,7 @@ namespace FanfouWP2.FanfouAPI
                 var client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
-           
+
                 var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUSES_CONTEXT_TIMELINE, parameters);
                 if (ContextTimelineSuccess != null)
                     ContextTimelineSuccess(result, new EventArgs());
@@ -422,6 +422,29 @@ namespace FanfouWP2.FanfouAPI
                     MentionTimelineFailed(this, new FailedEventArgs());
             }
         }
+        #endregion
+        #region favorite
+
+        public async void FavoritesId(string id, int count, int page = 1)
+        {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                if (page > 0)
+                    parameters.Add("page", page);
+                parameters.Add("count", count.ToString());
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.FAVORITES_ID, parameters);
+                if (FavoritesSuccess != null)
+                    FavoritesSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (FavoritesFailed != null)
+                    FavoritesFailed(this, new FailedEventArgs());
+            }
+        }
         public void FavoritesCreate(string id)
         {
 
@@ -431,7 +454,6 @@ namespace FanfouWP2.FanfouAPI
         {
 
         }
-
         #endregion
         #region search
         public void SearchTimeline(string q, int count = 60, string max_id = "")
@@ -470,15 +492,48 @@ namespace FanfouWP2.FanfouAPI
         #region user
         public void UsersShow(string id)
         {
-           
-        }
-        public void UsersFollowers(string id, int count = 60, int page = 1)
-        {
 
         }
-
-        public void UsersFriends(string id, int count = 60, int page = 1)
+        public async void UsersFollowers(string id, int count = 60, int page = 1)
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                if (page > 0)
+                    parameters.Add("page", page);
+                parameters.Add("count", count.ToString());
+                var result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_FOLLOWERS, parameters);
+                if (UsersFollowersSuccess != null)
+                    UsersFollowersSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (UsersFollowersFailed != null)
+                    UsersFollowersFailed(this, new FailedEventArgs());
+            }
+        }
+
+        public async void UsersFriends(string id, int count = 60, int page = 1)
+        {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                if (page > 0)
+                    parameters.Add("page", page);
+                parameters.Add("count", count.ToString());
+                var result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_FRIENDS, parameters);
+                if (UsersFriendsSuccess != null)
+                    UsersFriendsSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (UsersFriendsFailed != null)
+                    UsersFriendsFailed(this, new FailedEventArgs());
+            }
         }
         #endregion
         #region friendship

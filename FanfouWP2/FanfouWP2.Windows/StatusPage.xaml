@@ -102,13 +102,15 @@
 				<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
 				<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="21.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
 			</StackPanel>
-			<Image Margin="132,10,10,10" Source="{Binding status.photo.largeurl}" HorizontalAlignment="Stretch" Stretch="None" VerticalAlignment="Stretch" Grid.Row="2">
-				<Image.Transitions>
-					<TransitionCollection>
-						<EntranceThemeTransition/>
-					</TransitionCollection>
-				</Image.Transitions>
-			</Image>
+			<Viewbox Margin="132,10,10,10" Grid.Row="2">
+				<Image Source="{Binding status.photo.largeurl}" Stretch="None">
+					<Image.Transitions>
+						<TransitionCollection>
+							<EntranceThemeTransition/>
+						</TransitionCollection>
+					</Image.Transitions>
+				</Image>
+			</Viewbox>
 		</Grid>
 
 		<Grid>

@@ -16,7 +16,7 @@
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
-            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="280"/>
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>
 
         <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">

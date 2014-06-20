@@ -47,6 +47,19 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.ContextTimelineFailed += Instance_ContextTimelineFailed;
             FanfouAPI.FanfouAPI.Instance.UserTimelineSuccess += Instance_UserTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.UserTimelineFailed += Instance_UserTimelineFailed;
+
+            this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
+            this.send.StatusUpdateFailed += send_StatusUpdateFailed;
+        }
+
+        void send_StatusUpdateFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void send_StatusUpdateSuccess(object sender, EventArgs e)
+        {
+            this.sendPopup.IsOpen = false;
+            loading.Visibility = Visibility.Visible;        
         }
 
         void Instance_UserTimelineFailed(object sender, FailedEventArgs e)

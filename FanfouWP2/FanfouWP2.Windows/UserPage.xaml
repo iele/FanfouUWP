@@ -16,11 +16,23 @@
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
-            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="280"/>
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
+        </DataTemplate>
+        <DataTemplate x:Key="UserItemControl">
+            <itemcontrol:UserItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>
 
         <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">
             <GridView x:Name="statusesGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FollowerDataTemplate" x:Name="FollowerDataTemplate">
+            <GridView x:Name="followGridView" SelectionMode="Single" SelectionChanged="usersGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="usersGridView_ItemClick" ItemsSource="{Binding follower}" ItemTemplate="{StaticResource UserItemControl}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FriendsDataTemplate" x:Name="FriendsDataTemplate">
+            <GridView x:Name="friendGridView" SelectionMode="Single" SelectionChanged="usersGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="usersGridView_ItemClick" ItemsSource="{Binding friends}" ItemTemplate="{StaticResource UserItemControl}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FavoriteDataTemplate" x:Name="FavoriteDataTemplate">
+            <GridView x:Name="favGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding favorite}" ItemTemplate="{StaticResource StatusItemControl}"/>
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
@@ -55,7 +67,7 @@
                 		AutomationProperties.Name="Back"
                 		AutomationProperties.AutomationId="BackButton"
                 		AutomationProperties.ItemType="Navigation Button"/>
-                	<TextBlock x:Name="pageTitle" Text="{Binding user.screen_name}"
+                	<TextBlock x:Name="pageTitle" Text="个人资料"
                 		IsHitTestVisible="false" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Microsoft YaHei" Style="{StaticResource HeaderTextBlockStyle}" FontSize="40" Margin="80,-27,0,-3"/>
                 </Grid>
             </Hub.Header>
@@ -72,50 +84,50 @@
         					<Grid.ColumnDefinitions>
         						<ColumnDefinition Width="Auto"/>
         					</Grid.ColumnDefinitions>
-        					<ScrollViewer Margin="0,20,0,10" Grid.RowSpan="3" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-        						<StackPanel Orientation="Vertical">
-        							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-        								<Ellipse Stroke="LightGray" Height="64" StrokeThickness="2" Margin="0,0,0,20" HorizontalAlignment="Center" Width="64">
-        									<Ellipse.Fill>
-        										<ImageBrush Stretch="Fill" ImageSource="{Binding user.profile_image_url_large}"/>
-        									</Ellipse.Fill>
-        								</Ellipse>
-        								<TextBlock TextWrapping="Wrap" Text="{Binding user.screen_name}" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,16,0,0"/>
-        							</StackPanel>
-        							<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-        								<StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0">
-        									<StackPanel Margin="0" Orientation="Vertical">
-        										<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" FontSize="24"/>
-        										<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.statuses_count}" VerticalAlignment="Top" FontSize="32"/>
-        									</StackPanel>
-        									<StackPanel Margin="0,10,0,0" Orientation="Vertical">
-        										<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top" FontSize="24"/>
-        										<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.favourites_count}" VerticalAlignment="Top" FontSize="32"/>
-        									</StackPanel>
-        								</StackPanel>
-        								<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" >
-        									<StackPanel Orientation="Vertical">
-        										<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top" FontSize="24"/>
-        										<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.followers_count}"  VerticalAlignment="Top" FontSize="32"/>
-        									</StackPanel>
-        									<StackPanel Orientation="Vertical" Margin="0,10,0,0">
-        										<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top" FontSize="24"/>
-        										<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.friends_count}"  VerticalAlignment="Top" FontSize="32"/>
-        									</StackPanel>
-        								</StackPanel>
-        							</StackPanel>
-        							<TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="16" HorizontalAlignment="Left" MaxWidth="400" Margin="0,10,0,0"/>
+        					<StackPanel Margin="0,20,0,10" Grid.RowSpan="3" Orientation="Vertical">
+        						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+        							<Ellipse Stroke="LightGray" Height="64" StrokeThickness="2" Margin="0,0,0,20" HorizontalAlignment="Center" Width="64">
+        								<Ellipse.Fill>
+        									<ImageBrush Stretch="Fill" ImageSource="{Binding user.profile_image_url_large}"/>
+        								</Ellipse.Fill>
+        							</Ellipse>
+        							<TextBlock TextWrapping="Wrap" Text="{Binding user.screen_name}" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,16,0,0"/>
         						</StackPanel>
-        					</ScrollViewer>
+        						<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+        							<StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0">
+        								<StackPanel Margin="0" Orientation="Vertical">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.statuses_count}" VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        								<StackPanel Margin="0,10,0,0" Orientation="Vertical">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.favourites_count}" VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        							</StackPanel>
+        							<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" >
+        								<StackPanel Orientation="Vertical">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.followers_count}"  VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        								<StackPanel Orientation="Vertical" Margin="0,10,0,0">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.friends_count}"  VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        							</StackPanel>
+        						</StackPanel>
+        						<ScrollViewer MaxWidth="400" Margin="0,10,0,0" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+        							<TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="16"/>
+        						</ScrollViewer>
+        					</StackPanel>
         				</Grid>
         			</DataTemplate>
         		</HubSection.Resources>
         		<StaticResource ResourceKey="MainDataTemplate"/>
         	</HubSection>
         	<HubSection x:Name="mainHubSection" Header="消息" ContentTemplate="{StaticResource StatusDataTemplate}" IsHeaderInteractive="True"/>
-        	<HubSection x:Name="followHubSection" ContentTemplate="{StaticResource StatusDataTemplate}" Header="听众" IsHeaderInteractive="True"/>
-        	<HubSection x:Name="friendHubSection" ContentTemplate="{StaticResource StatusDataTemplate}" Header="好友" IsHeaderInteractive="True"/>
-        	<HubSection x:Name="favHubSection" ContentTemplate="{StaticResource StatusDataTemplate}" Header="收藏" IsHeaderInteractive="True"/>
+        	<HubSection x:Name="followHubSection" ContentTemplate="{StaticResource FollowerDataTemplate}" Header="听众" IsHeaderInteractive="True"/>
+        	<HubSection x:Name="friendHubSection" ContentTemplate="{StaticResource FriendsDataTemplate}" Header="好友" IsHeaderInteractive="True"/>
+            <HubSection x:Name="favHubSection" ContentTemplate="{StaticResource FavoriteDataTemplate}" Header="收藏" IsHeaderInteractive="True"/>
         </Hub>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft Yahei"/>
         <Popup x:Name="sendPopup" IsOpen="False">

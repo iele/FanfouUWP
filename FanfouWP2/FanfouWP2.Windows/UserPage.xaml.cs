@@ -28,6 +28,9 @@ namespace FanfouWP2
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private User user;
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private ObservableCollection<Status> favorite = new ObservableCollection<Status>();
+        private ObservableCollection<User> friends = new ObservableCollection<User>();
+        private ObservableCollection<User> follower = new ObservableCollection<User>();
 
         /// <summary>
         /// 可将其更改为强类型视图模型。
@@ -50,6 +53,57 @@ namespace FanfouWP2
 
             FanfouAPI.FanfouAPI.Instance.UserTimelineSuccess += Instance_UserTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.UserTimelineFailed += Instance_UserTimelineFailed;
+
+            FanfouAPI.FanfouAPI.Instance.FavoritesSuccess += Instance_FavoritesSuccess;
+            FanfouAPI.FanfouAPI.Instance.FavoritesFailed += Instance_FavoritesFailed;
+
+            FanfouAPI.FanfouAPI.Instance.UsersFollowersSuccess += Instance_UsersFollowersSuccess;
+            FanfouAPI.FanfouAPI.Instance.UsersFollowersFailed += Instance_UsersFollowersFailed;
+
+            FanfouAPI.FanfouAPI.Instance.UsersFriendsSuccess += Instance_UsersFriendsSuccess;
+            FanfouAPI.FanfouAPI.Instance.UsersFriendsFailed += Instance_UsersFriendsFailed;
+        }
+
+        void Instance_UsersFriendsFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_UsersFriendsSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<User>;
+            this.friends.Clear();
+            foreach (var item in ss)
+                this.friends.Add(item);
+        }
+
+        void Instance_UsersFollowersFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_UsersFollowersSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<User>;
+            this.follower.Clear();
+            foreach (var item in ss)
+                this.follower.Add(item);
+        }
+
+        void Instance_FavoritesFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_FavoritesSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<Status>;
+            this.favorite.Clear();
+            foreach (var item in ss)
+                this.favorite.Add(item);
         }
 
         void Instance_UserTimelineFailed(object sender, FailedEventArgs e)
@@ -71,9 +125,15 @@ namespace FanfouWP2
             user = e.NavigationParameter as User;
             this.defaultViewModel["user"] = user;
             this.defaultViewModel["statuses"] = statuses;
+            this.defaultViewModel["favorite"] = favorite;
+            this.defaultViewModel["friends"] = friends;
+            this.defaultViewModel["follower"] = follower;
 
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, count: 10);
+            FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 10);
+            FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 10);
+            FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 10);
+            FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 10);
         }
 
         #region NavigationHelper 注册
@@ -106,12 +166,11 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void statusesGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void ReplyButton_Click(object sender, RoutedEventArgs e)
@@ -131,6 +190,17 @@ namespace FanfouWP2
 
         private void send_BackClick(object sender, BackClickEventArgs e)
         {
+
+        }
+
+        private void usersGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage), e.ClickedItem);
 
         }
     }
