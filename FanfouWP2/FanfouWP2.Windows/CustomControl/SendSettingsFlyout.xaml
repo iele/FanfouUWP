@@ -130,6 +130,17 @@
         </Style>
         
         <converter:TextToLeftCountTextConverter x:Key="TextToLeftCountTextConverter"/>
+        <Flyout x:Name="TagFlyoutBase" x:Key="TagFlyoutBase" Placement="Bottom">
+        	<Grid Margin="0">
+        		<Grid.RowDefinitions>
+        			<RowDefinition Height="0*"/>
+        			<RowDefinition Height="33*"/>
+        			<RowDefinition Height="13*"/>
+        		</Grid.RowDefinitions>
+        		<TextBox x:Name="tag" Margin="0" TextWrapping="Wrap" Width="400" Grid.Row="1" FontFamily="Microsoft YaHei" InputScope="Chat" PlaceholderText="输入话题标签"/>
+        		<Button Content="添加" x:Name="TagAddButton" Click="TagAddButton_Click"  HorizontalAlignment="Stretch" Margin="-3,20,-3,0" VerticalAlignment="Stretch" Grid.Row="2" RequestedTheme="Light" FontFamily="Microsoft YaHei"/>
+        	</Grid>
+        </Flyout>
     </SettingsFlyout.Resources>
             <SettingsFlyout.Style>
                 <StaticResource ResourceKey="SettingsFlyoutStyle"/>
@@ -159,9 +170,9 @@
                         <TextBlock HorizontalAlignment="Right" Margin="0,14,10,18" TextWrapping="Wrap" Text="{Binding Text, Converter={StaticResource TextToLeftCountTextConverter}, ElementName=send}" VerticalAlignment="Center" Grid.Column="3" FontSize="26.667" Height="40" FontFamily="Microsoft YaHei"/>
                         <AppBarButton HorizontalAlignment="Center" Icon="Account" Label="AppBarButton" VerticalAlignment="Stretch" IsCompact="True" Margin="0"/>
                         <AppBarButton HorizontalAlignment="Center" Icon="Pictures" Label="AppBarButton" VerticalAlignment="Stretch" IsCompact="True" Margin="0" Grid.Column="1" FontFamily="Global User Interface"/>
-                        <AppBarButton HorizontalAlignment="Center" Label="AppBarButton" VerticalAlignment="Stretch" IsCompact="True" Margin="0" Icon="Tag" Grid.Column="2"/>
+                        <AppBarButton HorizontalAlignment="Center" Label="AppBarButton" VerticalAlignment="Stretch" IsCompact="True" Margin="0" Icon="Tag" Grid.Column="2" Flyout="{StaticResource TagFlyoutBase}" x:Name="TagAppBarButton"/>
                     </Grid>
-                    <TextBox x:Name="send" TextWrapping="Wrap" FontFamily="Microsoft YaHei" PlaceholderText="你在做什么" InputScope="Chat" Margin="0" Height="265" MaxLength="140"/>
+                    <TextBox x:Name="send" TextWrapping="Wrap" FontFamily="Microsoft YaHei" PlaceholderText="你在做什么" InputScope="Chat" Margin="0" Height="200" MaxLength="140"/>
                     <Button x:Name="SendButton" Content="发送" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Microsoft YaHei" Margin="-3,10,-3,0" Click="SendButton_Click"/>
 
                 </StackPanel>

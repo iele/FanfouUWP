@@ -114,8 +114,8 @@
     <Compile Include="CustomControl\SendSettingsFlyout.xaml.cs">
       <DependentUpon>SendSettingsFlyout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HubPage.xaml.cs">
-      <DependentUpon>HubPage.xaml</DependentUpon>
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ItemControl\UserItemControl.xaml.cs">
       <DependentUpon>UserItemControl.xaml</DependentUpon>
@@ -173,7 +173,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HubPage.xaml">
+    <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

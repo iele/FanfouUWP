@@ -61,7 +61,8 @@ namespace FanfouWP2.CustomControl
 
                 if (!this.send.Text.StartsWith("@" + (data as User).screen_name))
                     this.Title = "@" + (data as User).screen_name + " ";
-                else {                 
+                else
+                {
                 }
             }
             else
@@ -110,6 +111,14 @@ namespace FanfouWP2.CustomControl
                     FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text);
                 }
             }
+        }
+
+        private void TagAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.tag.Text != "")
+                this.send.Text = this.send.Text + " #" + this.tag.Text + "#";
+            this.tag.Text = "";
+            this.TagFlyoutBase.Hide();
         }
     }
 }

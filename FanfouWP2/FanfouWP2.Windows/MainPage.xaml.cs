@@ -35,7 +35,7 @@ namespace FanfouWP2
 
         void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
         {
-            Frame.Navigate(typeof(HubPage));
+            Frame.Navigate(typeof(HomePage));
         }
 
         void Instance_LoginFailed(object sender, FailedEventArgs e)
