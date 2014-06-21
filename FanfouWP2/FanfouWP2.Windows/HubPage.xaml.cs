@@ -274,5 +274,10 @@ namespace FanfouWP2
             Frame.Navigate(typeof(UserPage), currentSelection.user);
         }
 
+        private void FavAppButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TimelinePage), TimelinePage.PageType.Favorite);   
+        }
+
     }
 }

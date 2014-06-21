@@ -51,7 +51,7 @@
             <StackPanel Orientation="Horizontal">
         		<Button Content="个人中心" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei" Height="60"/>
         		<Button Content="私信" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Height="60"/>
-        		<Button Content="收藏" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Height="60"/>
+        		<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Height="60" Click="FavAppButton_Click"/>
         		<Button Content="设置" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Height="60"/>
         	</StackPanel>
         </AppBar>
@@ -143,12 +143,12 @@
             </HubSection>
         </Hub>
         <StackPanel Margin="0,30,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <AppBarButton x:Name="RefreshButton" HorizontalAlignment="Right" IsCompact="True" Click="RefreshButton_Click"  FontFamily="Microsoft Yahei" Icon="Refresh"/>
+            <AppBarButton x:Name="RefreshButton" HorizontalAlignment="Right" IsCompact="True" Click="RefreshButton_Click"  FontFamily="Microsoft YaHei" Icon="Refresh"/>
             <AppBarButton x:Name="MoreButton" HorizontalAlignment="Right" IsCompact="True" Click="MoreButton_Click" Margin="0" Icon="More"/>
-            <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Microsoft Yahei" Margin="0"/>
+            <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Microsoft YaHei" Margin="0"/>
             <AppBarButton x:Name="SearchButton" HorizontalAlignment="Right" Icon="Zoom" IsCompact="True" Margin="0"/>
         </StackPanel>
-        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft Yahei"/>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
         <Rectangle Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF00CCFF"/>
         <Popup x:Name="sendPopup" IsOpen="False">
             <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">

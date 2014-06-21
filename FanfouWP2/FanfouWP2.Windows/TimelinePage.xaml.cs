@@ -27,7 +27,7 @@ namespace FanfouWP2
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private ObservableCollection<ObservableCollection<Status>> statuses = new ObservableCollection<ObservableCollection<Status>>();
 
-        public enum PageType { Statuses, Mentions, Publics };
+        public enum PageType { Statuses, Mentions, Publics, Favorite };
         private PageType currentType;
         private Status currentSelection;
 
@@ -57,19 +57,35 @@ namespace FanfouWP2
 
             FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_TimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_TimelineFailed;
-      
+
+            FanfouAPI.FanfouAPI.Instance.FavoritesSuccess += Instance_FavoritesSuccess;
+            FanfouAPI.FanfouAPI.Instance.FavoritesFailed += Instance_FavoritesFailed;
+
             this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
             this.send.StatusUpdateFailed += send_StatusUpdateFailed;
         }
 
+        void Instance_FavoritesFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_FavoritesSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<Status>;
+            statuses.Add(new ObservableCollection<Status>(ss));
+        }
+
         void send_StatusUpdateFailed(object sender, FailedEventArgs e)
         {
+            loading.Visibility = Visibility.Collapsed;
         }
 
         void send_StatusUpdateSuccess(object sender, EventArgs e)
         {
             this.sendPopup.IsOpen = false;
-            loading.Visibility = Visibility.Visible;         
+            loading.Visibility = Visibility.Visible;
         }
         void Instance_TimelineFailed(object sender, FailedEventArgs e)
         {
@@ -108,6 +124,11 @@ namespace FanfouWP2
                     this.RightButton.Visibility = Visibility.Collapsed;
                     FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
                     this.defaultViewModel["title"] = "随便看看";
+                    break;
+                case PageType.Favorite:
+                    FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 1);
+                    FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 2);
+                    this.defaultViewModel["title"] = "我的收藏";
                     break;
                 default:
                     break;
@@ -160,6 +181,9 @@ namespace FanfouWP2
                     case PageType.Mentions:
                         FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, this.flipView.Items.Count() + 1);
                         break;
+                    case PageType.Favorite:
+                        FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, this.flipView.Items.Count() + 1);
+                        break;
                     case PageType.Publics:
                         break;
                     default:
@@ -188,6 +212,11 @@ namespace FanfouWP2
                 case PageType.Publics:
                     FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
                     this.defaultViewModel["title"] = "随便看看";
+                    break;
+                case PageType.Favorite:
+                      FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 1);
+                      FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 2);
+                       this.defaultViewModel["title"] = "我的收藏";
                     break;
                 default:
                     break;

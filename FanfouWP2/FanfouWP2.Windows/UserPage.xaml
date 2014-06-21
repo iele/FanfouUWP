@@ -129,7 +129,7 @@
         	<HubSection x:Name="friendHubSection" ContentTemplate="{StaticResource FriendsDataTemplate}" Header="好友" IsHeaderInteractive="True"/>
             <HubSection x:Name="favHubSection" ContentTemplate="{StaticResource FavoriteDataTemplate}" Header="收藏" IsHeaderInteractive="True"/>
         </Hub>
-        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft Yahei"/>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
         <Popup x:Name="sendPopup" IsOpen="False">
             <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
                 <Grid.ColumnDefinitions>
