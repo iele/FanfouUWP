@@ -26,9 +26,11 @@ namespace FanfouWP2
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private ObservableCollection<ObservableCollection<Status>> statuses = new ObservableCollection<ObservableCollection<Status>>();
+        private ObservableCollection<ObservableCollection<User>> users = new ObservableCollection<ObservableCollection<User>>();
 
-        public enum PageType { Statuses, Mentions, Publics, Favorite };
+        public enum PageType { Statuses, Favorite, Follower, Friends };
         private PageType currentType;
+        private object data;
         private Status currentSelection;
 
         public ObservableDictionary DefaultViewModel
@@ -49,20 +51,46 @@ namespace FanfouWP2
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
 
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_TimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_TimelineFailed;
-
-            FanfouAPI.FanfouAPI.Instance.MentionTimelineSuccess += Instance_TimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.MentionTimelineFailed += Instance_TimelineFailed;
-
-            FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_TimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_TimelineFailed;
+            FanfouAPI.FanfouAPI.Instance.UserTimelineSuccess += Instance_UserTimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.UserTimelineFailed += Instance_UserTimelineFailed;
 
             FanfouAPI.FanfouAPI.Instance.FavoritesSuccess += Instance_FavoritesSuccess;
             FanfouAPI.FanfouAPI.Instance.FavoritesFailed += Instance_FavoritesFailed;
 
+            FanfouAPI.FanfouAPI.Instance.UsersFriendsSuccess += Instance_UsersFriendsSuccess;
+            FanfouAPI.FanfouAPI.Instance.UsersFriendsFailed += Instance_UsersFriendsFailed;
+
+            FanfouAPI.FanfouAPI.Instance.UsersFollowersSuccess += Instance_UsersFollowersSuccess;
+            FanfouAPI.FanfouAPI.Instance.UsersFollowersFailed += Instance_UsersFollowersFailed;
+
             this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
             this.send.StatusUpdateFailed += send_StatusUpdateFailed;
+        }
+
+        void Instance_UsersFollowersFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_UsersFollowersSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<User>;
+            if (ss.Count != 0)
+                users.Add(new ObservableCollection<User>(ss));
+        }
+
+        void Instance_UsersFriendsFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+        }
+
+        void Instance_UsersFriendsSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<User>;
+            if (ss.Count != 0)
+                users.Add(new ObservableCollection<User>(ss));
         }
 
         void Instance_FavoritesFailed(object sender, FailedEventArgs e)
@@ -74,7 +102,8 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            statuses.Add(new ObservableCollection<Status>(ss));
+            if (ss.Count != 0)
+                statuses.Add(new ObservableCollection<Status>(ss));
         }
 
         void send_StatusUpdateFailed(object sender, FailedEventArgs e)
@@ -87,52 +116,66 @@ namespace FanfouWP2
             this.sendPopup.IsOpen = false;
             loading.Visibility = Visibility.Visible;
         }
-        void Instance_TimelineFailed(object sender, FailedEventArgs e)
+        void Instance_UserTimelineFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
         }
 
-        void Instance_TimelineSuccess(object sender, EventArgs e)
+        void Instance_UserTimelineSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            statuses.Add(new ObservableCollection<Status>(ss));
+            if (ss.Count != 0)
+                statuses.Add(new ObservableCollection<Status>(ss));
         }
 
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.defaultViewModel["statuses"] = statuses;
-
-            currentType = (PageType)e.NavigationParameter;
+            currentType = ((KeyValuePair<PageType, object>)e.NavigationParameter).Key;
+            data = ((KeyValuePair<PageType, object>)e.NavigationParameter).Value;
 
             loading.Visibility = Visibility.Visible;
 
-            switch ((PageType)e.NavigationParameter)
+            switch (currentType)
             {
                 case PageType.Statuses:
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
-                    this.defaultViewModel["title"] = "我的消息";
-                    break;
-                case PageType.Mentions:
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
-                    this.defaultViewModel["title"] = "提及我的";
-                    break;
-                case PageType.Publics:
-                    this.LeftButton.Visibility = Visibility.Collapsed;
-                    this.RightButton.Visibility = Visibility.Collapsed;
-                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
-                    this.defaultViewModel["title"] = "随便看看";
+                    this.defaultViewModel["statuses"] = statuses;
+                    FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60);
+                    FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的消息";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的消息";
                     break;
                 case PageType.Favorite:
-                    FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 1);
-                    FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 2);
-                    this.defaultViewModel["title"] = "我的收藏";
+                    this.defaultViewModel["statuses"] = statuses;
+                    FanfouAPI.FanfouAPI.Instance.FavoritesId((data as User).id, 60, 1);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的收藏";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的收藏";
+                    break;
+                case PageType.Follower:
+                    this.defaultViewModel["statuses"] = users;
+                    FanfouAPI.FanfouAPI.Instance.UsersFollowers((data as User).id, 60, 1);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的听众";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的听众";
+                    break;
+                case PageType.Friends:
+                    this.defaultViewModel["statuses"] = users;
+                    FanfouAPI.FanfouAPI.Instance.UsersFriends((data as User).id, 60, 1);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的好友";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的好友";
                     break;
                 default:
                     break;
             }
+
+            this.defaultViewModel["page"] = "第1页";
         }
 
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -170,21 +213,24 @@ namespace FanfouWP2
 
         private void flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1 && this.flipView.SelectedIndex >= 1)
+            this.defaultViewModel["page"] = "第" + (this.flipView.SelectedIndex + 1).ToString() + "页";
+
+            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1)
             {
                 loading.Visibility = Visibility.Visible;
                 switch (currentType)
                 {
                     case PageType.Statuses:
-                        FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, this.flipView.Items.Count() + 1);
-                        break;
-                    case PageType.Mentions:
-                        FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, this.flipView.Items.Count() + 1);
+                        FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60, this.flipView.Items.Count() + 1);
                         break;
                     case PageType.Favorite:
                         FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, this.flipView.Items.Count() + 1);
                         break;
-                    case PageType.Publics:
+                    case PageType.Follower:
+                        FanfouAPI.FanfouAPI.Instance.UsersFollowers((data as User).id, 60, this.flipView.Items.Count() + 1);
+                        break;
+                    case PageType.Friends:
+                        FanfouAPI.FanfouAPI.Instance.UsersFriends((data as User).id, 60, this.flipView.Items.Count() + 1);
                         break;
                     default:
                         break;
@@ -195,28 +241,38 @@ namespace FanfouWP2
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             this.statuses.Clear();
+            this.users.Clear();
             loading.Visibility = Visibility.Visible;
 
             switch (currentType)
             {
                 case PageType.Statuses:
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
-                    this.defaultViewModel["title"] = "我的消息";
-                    break;
-                case PageType.Mentions:
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
-                    this.defaultViewModel["title"] = "提及我的";
-                    break;
-                case PageType.Publics:
-                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
-                    this.defaultViewModel["title"] = "随便看看";
+                    FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60, 1);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的消息";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的消息";
                     break;
                 case PageType.Favorite:
-                      FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 1);
-                      FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 2);
-                       this.defaultViewModel["title"] = "我的收藏";
+                    FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 1);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的收藏";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的收藏";
+                    break;
+                case PageType.Follower:
+                    FanfouAPI.FanfouAPI.Instance.UsersFollowers((data as User).id, 60, 1);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的听众";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的听众";
+                    break;
+                case PageType.Friends:
+                    FanfouAPI.FanfouAPI.Instance.UsersFriends((data as User).id, 60, 1);
+                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                        this.defaultViewModel["title"] = "我的好友";
+                    else
+                        this.defaultViewModel["title"] = (data as User).screen_name + "的好友";
                     break;
                 default:
                     break;

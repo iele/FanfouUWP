@@ -117,6 +117,7 @@
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItemControl\TemplateSelector\MessageItemTemplateSelector.cs" />
     <Compile Include="ItemControl\UserItemControl.xaml.cs">
       <DependentUpon>UserItemControl.xaml</DependentUpon>
     </Compile>
@@ -124,7 +125,7 @@
       <DependentUpon>StatusItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ItemControl\TemplateSelector\ConversationItemTemplateSelector.cs" />
-    <Compile Include="ItemControl\TemplateSelector\MessageItemTemplateSelector.cs" />
+    <Compile Include="ItemControl\TemplateSelector\TimelineTemplateSelector.cs" />
     <Compile Include="ItemControl\ValueConverter\BoolToFavoritedConverter.cs" />
     <Compile Include="ItemControl\ValueConverter\CountToVisibilityCOnverter.cs" />
     <Compile Include="ItemControl\ValueConverter\DateToTextConverter.cs" />

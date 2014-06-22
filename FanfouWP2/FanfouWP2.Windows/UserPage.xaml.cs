@@ -203,5 +203,29 @@ namespace FanfouWP2
             Frame.Navigate(typeof(UserPage), e.ClickedItem);
 
         }
+
+        private void hub_SectionHeaderClick(object sender, HubSectionHeaderClickEventArgs e)
+        {
+            if (e.Section == mainHubSection)
+            {
+                Frame.Navigate(typeof(TimelinePage),
+                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Statuses, this.user));
+            }
+            else if (e.Section == favHubSection)
+            {
+                Frame.Navigate(typeof(TimelinePage),
+                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Favorite,this.user));
+            }
+            else if (e.Section == followHubSection)
+            {
+                Frame.Navigate(typeof(TimelinePage),
+                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Follower, this.user));
+            }
+            else if (e.Section == friendHubSection)
+            {
+                Frame.Navigate(typeof(TimelinePage),
+                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Friends, this.user));
+            }
+        }
     }
 }

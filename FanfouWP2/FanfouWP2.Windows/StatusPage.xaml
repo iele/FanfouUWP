@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
-    xmlns:itemcontrol="using:FanfouWP2.ItemControl" xmlns:CustomControl="using:FanfouWP2.CustomControl"
+    xmlns:itemcontrol="using:FanfouWP2.ItemControl"
+    xmlns:customcontrol="using:FanfouWP2.CustomControl"
     x:Name="pageRoot"
     x:Class="FanfouWP2.StatusPage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
@@ -55,7 +56,7 @@
 			</TransitionCollection>
 		</Grid.ChildrenTransitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="120"/>
+			<RowDefinition Height="140"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
@@ -119,13 +120,13 @@
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<Button x:Name="backButton" Margin="39,40,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+			<Button x:Name="backButton" Margin="39,60,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
 				Style="{StaticResource NavigationBackButtonNormalStyle}"
 				VerticalAlignment="Top"
 				AutomationProperties.Name="Back"
 				AutomationProperties.AutomationId="BackButton"
 				AutomationProperties.ItemType="Navigation Button"/>
-			<Rectangle Height="52" StrokeThickness="0" Width="52" RadiusY="5" Canvas.ZIndex="2" Margin="10,29,20,27" RadiusX="5" Grid.Column="1">
+			<Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="10,0,20,-20" RadiusX="5" Grid.Column="1" VerticalAlignment="Center">
 				<Rectangle.Transitions>
 					<TransitionCollection>
 						<EntranceThemeTransition/>
@@ -137,7 +138,7 @@
 			</Rectangle>
 
 			<TextBlock x:Name="pageTitle" Text="{Binding status.user.screen_name}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="2" 
-				IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,46" FontFamily="Microsoft YaHei" FontSize="40"/>
+				IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,60,40" FontFamily="Microsoft YaHei" FontSize="56"/>
 		</Grid>
 		<ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" Grid.ColumnSpan="2" Height="6" Visibility="Collapsed"/>
 		<Popup x:Name="sendPopup" IsOpen="False" Grid.RowSpan="2">
@@ -146,7 +147,7 @@
 					<ColumnDefinition/>
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-				<CustomControl:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
+				<customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
 			</Grid>
 		</Popup>
 	</Grid>

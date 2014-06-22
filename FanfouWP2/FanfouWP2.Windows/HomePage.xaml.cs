@@ -79,6 +79,7 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
+            statuses.Clear();
             statuses.Add(new ObservableCollection<Status>(ss));
         }
 
@@ -91,7 +92,8 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            statuses.Add(new ObservableCollection<Status>(ss));
+            if (ss.Count != 0)
+                statuses.Add(new ObservableCollection<Status>(ss));
         }
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
@@ -103,7 +105,8 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            statuses.Add(new ObservableCollection<Status>(ss));
+            if (ss.Count != 0)
+                statuses.Add(new ObservableCollection<Status>(ss));
         }
 
 
@@ -167,22 +170,21 @@ namespace FanfouWP2
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            this.statuses.Clear();            
             loading.Visibility = Visibility.Visible;
-            loading.Visibility = Visibility.Visible;
+
             switch (currentType)
             {
                 case PageType.Statuses:
                     this.LeftButton.Visibility = Visibility.Visible;
                     this.RightButton.Visibility = Visibility.Visible;
                     FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
                     this.defaultViewModel["title"] = "我的消息";
                     break;
                 case PageType.Mentions:
                     this.LeftButton.Visibility = Visibility.Visible;
                     this.RightButton.Visibility = Visibility.Visible;
                     FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
                     this.defaultViewModel["title"] = "提及我的";
                     break;
                 case PageType.Publics:
@@ -235,7 +237,9 @@ namespace FanfouWP2
 
         private void FavAppButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(TimelinePage), TimelinePage.PageType.Favorite);
+            Frame.Navigate(typeof(TimelinePage), 
+                new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Favorite,
+                    FanfouAPI.FanfouAPI.Instance.currentUser));
         }
 
         private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -265,7 +269,6 @@ namespace FanfouWP2
             this.LeftButton.Visibility = Visibility.Visible;
             this.RightButton.Visibility = Visibility.Visible;
             FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 2);
             this.defaultViewModel["title"] = "我的消息";
         }
 
@@ -277,7 +280,6 @@ namespace FanfouWP2
             this.LeftButton.Visibility = Visibility.Visible;
             this.RightButton.Visibility = Visibility.Visible;
             FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 2);
             this.defaultViewModel["title"] = "提及我的";
         }
 
@@ -306,7 +308,7 @@ namespace FanfouWP2
         {
             this.defaultViewModel["page"] = "第" + (this.flipView.SelectedIndex + 1).ToString() + "页";
 
-            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1 && this.flipView.SelectedIndex >= 1)
+            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1)
             {
                 loading.Visibility = Visibility.Visible;
                 switch (currentType)

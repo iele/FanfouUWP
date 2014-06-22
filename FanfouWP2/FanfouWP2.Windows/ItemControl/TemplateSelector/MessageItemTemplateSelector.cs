@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace FanfouWP2.ItemControl.TemplateSelector
 {
-    
+
     public class MessageItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate MessageOtherTemplate { get; set; }

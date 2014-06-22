@@ -16,10 +16,10 @@
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
-            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
         </DataTemplate>
         <DataTemplate x:Key="UserItemControl">
-            <itemcontrol:UserItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
+            <itemcontrol:UserItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
         </DataTemplate>
 
         <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">
@@ -56,19 +56,19 @@
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-        <Hub x:Name="hub">
+        <Hub x:Name="hub" SectionHeaderClick="hub_SectionHeaderClick">
             <Hub.Header>
                 <!-- 后退按钮和页标题 -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                     	<ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                	<Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource NavigationBackButtonNormalStyle}" Margin="0,-20,0,-2" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                	<Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource NavigationBackButtonNormalStyle}" Margin="0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
                 		AutomationProperties.Name="Back"
                 		AutomationProperties.AutomationId="BackButton"
                 		AutomationProperties.ItemType="Navigation Button"/>
                 	<TextBlock x:Name="pageTitle" Text="个人资料"
-                		IsHitTestVisible="false" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Microsoft YaHei" Style="{StaticResource HeaderTextBlockStyle}" FontSize="40" Margin="80,-27,0,-3"/>
+                		IsHitTestVisible="false" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Microsoft YaHei" Style="{StaticResource HeaderTextBlockStyle}" Margin="80,0,0,0"/>
                 </Grid>
             </Hub.Header>
 
@@ -84,7 +84,7 @@
         					<Grid.ColumnDefinitions>
         						<ColumnDefinition Width="Auto"/>
         					</Grid.ColumnDefinitions>
-        					<StackPanel Margin="0,20,0,10" Grid.RowSpan="3" Orientation="Vertical">
+        					<StackPanel Margin="0,0,0,10" Grid.RowSpan="3" Orientation="Vertical">
         						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
         							<Ellipse Stroke="LightGray" Height="64" StrokeThickness="2" Margin="0,0,0,20" HorizontalAlignment="Center" Width="64">
         								<Ellipse.Fill>
