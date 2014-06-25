@@ -218,13 +218,13 @@ namespace FanfouWP2
             }
             else if (e.Section == followHubSection)
             {
-                Frame.Navigate(typeof(TimelinePage),
-                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Follower, this.user));
+                Frame.Navigate(typeof(UserListPage),
+                    new KeyValuePair<UserListPage.PageType, object>(UserListPage.PageType.Follower, this.user));
             }
             else if (e.Section == friendHubSection)
             {
-                Frame.Navigate(typeof(TimelinePage),
-                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Friends, this.user));
+                Frame.Navigate(typeof(UserListPage),
+                    new KeyValuePair<UserListPage.PageType, object>(UserListPage.PageType.Friends, this.user));
             }
         }
     }

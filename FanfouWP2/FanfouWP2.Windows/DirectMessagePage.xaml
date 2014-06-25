@@ -9,7 +9,7 @@
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
     xmlns:selector="using:FanfouWP2.ItemControl.TemplateSelector"
     x:Name="pageRoot"
-    x:Class="FanfouWP2.TimelinePage"
+    x:Class="FanfouWP2.DirectMessagePage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d">
 
@@ -18,22 +18,7 @@
             <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>
     </Page.Resources>
-    <Page.BottomAppBar>
-        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" Visibility="Collapsed">
-            <CommandBar.SecondaryCommands>
-                <AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
-            </CommandBar.SecondaryCommands>
-            <AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料" Click="UserButton_Click"/>
-            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
-            <AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
-            <AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
-                <AppBarButton.Icon>
-                    <SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>
-
+    
     <Grid Background="#FF8DE8FF">
         <Grid.ChildrenTransitions>
             <TransitionCollection>

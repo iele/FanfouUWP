@@ -9,13 +9,13 @@
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
     xmlns:selector="using:FanfouWP2.ItemControl.TemplateSelector"
     x:Name="pageRoot"
-    x:Class="FanfouWP2.TimelinePage"
+    x:Class="FanfouWP2.UserListPage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <DataTemplate x:Key="StatusItemControl">
-            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
+        <DataTemplate x:Key="UserItemControl">
+            <itemcontrol:UserItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
@@ -24,13 +24,7 @@
                 <AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料" Click="UserButton_Click"/>
-            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
-            <AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
-            <AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
-                <AppBarButton.Icon>
-                    <SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="提及" Click="ReplyButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -45,10 +39,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding statuses}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged" Background="Transparent">
+        <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding users}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged" Background="Transparent">
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <GridView ItemsSource="{Binding}" SelectionMode="Single" SelectionChanged="GridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei" ItemTemplate="{StaticResource StatusItemControl}" />
+                    <GridView ItemsSource="{Binding}" SelectionMode="Single" SelectionChanged="GridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei" ItemTemplate="{StaticResource UserItemControl}" />
+
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>

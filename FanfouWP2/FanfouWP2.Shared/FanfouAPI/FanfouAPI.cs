@@ -85,11 +85,11 @@ namespace FanfouWP2.FanfouAPI
         public event FavoritesSuccessHandler FavoritesSuccess;
         public event FavoritesFailedHandler FavoritesFailed;
 
-        public delegate void SearchTimelineSuccessHandler(object sender, UserTimelineEventArgs<Status> e);
+        public delegate void SearchTimelineSuccessHandler(object sender, EventArgs e);
         public delegate void SearchTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void SearchUserTimelineSuccessHandler(object sender, UserTimelineEventArgs<Status> e);
+        public delegate void SearchUserTimelineSuccessHandler(object sender, EventArgs e);
         public delegate void SearchUserTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void SearchUserSuccessHandler(object sender, UserTimelineEventArgs<User> e);
+        public delegate void SearchUserSuccessHandler(object sender, EventArgs e);
         public delegate void SearchUserFailedHandler(object sender, FailedEventArgs e);
 
         public event SearchTimelineSuccessHandler SearchTimelineSuccess;
@@ -105,9 +105,9 @@ namespace FanfouWP2.FanfouAPI
         public event TrendsListSuccessHandler TrendsListSuccess;
         public event TrendsListFailedHandler TrendsListFailed;
 
-        public delegate void TagListSuccessHandler(object sender, ListEventArgs<string> e);
+        public delegate void TagListSuccessHandler(object sender, EventArgs e);
         public delegate void TagListFailedHandler(object sender, FailedEventArgs e);
-        public delegate void TaggedSuccessHandler(object sender, UserTimelineEventArgs<User> e);
+        public delegate void TaggedSuccessHandler(object sender, EventArgs e);
         public delegate void TaggedFailedHandler(object sender, FailedEventArgs e);
 
         public event TagListSuccessHandler TagListSuccess;
@@ -131,7 +131,7 @@ namespace FanfouWP2.FanfouAPI
 
         public delegate void PhotosUploadSuccessHandler(object sender, EventArgs e);
         public delegate void PhotosUploadFailedHandler(object sender, FailedEventArgs e);
-        public delegate void PhotosUserTimelineSuccessHandler(object sender, UserTimelineEventArgs<Status> e);
+        public delegate void PhotosUserTimelineSuccessHandler(object sender, EventArgs e);
         public delegate void PhotosUserTimelineFailedHandler(object sender, FailedEventArgs e);
 
         public event PhotosUploadSuccessHandler PhotosUploadSuccess;
@@ -143,7 +143,7 @@ namespace FanfouWP2.FanfouAPI
         public delegate void FriendshipsCreateFailedHandler(object sender, FailedEventArgs e);
         public delegate void FriendshipsDestroySuccessHandler(object sender, EventArgs e);
         public delegate void FriendshipsDestroyFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FriendshipsRequestsSuccessHandler(object sender, UserTimelineEventArgs<User> e);
+        public delegate void FriendshipsRequestsSuccessHandler(object sender, EventArgs e);
         public delegate void FriendshipsRequestsFailedHandler(object sender, FailedEventArgs e);
         public delegate void FriendshipsAcceptSuccessHandler(object sender, EventArgs e);
         public delegate void FriendshipsAcceptFailedHandler(object sender, FailedEventArgs e);
@@ -165,9 +165,9 @@ namespace FanfouWP2.FanfouAPI
         public event FriendshipsExistsSuccessHandler FriendshipsExistsSuccess;
         public event FriendshipsExistsFailedHandler FriendshipsExistsFailed;
 
-        public delegate void DirectMessageConversationListSuccessHandler(object sender, UserTimelineEventArgs<DirectMessageItem> e);
+        public delegate void DirectMessageConversationListSuccessHandler(object sender, EventArgs e);
         public delegate void DirectMessageConversationListFailedHandler(object sender, FailedEventArgs e);
-        public delegate void DirectMessageConversationSuccessHandler(object sender, UserTimelineEventArgs<DirectMessage> e);
+        public delegate void DirectMessageConversationSuccessHandler(object sender, EventArgs e);
         public delegate void DirectMessageConversationFailedHandler(object sender, FailedEventArgs e);
         public delegate void DirectMessageNewSuccessHandler(object sender, EventArgs e);
         public delegate void DirectMessageNewFailedHandler(object sender, FailedEventArgs e);
@@ -179,7 +179,7 @@ namespace FanfouWP2.FanfouAPI
         public event DirectMessageNewSuccessHandler DirectMessageNewSuccess;
         public event DirectMessageNewFailedHandler DirectMessageNewFailed;
 
-        public delegate void SavedSearchListSuccessHandler(object sender, ListEventArgs<Search> e);
+        public delegate void SavedSearchListSuccessHandler(object sender, EventArgs e);
         public delegate void SavedSearchListFailedHandler(object sender, FailedEventArgs e);
 
         public event SavedSearchListSuccessHandler SavedSearchListSuccess;
@@ -374,7 +374,7 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void StatusPublicTimeline(int count = 20, int page = 1, string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusPublicTimeline(int count = 20, int page = 1, string since_id = "", string max_id = "")
         {
             try
             {
@@ -398,7 +398,7 @@ namespace FanfouWP2.FanfouAPI
                     PublicTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void StatusMentionTimeline(int count, int page = 1, string since_id = "", string max_id = "", string refresh_id = "")
+        public async void StatusMentionTimeline(int count, int page = 1, string since_id = "", string max_id = "")
         {
             try
             {
@@ -490,9 +490,22 @@ namespace FanfouWP2.FanfouAPI
         }
         #endregion
         #region user
-        public void UsersShow(string id)
+        public async void UsersShow(string id)
         {
-
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                var result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_SHOW, parameters);
+                if (UsersShowSuccess != null)
+                    UsersShowSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (UsersShowFailed != null)
+                    UsersShowFailed(this, new FailedEventArgs());
+            }
         }
         public async void UsersFollowers(string id, int count = 60, int page = 1)
         {
@@ -564,9 +577,30 @@ namespace FanfouWP2.FanfouAPI
         }
         #endregion
         #region photo
-        public void PhotosUserTimeline(string id, int count = 60)
+        public async void PhotosUserTimeline(string id, int count, int page = 1, string since_id = "", string max_id = "")
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                parameters.Add("count", count.ToString());
+                if (page > 0)
+                    parameters.Add("page", page);
+                if (since_id != "")
+                    parameters.Add("since_id", since_id);
+                if (max_id != "")
+                    parameters.Add("max_id", max_id);
 
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.PHOTOS_USER_TIMELINE, parameters);
+                if (PhotosUserTimelineSuccess != null)
+                    PhotosUserTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (PhotosUserTimelineFailed != null)
+                    PhotosUserTimelineFailed(this, new FailedEventArgs());
+            }
         }
         public void PhotoUpload(string status, WriteableBitmap photo, string location = "")
         {
@@ -575,14 +609,47 @@ namespace FanfouWP2.FanfouAPI
 
         #endregion
         #region direct
-        public void DirectMessagesConversationList(int page = 1, int count = 20)
+        public async void DirectMessagesConversationList(int page = 1, int count = 20)
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("count", count.ToString());
+                if (page > 0)
+                    parameters.Add("page", page);
 
+                var result = await client.GetRequestObject<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION_LIST, parameters);
+                if (DirectMessageConversationListSuccess != null)
+                    DirectMessageConversationListSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (DirectMessageConversationListFailed != null)
+                    DirectMessageConversationListFailed(this, new FailedEventArgs());
+            }
         }
 
-        public void DirectMessagesConversation(string id, int count = 60, int page = 1)
+        public async void DirectMessagesConversation(string id, int count = 60, int page = 1)
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                parameters.Add("count", count.ToString());
+                if (page > 0)
+                    parameters.Add("page", page);
 
+                var result = await client.GetRequestObjectCollection<DirectMessageItem>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION, parameters);
+                if (DirectMessageConversationSuccess != null)
+                    DirectMessageConversationSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (DirectMessageConversationFailed != null)
+                    DirectMessageConversationFailed(this, new FailedEventArgs());
+            }
         }
 
         public void DirectMessagesNew(string user, string text, string in_reply_to_id)

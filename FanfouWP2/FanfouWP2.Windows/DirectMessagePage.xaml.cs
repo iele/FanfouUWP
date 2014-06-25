@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FanfouWP2
 {
-    public sealed partial class TimelinePage : Page
+    public sealed partial class DirectMessagePage : Page
     {
 
         private NavigationHelper navigationHelper;
