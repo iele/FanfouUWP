@@ -117,6 +117,12 @@
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItemControl\DirectOtherItemControl.xaml.cs">
+      <DependentUpon>DirectOtherItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\DirectItemControl.xaml.cs">
+      <DependentUpon>DirectItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ItemControl\TemplateSelector\MessageItemTemplateSelector.cs" />
     <Compile Include="ItemControl\UserItemControl.xaml.cs">
       <DependentUpon>UserItemControl.xaml</DependentUpon>
@@ -183,6 +189,14 @@
     <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemControl\DirectOtherItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\DirectItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ItemControl\UserItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>

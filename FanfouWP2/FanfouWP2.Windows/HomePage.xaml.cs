@@ -336,5 +336,10 @@ namespace FanfouWP2
         {
 
         }
+
+        private void DirectButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(DirectMessagePage));
+        }
     }
 }

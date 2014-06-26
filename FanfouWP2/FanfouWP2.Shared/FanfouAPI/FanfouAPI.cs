@@ -619,7 +619,7 @@ namespace FanfouWP2.FanfouAPI
                 if (page > 0)
                     parameters.Add("page", page);
 
-                var result = await client.GetRequestObject<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION_LIST, parameters);
+                var result = await client.GetRequestObjectCollection<DirectMessageItem>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION_LIST, parameters);
                 if (DirectMessageConversationListSuccess != null)
                     DirectMessageConversationListSuccess(result, new EventArgs());
             }
@@ -641,7 +641,7 @@ namespace FanfouWP2.FanfouAPI
                 if (page > 0)
                     parameters.Add("page", page);
 
-                var result = await client.GetRequestObjectCollection<DirectMessageItem>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION, parameters);
+                var result = await client.GetRequestObjectCollection<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION, parameters);
                 if (DirectMessageConversationSuccess != null)
                     DirectMessageConversationSuccess(result, new EventArgs());
             }

@@ -14,8 +14,8 @@ namespace FanfouWP2.ItemControl.TemplateSelector
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             var i = item as DirectMessage;
-//            if (i.sender_id == FanfouWP.API.FanfouAPI.Instance.CurrentUser.id)
-//                return MessageSelfTemplate;
+            if (i.sender_id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                return MessageSelfTemplate;
             return MessageOtherTemplate;
         }
     }

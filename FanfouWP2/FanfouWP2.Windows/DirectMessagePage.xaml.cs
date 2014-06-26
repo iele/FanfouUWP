@@ -25,12 +25,7 @@ namespace FanfouWP2
 
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private ObservableCollection<ObservableCollection<Status>> statuses = new ObservableCollection<ObservableCollection<Status>>();
-
-        public enum PageType { Statuses, Favorite };
-        private PageType currentType;
-        private object data;
-        private Status currentSelection;
+        private ObservableCollection<ObservableCollection<DirectMessageItem>> messages = new ObservableCollection<ObservableCollection<DirectMessageItem>>();
 
         public ObservableDictionary DefaultViewModel
         {
@@ -43,87 +38,39 @@ namespace FanfouWP2
         }
 
 
-        public TimelinePage()
+        public DirectMessagePage()
         {
             this.InitializeComponent();
+
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
 
-            FanfouAPI.FanfouAPI.Instance.UserTimelineSuccess += Instance_UserTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.UserTimelineFailed += Instance_UserTimelineFailed;
-
-            FanfouAPI.FanfouAPI.Instance.FavoritesSuccess += Instance_FavoritesSuccess;
-            FanfouAPI.FanfouAPI.Instance.FavoritesFailed += Instance_FavoritesFailed;
-
-            this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
-            this.send.StatusUpdateFailed += send_StatusUpdateFailed;
+            FanfouAPI.FanfouAPI.Instance.DirectMessageConversationListSuccess += Instance_DirectMessageConversationListSuccess;
+            FanfouAPI.FanfouAPI.Instance.DirectMessageConversationListFailed += Instance_DirectMessageConversationListFailed;
         }
 
-        void Instance_FavoritesFailed(object sender, FailedEventArgs e)
+        void Instance_DirectMessageConversationListFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
+
         }
 
-        void Instance_FavoritesSuccess(object sender, EventArgs e)
+        void Instance_DirectMessageConversationListSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
+            var ss = sender as List<DirectMessageItem>;
             if (ss.Count != 0)
-                statuses.Add(new ObservableCollection<Status>(ss));
-        }
-
-        void send_StatusUpdateFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-        }
-
-        void send_StatusUpdateSuccess(object sender, EventArgs e)
-        {
-            this.sendPopup.IsOpen = false;
-            loading.Visibility = Visibility.Visible;
-        }
-        void Instance_UserTimelineFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-        }
-
-        void Instance_UserTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            if (ss.Count != 0)
-                statuses.Add(new ObservableCollection<Status>(ss));
+                messages.Add(new ObservableCollection<DirectMessageItem>(ss));
         }
 
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            currentType = ((KeyValuePair<PageType, object>)e.NavigationParameter).Key;
-            data = ((KeyValuePair<PageType, object>)e.NavigationParameter).Value;
-
             loading.Visibility = Visibility.Visible;
 
-            this.defaultViewModel["statuses"] = statuses;
+            this.defaultViewModel["messages"] = messages;
 
-            switch (currentType)
-            {
-                case PageType.Statuses:
-                    FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的消息";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的消息";
-                    break;
-                case PageType.Favorite:
-                    FanfouAPI.FanfouAPI.Instance.FavoritesId((data as User).id, 60, 1);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的收藏";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的收藏";
-                    break;
-                default:
-                    break;
-            }
+            FanfouAPI.FanfouAPI.Instance.DirectMessagesConversationList(1, 60);
 
             this.defaultViewModel["page"] = "第1页";
         }
@@ -157,8 +104,6 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var item = e.ClickedItem as Status;
-            Frame.Navigate(typeof(StatusPage), item);
         }
 
         private void flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -168,44 +113,16 @@ namespace FanfouWP2
             if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1)
             {
                 loading.Visibility = Visibility.Visible;
-                switch (currentType)
-                {
-                    case PageType.Statuses:
-                        FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60, this.flipView.Items.Count() + 1);
-                        break;
-                    case PageType.Favorite:
-                        FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, this.flipView.Items.Count() + 1);
-                        break;
-                    default:
-                        break;
-                }
+                FanfouAPI.FanfouAPI.Instance.DirectMessagesConversationList(this.flipView.Items.Count() + 1, 60);
             }
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            this.statuses.Clear();
+            this.messages.Clear();
             loading.Visibility = Visibility.Visible;
 
-            switch (currentType)
-            {
-                case PageType.Statuses:
-                    FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60, 1);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的消息";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的消息";
-                    break;
-                case PageType.Favorite:
-                    FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 1);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的收藏";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的收藏";
-                    break;
-                default:
-                    break;
-            }
+            FanfouAPI.FanfouAPI.Instance.DirectMessagesConversationList(1, 60);
         }
 
         private void LeftButton_Click(object sender, RoutedEventArgs e)
@@ -225,49 +142,7 @@ namespace FanfouWP2
 
         private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            currentSelection = (sender as GridView).SelectedItem as Status;
-            if ((sender as GridView).SelectedIndex != -1)
-            {
-                commandBar.Visibility = Visibility.Visible;
-                commandBar.IsOpen = true;
-            }
-            else
-            {
-                commandBar.IsOpen = false;
-                commandBar.Visibility = Visibility.Collapsed;
-            }
-        }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void FavButton1_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ReplyButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentSelection);
-        }
-
-        private void RepostButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentSelection);
-        }
-
-        private void send_BackClick(object sender, BackClickEventArgs e)
-        {
-            this.sendPopup.IsOpen = false;
-        }
-
-        private void UserButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(UserPage), currentSelection.user);
         }
     }
 }

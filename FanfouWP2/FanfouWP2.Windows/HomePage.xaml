@@ -18,7 +18,7 @@
         <DataTemplate x:Key="StatusItemControl">
             <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>
-        <MenuFlyout x:Key="FlyoutBase" Placement="Bottom">
+        <MenuFlyout x:Key="FlyoutBase" Placement="Bottom" >
             <MenuFlyoutItem Text="我的消息" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="Normal" Click="StatusesMenuFlyoutItem_Click" Foreground="Black" />
             <MenuFlyoutItem Text="提及我的" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="Normal" Click="MentionsMenuFlyoutItem_Click"/>
             <MenuFlyoutItem Text="随便看看" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="Normal" Click="PublicsMenuFlyoutItem_Click" />
@@ -43,7 +43,7 @@
         <AppBar Height="120" Background="#FF00CCFF" BorderBrush="#FF00CCFF">
             <StackPanel Orientation="Horizontal" Margin="0,20">
                 <Button Content="个人中心" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei"/>
-                <Button Content="私信" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei"/>
+                <Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click"/>
                 <Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click"/>
                 <Button Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei"/>
                 <Button Content="设置" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei"/>
@@ -66,13 +66,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" VerticalAlignment="Bottom" Margin="45,0,41,40" HorizontalAlignment="Left" x:Name="pageTitle" Text="{Binding title}" Style="{StaticResource HeaderTextBlockStyle}"  IsHitTestVisible="true" TextWrapping="NoWrap" FontFamily="Microsoft YaHei"  Height="40" Tapped="pageTitle_Tapped" FlyoutBase.AttachedFlyout="{StaticResource FlyoutBase}" IsTapEnabled="True">
-            	<TextBlock.Transitions>
-            		<TransitionCollection>
-            			<EntranceThemeTransition/>
-            		</TransitionCollection>
-            	</TextBlock.Transitions>
-            </TextBlock>
+        	<StackPanel Margin="45,60,0,40" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Left" x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}"  IsHitTestVisible="true" TextWrapping="NoWrap" FontFamily="Microsoft YaHei" Tapped="pageTitle_Tapped" Text="{Binding title}" FlyoutBase.AttachedFlyout="{StaticResource FlyoutBase}" IsTapEnabled="True">
+                    <TextBlock.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </TextBlock.Transitions>
+                </TextBlock>
+            </StackPanel>
 
         </Grid>
 
