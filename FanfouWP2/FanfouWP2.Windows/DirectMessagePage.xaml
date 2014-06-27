@@ -36,7 +36,7 @@
         <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding messages}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged" Background="Transparent">
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <GridView ItemsSource="{Binding}" SelectionMode="Single" SelectionChanged="GridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei">
+                    <GridView ItemsSource="{Binding}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei">
                         <GridView.ItemTemplateSelector>
                             <selector:ConversationItemTemplateSelector ConversationSelfTemplate="{StaticResource DirectItemControl}" ConversationOtherTemplate="{StaticResource DirectOtherItemControl}"/>
                         </GridView.ItemTemplateSelector>

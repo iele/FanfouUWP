@@ -139,10 +139,5 @@ namespace FanfouWP2
         private void flipView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
         }
-
-        private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

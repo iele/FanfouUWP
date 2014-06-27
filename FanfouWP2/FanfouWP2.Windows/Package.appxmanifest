@@ -18,7 +18,9 @@
       <m2:VisualElements DisplayName="FanfouWP2.Windows" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="FanfouWP2.Windows" ForegroundText="light" BackgroundColor="#464646">
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
         <m2:InitialRotationPreference>
+          <m2:Rotation Preference="portrait" />
           <m2:Rotation Preference="landscape" />
+          <m2:Rotation Preference="portraitFlipped" />
           <m2:Rotation Preference="landscapeFlipped" />
         </m2:InitialRotationPreference>
         <m2:ApplicationView MinWidth="width500" />
