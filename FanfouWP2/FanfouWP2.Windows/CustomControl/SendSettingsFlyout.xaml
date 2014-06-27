@@ -109,19 +109,19 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid x:Name="Header" Background="{Binding TemplateSettings.HeaderBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button x:Name="BackButton" Background="{Binding TemplateSettings.HeaderBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Height="30" Margin="39,0,0,12" Style="{StaticResource BackButtonStyle}" VerticalAlignment="Bottom" Width="30"/>
-                                    <TextBlock Grid.Column="1" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" FontWeight="SemiLight" FontSize="{ThemeResource SettingsFlyoutHeaderThemeFontSize}" Margin="10,0,0,13" Text="{TemplateBinding Title}" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"/>
-                                    <Image Grid.Column="2" Height="30" Margin="0,0,40,15" Source="{Binding TemplateSettings.IconSource, RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Bottom" Width="30"/>
-                                </Grid>
-                                <ScrollViewer x:Name="ScrollViewer" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Grid.Row="1" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
-                                    <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{Binding TemplateSettings.ContentTransitions, RelativeSource={RelativeSource Mode=TemplatedParent}}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </ScrollViewer>
-                                <Rectangle x:Name="InputPanePlaceholder" Grid.Row="2"/>
+                            		<Grid.ColumnDefinitions>
+                            			<ColumnDefinition Width="Auto"/>
+                            			<ColumnDefinition Width="*"/>
+                            			<ColumnDefinition Width="Auto"/>
+                            		</Grid.ColumnDefinitions>
+                            		<Button x:Name="BackButton" Background="{Binding TemplateSettings.HeaderBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Height="30" Margin="39,0,0,12" Style="{StaticResource BackButtonStyle}" VerticalAlignment="Bottom" Width="30"/>
+                            		<TextBlock Grid.Column="1" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" FontWeight="SemiLight" FontSize="{ThemeResource SettingsFlyoutHeaderThemeFontSize}" Margin="10,0,0,15" Text="{TemplateBinding Title}" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei"/>
+                            		<Image Grid.Column="2" Height="30" Margin="0,0,40,15" Source="{Binding TemplateSettings.IconSource, RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Bottom" Width="30"/>
+                            	</Grid>
+                            	<ScrollViewer x:Name="ScrollViewer" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Grid.Row="1" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                            		<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{Binding TemplateSettings.ContentTransitions, RelativeSource={RelativeSource Mode=TemplatedParent}}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            	</ScrollViewer>
+                            	<Rectangle x:Name="InputPanePlaceholder" Grid.Row="2"/>
                             </Grid>
                         </Border>
                     </ControlTemplate>

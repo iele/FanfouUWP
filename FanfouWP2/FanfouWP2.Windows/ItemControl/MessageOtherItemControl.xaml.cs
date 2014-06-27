@@ -19,7 +19,7 @@ namespace FanfouWP2.ItemControl
 {
     public sealed partial class MessageOtherItemControl : UserControl
     {
-        public MessageItemControl()
+        public MessageOtherItemControl()
         {
             this.InitializeComponent();
         }

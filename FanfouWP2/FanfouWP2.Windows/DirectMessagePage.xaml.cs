@@ -104,6 +104,12 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if ((e.ClickedItem as DirectMessageItem).dm.recipient.id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+                message.setUser((e.ClickedItem as DirectMessageItem).dm.sender);
+            else
+                message.setUser((e.ClickedItem as DirectMessageItem).dm.recipient);
+      
+            popup.IsOpen = true;
         }
 
         private void flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -138,6 +144,11 @@ namespace FanfouWP2
         }
         private void flipView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+        }
+
+        private void message_BackClick(object sender, BackClickEventArgs e)
+        {
+            popup.IsOpen = false;
         }
     }
 }

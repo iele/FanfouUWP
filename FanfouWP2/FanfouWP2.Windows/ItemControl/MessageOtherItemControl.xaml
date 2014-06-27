@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400" FontFamily="Microsoft YaHei">
     <UserControl.Resources >
         <ResourceDictionary>
             <converter:HtmlToTextConverter x:Key="HtmlToTextConverter" />
@@ -24,11 +24,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Image Height="64" Width="64" Margin="10" Source="{Binding sender.profile_image_url}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" />
-
-        <StackPanel Orientation="Vertical" Margin="10" Grid.RowSpan="2">
-            <TextBlock TextWrapping="Wrap" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}" Margin="5"/>
-            <TextBlock Text="{Binding created_at, Converter={StaticResource DateToTextConverter}}" Margin="5" Foreground="#DE676767" />
+        <Image Height="32" Width="32" Margin="10" Source="{Binding sender.profile_image_url}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" />
+        <StackPanel Orientation="Vertical" Margin="0" Grid.RowSpan="2">
+        	<TextBlock TextWrapping="Wrap" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}" Margin="10"/>
+        	<TextBlock Text="{Binding created_at, Converter={StaticResource DateToTextConverter}}" Margin="10,0,10,10" Foreground="#DE676767" />
         </StackPanel>
     </Grid>
 </UserControl>

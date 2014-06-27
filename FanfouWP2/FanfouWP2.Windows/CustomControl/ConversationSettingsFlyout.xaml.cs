@@ -1,5 +1,8 @@
-﻿using System;
+﻿using FanfouWP2.Common;
+using FanfouWP2.FanfouAPI;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -19,9 +22,38 @@ namespace FanfouWP2.CustomControl
 {
     public sealed partial class ConversationSettingsFlyout : SettingsFlyout
     {
+        private User user;
+        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private ObservableCollection<DirectMessage> list = new ObservableCollection<DirectMessage>();
+        public ObservableDictionary DefaultViewModel
+        {
+            get { return this.defaultViewModel; }
+        }
+
         public ConversationSettingsFlyout()
         {
             this.InitializeComponent();
+
+            FanfouAPI.FanfouAPI.Instance.DirectMessageConversationSuccess += Instance_DirectMessageConversationSuccess;
+            FanfouAPI.FanfouAPI.Instance.DirectMessageConversationFailed += Instance_DirectMessageConversationFailed;
+        }
+
+        void Instance_DirectMessageConversationFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_DirectMessageConversationSuccess(object sender, EventArgs e)
+        {
+            var ss = sender as List<DirectMessage>;
+            ss.Reverse();
+            this.list = new ObservableCollection<DirectMessage>(ss);
+            this.defaultViewModel["list"] = list;
+        }
+
+        public void setUser(User user){
+            this.user = user;
+            this.list.Clear();
+            FanfouAPI.FanfouAPI.Instance.DirectMessagesConversation(user.id, 60);
         }
     }
 }
