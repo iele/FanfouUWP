@@ -52,6 +52,7 @@ namespace FanfouWP2.CustomControl
 
         public void setUser(User user){
             this.user = user;
+            this.Title = "和" + user.screen_name + "的对话";
             this.list.Clear();
             FanfouAPI.FanfouAPI.Instance.DirectMessagesConversation(user.id, 60);
         }

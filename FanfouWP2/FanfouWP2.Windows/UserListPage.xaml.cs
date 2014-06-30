@@ -153,13 +153,7 @@ namespace FanfouWP2
         }
 
         #endregion
-
-        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as Status;
-            Frame.Navigate(typeof(StatusPage), item);
-        }
-
+       
         private void flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.defaultViewModel["page"] = "第" + (this.flipView.SelectedIndex + 1).ToString() + "页";
@@ -260,6 +254,11 @@ namespace FanfouWP2
         private void UserButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(UserPage), currentSelection.user);
+        }
+
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

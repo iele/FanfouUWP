@@ -30,7 +30,8 @@ namespace FanfouWP2
         public enum PageType { Statuses, Mentions, Publics };
         private PageType currentType = PageType.Statuses;
 
-        private Status currentSelection;
+        private Status currentClick;
+
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
@@ -58,6 +59,32 @@ namespace FanfouWP2
 
             this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
             this.send.StatusUpdateFailed += send_StatusUpdateFailed;
+
+            this.status.UserButtonClick += status_UserButtonClick;
+            this.status.ReplyButtonClick += status_ReplyButtonClick;
+            this.status.RepostButtonClick += status_RepostButtonClick;
+            this.status.FavButtonClick += status_FavButtonClick;
+        }
+
+        private void status_FavButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        void status_RepostButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentClick);
+        }
+
+        void status_ReplyButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentClick);
+        }
+
+        void status_UserButtonClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage), currentClick.user);
         }
 
         void send_StatusUpdateFailed(object sender, FailedEventArgs e)
@@ -159,8 +186,9 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var item = e.ClickedItem as Status;
-            Frame.Navigate(typeof(StatusPage), item);
+            currentClick = e.ClickedItem as Status;
+            this.status.setStatus(currentClick);
+            this.statusPopup.IsOpen = true;
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
@@ -170,7 +198,7 @@ namespace FanfouWP2
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            this.statuses.Clear();            
+            this.statuses.Clear();
             loading.Visibility = Visibility.Visible;
 
             switch (currentType)
@@ -203,58 +231,16 @@ namespace FanfouWP2
 
         }
 
-        private void ReplyButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentSelection);
-        }
-
-        private void RepostButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentSelection);
-        }
-
-        private void FavButton1_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void send_BackClick(object sender, BackClickEventArgs e)
         {
             this.sendPopup.IsOpen = false;
         }
 
-        private void UserButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(UserPage), currentSelection.user);
-        }
-
         private void FavAppButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(TimelinePage), 
+            Frame.Navigate(typeof(TimelinePage),
                 new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Favorite,
                     FanfouAPI.FanfouAPI.Instance.currentUser));
-        }
-
-        private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            currentSelection = (sender as GridView).SelectedItem as Status;
-            if ((sender as GridView).SelectedIndex != -1)
-            {
-                commandBar.Visibility = Visibility.Visible;
-                commandBar.IsOpen = true;
-            }
-            else
-            {
-                commandBar.IsOpen = false;
-                commandBar.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void pageTitle_Tapped(object sender, TappedRoutedEventArgs e)
@@ -334,12 +320,17 @@ namespace FanfouWP2
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(SearchPage));    
         }
 
         private void DirectButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(DirectMessagePage));
+        }
+
+        private void status_BackClick(object sender, BackClickEventArgs e)
+        {
+            this.statusPopup.IsOpen = false;
         }
     }
 }

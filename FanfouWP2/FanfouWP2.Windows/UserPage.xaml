@@ -23,7 +23,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">
-            <GridView x:Name="statusesGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"/>
+            <GridView x:Name="statusesGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"/>
         </DataTemplate>
         <DataTemplate x:Key="FollowerDataTemplate" x:Name="FollowerDataTemplate">
             <GridView x:Name="followGridView" SelectionMode="Single" SelectionChanged="usersGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="usersGridView_ItemClick" ItemsSource="{Binding follower}" ItemTemplate="{StaticResource UserItemControl}"/>
@@ -32,21 +32,9 @@
             <GridView x:Name="friendGridView" SelectionMode="Single" SelectionChanged="usersGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="usersGridView_ItemClick" ItemsSource="{Binding friends}" ItemTemplate="{StaticResource UserItemControl}"/>
         </DataTemplate>
         <DataTemplate x:Key="FavoriteDataTemplate" x:Name="FavoriteDataTemplate">
-            <GridView x:Name="favGridView" SelectionMode="Single" SelectionChanged="statusesGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding favorite}" ItemTemplate="{StaticResource StatusItemControl}"/>
+            <GridView x:Name="favGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding favorite}" ItemTemplate="{StaticResource StatusItemControl}"/>
         </DataTemplate>
     </Page.Resources>
-    <Page.BottomAppBar>
-        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" Visibility="Collapsed">
-            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
-            <AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
-            <AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
-                <AppBarButton.Icon>
-                    <SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>
-
     <!--
         此网格充当页的根面板。
     -->
@@ -138,6 +126,15 @@
                 </Grid.ColumnDefinitions>
                 <customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
             </Grid>
+        </Popup>
+        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10">
+        	<Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
+        		<Grid.ColumnDefinitions>
+        			<ColumnDefinition/>
+        			<ColumnDefinition Width="Auto"/>
+        		</Grid.ColumnDefinitions>
+        		<customcontrol:StatusSettingsFlyout x:Name="status" Width="500" Grid.Column="1" Grid.Row="1" BackClick="status_BackClick"/>
+        	</Grid>
         </Popup>
     </Grid>
 </Page>

@@ -24,29 +24,15 @@
             <MenuFlyoutItem Text="随便看看" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="Normal" Click="PublicsMenuFlyoutItem_Click" />
         </MenuFlyout>
     </Page.Resources>
-    <Page.BottomAppBar>
-        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" Visibility="Collapsed">
-            <CommandBar.SecondaryCommands>
-                <AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
-            </CommandBar.SecondaryCommands>
-            <AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料" Click="UserButton_Click"/>
-            <AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Click="ReplyButton_Click"/>
-            <AppBarButton x:Name="RepostButton" Icon="ReShare" Label="转发" Click="RepostButton_Click"/>
-            <AppBarButton x:Name="FavButton1" Label="收藏" Click="FavButton1_Click">
-                <AppBarButton.Icon>
-                    <SymbolIcon x:Name="FavButton" Symbol="SolidStar"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>
+  
     <Page.TopAppBar>
         <AppBar Height="120" Background="#FF00CCFF" BorderBrush="#FF00CCFF">
             <StackPanel Orientation="Horizontal" Margin="0,20">
-                <Button Content="个人中心" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei"/>
-                <Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click"/>
-                <Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click"/>
-                <Button Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei"/>
-                <Button Content="设置" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei"/>
+                <Button Content="个人中心" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei" FontSize="18.667"/>
+                <Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667"/>
+                <Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667"/>
+                <Button Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667"/>
+                <Button Content="设置" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667"/>
             </StackPanel>
         </AppBar>
     </Page.TopAppBar>
@@ -98,10 +84,19 @@
         <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding statuses}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged" Background="Transparent">
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <GridView ItemsSource="{Binding}" ItemTemplate="{StaticResource StatusItemControl}" SelectionMode="Single" SelectionChanged="GridView_SelectionChanged" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" FontFamily="Microsoft YaHei" Grid.Row="1" Padding="45,0"/>
+                    <GridView ItemsSource="{Binding}" ItemTemplate="{StaticResource StatusItemControl}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" FontFamily="Microsoft YaHei" Grid.Row="1" Padding="45,0"/>
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
         <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,40" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Gray" Text="{Binding page}" FontSize="16"/>
+        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2">
+        	<Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
+        		<Grid.ColumnDefinitions>
+        			<ColumnDefinition/>
+        			<ColumnDefinition Width="Auto"/>
+        		</Grid.ColumnDefinitions>
+                <customcontrol:StatusSettingsFlyout x:Name="status" Width="500" Grid.Column="1" Grid.Row="1" BackClick="status_BackClick"/>
+            </Grid>
+        </Popup>
     </Grid>
 </Page>

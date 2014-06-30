@@ -1,0 +1,212 @@
+﻿<SettingsFlyout
+    x:Class="FanfouWP2.CustomControl.StatusSettingsFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2.CustomControl"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
+    xmlns:itemcontrol="using:FanfouWP2.ItemControl"
+    xmlns:customcontrol="using:FanfouWP2.CustomControl"
+    mc:Ignorable="d"
+    IconSource="Assets/SmallLogo.png"
+    Title="{Binding status.user.screen_name}" Width="500" HeaderBackground="#FF00CCFF" Background="#FF8DE8FF" RequestedTheme="Dark"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}" FontFamily="Microsoft YaHei">
+    <SettingsFlyout.Resources>
+        <Style x:Key="StatusSettingsFlyout" TargetType="SettingsFlyout">
+            <Setter Property="RequestedTheme" Value="Light"/>
+            <Setter Property="HeaderBackground" Value="{ThemeResource SettingsFlyoutHeaderBackgroundThemeBrush}"/>
+            <Setter Property="HeaderForeground" Value="{ThemeResource SettingsFlyoutHeaderForegroundThemeBrush}"/>
+            <Setter Property="Background" Value="{ThemeResource SettingsFlyoutBackgroundThemeBrush}"/>
+            <Setter Property="BorderThickness" Value="1,0,0,0"/>
+            <Setter Property="Padding" Value="39,33,40,33"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
+            <Setter Property="Width" Value="346"/>
+            <Setter Property="MinWidth" Value="320"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="SettingsFlyout">
+                        <Border BorderBrush="{Binding TemplateSettings.BorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" BorderThickness="{Binding TemplateSettings.BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}}" Background="{TemplateBinding Background}" Width="500">
+                            <Border.Resources>
+                                <Style x:Key="BackButtonStyle" TargetType="Button">
+                                    <Setter Property="FontFamily" Value="{ThemeResource SymbolThemeFontFamily}"/>
+                                    <Setter Property="FontSize" Value="39"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid x:Name="RootGrid">
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup x:Name="CommonStates">
+                                                            <VisualState x:Name="Normal"/>
+                                                            <VisualState x:Name="PointerOver">
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Background">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SettingsFlyoutBackButtonPointerOverBackgroundThemeBrush}"/>
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Pressed">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PressedBackground"/>
+                                                                    <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PressedGlyph"/>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Disabled">
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="RootGrid">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                        <VisualStateGroup x:Name="FocusStates">
+                                                            <VisualState x:Name="Focused">
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
+                                                                    <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Unfocused"/>
+                                                            <VisualState x:Name="PointerFocused"/>
+                                                        </VisualStateGroup>
+                                                        <VisualStateGroup x:Name="SettingsEdgeLocationStates">
+                                                            <VisualState x:Name="Right"/>
+                                                            <VisualState x:Name="Left">
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Text" Storyboard.TargetName="NormalGlyph">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE0AB;"/>
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Text" Storyboard.TargetName="PressedGlyph">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE0AB;"/>
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                    <Grid Background="Transparent" Margin="-12,-16,-10,-10">
+                                                        <Ellipse x:Name="Background" Fill="Transparent" HorizontalAlignment="Left" Height="30" Margin="12,0,0,0" Stroke="{TemplateBinding Foreground}" StrokeThickness="2" Width="30"/>
+                                                        <TextBlock x:Name="NormalGlyph" AutomationProperties.AccessibilityView="Raw" Foreground="{TemplateBinding Foreground}" FontWeight="SemiLight" Margin="10,0,0,0" Text="&#xE0A6;"/>
+                                                        <Ellipse x:Name="PressedBackground" Fill="{TemplateBinding Foreground}" HorizontalAlignment="Left" Height="30" Margin="12,0,0,0" Opacity="0" StrokeThickness="0" Width="30"/>
+                                                        <TextBlock x:Name="PressedGlyph" AutomationProperties.AccessibilityView="Raw" Foreground="{TemplateBinding Background}" FontWeight="SemiLight" Margin="10,0,0,0" Opacity="0" Text="&#xE0A6;"/>
+                                                    </Grid>
+                                                    <Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Margin="-3,-6,-3,0" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>
+                                                    <Rectangle x:Name="FocusVisualBlack" IsHitTestVisible="False" Margin="-3,-6,-3,0" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" StrokeDashArray="1,1"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Border.Resources>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="80"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid x:Name="Header" Background="{Binding TemplateSettings.HeaderBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="BackButton" Background="{Binding TemplateSettings.HeaderBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Height="30" Margin="39,0,0,12" Style="{StaticResource BackButtonStyle}" VerticalAlignment="Bottom" Width="30"/>
+                                    <TextBlock Grid.Column="2" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" FontWeight="SemiLight" FontSize="{ThemeResource SettingsFlyoutHeaderThemeFontSize}" Margin="10,0,0,15" Text="{TemplateBinding Title}" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei"/>
+                                    <Image Grid.Column="1" Height="30" Margin="10,0,0,15" Source="{Binding status.user.profile_image_url_large}" VerticalAlignment="Bottom" Width="30"/>
+                                </Grid>
+                                <Rectangle x:Name="InputPanePlaceholder" Grid.Row="2"/>
+                                <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{Binding TemplateSettings.ContentTransitions, RelativeSource={RelativeSource Mode=TemplatedParent}}" Content="{TemplateBinding Content}" Margin="0" Grid.Row="1"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="StatusItemControl">
+            <itemcontrol:StatusItemControl  DataContext="{Binding}" Height="260"/>
+        </DataTemplate>
+        <converter:DateToTextConverter  x:Key="DateToTextConverter" />
+        <converter:SourceToTextConverter  x:Key="SourceToTextConverter" />
+        <converter:BoolToFavoritedConverter  x:Key="BoolToFavoritedConverter" />
+        <converter:NullToVisibilityConverter  x:Key="NullToVisibilityConverter" />
+        <converter:ReplyToNameConverter x:Key="ReplyToNameConverter" />
+        <converter:RetweetToNameConverter  x:Key="RetweetToNameConverter" />
+    </SettingsFlyout.Resources>
+    <SettingsFlyout.Style>
+        <StaticResource ResourceKey="StatusSettingsFlyout"/>
+    </SettingsFlyout.Style>
+
+    <Grid Margin="0">
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="1*"/>
+    		<RowDefinition Height="Auto"/>
+    	</Grid.RowDefinitions>
+
+		<ScrollViewer FontFamily="Microsoft YaHei" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" Margin="0">
+			<Grid x:Name="contentRegion" Margin="20,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding status.text}" FontSize="21.333" Margin="10,10,10,0" IsTextSelectionEnabled="True">
+					<TextBlock.Transitions>
+						<TransitionCollection>
+							<EntranceThemeTransition/>
+						</TransitionCollection>
+					</TextBlock.Transitions>
+				</TextBlock>
+				<StackPanel Margin="10,10,10,0" Orientation="Horizontal" Grid.Row="1">
+					<StackPanel.Transitions>
+						<TransitionCollection>
+							<EntranceThemeTransition/>
+						</TransitionCollection>
+					</StackPanel.Transitions>
+					<TextBlock Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" Padding="0"  FontSize="17.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
+					<TextBlock Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" Padding="5,0,0,0" FontSize="17.333" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Gray"/>
+					<TextBlock Padding="5,0,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="17.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.favorited, Converter={StaticResource NullToVisibilityConverter}}" x:Name="fav"/>
+					<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="17.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
+					<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="17.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+				</StackPanel>
+				<StackPanel Margin="10,10,10,0" Orientation="Vertical" Grid.Row="2">
+					<TextBlock x:Name="contextTextBlock" TextWrapping="Wrap" Text="当前消息的上下文" FontSize="21.333" Foreground="Gray" Visibility="Collapsed" Margin="0,10,0,0" />
+					<ListView Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Auto" IsItemClickEnabled="True" SelectionMode="None" BorderThickness="0,10,0,0" ItemsSource="{Binding context}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,10,0,0">
+						<ListView.ItemContainerStyle>
+							<Style TargetType="ListViewItem">
+								<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+							</Style>
+						</ListView.ItemContainerStyle>
+					</ListView>
+				</StackPanel>
+				<Viewbox Margin="10,10,10,0" Grid.Row="3">
+					<Image Source="{Binding status.photo.largeurl}" Stretch="None">
+						<Image.Transitions>
+							<TransitionCollection>
+								<EntranceThemeTransition/>
+							</TransitionCollection>
+						</Image.Transitions>
+					</Image>
+				</Viewbox>
+			</Grid>
+
+		</ScrollViewer>
+		<StackPanel Margin="0" Orientation="Vertical" Background="#FF00CCFF" VerticalAlignment="Bottom" Grid.Row="1">
+			<StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Bottom" Background="#FF00CCFF" HorizontalAlignment="Center">
+				<AppBarButton x:Name="UserButton" Icon="Contact" Label="个人资料" Height="88" Width="100" FontFamily="Microsoft YaHei" Click="UserButton_Click"/>
+				<AppBarButton x:Name="ReplyButton" Icon="Account" Label="回复" Height="88" Width="100" FontFamily="Microsoft YaHei" Click="ReplyButton_Click"/>
+				<AppBarButton x:Name="RepostButton" Icon="Sync" Label="转发" Height="88" Width="100" FontFamily="Microsoft YaHei" Click="RepostButton_Click"/>
+				<AppBarButton x:Name="FavButton" Icon="SolidStar" Label="收藏" Height="88" Width="100" FontFamily="Microsoft YaHei" Click="FavButton_Click"/>
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</SettingsFlyout>

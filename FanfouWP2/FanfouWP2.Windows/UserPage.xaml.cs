@@ -26,11 +26,14 @@ namespace FanfouWP2
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+
         private User user;
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         private ObservableCollection<Status> favorite = new ObservableCollection<Status>();
         private ObservableCollection<User> friends = new ObservableCollection<User>();
         private ObservableCollection<User> follower = new ObservableCollection<User>();
+
+        private Status currentClick;
 
         /// <summary>
         /// 可将其更改为强类型视图模型。
@@ -62,6 +65,32 @@ namespace FanfouWP2
 
             FanfouAPI.FanfouAPI.Instance.UsersFriendsSuccess += Instance_UsersFriendsSuccess;
             FanfouAPI.FanfouAPI.Instance.UsersFriendsFailed += Instance_UsersFriendsFailed;
+
+            this.status.UserButtonClick += status_UserButtonClick;
+            this.status.ReplyButtonClick += status_ReplyButtonClick;
+            this.status.RepostButtonClick += status_RepostButtonClick;
+            this.status.FavButtonClick += status_FavButtonClick;
+        }
+
+        private void status_FavButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        void status_RepostButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentClick);
+        }
+
+        void status_ReplyButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.sendPopup.IsOpen = true;
+            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentClick);
+        }
+
+        void status_UserButtonClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage), currentClick.user);
         }
 
         void Instance_UsersFriendsFailed(object sender, FailedEventArgs e)
@@ -166,31 +195,14 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
-        }
-
-        private void statusesGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
-        private void ReplyButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RepostButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void FavButton1_Click(object sender, RoutedEventArgs e)
-        {
-
+            currentClick = e.ClickedItem as Status;
+            this.status.setStatus(currentClick);
+            this.statusPopup.IsOpen = true;
         }
 
         private void send_BackClick(object sender, BackClickEventArgs e)
         {
-
+            this.sendPopup.IsOpen = false;
         }
 
         private void usersGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -201,7 +213,6 @@ namespace FanfouWP2
         private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Frame.Navigate(typeof(UserPage), e.ClickedItem);
-
         }
 
         private void hub_SectionHeaderClick(object sender, HubSectionHeaderClickEventArgs e)
@@ -214,7 +225,7 @@ namespace FanfouWP2
             else if (e.Section == favHubSection)
             {
                 Frame.Navigate(typeof(TimelinePage),
-                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Favorite,this.user));
+                    new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Favorite, this.user));
             }
             else if (e.Section == followHubSection)
             {
@@ -227,5 +238,11 @@ namespace FanfouWP2
                     new KeyValuePair<UserListPage.PageType, object>(UserListPage.PageType.Friends, this.user));
             }
         }
+
+        private void status_BackClick(object sender, BackClickEventArgs e)
+        {
+            this.statusPopup.IsOpen = false;
+        }
+
     }
 }
