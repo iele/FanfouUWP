@@ -456,18 +456,61 @@ namespace FanfouWP2.FanfouAPI
         }
         #endregion
         #region search
-        public void SearchTimeline(string q, int count = 60, string max_id = "")
+        public async void SearchTimeline(string q, int count = 60)
         {
-
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("q", q);
+                parameters.Add("count", count.ToString());
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_PUBLIC_TIMELINE, parameters);
+                if (SearchTimelineSuccess != null)
+                    SearchTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (SearchTimelineFailed != null)
+                    SearchTimelineFailed(this, new FailedEventArgs());
+            }
         }
 
-        public void SearchUserTimeline(string q, string id = "", int count = 60, string max_id = "")
+        public async void SearchUserTimeline(string q, string id, int count = 60)
         {
-
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("q", q);
+                parameters.Add("id", id);
+                parameters.Add("count", count.ToString());
+                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_USER_TIMELINE, parameters);
+                if (SearchUserTimelineSuccess != null)
+                    SearchUserTimelineSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (SearchUserTimelineFailed != null)
+                    SearchUserTimelineFailed(this, new FailedEventArgs());
+            }
         }
-        public void SearchUser(string q, int count = 60, int page = 0)
+        public async void SearchUser(string q, int count = 60)
         {
-
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("q", q);
+                parameters.Add("count", count.ToString());
+                var result = await client.GetRequestObject<UserList>(FanfouConsts.SEARCH_USER, parameters);
+                if (SearchUserSuccess != null)
+                    SearchUserSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (SearchUserFailed != null)
+                    SearchUserFailed(this, new FailedEventArgs());
+            }
         }
 
         public void TrendsList()
