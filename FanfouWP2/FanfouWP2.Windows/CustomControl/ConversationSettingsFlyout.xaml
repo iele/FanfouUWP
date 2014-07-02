@@ -10,7 +10,7 @@
     xmlns:itemcontrol="using:FanfouWP2.ItemControl"
     mc:Ignorable="d"
     IconSource="Assets/SmallLogo.png"
-    Title="私信" HeaderBackground="#FF00CCFF" Background="#FF8DE8FF" Width="500" RequestedTheme="Default">
+    Title="私信" HeaderBackground="#FF006FA6" Background="#FF399DCE" Width="500" RequestedTheme="Default">
     <SettingsFlyout.Resources>
         <Style x:Key="SettingsFlyoutStyle" TargetType="SettingsFlyout">
             <Setter Property="RequestedTheme" Value="Light"/>
@@ -141,12 +141,16 @@
     
     <!-- 此 StackPanel 充当内容部分的垂直布局的根面板-->
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    	<Grid.RowDefinitions>
+    		<RowDefinition/>
+    		<RowDefinition Height="Auto"/>
+    	</Grid.RowDefinitions>
         <ListView x:Name="listView" Margin="0" ItemsSource="{Binding list}" Padding="10,0" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplateSelector>
                 <selector:MessageItemTemplateSelector  MessageSelfTemplate="{StaticResource MessageOtherItemControl}" MessageOtherTemplate="{StaticResource MessageItemControl}"/>
             </ListView.ItemTemplateSelector>
         </ListView>
-        <Grid Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" >
+        <Grid Margin="0" VerticalAlignment="Bottom" Background="#FF006FA6" Grid.Row="1" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition/>
@@ -154,7 +158,7 @@
             <TextBox TextWrapping="Wrap" FontFamily="Microsoft YaHei" Margin="10,10,0,10" PlaceholderText="发送新私信"/>
             <Button Content="发送" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="7" Grid.Column="1" FontFamily="Microsoft YaHei"/>
         </Grid>
-        <Popup>
+        <Popup Grid.RowSpan="2">
             <Grid Background="#FFE5E5E5" Height="0" Width="0"/>
         </Popup>
 

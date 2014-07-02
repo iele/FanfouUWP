@@ -19,7 +19,7 @@
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF00CCFF" BorderBrush="#FF00CCFF" Visibility="Collapsed">
+        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF006FA6" BorderBrush="#FF006FA6" Visibility="Collapsed">
             <CommandBar.SecondaryCommands>
                 <AppBarToggleButton x:Name="DeleteButton" Icon="Delete" Label="删除" Visibility="Collapsed" Click="DeleteButton_Click"/>
             </CommandBar.SecondaryCommands>
@@ -28,7 +28,10 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Background="#FF8DE8FF">
+    <Grid>
+    	<Grid.Background>
+    		<ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
+    	</Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -77,6 +80,6 @@
                 <customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
             </Grid>
         </Popup>
-        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Gray" Text="{Binding page}" FontSize="16" Grid.Row="1"/>
+        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16" Grid.Row="1"/>
     </Grid>
 </Page>

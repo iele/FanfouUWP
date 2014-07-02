@@ -22,7 +22,10 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="#FF8DE8FF">
+    <Grid>
+    	<Grid.Background>
+    		<ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
+    	</Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -65,7 +68,7 @@
             </StackPanel>
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
-        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Gray" Text="{Binding page}" FontSize="16" Grid.Row="1"/>
+        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16" Grid.Row="1"/>
         <Popup x:Name="popup" Margin="0" Grid.RowSpan="2" IsOpen="False">
             <Grid Background="#7F808080" Width="{Binding ActualWidth, ElementName=popup}" Height="{Binding ActualHeight, ElementName=popup}">
             	<Grid.ColumnDefinitions>

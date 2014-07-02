@@ -23,7 +23,10 @@
 
     </Page.Resources>
 
-    <Grid Background="#FF8DE8FF">
+    <Grid>
+    	<Grid.Background>
+    		<ImageBrush ImageSource="Assets/10.png" Stretch="UniformToFill"/>
+    	</Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>

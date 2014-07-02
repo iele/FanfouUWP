@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     IconSource="Assets/SmallLogo.png"
     Title="发送新消息"
-    d:DesignWidth="500" Background="#FF8DE8FF" HeaderBackground="#FF00CCFF" RequestedTheme="Default">
+    d:DesignWidth="500" Background="#FF399DCE" HeaderBackground="#FF006FA6" RequestedTheme="Default" >
     <SettingsFlyout.Resources>
         <Style x:Key="SettingsFlyoutStyle" TargetType="SettingsFlyout">
             <Setter Property="RequestedTheme" Value="Light"/>
@@ -160,6 +160,8 @@
                     <!-- 第 1 部分标题-->
 
                     <!-- 第 1 部分正文-->
+
+                    <!-- 第 1 部分正文-->
                     <Grid Margin="0" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -173,6 +175,7 @@
                         <AppBarButton HorizontalAlignment="Center" Label="AppBarButton" VerticalAlignment="Stretch" IsCompact="True" Margin="0" Icon="Tag" Grid.Column="2" Flyout="{StaticResource TagFlyoutBase}" x:Name="TagAppBarButton"/>
                     </Grid>
                     <TextBox x:Name="send" TextWrapping="Wrap" FontFamily="Microsoft YaHei" PlaceholderText="你在做什么" InputScope="Chat" Margin="0" Height="200" MaxLength="140"/>
+                    <TextBlock x:Name="locate" TextWrapping="Wrap" Text="已定位" Margin="0,2" FontFamily="Microsoft YaHei" FontSize="13.333" Foreground="white" Visibility="Collapsed"/>
                     <Button x:Name="SendButton" Content="发送" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Microsoft YaHei" Margin="-3,10,-3,0" Click="SendButton_Click"/>
 
                 </StackPanel>

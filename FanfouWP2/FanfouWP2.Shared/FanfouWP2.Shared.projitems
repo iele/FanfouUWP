@@ -33,6 +33,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Items\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Parameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\XAuthHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\EvilTransform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\GeoLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\VisualHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\StatusesReform.cs" />
   </ItemGroup>

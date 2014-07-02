@@ -38,8 +38,8 @@
     		</Rectangle.Fill>
     	</Rectangle>
     	<StackPanel Orientation="Horizontal" Margin="10,0,10,12" Grid.Column="1" VerticalAlignment="Bottom">
-    		<TextBlock Text="{Binding dm.created_at, Converter={StaticResource DateToTextConverter}}" VerticalAlignment="Top" Foreground="Gray" HorizontalAlignment="Left" FontSize="16" />
-    		<TextBlock Text="{Binding msg_num, Converter={StaticResource IntToMsgCountStringConverter}}" VerticalAlignment="Top" Foreground="Gray" Margin="9,0,0,0" HorizontalAlignment="Left" FontSize="16" />
+            <TextBlock Text="{Binding dm.created_at, Converter={StaticResource DateToTextConverter}}" VerticalAlignment="Top" Foreground="#DE676767" HorizontalAlignment="Left" FontSize="16" />
+            <TextBlock Text="{Binding msg_num, Converter={StaticResource IntToMsgCountStringConverter}}" VerticalAlignment="Top" Foreground="#DE676767" Margin="9,0,0,0" HorizontalAlignment="Left" FontSize="16" />
     	</StackPanel>
     	<TextBlock TextWrapping="Wrap" Text="{Binding dm.text}" FontSize="16" Grid.ColumnSpan="2" Margin="10" Grid.Row="1"/>
     	<Rectangle Stroke="DeepSkyBlue" StrokeThickness="3" Margin="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>

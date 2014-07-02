@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
      xmlns:itemcontrol="using:FanfouWP2.ItemControl" FontFamily="Microsoft YaHei"
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
-    mc:Ignorable="d" NavigationCacheMode="Required" Background="#FF00CCFF" BorderBrush="#FF00CCFF" SizeChanged="pageRoot_SizeChanged">
+    mc:Ignorable="d" NavigationCacheMode="Required" BorderBrush="#FF006FA6" SizeChanged="pageRoot_SizeChanged" Background="#FF006FA6">
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
@@ -26,7 +26,7 @@
     </Page.Resources>
   
     <Page.TopAppBar>
-        <AppBar Height="120" Background="#FF00CCFF" BorderBrush="#FF00CCFF">
+        <AppBar Height="120" Background="#FF006FA6" BorderBrush="#FF006FA6">
             <StackPanel Orientation="Horizontal" Margin="0,20">
                 <Button Content="个人中心" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei" FontSize="18.667"/>
                 <Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667"/>
@@ -37,7 +37,10 @@
         </AppBar>
     </Page.TopAppBar>
 
-    <Grid Background="#FF8DE8FF">
+    <Grid>
+    	<Grid.Background>
+    		<ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
+    	</Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -71,7 +74,7 @@
             <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Microsoft YaHei" Margin="0"/>
         </StackPanel>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
-        <Rectangle Height="20" Margin="0" Stroke="#FF00CCFF" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF00CCFF"/>
+        <Rectangle Height="20" Margin="0" Stroke="#FF006FA6" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF006FA6"/>
         <Popup x:Name="sendPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2">
             <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
                 <Grid.ColumnDefinitions>
@@ -88,7 +91,7 @@
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
-        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,40" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Gray" Text="{Binding page}" FontSize="16"/>
+        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,40" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16"/>
         <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2">
         	<Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
         		<Grid.ColumnDefinitions>

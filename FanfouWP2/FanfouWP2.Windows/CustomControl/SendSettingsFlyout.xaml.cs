@@ -24,6 +24,8 @@ namespace FanfouWP2.CustomControl
         public event StatusUpdateSuccessHandler StatusUpdateSuccess;
         public event StatusUpdateFailedHandler StatusUpdateFailed;
 
+        private string location;
+
         public enum SendMode { Normal, Reply, Repose, ReplyUser };
         private SendMode mode;
         private Item data;
@@ -32,8 +34,22 @@ namespace FanfouWP2.CustomControl
         {
             this.InitializeComponent();
 
+            getLocation();
+
             FanfouAPI.FanfouAPI.Instance.StatusUpdateSuccess += Instance_StatusUpdateSuccess;
             FanfouAPI.FanfouAPI.Instance.StatusUpdateFailed += Instance_StatusUpdateFailed;
+        }
+        private async void getLocation()
+        {
+            location = await Utils.GeoLocator.getGeolocator();
+            if (location != "")
+            {
+                this.locate.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.locate.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void ChangeMode(SendMode mode, Item data = null)
@@ -96,19 +112,31 @@ namespace FanfouWP2.CustomControl
                 loading.Visibility = Visibility.Visible;
                 if (mode == SendMode.Reply)
                 {
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, in_reply_to_status_id: (data as Status).id);
+                    if (location != "")
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, in_reply_to_status_id: (data as Status).id, location: location);
+                    else
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, in_reply_to_status_id: (data as Status).id);
                 }
                 else if (mode == SendMode.Repose)
                 {
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, repost_status_id: (data as Status).id);
+                    if (location != "")
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, repost_status_id: (data as Status).id, location: location);
+                    else
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, repost_status_id: (data as Status).id);
                 }
                 else if (mode == SendMode.ReplyUser)
                 {
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, in_reply_to_user_id: (data as User).id);
+                    if (location != "")
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, in_reply_to_user_id: (data as User).id, location: location);
+                    else
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, in_reply_to_user_id: (data as User).id);
                 }
                 else
                 {
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text);
+                    if (location != "")
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, location: location);
+                    else
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text);
                 }
             }
         }
