@@ -13,18 +13,18 @@
     mc:Ignorable="d" NavigationCacheMode="Required" BorderBrush="#FF006FA6" SizeChanged="pageRoot_SizeChanged" Background="#FF006FA6">
 
     <Page.Resources>
-        <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
+        <x:String x:Key="ChevronGlyph">&#xE228;</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
             <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>
-        <MenuFlyout x:Key="FlyoutBase" Placement="Bottom" >
+        <MenuFlyout x:Key="FlyoutBase" Placement="Bottom" Opened="MenuFlyout_Opened" Closed="MenuFlyout_Closed" >
             <MenuFlyoutItem Text="我的消息" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="Normal" Click="StatusesMenuFlyoutItem_Click" Foreground="Black" />
             <MenuFlyoutItem Text="提及我的" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="Normal" Click="MentionsMenuFlyoutItem_Click"/>
             <MenuFlyoutItem Text="随便看看" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="Normal" Click="PublicsMenuFlyoutItem_Click" />
         </MenuFlyout>
     </Page.Resources>
-  
+
     <Page.TopAppBar>
         <AppBar Height="120" Background="#FF006FA6" BorderBrush="#FF006FA6">
             <StackPanel Orientation="Horizontal" Margin="0,20">
@@ -38,9 +38,9 @@
     </Page.TopAppBar>
 
     <Grid>
-    	<Grid.Background>
-    		<ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
-    	</Grid.Background>
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
+        </Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
@@ -55,8 +55,19 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-        	<StackPanel Margin="45,60,0,40" Orientation="Horizontal">
+            <StackPanel Margin="45,60,0,40" Orientation="Horizontal">
+
                 <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Left" x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}"  IsHitTestVisible="true" TextWrapping="NoWrap" FontFamily="Microsoft YaHei" Tapped="pageTitle_Tapped" Text="{Binding title}" FlyoutBase.AttachedFlyout="{StaticResource FlyoutBase}" IsTapEnabled="True">
+                    <TextBlock.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </TextBlock.Transitions>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="10,-16,0,0" TextWrapping="Wrap" Text="{StaticResource ChevronGlyph}" FontSize="56" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" Tapped="pageTitle_Tapped" RenderTransformOrigin="0.489,0.606" FontWeight="Bold">
+                	<TextBlock.RenderTransform>
+                		<CompositeTransform x:Name="rotation" Rotation="0"/>
+                	</TextBlock.RenderTransform>
                     <TextBlock.Transitions>
                         <TransitionCollection>
                             <EntranceThemeTransition/>
@@ -93,11 +104,11 @@
         </FlipView>
         <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,40" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16"/>
         <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2">
-        	<Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
-        		<Grid.ColumnDefinitions>
-        			<ColumnDefinition/>
-        			<ColumnDefinition Width="Auto"/>
-        		</Grid.ColumnDefinitions>
+            <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
                 <customcontrol:StatusSettingsFlyout x:Name="status" Width="500" Grid.Column="1" Grid.Row="1" BackClick="status_BackClick"/>
             </Grid>
         </Popup>

@@ -245,7 +245,7 @@ namespace FanfouWP2
 
         private void pageTitle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+            FlyoutBase.ShowAttachedFlyout(this.pageTitle as FrameworkElement);
         }
         private void StatusesMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
@@ -331,6 +331,16 @@ namespace FanfouWP2
         private void status_BackClick(object sender, BackClickEventArgs e)
         {
             this.statusPopup.IsOpen = false;
+        }
+
+        private void MenuFlyout_Closed(object sender, object e)
+        {
+            rotation.Rotation = 0;
+        }
+
+        private void MenuFlyout_Opened(object sender, object e)
+        {
+            rotation.Rotation = 180;
         }
     }
 }
