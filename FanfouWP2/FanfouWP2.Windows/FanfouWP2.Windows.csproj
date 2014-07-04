@@ -271,6 +271,9 @@
     <Reference Include="Windows.UI.Interactivity">
       <HintPath>..\..\packages\Expression.Blend.Sdk.1.0.2\lib\netcore451\Windows.UI.Interactivity.dll</HintPath>
     </Reference>
+    <Reference Include="WinRTXamlToolkit">
+      <HintPath>..\..\packages\WinRTXamlToolkit.1.6.1.3\lib\netcore451\WinRTXamlToolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

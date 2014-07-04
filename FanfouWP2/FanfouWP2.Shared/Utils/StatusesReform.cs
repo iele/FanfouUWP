@@ -11,18 +11,25 @@ namespace FanfouWP2.Utils
     {
         public static void reform(ObservableCollection<Status> statuses, List<Status> list)
         {
+            if (list.Count == 0)
+                return;
+
             list.Reverse();
-            foreach (var item in list)
+            foreach (var i in list)
             {
-                int i = 0;
-                for (i = 0; i < statuses.Count(); i++)
+                for (var k = statuses.Count - 1; k == 0; k--)
                 {
-                    if (item.rawid > statuses[i].rawid)
-                        break;
+                    if (i.rawid > statuses[k].rawid)
+                    {
+                        statuses.Insert(statuses.IndexOf(statuses[k]), i);
+                        goto inserted;
+                    }
                 }
-                var l = from p in statuses where p.id == item.id select p;
-                if (l.Count() == 0)
-                    statuses.Insert(i, item);
+                var ss = from s in statuses where s.id == i.id select s;
+                if (ss.Count() == 0)
+                    statuses.Insert(0, i);
+            inserted:
+                continue;
             }
         }
     }
