@@ -153,12 +153,12 @@ namespace FanfouWP2
         }
 
         #endregion
-       
+
         private void flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.defaultViewModel["page"] = "第" + (this.flipView.SelectedIndex + 1).ToString() + "页";
 
-            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1)
+            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1 && this.flipView.Items.Count > 0)
             {
                 loading.Visibility = Visibility.Visible;
                 switch (currentType)
@@ -172,32 +172,6 @@ namespace FanfouWP2
                     default:
                         break;
                 }
-            }
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.users.Clear();
-            loading.Visibility = Visibility.Visible;
-
-            switch (currentType)
-            {
-                case PageType.Follower:
-                    FanfouAPI.FanfouAPI.Instance.UsersFollowers((data as User).id, 60, 1);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的听众";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的听众";
-                    break;
-                case PageType.Friends:
-                    FanfouAPI.FanfouAPI.Instance.UsersFriends((data as User).id, 60, 1);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的好友";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的好友";
-                    break;
-                default:
-                    break;
             }
         }
 

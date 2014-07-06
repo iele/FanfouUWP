@@ -47,6 +47,9 @@ namespace FanfouWP2
         public HomePage()
         {
             this.InitializeComponent();
+
+            this.Loaded += HomePage_Loaded;
+
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
 
@@ -66,6 +69,64 @@ namespace FanfouWP2
             this.status.ReplyButtonClick += status_ReplyButtonClick;
             this.status.RepostButtonClick += status_RepostButtonClick;
             this.status.FavButtonClick += status_FavButtonClick;
+        }
+
+        void HomePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ScrollViewer sv = Utils.VisualHelper.FindVisualChildByName<ScrollViewer>(this.statusesGridView, "ScrollViewer");
+            ScrollBar sb = Utils.VisualHelper.FindVisualChildByName<ScrollBar>(sv, "HorizontalScrollBar");
+            sb.ValueChanged += sb_ValueChanged;
+        }
+
+        bool is_loading = false;
+        bool can_loading = false;
+        void sb_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (e.NewValue >= (sender as ScrollBar).Maximum - 100 && !is_loading && can_loading)
+            {
+                loading.Visibility = Visibility.Visible;
+                is_loading = true;
+                switch (currentType)
+                {
+                    case PageType.Statuses:
+                        if (statuses.Count != 0)
+                            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id: statuses.Last().id);
+                        break;
+                    case PageType.Mentions:
+                        if (mentions.Count != 0)
+                            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, max_id: mentions.Last().id);
+                        break;
+                    case PageType.Publics:
+                        loading.Visibility = Visibility.Collapsed;
+                        break;
+                    default:
+                        break;
+                }
+                return;
+            }
+            //if (e.NewValue <= (sender as ScrollBar).Minimum + 100 && !is_loading && can_loading)
+            //{
+            //    loading.Visibility = Visibility.Visible;
+            //    is_loading = true;
+            //    switch (currentType)
+            //    {
+            //        case PageType.Statuses:
+            //            if (statuses.Count != 0)
+            //                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, since_id: statuses.First().id);
+            //            break;
+            //        case PageType.Mentions:
+            //            if (mentions.Count != 0)
+            //                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, since_id: mentions.First().id);
+            //            break;
+            //        case PageType.Publics:
+            //            loading.Visibility = Visibility.Collapsed;
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //    return;
+            //}
+            can_loading = true;
         }
 
         private void status_FavButtonClick(object sender, RoutedEventArgs e)
@@ -101,23 +162,28 @@ namespace FanfouWP2
 
         void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
         {
+            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
         }
 
         void Instance_PublicTimelineSuccess(object sender, EventArgs e)
         {
+            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
+            this.publics.Clear();
             Utils.StatusesReform.reform(this.publics, ss);
         }
 
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
         {
+            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
         }
 
         private void Instance_MentionTimelineSuccess(object sender, EventArgs e)
         {
+            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             Utils.StatusesReform.reform(this.mentions, ss);
@@ -125,11 +191,13 @@ namespace FanfouWP2
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
         {
+            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
         }
 
         private void Instance_HomeTimelineSuccess(object sender, EventArgs e)
         {
+            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             Utils.StatusesReform.reform(this.statuses, ss);

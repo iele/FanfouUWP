@@ -192,7 +192,7 @@ namespace FanfouWP2
         {
             this.defaultViewModel["page"] = "第" + (this.flipView.SelectedIndex + 1).ToString() + "页";
 
-            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1)
+            if (this.flipView.SelectedIndex == this.flipView.Items.Count() - 1 && this.flipView.Items.Count > 0)
             {
                 loading.Visibility = Visibility.Visible;
                 switch (currentType)
@@ -208,33 +208,6 @@ namespace FanfouWP2
                 }
             }
         }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.statuses.Clear();
-            loading.Visibility = Visibility.Visible;
-
-            switch (currentType)
-            {
-                case PageType.Statuses:
-                    FanfouAPI.FanfouAPI.Instance.StatusUserTimeline((data as User).id, 60, 1);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的消息";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的消息";
-                    break;
-                case PageType.Favorite:
-                    FanfouAPI.FanfouAPI.Instance.FavoritesId(FanfouAPI.FanfouAPI.Instance.currentUser.id, 60, 1);
-                    if ((data as User).id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
-                        this.defaultViewModel["title"] = "我的收藏";
-                    else
-                        this.defaultViewModel["title"] = (data as User).screen_name + "的收藏";
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private void LeftButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.flipView.SelectedIndex > 0)

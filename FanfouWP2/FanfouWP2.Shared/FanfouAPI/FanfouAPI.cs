@@ -324,7 +324,7 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void StatusUserTimeline(string id, int count, int page = 1, string since_id = "", string max_id = "")
+        public async void StatusUserTimeline(string id, int count, int page = 0, string since_id = "", string max_id = "")
         {
             try
             {
@@ -349,7 +349,7 @@ namespace FanfouWP2.FanfouAPI
                     UserTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void StatusHomeTimeline(int count, int page = 1, string since_id = "", string max_id = "")
+        public async void StatusHomeTimeline(int count, int page = 0, string since_id = "", string max_id = "")
         {
             try
             {
@@ -374,7 +374,7 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void StatusPublicTimeline(int count = 20, int page = 1, string since_id = "", string max_id = "")
+        public async void StatusPublicTimeline(int count = 20, int page = 0, string since_id = "", string max_id = "")
         {
             try
             {
@@ -398,7 +398,7 @@ namespace FanfouWP2.FanfouAPI
                     PublicTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void StatusMentionTimeline(int count, int page = 1, string since_id = "", string max_id = "")
+        public async void StatusMentionTimeline(int count, int page = 0, string since_id = "", string max_id = "")
         {
             try
             {
@@ -425,7 +425,7 @@ namespace FanfouWP2.FanfouAPI
         #endregion
         #region favorite
 
-        public async void FavoritesId(string id, int count, int page = 1)
+        public async void FavoritesId(string id, int count, int page = 0)
         {
             try
             {
@@ -550,7 +550,7 @@ namespace FanfouWP2.FanfouAPI
                     UsersShowFailed(this, new FailedEventArgs());
             }
         }
-        public async void UsersFollowers(string id, int count = 60, int page = 1)
+        public async void UsersFollowers(string id, int count = 60, int page = 0)
         {
             try
             {
@@ -571,7 +571,7 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void UsersFriends(string id, int count = 60, int page = 1)
+        public async void UsersFriends(string id, int count = 60, int page = 0)
         {
             try
             {
@@ -601,7 +601,7 @@ namespace FanfouWP2.FanfouAPI
         {
 
         }
-        public void FriendshipRequests(int page = 1)
+        public void FriendshipRequests(int page = 0)
         {
 
         }
@@ -620,7 +620,7 @@ namespace FanfouWP2.FanfouAPI
         }
         #endregion
         #region photo
-        public async void PhotosUserTimeline(string id, int count, int page = 1, string since_id = "", string max_id = "")
+        public async void PhotosUserTimeline(string id, int count, int page = 0, string since_id = "", string max_id = "")
         {
             try
             {
@@ -652,7 +652,7 @@ namespace FanfouWP2.FanfouAPI
 
         #endregion
         #region direct
-        public async void DirectMessagesConversationList(int page = 1, int count = 20)
+        public async void DirectMessagesConversationList(int page = 0, int count = 20)
         {
             try
             {
@@ -673,7 +673,7 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void DirectMessagesConversation(string id, int count = 60, int page = 1)
+        public async void DirectMessagesConversation(string id, int count = 60, int page = 0)
         {
             try
             {

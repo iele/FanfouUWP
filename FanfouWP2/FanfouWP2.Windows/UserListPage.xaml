@@ -65,7 +65,6 @@
             <TextBlock x:Name="pageTitle" Text="{Binding title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
 				IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei" FontSize="56"/>
             <StackPanel Grid.Column="1" Margin="0,45,40,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <AppBarButton HorizontalAlignment="Right" Icon="Sync" x:Name="RefreshButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="RefreshButton_Click"/>
                 <AppBarButton HorizontalAlignment="Right" Icon="Previous" x:Name="LeftButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="LeftButton_Click"/>
                 <AppBarButton HorizontalAlignment="Right" Icon="Next" x:Name="RightButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="RightButton_Click"/>
             </StackPanel>

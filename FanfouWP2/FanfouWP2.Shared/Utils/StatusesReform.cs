@@ -14,22 +14,40 @@ namespace FanfouWP2.Utils
             if (list.Count == 0)
                 return;
 
-            list.Reverse();
-            foreach (var i in list)
+            if (statuses.Count == 0)
             {
-                for (var k = statuses.Count - 1; k == 0; k--)
+                foreach (var item in list)
+                    statuses.Add(item);
+                return;
+            }
+            else
+            {
+                foreach (var i in list)
                 {
-                    if (i.rawid > statuses[k].rawid)
+                    var ss = from s in statuses where s.rawid < i.rawid select s;
+                    if (ss.Count() == 0)
                     {
-                        statuses.Insert(statuses.IndexOf(statuses[k]), i);
+                        statuses.Add(i);
                         goto inserted;
                     }
+                    ss = from s in statuses where s.rawid > i.rawid select s;
+                    if (ss.Count() == 0)
+                    {
+                        statuses.Insert(0, i);
+                        goto inserted;
+                    }
+
+                    for (var k = statuses.Count - 1; k == 0; k--)
+                    {
+                        if (i.rawid > statuses[k].rawid)
+                        {
+                            statuses.Insert(statuses.IndexOf(statuses[k]), i);
+                            goto inserted;
+                        }
+                    }
+                inserted:
+                    continue;
                 }
-                var ss = from s in statuses where s.id == i.id select s;
-                if (ss.Count() == 0)
-                    statuses.Insert(0, i);
-            inserted:
-                continue;
             }
         }
     }

@@ -108,7 +108,7 @@ namespace FanfouWP2
                 message.setUser((e.ClickedItem as DirectMessageItem).dm.sender);
             else
                 message.setUser((e.ClickedItem as DirectMessageItem).dm.recipient);
-      
+
             popup.IsOpen = true;
         }
 
@@ -121,14 +121,6 @@ namespace FanfouWP2
                 loading.Visibility = Visibility.Visible;
                 FanfouAPI.FanfouAPI.Instance.DirectMessagesConversationList(this.flipView.Items.Count() + 1, 60);
             }
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.messages.Clear();
-            loading.Visibility = Visibility.Visible;
-
-            FanfouAPI.FanfouAPI.Instance.DirectMessagesConversationList(1, 60);
         }
 
         private void LeftButton_Click(object sender, RoutedEventArgs e)
