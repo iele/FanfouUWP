@@ -36,6 +36,21 @@ namespace FanfouWP2.CustomControl
 
             FanfouAPI.FanfouAPI.Instance.DirectMessageConversationSuccess += Instance_DirectMessageConversationSuccess;
             FanfouAPI.FanfouAPI.Instance.DirectMessageConversationFailed += Instance_DirectMessageConversationFailed;
+
+            FanfouAPI.FanfouAPI.Instance.DirectMessageNewSuccess += Instance_DirectMessageNewSuccess;
+            FanfouAPI.FanfouAPI.Instance.DirectMessageNewFailed += Instance_DirectMessageNewFailed;
+        }
+
+        void Instance_DirectMessageNewFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_DirectMessageNewSuccess(object sender, EventArgs e)
+        {
+            this.message.Text = "";
+            this.list.Add(sender as DirectMessage);
+            if (list.Count != 0)
+                this.listView.ScrollIntoView(list.Last());
         }
 
         void Instance_DirectMessageConversationFailed(object sender, FailedEventArgs e)
@@ -48,13 +63,23 @@ namespace FanfouWP2.CustomControl
             ss.Reverse();
             this.list = new ObservableCollection<DirectMessage>(ss);
             this.defaultViewModel["list"] = list;
+            if (list.Count != 0)
+                this.listView.ScrollIntoView(list.Last());
         }
 
-        public void setUser(User user){
+        public void setUser(User user)
+        {
             this.user = user;
             this.Title = "和" + user.screen_name + "的对话";
             this.list.Clear();
             FanfouAPI.FanfouAPI.Instance.DirectMessagesConversation(user.id, 60);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.message.Text.Count() > 0) {
+                FanfouAPI.FanfouAPI.Instance.DirectMessagesNew(user.id, this.message.Text);
+            }
         }
     }
 }

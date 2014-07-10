@@ -645,8 +645,25 @@ namespace FanfouWP2.FanfouAPI
                     PhotosUserTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public void PhotoUpload(string status, WriteableBitmap photo, string location = "")
+        public async void PhotoUpload(string status, StorageFile photo, string location = "")
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("status", status);
+                if (location != "")
+                    parameters.Add("location", location);
+
+                var result = await client.PostRequestWithFile<Status>(FanfouConsts.PHOTOS_UPLOAD, parameters, "photo","image/jpeg", photo);
+                if (PhotosUploadSuccess != null)
+                    PhotosUploadSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (PhotosUploadFailed != null)
+                    PhotosUploadFailed(this, new FailedEventArgs());
+            }
         }
 
 
@@ -695,9 +712,26 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public void DirectMessagesNew(string user, string text, string in_reply_to_id)
+        public async void DirectMessagesNew(string user, string text, string in_reply_to_id = "")
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("user", user);
+                parameters.Add("text", text);
+                if (in_reply_to_id != "")
+                    parameters.Add("in_reply_to_id", in_reply_to_id);
 
+                var result = await client.PostRequestObject<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_NEW, parameters);
+                if (DirectMessageNewSuccess != null)
+                    DirectMessageNewSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (DirectMessageNewFailed != null)
+                    DirectMessageNewFailed(this, new FailedEventArgs());
+            }
         }
         #endregion
 

@@ -5,6 +5,7 @@ using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -151,7 +152,7 @@ namespace FanfouWP2.FanfouAPI
             using (var client = new HttpClient())
             {
                 var urlStr = baseUrl + "/" + url;
-               
+
                 var oauth = generateOAuthHeader(parameters, url, "POST");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
@@ -183,17 +184,32 @@ namespace FanfouWP2.FanfouAPI
                 return obj;
             }
         }
-        public async Task<string> PostRequestWithFile(string url, Parameters parameters, Stream file)
+        public async Task<T> PostRequestWithFile<T>(string url, Parameters parameters, string filePara, string type, StorageFile file) where T : Item
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-                client.DefaultRequestHeaders.Add("Method", "POST");
+                var urlStr = baseUrl + "/" + url;
+
+                var oauth = generateOAuthHeader(new Parameters(), url, "POST");
+                client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
                 Windows.Storage.Streams.Buffer buff = new Windows.Storage.Streams.Buffer(1024);
-                var content = new HttpBufferContent(buff);
-                using (var response = await client.PostAsync(new Uri(baseUrl + "/" + url), content))
+                var content = new HttpMultipartFormDataContent();
+                var c = new HttpFormUrlEncodedContent(parameters.Items);
+                content.Add(c);
+                var s = await file.OpenStreamForReadAsync();
+                var f = new HttpStreamContent(s.AsInputStream());
+                f.Headers.ContentType.MediaType = type;
+                content.Add(f, filePara);
+                using (var response = await client.PostAsync(new Uri(urlStr), content))
                 {
-                    return await response.Content.ReadAsStringAsync();
+                    var result = await response.Content.ReadAsStringAsync();
+                    response.EnsureSuccessStatusCode();
+                    var ds = new DataContractJsonSerializer(typeof(T));
+                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(result)))
+                    {
+                        var obj = ds.ReadObject(ms) as T;
+                        return obj;
+                    }
                 }
             }
         }

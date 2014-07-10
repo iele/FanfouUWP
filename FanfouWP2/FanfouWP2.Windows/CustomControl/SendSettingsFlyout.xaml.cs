@@ -6,12 +6,15 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace FanfouWP2.CustomControl
@@ -26,9 +29,10 @@ namespace FanfouWP2.CustomControl
 
         private string location;
 
-        public enum SendMode { Normal, Reply, Repose, ReplyUser };
+        public enum SendMode { Normal, Reply, Repose, ReplyUser, Photo };
         private SendMode mode;
         private Item data;
+        private StorageFile file;
 
         public SendSettingsFlyout()
         {
@@ -38,7 +42,29 @@ namespace FanfouWP2.CustomControl
 
             FanfouAPI.FanfouAPI.Instance.StatusUpdateSuccess += Instance_StatusUpdateSuccess;
             FanfouAPI.FanfouAPI.Instance.StatusUpdateFailed += Instance_StatusUpdateFailed;
+
+            FanfouAPI.FanfouAPI.Instance.PhotosUploadSuccess += Instance_PhotosUploadSuccess;
+            FanfouAPI.FanfouAPI.Instance.PhotosUploadFailed += Instance_PhotosUploadFailed;
         }
+
+        void Instance_PhotosUploadFailed(object sender, FailedEventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            if (StatusUpdateFailed != null)
+            {
+                StatusUpdateFailed(this, e);
+            }
+        }
+
+        void Instance_PhotosUploadSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            if (StatusUpdateSuccess != null)
+            {
+                StatusUpdateSuccess(this, e);
+            }
+        }
+
         private async void getLocation()
         {
             location = await Utils.GeoLocator.getGeolocator();
@@ -131,6 +157,13 @@ namespace FanfouWP2.CustomControl
                     else
                         FanfouAPI.FanfouAPI.Instance.StatusUpdate(this.send.Text, in_reply_to_user_id: (data as User).id);
                 }
+                else if (mode == SendMode.Photo)
+                {
+                    if (location != "")
+                        FanfouAPI.FanfouAPI.Instance.PhotoUpload(this.send.Text, file, location);
+                    else
+                        FanfouAPI.FanfouAPI.Instance.PhotoUpload(this.send.Text, file);
+                }
                 else
                 {
                     if (location != "")
@@ -147,6 +180,25 @@ namespace FanfouWP2.CustomControl
                 this.send.Text = this.send.Text + " #" + this.tag.Text + "#";
             this.tag.Text = "";
             this.TagFlyoutBase.Hide();
+        }
+        private async void ImageAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            var openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".png");
+            openPicker.FileTypeFilter.Add(".bmp");
+            file = await openPicker.PickSingleFileAsync();
+            if (null != file)
+            {
+                var bi = new BitmapImage();
+                var s = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                await bi.SetSourceAsync(s);
+                this.image.Source = bi;
+                mode = SendMode.Photo;
+            }
         }
     }
 }

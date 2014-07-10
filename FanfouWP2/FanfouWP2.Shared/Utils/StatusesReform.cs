@@ -24,7 +24,12 @@ namespace FanfouWP2.Utils
             {
                 foreach (var i in list)
                 {
-                    var ss = from s in statuses where s.rawid < i.rawid select s;
+                    var ss = from s in statuses where s.rawid == i.rawid select s;
+                    if (ss.Count() != 0)
+                    {
+                        goto inserted;
+                    }
+                    ss = from s in statuses where s.rawid < i.rawid select s;
                     if (ss.Count() == 0)
                     {
                         statuses.Add(i);

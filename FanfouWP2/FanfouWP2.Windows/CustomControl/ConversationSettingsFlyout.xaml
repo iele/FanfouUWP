@@ -145,7 +145,7 @@
     		<RowDefinition/>
     		<RowDefinition Height="Auto"/>
     	</Grid.RowDefinitions>
-        <ListView x:Name="listView" Margin="0" ItemsSource="{Binding list}" Padding="10,0" HorizontalContentAlignment="Stretch">
+        <ListView x:Name="listView" Margin="0" ItemsSource="{Binding list}" Padding="10,0" SelectionMode="None" HorizontalContentAlignment="Stretch" >
             <ListView.ItemTemplateSelector>
                 <selector:MessageItemTemplateSelector  MessageSelfTemplate="{StaticResource MessageOtherItemControl}" MessageOtherTemplate="{StaticResource MessageItemControl}"/>
             </ListView.ItemTemplateSelector>
@@ -155,8 +155,8 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBox TextWrapping="Wrap" FontFamily="Microsoft YaHei" Margin="10,10,0,10" PlaceholderText="发送新私信"/>
-            <Button Content="发送" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="7" Grid.Column="1" FontFamily="Microsoft YaHei"/>
+            <TextBox x:Name="message" TextWrapping="Wrap" FontFamily="Microsoft YaHei" Margin="10,10,0,10" PlaceholderText="发送新私信"/>
+            <Button Content="发送" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="7" Grid.Column="1" FontFamily="Microsoft YaHei" Click="Button_Click"/>
         </Grid>
         <Popup Grid.RowSpan="2">
             <Grid Background="#FFE5E5E5" Height="0" Width="0"/>
