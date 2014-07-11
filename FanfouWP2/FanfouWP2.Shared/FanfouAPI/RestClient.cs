@@ -184,7 +184,7 @@ namespace FanfouWP2.FanfouAPI
                 return obj;
             }
         }
-        public async Task<T> PostRequestWithFile<T>(string url, Parameters parameters, string filePara, string type, StorageFile file) where T : Item
+        public async Task<T> PostRequestWithFile<T>(string url, Parameters parameters, string filePara, StorageFile file) where T : Item
         {
             using (var client = new HttpClient())
             {
@@ -194,12 +194,14 @@ namespace FanfouWP2.FanfouAPI
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
                 Windows.Storage.Streams.Buffer buff = new Windows.Storage.Streams.Buffer(1024);
                 var content = new HttpMultipartFormDataContent();
-                var c = new HttpFormUrlEncodedContent(parameters.Items);
-                content.Add(c);
+                foreach (var item in parameters.Items) {
+                    var c = new HttpStringContent(item.Value);
+                    content.Add(c, item.Key);
+                }
                 var s = await file.OpenStreamForReadAsync();
                 var f = new HttpStreamContent(s.AsInputStream());
-                f.Headers.ContentType.MediaType = type;
-                content.Add(f, filePara);
+                f.Headers.ContentType = new HttpMediaTypeHeaderValue(file.ContentType);
+                content.Add(f, filePara,file.Name);
                 using (var response = await client.PostAsync(new Uri(urlStr), content))
                 {
                     var result = await response.Content.ReadAsStringAsync();

@@ -655,7 +655,7 @@ namespace FanfouWP2.FanfouAPI
                 if (location != "")
                     parameters.Add("location", location);
 
-                var result = await client.PostRequestWithFile<Status>(FanfouConsts.PHOTOS_UPLOAD, parameters, "photo","image/jpeg", photo);
+                var result = await client.PostRequestWithFile<Status>(FanfouConsts.PHOTOS_UPLOAD, parameters, "photo", photo);
                 if (PhotosUploadSuccess != null)
                     PhotosUploadSuccess(result, new EventArgs());
             }
