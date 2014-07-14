@@ -69,6 +69,60 @@ namespace FanfouWP2
             this.status.ReplyButtonClick += status_ReplyButtonClick;
             this.status.RepostButtonClick += status_RepostButtonClick;
             this.status.FavButtonClick += status_FavButtonClick;
+            this.status.FavCreateSuccess += status_FavCreateSuccess;
+            this.status.FavDestroySuccess += status_FavDestroySuccess;
+        }
+
+        void status_FavDestroySuccess(object sender, EventArgs e)
+        {
+            var s = sender as Status;
+            foreach (var i in statuses)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = false;
+                }
+            }
+            foreach (var i in mentions)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = false;
+                }
+            }
+            foreach (var i in publics)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = false;
+                }
+            }
+        }
+
+        void status_FavCreateSuccess(object sender, EventArgs e)
+        {
+            var s = sender as Status;
+            foreach (var i in statuses)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = true;
+                }
+            }
+            foreach (var i in mentions)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = false;
+                }
+            }
+            foreach (var i in publics)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = false;
+                }
+            }
         }
 
         void HomePage_Loaded(object sender, RoutedEventArgs e)
@@ -268,30 +322,15 @@ namespace FanfouWP2
             switch (currentType)
             {
                 case PageType.Statuses:
-                    if (statuses.Count == 0)
-                        FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-                    else
-                    {
-                        FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, since_id: statuses.First().id);
-                    }
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
                     this.defaultViewModel["title"] = "我的消息";
                     break;
                 case PageType.Mentions:
-                    if (mentions.Count == 0)
-                        FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
-                    else
-                    {
-                        FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, since_id: mentions.First().id);
-                    }
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
                     this.defaultViewModel["title"] = "提及我的";
                     break;
                 case PageType.Publics:
-                    if (publics.Count == 0)
-                        FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
-                    else
-                    {
-                        FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, since_id: publics.First().id);
-                    }
+                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
                     this.defaultViewModel["title"] = "随便看看";
                     break;
                 default:

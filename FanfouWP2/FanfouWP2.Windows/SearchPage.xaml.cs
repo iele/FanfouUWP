@@ -65,6 +65,31 @@ namespace FanfouWP2
             this.status.ReplyButtonClick += status_ReplyButtonClick;
             this.status.RepostButtonClick += status_RepostButtonClick;
             this.status.FavButtonClick += status_FavButtonClick;
+            this.status.FavCreateSuccess += status_FavCreateSuccess;
+            this.status.FavDestroySuccess += status_FavDestroySuccess;
+        }
+
+        void status_FavDestroySuccess(object sender, EventArgs e)
+        {
+            var s = sender as Status;
+            foreach (var i in statuses)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = false;
+                }
+            }
+        }
+        void status_FavCreateSuccess(object sender, EventArgs e)
+        {
+            var s = sender as Status;
+            foreach (var i in statuses)
+            {
+                if (i.id == s.id)
+                {
+                    i.favorited = true;
+                }
+            }        
         }
 
         void Instance_SearchUserFailed(object sender, FailedEventArgs e)

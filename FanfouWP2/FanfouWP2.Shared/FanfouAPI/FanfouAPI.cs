@@ -445,14 +445,40 @@ namespace FanfouWP2.FanfouAPI
                     FavoritesFailed(this, new FailedEventArgs());
             }
         }
-        public void FavoritesCreate(string id)
+        public async void FavoritesCreate(string id)
         {
-
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                var result = await client.PostRequestObject<Status>(FanfouConsts.FAVORITES_CREATE_ID + ":" + id + ".json", parameters);
+                if (FavoritesCreateSuccess != null)
+                    FavoritesCreateSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (FavoritesCreateFailed != null)
+                    FavoritesCreateFailed(this, new FailedEventArgs());
+            }
         }
 
-        public void FavoritesDestroy(string id)
+        public async void FavoritesDestroy(string id)
         {
-
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+                var result = await client.PostRequestObject<Status>(FanfouConsts.FAVORITES_DESTROY_ID + id + ".json", parameters);
+                if (FavoritesDestroySuccess != null)
+                    FavoritesDestroySuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (FavoritesDestroyFailed != null)
+                    FavoritesDestroyFailed(this, new FailedEventArgs());
+            }
         }
         #endregion
         #region search

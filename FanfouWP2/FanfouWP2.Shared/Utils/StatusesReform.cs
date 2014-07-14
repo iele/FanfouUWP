@@ -20,39 +20,53 @@ namespace FanfouWP2.Utils
                     statuses.Add(item);
                 return;
             }
-            else
+            foreach (var i in list)
             {
-                foreach (var i in list)
+                var eq = new ObservableCollection<Status>();
+                var bt = new ObservableCollection<Status>();
+                var lt = new ObservableCollection<Status>();
+
+                foreach (var s in statuses)
                 {
-                    var ss = from s in statuses where s.rawid == i.rawid select s;
-                    if (ss.Count() != 0)
+                    if (s.rawid == i.rawid)
                     {
-                        goto inserted;
+                        eq.Add(s);
+                    } if (s.rawid <= i.rawid)
+                    {
+                        bt.Add(s);
                     }
-                    ss = from s in statuses where s.rawid < i.rawid select s;
-                    if (ss.Count() == 0)
+                    if (s.rawid >= i.rawid)
                     {
-                        statuses.Add(i);
-                        goto inserted;
-                    }
-                    ss = from s in statuses where s.rawid > i.rawid select s;
-                    if (ss.Count() == 0)
-                    {
-                        statuses.Insert(0, i);
-                        goto inserted;
+                        lt.Add(s);
                     }
 
-                    for (var k = statuses.Count - 1; k == 0; k--)
-                    {
-                        if (i.rawid > statuses[k].rawid)
-                        {
-                            statuses.Insert(statuses.IndexOf(statuses[k]), i);
-                            goto inserted;
-                        }
-                    }
-                inserted:
-                    continue;
                 }
+
+                if (eq.Count() != 0)
+                {
+                    goto inserted;
+                }
+                if (bt.Count() == 0)
+                {
+                    statuses.Add(i);
+                    goto inserted;
+                }
+                if (lt.Count() == 0)
+                {
+                    statuses.Insert(0, i);
+                    goto inserted;
+                }
+
+                for (var k = statuses.Count - 1; k == 0; k--)
+                {
+                    if (i.rawid > statuses[k].rawid)
+                    {
+                        statuses.Insert(statuses.IndexOf(statuses[k]), i);
+                        goto inserted;
+                    }
+                }
+            inserted:
+                continue;
             }
         }
     }
