@@ -20,52 +20,41 @@ namespace FanfouWP2.Utils
                     statuses.Add(item);
                 return;
             }
-            foreach (var i in list)
+
+            if (list.Last().rawid > statuses.Last().rawid)
             {
-                var eq = new ObservableCollection<Status>();
-                var bt = new ObservableCollection<Status>();
-                var lt = new ObservableCollection<Status>();
-
-                foreach (var s in statuses)
-                {
-                    if (s.rawid == i.rawid)
-                    {
-                        eq.Add(s);
-                    } if (s.rawid <= i.rawid)
-                    {
-                        bt.Add(s);
-                    }
-                    if (s.rawid >= i.rawid)
-                    {
-                        lt.Add(s);
-                    }
-
-                }
-
-                if (eq.Count() != 0)
-                {
-                    goto inserted;
-                }
-                if (bt.Count() == 0)
-                {
-                    statuses.Add(i);
-                    goto inserted;
-                }
-                if (lt.Count() == 0)
+                list.Reverse();
+                foreach (var i in list)
                 {
                     statuses.Insert(0, i);
-                    goto inserted;
+                }
+                return;
+            }
+
+            if (list.First().rawid < statuses.First().rawid)
+            {
+                foreach (var i in list)
+                {
+                    statuses.Add(i);
+                }
+                return;
+            }
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                var j = 0;
+                for (j = 0; j < statuses.Count; j++)
+                {
+                    if (list[i].rawid < statuses[j].rawid)
+                        continue;
+                    if (list[i].rawid > statuses[j].rawid)
+                        break;
+                    if (list[i].rawid == statuses[j].rawid)
+                        goto equal;
                 }
 
-                for (var k = statuses.Count - 1; k == 0; k--)
-                {
-                    if (i.rawid > statuses[k].rawid)
-                    {
-                        statuses.Insert(statuses.IndexOf(statuses[k]), i);
-                        goto inserted;
-                    }
-                }
-            inserted:
+                statuses.Insert(j, list[i]);
+            equal:
                 continue;
             }
         }

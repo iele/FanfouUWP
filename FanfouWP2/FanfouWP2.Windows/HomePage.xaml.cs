@@ -322,11 +322,11 @@ namespace FanfouWP2
             switch (currentType)
             {
                 case PageType.Statuses:
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, since_id: statuses.First().id);
                     this.defaultViewModel["title"] = "我的消息";
                     break;
                 case PageType.Mentions:
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, since_id: mentions.First().id);
                     this.defaultViewModel["title"] = "提及我的";
                     break;
                 case PageType.Publics:
