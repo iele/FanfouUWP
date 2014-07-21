@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Web.Http;
+using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
 
 namespace FanfouWP2.FanfouAPI
@@ -25,7 +26,11 @@ namespace FanfouWP2.FanfouAPI
             this.secret = secret;
             this.token = token;
             this.tokenSecret = tokenSecret;
+
+            protocolFilter.AllowUI = false;
         }
+
+        private HttpBaseProtocolFilter protocolFilter = new HttpBaseProtocolFilter();
 
         private string generateXAuthHeader(string url, string username, string password)
         {
@@ -79,7 +84,7 @@ namespace FanfouWP2.FanfouAPI
         }
         public async Task Login(string url, string username, string password)
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(protocolFilter))
             {
                 var oauth = generateXAuthHeader(url, username, password);
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
@@ -97,7 +102,7 @@ namespace FanfouWP2.FanfouAPI
 
         public async Task<string> GetRequest(string url, Parameters parameters = null)
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(protocolFilter))
             {
                 var urlStr = baseUrl + "/" + url;
 
@@ -149,7 +154,7 @@ namespace FanfouWP2.FanfouAPI
 
         public async Task<string> PostRequest(string url, Parameters parameters)
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(protocolFilter))
             {
                 var urlStr = baseUrl + "/" + url;
 
@@ -186,7 +191,7 @@ namespace FanfouWP2.FanfouAPI
         }
         public async Task<T> PostRequestWithFile<T>(string url, Parameters parameters, string filePara, StorageFile file) where T : Item
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(protocolFilter))
             {
                 var urlStr = baseUrl + "/" + url;
 
@@ -194,14 +199,15 @@ namespace FanfouWP2.FanfouAPI
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
                 Windows.Storage.Streams.Buffer buff = new Windows.Storage.Streams.Buffer(1024);
                 var content = new HttpMultipartFormDataContent();
-                foreach (var item in parameters.Items) {
+                foreach (var item in parameters.Items)
+                {
                     var c = new HttpStringContent(item.Value);
                     content.Add(c, item.Key);
                 }
                 var s = await file.OpenStreamForReadAsync();
                 var f = new HttpStreamContent(s.AsInputStream());
                 f.Headers.ContentType = new HttpMediaTypeHeaderValue(file.ContentType);
-                content.Add(f, filePara,file.Name);
+                content.Add(f, filePara, file.Name);
                 using (var response = await client.PostAsync(new Uri(urlStr), content))
                 {
                     var result = await response.Content.ReadAsStringAsync();

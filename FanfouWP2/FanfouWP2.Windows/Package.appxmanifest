@@ -15,7 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FanfouWP2.Windows.App">
-      <m2:VisualElements DisplayName="FanfouWP2.Windows" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="FanfouWP2.Windows" ForegroundText="light" BackgroundColor="#464646">
+      <m2:VisualElements DisplayName="FanfouWP2.Windows" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="FanfouWP2.Windows" ForegroundText="light" BackgroundColor="#3A9DCF" ToastCapable="true">
+        <m2:DefaultTile ShortName="饭窗">
+        </m2:DefaultTile>
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
         <m2:InitialRotationPreference>
           <m2:Rotation Preference="landscape" />
