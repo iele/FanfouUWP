@@ -413,5 +413,10 @@ namespace FanfouWP2
         {
             rotation.Rotation = 180;
         }
+
+        private void SelfButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

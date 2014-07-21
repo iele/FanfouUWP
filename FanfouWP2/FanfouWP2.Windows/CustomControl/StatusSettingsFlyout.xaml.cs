@@ -66,7 +66,7 @@ namespace FanfouWP2.CustomControl
 
         void Instance_FavoritesDestroySuccess(object sender, EventArgs e)
         {
-            this.status.favorited = false;
+            this.status = sender as Status;
             this.FavButton.Icon = new SymbolIcon(Symbol.SolidStar);
             this.FavButton.Label = "收藏";
             if (FavDestroySuccess != null)
@@ -81,7 +81,7 @@ namespace FanfouWP2.CustomControl
 
         void Instance_FavoritesCreateSuccess(object sender, EventArgs e)
         {
-            this.status.favorited = true;
+            this.status = sender as Status;
             this.FavButton.Icon = new SymbolIcon(Symbol.OutlineStar);
             this.FavButton.Label = "取消收藏";
             if (FavCreateSuccess != null)

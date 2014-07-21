@@ -22,7 +22,7 @@ namespace FanfouWP2
     /// <summary>
     /// 显示分组的项集合的页。
     /// </summary>
-    public sealed partial class UserPage : Page
+    public sealed partial class UserPage2 : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -48,7 +48,7 @@ namespace FanfouWP2
             get { return this.navigationHelper; }
         }
 
-        public UserPage()
+        public UserPage2()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
@@ -131,7 +131,7 @@ namespace FanfouWP2
 
         void status_UserButtonClick(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage2), currentClick.user);
+            Frame.Navigate(typeof(UserPage), currentClick.user);
         }
 
         void Instance_UsersFriendsFailed(object sender, FailedEventArgs e)
@@ -253,7 +253,7 @@ namespace FanfouWP2
 
         private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage2), e.ClickedItem);
+            Frame.Navigate(typeof(UserPage), e.ClickedItem);
         }
 
         private void hub_SectionHeaderClick(object sender, HubSectionHeaderClickEventArgs e)

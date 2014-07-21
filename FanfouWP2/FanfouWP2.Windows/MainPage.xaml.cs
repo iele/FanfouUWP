@@ -27,6 +27,13 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.LoginFailed += Instance_LoginFailed;
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
+
+            this.Loaded += MainPage_Loaded;            
+        }
+
+        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(LoginPage));
         }
 
         void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
