@@ -1,4 +1,5 @@
 ﻿using FanfouWP2.Common;
+using FanfouWP2.CustomControl;
 using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -71,6 +73,16 @@ namespace FanfouWP2
             this.status.FavButtonClick += status_FavButtonClick;
             this.status.FavCreateSuccess += status_FavCreateSuccess;
             this.status.FavDestroySuccess += status_FavDestroySuccess;
+        }
+        void onCommandsRequested(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs e)
+        {
+            SettingsCommand defaultsCommand = new SettingsCommand("账户", "账户",
+                (handler) =>
+                {
+                    AccountSettingsFlyout sf = new AccountSettingsFlyout();
+                    sf.Show();
+                });
+            e.Request.ApplicationCommands.Add(defaultsCommand);
         }
 
         void status_FavDestroySuccess(object sender, EventArgs e)

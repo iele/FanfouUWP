@@ -8,6 +8,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
+using FanfouWP.Storage;
 
 namespace FanfouWP2.FanfouAPI
 {
@@ -19,7 +20,14 @@ namespace FanfouWP2.FanfouAPI
         public string username;
         public string password;
 
-        public User currentUser { get; private set; }
+        public User currentUser;
+        public void setUserAuth(UserAuth auth)
+        {
+            this.oauthToken = auth.oauthToken;
+            this.oauthSecret = auth.oauthSecret;
+            this.username = auth.username;
+            this.password = auth.password;
+        }
 
         public delegate void LoginSuccessHandler(object sender, EventArgs e);
         public delegate void LoginFailedHandler(object sender, FailedEventArgs e);
@@ -242,6 +250,7 @@ namespace FanfouWP2.FanfouAPI
 
                 this.oauthToken = client.token;
                 this.oauthSecret = client.tokenSecret;
+
                 if (LoginSuccess != null)
                     LoginSuccess(this, new EventArgs());
             }
@@ -259,7 +268,14 @@ namespace FanfouWP2.FanfouAPI
             try
             {
                 var result = await GetClient().GetRequestObject<User>(FanfouConsts.VERIFY_CREDENTIALS);
-                this.currentUser = result;
+                currentUser = result;
+                var ua = new UserAuth();
+                ua.oauthToken = this.oauthToken;
+                ua.oauthSecret = this.oauthSecret;
+                ua.username = this.username;
+                ua.password = this.password;
+                SettingStorage.Instance.currentUserAuth = ua;
+
                 if (VerifyCredentialsSuccess != null)
                     VerifyCredentialsSuccess(result, new EventArgs());
             }

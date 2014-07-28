@@ -9,6 +9,19 @@ using System.Threading.Tasks;
 namespace FanfouWP2.FanfouAPI
 {
     [DataContract]
+    public class UserAuth : Item {
+
+        [DataMember(Name = "oauthToken", IsRequired = false)]
+        public string oauthToken { get; set; }
+        [DataMember(Name = "oauthSecret", IsRequired = false)]
+        public string oauthSecret { get; set; }
+        [DataMember(Name = "username", IsRequired = false)]
+        public string username { get; set; }
+        [DataMember(Name = "password", IsRequired = false)]
+        public string password { get; set; }
+    }
+
+    [DataContract]
     public class UserList : Item
     {
         [DataMember(Name = "total_number", IsRequired = false)]
@@ -73,9 +86,5 @@ namespace FanfouWP2.FanfouAPI
         public bool profile_background_tile { get; set; }
         [DataMember(Name = "status", IsRequired = false)]
         public Status status { get; set; }
-        public string oauthToken { get; set; }
-        public string oauthSecret { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
     }
 }

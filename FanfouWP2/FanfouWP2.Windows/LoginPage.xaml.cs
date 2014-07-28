@@ -1,4 +1,5 @@
-﻿using FanfouWP2.Common;
+﻿using FanfouWP.Storage;
+using FanfouWP2.Common;
 using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;

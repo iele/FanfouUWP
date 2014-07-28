@@ -8,7 +8,7 @@
     xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
     xmlns:itemcontrol="using:FanfouWP2.ItemControl"
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
-    mc:Ignorable="d"
+   mc:Ignorable="d"
     IconSource="Assets/SmallLogo.png"
     Title="{Binding status.user.screen_name}" Width="500" HeaderBackground="#FF006FA6" Background="#FF399DCE" RequestedTheme="Dark"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}" FontFamily="Microsoft YaHei">
@@ -118,7 +118,6 @@
                                     </Grid.ColumnDefinitions>
                                     <Button x:Name="BackButton" Background="{Binding TemplateSettings.HeaderBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Height="30" Margin="39,0,0,12" Style="{StaticResource BackButtonStyle}" VerticalAlignment="Bottom" Width="30"/>
                                     <TextBlock Grid.Column="2" Foreground="{Binding TemplateSettings.HeaderForeground, RelativeSource={RelativeSource Mode=TemplatedParent}}" FontWeight="SemiLight" FontSize="{ThemeResource SettingsFlyoutHeaderThemeFontSize}" Margin="10,0,0,15" Text="{TemplateBinding Title}" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei"/>
-                                    <Image Grid.Column="1" Height="30" Margin="10,0,0,15" Source="{Binding status.user.profile_image_url_large}" VerticalAlignment="Bottom" Width="30"/>
                                 </Grid>
                                 <Rectangle x:Name="InputPanePlaceholder" Grid.Row="2"/>
                                 <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{Binding TemplateSettings.ContentTransitions, RelativeSource={RelativeSource Mode=TemplatedParent}}" Content="{TemplateBinding Content}" Margin="0" Grid.Row="1"/>
@@ -158,7 +157,7 @@
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
+                </Grid.RowDefinitions>
 				<TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding status.text}" FontSize="21.333" Margin="10,10,10,0" IsTextSelectionEnabled="True">
 					<TextBlock.Transitions>
 						<TransitionCollection>
@@ -188,7 +187,7 @@
 						</ListView.ItemContainerStyle>
 					</ListView>
 				</StackPanel>
-				<Viewbox Margin="10,10,10,0" Grid.Row="3">
+                <Viewbox Margin="10,10,10,0" Grid.Row="3">
 					<Image Source="{Binding status.photo.largeurl}" Stretch="None">
 						<Image.Transitions>
 							<TransitionCollection>

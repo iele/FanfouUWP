@@ -1,10 +1,12 @@
-﻿using System;
+﻿using FanfouWP2.CustomControl;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.System;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -347,6 +349,7 @@ namespace FanfouWP2.Common
                     this.LoadState(this, new LoadStateEventArgs(e.Parameter, (Dictionary<String, Object>)frameState[this._pageKey]));
                 }
             }
+            SettingsPane.GetForCurrentView().CommandsRequested += onCommandsRequested;
         }
 
         /// <summary>
@@ -365,8 +368,46 @@ namespace FanfouWP2.Common
                 this.SaveState(this, new SaveStateEventArgs(pageState));
             }
             frameState[_pageKey] = pageState;
+     
+            SettingsPane.GetForCurrentView().CommandsRequested -= onCommandsRequested;
         }
 
+        /// <summary>
+        /// Handler for the CommandsRequested event. Add custom SettingsCommands here.
+        /// </summary>
+        /// <param name="e">Event data that includes a vector of commands (ApplicationCommands)</param>
+        void onCommandsRequested(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs e)
+        {
+            SettingsCommand infoCommand = new SettingsCommand("info", "关于",
+            (handler) =>
+            {
+                AccountSettingsFlyout sf = new AccountSettingsFlyout();
+                sf.Show();
+            });
+            e.Request.ApplicationCommands.Add(infoCommand); 
+            SettingsCommand accountCommand = new SettingsCommand("account", "账户",
+                (handler) =>
+                {
+                    AccountSettingsFlyout sf = new AccountSettingsFlyout();
+                    sf.Show();
+                });
+            e.Request.ApplicationCommands.Add(accountCommand);
+            SettingsCommand settingCommand = new SettingsCommand("setting", "设置",
+               (handler) =>
+               {
+                   AccountSettingsFlyout sf = new AccountSettingsFlyout();
+                   sf.Show();
+               });
+            e.Request.ApplicationCommands.Add(settingCommand);
+            SettingsCommand backCommand = new SettingsCommand("back", "反馈",
+              (handler) =>
+              {
+                  AccountSettingsFlyout sf = new AccountSettingsFlyout();
+                  sf.Show();
+              });
+            e.Request.ApplicationCommands.Add(backCommand); 
+          
+        }
         #endregion
     }
 

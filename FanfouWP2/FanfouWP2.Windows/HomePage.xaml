@@ -31,8 +31,7 @@
         		<Button Content="个人中心" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click"/>
         		<Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667"/>
         		<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667"/>
-        		<Button Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667"/>
-        		<Button Content="设置" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667"/>
+        		<Button x:Name="SearchButton" Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667"/>
         	</StackPanel>
         </AppBar>
     </Page.TopAppBar>

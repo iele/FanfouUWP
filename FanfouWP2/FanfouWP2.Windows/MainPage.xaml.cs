@@ -1,4 +1,5 @@
-﻿using FanfouWP2.FanfouAPI;
+﻿using FanfouWP.Storage;
+using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,8 +24,6 @@ namespace FanfouWP2
         {
             this.InitializeComponent();
 
-            FanfouAPI.FanfouAPI.Instance.LoginSuccess += Instance_LoginSuccess;
-            FanfouAPI.FanfouAPI.Instance.LoginFailed += Instance_LoginFailed;
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
 
@@ -33,30 +32,25 @@ namespace FanfouWP2
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(LoginPage));
+            if (SettingStorage.Instance.currentUserAuth == null)
+            {
+                Frame.Navigate(typeof(LoginPage));
+            }
+            else
+            {
+                FanfouAPI.FanfouAPI.Instance.setUserAuth(SettingStorage.Instance.currentUserAuth);
+                FanfouAPI.FanfouAPI.Instance.VerifyCredentials();
+            }
         }
 
         void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
         {
+            Frame.Navigate(typeof(LoginPage));
         }
 
         void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
         {
             Frame.Navigate(typeof(HomePage));
-        }
-
-        void Instance_LoginFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        void Instance_LoginSuccess(object sender, EventArgs e)
-        {
-            FanfouAPI.FanfouAPI.Instance.VerifyCredentials();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            FanfouAPI.FanfouAPI.Instance.Login("elephas", "myelephas");
         }
     }
 }
