@@ -378,10 +378,11 @@ namespace FanfouWP2.Common
         /// <param name="e">Event data that includes a vector of commands (ApplicationCommands)</param>
         void onCommandsRequested(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs e)
         {
+            e.Request.ApplicationCommands.Clear();           
             SettingsCommand infoCommand = new SettingsCommand("info", "关于",
             (handler) =>
             {
-                AccountSettingsFlyout sf = new AccountSettingsFlyout();
+                AboutSettingsFlyout sf = new AboutSettingsFlyout();
                 sf.Show();
             });
             e.Request.ApplicationCommands.Add(infoCommand); 

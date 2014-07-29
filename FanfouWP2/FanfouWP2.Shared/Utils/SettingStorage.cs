@@ -87,7 +87,10 @@ namespace FanfouWP.Storage
             }
             set
             {
-                getContainer().Values["currentUserAuth"] = serialize<UserAuth>(value);
+                if (value != null)
+                    getContainer().Values["currentUserAuth"] = serialize<UserAuth>(value);
+                else
+                    getContainer().Values.Remove("currentUserAuth");         
             }
         }
 

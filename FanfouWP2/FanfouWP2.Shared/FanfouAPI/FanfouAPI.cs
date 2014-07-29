@@ -262,7 +262,12 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-
+        public void Logout()
+        {
+            this.setUserAuth(new UserAuth());
+            this.currentUser = null;
+            SettingStorage.Instance.currentUserAuth = null;
+        }
         public async void VerifyCredentials()
         {
             try
