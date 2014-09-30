@@ -130,23 +130,11 @@
             <HubSection x:Name="favHubSection" ContentTemplate="{StaticResource FavoriteDataTemplate}" Header="收藏" IsHeaderInteractive="True"/>
         </Hub>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
-        <Popup x:Name="sendPopup" IsOpen="False">
-            <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
-            </Grid>
+        <Popup x:Name="sendPopup" IsOpen="False" Width="500" HorizontalAlignment="Right">
+            <customcontrol:SendSettingsFlyout x:Name="send" Width="500" BackClick="send_BackClick" Height="768"/>
         </Popup>
-        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10">
-        	<Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
-        		<Grid.ColumnDefinitions>
-        			<ColumnDefinition/>
-        			<ColumnDefinition Width="Auto"/>
-        		</Grid.ColumnDefinitions>
-        		<customcontrol:StatusSettingsFlyout x:Name="status" Width="500" Grid.Column="1" Grid.Row="1" BackClick="status_BackClick"/>
-        	</Grid>
+        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Width="500" HorizontalAlignment="Right">
+        	<customcontrol:StatusSettingsFlyout x:Name="status" Width="500" BackClick="status_BackClick" Height="768"/>
         </Popup>
     </Grid>
 </Page>

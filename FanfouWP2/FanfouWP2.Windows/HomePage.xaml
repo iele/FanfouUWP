@@ -23,20 +23,113 @@
             <MenuFlyoutItem Text="提及我的" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="ExtraLight" Click="MentionsMenuFlyoutItem_Click"/>
             <MenuFlyoutItem Text="随便看看" FontSize="30" FontFamily="Microsoft YaHei" FontWeight="ExtraLight" Click="PublicsMenuFlyoutItem_Click" />
         </MenuFlyout>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+        	<Setter Property="Background" Value="{ThemeResource ButtonBackgroundThemeBrush}"/>
+        	<Setter Property="Foreground" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
+        	<Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderThemeBrush}"/>
+        	<Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+        	<Setter Property="Padding" Value="12,4,12,4"/>
+        	<Setter Property="HorizontalAlignment" Value="Left"/>
+        	<Setter Property="VerticalAlignment" Value="Center"/>
+        	<Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        	<Setter Property="FontWeight" Value="SemiBold"/>
+        	<Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        	<Setter Property="Template">
+        		<Setter.Value>
+        			<ControlTemplate TargetType="Button">
+        				<Grid>
+        					<VisualStateManager.VisualStateGroups>
+        						<VisualStateGroup x:Name="CommonStates">
+        							<VisualState x:Name="Normal"/>
+        							<VisualState x:Name="PointerOver">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPointerOverBackgroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPointerOverForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="Pressed">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+        										<DiscreteObjectKeyFrame KeyTime="0">
+        											<DiscreteObjectKeyFrame.Value>
+        												<SolidColorBrush Color="#FF3A9DCF"/>
+        											</DiscreteObjectKeyFrame.Value>
+        										</DiscreteObjectKeyFrame>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+        										<DiscreteObjectKeyFrame KeyTime="0">
+        											<DiscreteObjectKeyFrame.Value>
+        												<SolidColorBrush Color="White"/>
+        											</DiscreteObjectKeyFrame.Value>
+        										</DiscreteObjectKeyFrame>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="FocusVisualBlack">
+        										<DiscreteObjectKeyFrame KeyTime="0">
+        											<DiscreteObjectKeyFrame.Value>
+        												<SolidColorBrush Color="#FF006FA6"/>
+        											</DiscreteObjectKeyFrame.Value>
+        										</DiscreteObjectKeyFrame>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="FocusVisualWhite">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Null}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="Disabled">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Border">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        						</VisualStateGroup>
+        						<VisualStateGroup x:Name="FocusStates">
+        							<VisualState x:Name="Focused">
+        								<Storyboard>
+        									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
+        									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="Unfocused"/>
+        							<VisualState x:Name="PointerFocused"/>
+        						</VisualStateGroup>
+        					</VisualStateManager.VisualStateGroups>
+        					<Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="3">
+        						<ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        					</Border>
+        					<Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" StrokeDashArray="1,1"/>
+        					<Rectangle x:Name="FocusVisualBlack" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" StrokeDashArray="1,1"/>
+        				</Grid>
+        			</ControlTemplate>
+        		</Setter.Value>
+        	</Setter>
+        </Style>
     </Page.Resources>
 
     <Page.TopAppBar>
         <AppBar Height="120" Background="#FF006FA6" BorderBrush="#FF006FA6">
-            <StackPanel Margin="0" Orientation="Horizontal" HorizontalAlignment="Left" Height="70">
-        		<Button Content="个人中心" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="15,0,0,0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click" FontWeight="ExtraLight"/>
-        		<Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667" FontWeight="ExtraLight"/>
-        		<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667" FontWeight="ExtraLight"/>
-        		<Button x:Name="SearchButton" Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="ExtraLight"/>
-        	</StackPanel>
+            <Viewbox ScrollViewer.HorizontalScrollMode="Disabled" Height="70" Margin="0" ScrollViewer.ZoomMode="Disabled" HorizontalAlignment="Left" >
+        		<StackPanel Orientation="Horizontal" Height="70" Margin="15,0">
+        			<Button Content="个人中心" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
+        			<Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
+        			<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
+        			<Button x:Name="SearchButton" Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
+        		</StackPanel>
+        	</Viewbox>
         </AppBar>
     </Page.TopAppBar>
 
-    <Grid>
+    <Grid x:Name="grid">
         <Grid.Background>
             <ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
         </Grid.Background>
@@ -50,7 +143,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid x:Name="grid1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -83,24 +176,12 @@
         </StackPanel>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
         <Rectangle Height="20" Margin="0" Stroke="#FF006FA6" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF006FA6"/>
-        <Popup x:Name="sendPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2">
-            <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <customcontrol:SendSettingsFlyout x:Name="send" Width="500" Grid.Column="1" Grid.Row="1" BackClick="send_BackClick"/>
-            </Grid>
+        <Popup x:Name="sendPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Height="{Binding ActualHeight, ElementName=pageRoot}" HorizontalAlignment="Right" Width="500">
+            <customcontrol:SendSettingsFlyout x:Name="send" Width="500" BackClick="send_BackClick" HorizontalAlignment="Right" Height="768" Margin="0"/>
         </Popup>
         <GridView x:Name="statusesGridView" Margin="0" Grid.Row="1" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" FontFamily="Microsoft YaHei" Padding="10,0,10,10"/>
-        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2">
-            <Grid Width="{Binding ActualWidth, ElementName=sendPopup}" Height="{Binding ActualHeight, ElementName=sendPopup}" Background="#7F808080">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <customcontrol:StatusSettingsFlyout x:Name="status" Width="500" Grid.Column="1" Grid.Row="1" BackClick="status_BackClick"/>
-            </Grid>
+        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right">
+        	<customcontrol:StatusSettingsFlyout x:Name="status" Width="500" BackClick="status_BackClick" Height="768"/>
         </Popup>
     </Grid>
 </Page>
