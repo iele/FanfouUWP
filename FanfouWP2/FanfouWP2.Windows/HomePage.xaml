@@ -10,9 +10,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
      xmlns:itemcontrol="using:FanfouWP2.ItemControl" FontFamily="Microsoft YaHei"
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
+    xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
     mc:Ignorable="d" NavigationCacheMode="Required" BorderBrush="#FF006FA6" SizeChanged="pageRoot_SizeChanged" Background="#FF006FA6">
 
     <Page.Resources>
+        <converter:StatusesToTimeStringConverter x:Key="StatusesToTimeStringConverter" />
+        
         <x:String x:Key="ChevronGlyph">&#xE228;</x:String>
 
         <DataTemplate x:Key="StatusItemControl">
@@ -120,7 +123,7 @@
         <AppBar Height="120" Background="#FF006FA6" BorderBrush="#FF006FA6">
             <Viewbox ScrollViewer.HorizontalScrollMode="Disabled" Height="70" Margin="0" ScrollViewer.ZoomMode="Disabled" HorizontalAlignment="Left" >
         		<StackPanel Orientation="Horizontal" Height="70" Margin="15,0">
-        			<Button Content="个人中心" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
+        			<Button Content="我的主页" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
         			<Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
         			<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
         			<Button x:Name="SearchButton" Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
@@ -183,5 +186,7 @@
         <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right">
         	<customcontrol:StatusSettingsFlyout x:Name="status" Width="500" BackClick="status_BackClick" Height="768"/>
         </Popup>
+        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,38.317" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding date}" FontSize="16" Grid.Row="1"/>
+
     </Grid>
 </Page>

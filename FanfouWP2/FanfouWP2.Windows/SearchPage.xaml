@@ -56,7 +56,7 @@
 				AutomationProperties.AutomationId="BackButton"
 				AutomationProperties.ItemType="Navigation Button"/>
             <ComboBox x:Name="type" VerticalAlignment="Top" Margin="0,57,0,0" Grid.Column="1" FontSize="24" Height="44" Width="180" FontFamily="Microsoft YaHei" SelectionChanged="type_SelectionChanged"/>
-            <TextBox x:Name="search" Grid.Column="2" Margin="10,57,20,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" InputScope="Search" AcceptsReturn="False" PlaceholderText="搜索内容" FontFamily="Microsoft YaHei"/>
+            <TextBox x:Name="search" Grid.Column="2" Margin="10,57,20,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="24" InputScope="Search" AcceptsReturn="False" PlaceholderText="搜索内容" FontFamily="Microsoft YaHei"/>
             <AppBarButton HorizontalAlignment="Right" Icon="Zoom" x:Name="SearchButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Margin="0,45,40,0" Grid.Column="3" Click="SearchButton_Click"/>
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>

@@ -218,12 +218,27 @@ namespace FanfouWP2
 
         void send_StatusUpdateFailed(object sender, FailedEventArgs e)
         {
+            this.sendPopup.IsOpen = false;
+            loading.Visibility = Visibility.Visible;
         }
 
         void send_StatusUpdateSuccess(object sender, EventArgs e)
         {
             this.sendPopup.IsOpen = false;
-            loading.Visibility = Visibility.Visible;
+            switch (currentType)
+            {
+                case PageType.Statuses:
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, since_id: statuses.First().id);
+                    break;
+                case PageType.Mentions:
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, since_id: mentions.First().id);
+                    break;
+                case PageType.Publics:
+                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                    break;
+                default:
+                    break;
+            }
         }
 
         void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
@@ -239,6 +254,7 @@ namespace FanfouWP2
             var ss = sender as List<Status>;
             this.publics.Clear();
             Utils.StatusesReform.reform(this.publics, ss);
+            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
         }
 
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
@@ -253,6 +269,7 @@ namespace FanfouWP2
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             Utils.StatusesReform.reform(this.mentions, ss);
+            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
         }
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
@@ -267,6 +284,7 @@ namespace FanfouWP2
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             Utils.StatusesReform.reform(this.statuses, ss);
+            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
         }
 
 
@@ -428,7 +446,7 @@ namespace FanfouWP2
 
         private void SelfButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(SelfPage));
         }
     }
 }

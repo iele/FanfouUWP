@@ -1,0 +1,140 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="FanfouWP2.SelfPage"
+       DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:common="using:FanfouWP2.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:itemcontrol="using:FanfouWP2.ItemControl" FontFamily="Microsoft YaHei"
+    xmlns:customcontrol="using:FanfouWP2.CustomControl"
+    mc:Ignorable="d" NavigationCacheMode="Required" Background="#FF006FA6" BorderBrush="#FF006FA6" SizeChanged="pageRoot_SizeChanged">
+
+    <Page.Resources>
+        <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
+
+        <DataTemplate x:Key="StatusItemControl">
+            <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
+        </DataTemplate>
+        <DataTemplate x:Key="UserItemControl">
+            <itemcontrol:UserItemControl  DataContext="{Binding}"  Width="400" Height="250"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="StatusDataTemplate" x:Name="StatusDataTemplate">
+            <GridView x:Name="statusesGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FollowerDataTemplate" x:Name="FollowerDataTemplate">
+            <GridView x:Name="followGridView" SelectionMode="Single" SelectionChanged="usersGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="usersGridView_ItemClick" ItemsSource="{Binding follower}" ItemTemplate="{StaticResource UserItemControl}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FriendsDataTemplate" x:Name="FriendsDataTemplate">
+            <GridView x:Name="friendGridView" SelectionMode="Single" SelectionChanged="usersGridView_SelectionChanged"  IsItemClickEnabled="True" ItemClick="usersGridView_ItemClick" ItemsSource="{Binding friends}" ItemTemplate="{StaticResource UserItemControl}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FavoriteDataTemplate" x:Name="FavoriteDataTemplate">
+            <GridView x:Name="favGridView" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding favorite}" ItemTemplate="{StaticResource StatusItemControl}"/>
+        </DataTemplate>
+    </Page.Resources>
+	<Page.BottomAppBar>
+		<CommandBar Background="#FF006FA6" BorderBrush="#FF006FA6">
+			<CommandBar.SecondaryCommands>
+				<AppBarButton Icon="AddFriend" Label="加为好友"/>
+			</CommandBar.SecondaryCommands>
+			<AppBarButton Icon="Account" Label="提及"/>
+			<AppBarButton Icon="Mail" Label="私信"/>
+		</CommandBar>
+	</Page.BottomAppBar>
+    <!--
+        此网格充当页的根面板。
+    -->
+    <Grid>
+    	<Grid.Background>
+    		<ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
+    	</Grid.Background>
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Hub x:Name="hub" SectionHeaderClick="hub_SectionHeaderClick">
+            <Hub.Header>
+                <!-- 后退按钮和页标题 -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                    	<ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                	<Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource NavigationBackButtonNormalStyle}" Margin="0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                		AutomationProperties.Name="Back"
+                		AutomationProperties.AutomationId="BackButton"
+                		AutomationProperties.ItemType="Navigation Button"/>
+                	<TextBlock x:Name="pageTitle" Text="我的主页"
+                		IsHitTestVisible="false" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Microsoft YaHei" Style="{StaticResource HeaderTextBlockStyle}" Margin="80,0,0,0"/>
+                </Grid>
+            </Hub.Header>
+
+        	<HubSection Margin="0,0,10,0">
+        		<HubSection.Resources>
+        			<DataTemplate x:Key="MainDataTemplate">
+        				<Grid Margin="0">
+        					<Grid.RowDefinitions>
+        						<RowDefinition Height="Auto"/>
+        						<RowDefinition Height="Auto"/>
+        						<RowDefinition Height="1*" />
+        					</Grid.RowDefinitions>
+        					<Grid.ColumnDefinitions>
+        						<ColumnDefinition Width="Auto"/>
+        					</Grid.ColumnDefinitions>
+        					<StackPanel Margin="0,0,0,10" Grid.RowSpan="3" Orientation="Vertical">
+        						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+        							<Ellipse Stroke="White" Height="64" StrokeThickness="2" Margin="0,0,0,20" HorizontalAlignment="Center" Width="64">
+        								<Ellipse.Fill>
+        									<ImageBrush Stretch="Fill" ImageSource="{Binding user.profile_image_url_large}"/>
+        								</Ellipse.Fill>
+        							</Ellipse>
+        							<TextBlock TextWrapping="Wrap" Text="{Binding user.screen_name}" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,16,0,0"/>
+        						</StackPanel>
+        						<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+        							<StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0">
+        								<StackPanel Margin="0" Orientation="Vertical">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="white" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.statuses_count}" VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        								<StackPanel Margin="0,10,0,0" Orientation="Vertical">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="white" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.favourites_count}" VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        							</StackPanel>
+        							<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" >
+        								<StackPanel Orientation="Vertical">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="white" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.followers_count}"  VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        								<StackPanel Orientation="Vertical" Margin="0,10,0,0">
+        									<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top" FontSize="24"/>
+        									<TextBlock Foreground="white" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.friends_count}"  VerticalAlignment="Top" FontSize="32"/>
+        								</StackPanel>
+        							</StackPanel>
+        						</StackPanel>
+        						<ScrollViewer MaxWidth="400" Margin="0,10,0,0" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+        							<TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="16"/>
+        						</ScrollViewer>
+        					</StackPanel>
+        				</Grid>
+        			</DataTemplate>
+        		</HubSection.Resources>
+        		<StaticResource ResourceKey="MainDataTemplate"/>
+        	</HubSection>
+        	<HubSection x:Name="mainHubSection" Header="消息" ContentTemplate="{StaticResource StatusDataTemplate}" IsHeaderInteractive="True"/>
+        	<HubSection x:Name="followHubSection" ContentTemplate="{StaticResource FollowerDataTemplate}" Header="听众" IsHeaderInteractive="True"/>
+        	<HubSection x:Name="friendHubSection" ContentTemplate="{StaticResource FriendsDataTemplate}" Header="好友" IsHeaderInteractive="True"/>
+            <HubSection x:Name="favHubSection" ContentTemplate="{StaticResource FavoriteDataTemplate}" Header="收藏" IsHeaderInteractive="True"/>
+        </Hub>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
+        <Popup x:Name="sendPopup" IsOpen="False" Width="500" HorizontalAlignment="Right">
+            <customcontrol:SendSettingsFlyout x:Name="send" Width="500" BackClick="send_BackClick" Height="768"/>
+        </Popup>
+        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Width="500" HorizontalAlignment="Right">
+        	<customcontrol:StatusSettingsFlyout x:Name="status" Width="500" BackClick="status_BackClick" Height="768"/>
+        </Popup>
+    </Grid>
+</Page>

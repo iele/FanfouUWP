@@ -113,6 +113,7 @@
     <Compile Include="CustomControl\AccountSettingsFlyout.xaml.cs">
       <DependentUpon>AccountSettingsFlyout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItemControl\ValueConverter\StatusesToTimeStringConverter.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -185,6 +186,9 @@
     <Compile Include="TimelinePage.xaml.cs">
       <DependentUpon>TimelinePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelfPage.xaml.cs">
+      <DependentUpon>SelfPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPage2.xaml.cs">
       <DependentUpon>UserPage2.xaml</DependentUpon>
     </Compile>
@@ -206,12 +210,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\Logo.scale-140.png" />
+    <Content Include="Assets\Logo.scale-180.png" />
     <Content Include="Assets\search-512.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-140.png" />
+    <Content Include="Assets\SplashScreen.scale-180.png" />
     <Content Include="Assets\Square70x70Logo.scale-100.png" />
+    <Content Include="Assets\Square70x70Logo.scale-140.png" />
+    <Content Include="Assets\Square70x70Logo.scale-180.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-140.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-180.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="CustomControl\AboutSettingFlyout.xaml">
@@ -285,6 +297,10 @@
     <Page Include="TimelinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelfPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserPage2.xaml">
       <Generator>MSBuild:Compile</Generator>

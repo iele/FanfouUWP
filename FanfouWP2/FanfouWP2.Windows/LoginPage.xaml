@@ -12,7 +12,8 @@
 
     <Grid Background="#FF3A9DCF">
 		<StackPanel Margin="0,0,0,200" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-			<Image HorizontalAlignment="Left" VerticalAlignment="Top" Source="assets/login.png" Width="297">
+
+			<Image HorizontalAlignment="Left" VerticalAlignment="Top" Source="assets/login.png" Width="297" Height="263">
 				<Image.Transitions>
 					<TransitionCollection>
 						<EntranceThemeTransition/>

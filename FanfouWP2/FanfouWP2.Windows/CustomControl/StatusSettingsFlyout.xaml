@@ -10,7 +10,7 @@
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
    mc:Ignorable="d"
     IconSource="Assets/SmallLogo.png"
-    Title="{Binding status.user.screen_name}" Width="500" HeaderBackground="#FF006FA6" Background="#FF399DCE" RequestedTheme="Dark"
+    Title="消息详情" Width="500" HeaderBackground="#FF006FA6" Background="#FF399DCE" RequestedTheme="Dark"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}" FontFamily="Microsoft YaHei">
     <SettingsFlyout.Resources>
         <Style x:Key="StatusSettingsFlyout" TargetType="SettingsFlyout">
@@ -157,15 +157,24 @@
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-				<TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding status.text}" FontSize="21.333" Margin="10,10,10,0" IsTextSelectionEnabled="True">
+				<StackPanel Margin="10,10,10,0" Orientation="Horizontal">
+                    <Rectangle StrokeThickness="0" RadiusY="5" Canvas.ZIndex="2" Margin="0" RadiusX="5" Width="40" Height="40">
+                        <Rectangle.Fill>
+							<ImageBrush Stretch="UniformToFill" ImageSource="{Binding status.user.profile_image_url_large}"/>
+						</Rectangle.Fill>
+					</Rectangle>
+					<TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="{Binding status.user.screen_name}" FontSize="24" VerticalAlignment="Center"/>
+				</StackPanel>
+				<TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding status.text}" FontSize="21.333" Margin="10,10,10,0" IsTextSelectionEnabled="True" FontFamily="Global User Interface">
 					<TextBlock.Transitions>
 						<TransitionCollection>
 							<EntranceThemeTransition/>
 						</TransitionCollection>
 					</TextBlock.Transitions>
 				</TextBlock>
-				<StackPanel Margin="10,10,10,0" Orientation="Horizontal" Grid.Row="1">
+				<StackPanel Margin="10,10,10,0" Orientation="Horizontal" Grid.Row="2">
 					<StackPanel.Transitions>
 						<TransitionCollection>
 							<EntranceThemeTransition/>
@@ -177,7 +186,7 @@
 					<TextBlock x:Name="ReplyTextBlock" Padding="5,0,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="17.333" HorizontalAlignment="Left" Foreground="white" Visibility="{Binding status.in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
 					<TextBlock x:Name="RepostTextBlock" Padding="5,0,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="17.333" HorizontalAlignment="Left" Foreground="white" Visibility="{Binding status.repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
 				</StackPanel>
-				<StackPanel Margin="10,10,10,0" Orientation="Vertical" Grid.Row="2">
+				<StackPanel Margin="10,10,10,0" Orientation="Vertical" Grid.Row="3">
 					<TextBlock x:Name="contextTextBlock" TextWrapping="Wrap" Text="当前消息的上下文" FontSize="17.333" Foreground="white" Visibility="Collapsed" Margin="0,10,0,0" />
 					<ListView Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Auto" IsItemClickEnabled="True" SelectionMode="None" BorderThickness="0,10,0,0" ItemsSource="{Binding context}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,10,0,0">
 						<ListView.ItemContainerStyle>
@@ -187,7 +196,7 @@
 						</ListView.ItemContainerStyle>
 					</ListView>
 				</StackPanel>
-                <Viewbox Margin="10,10,10,0" Grid.Row="3">
+                <Viewbox Margin="10,10,10,0" Grid.Row="4">
 					<Image Source="{Binding status.photo.largeurl}" Stretch="None">
 						<Image.Transitions>
 							<TransitionCollection>
