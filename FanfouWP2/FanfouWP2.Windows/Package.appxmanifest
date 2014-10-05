@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="3fac98e2-1bbe-4937-b21b-4b4e5ce89380" Publisher="CN=Elephas" Version="1.0.0.1" />
+  <Identity Name="3fac98e2-1bbe-4937-b21b-4b4e5ce89380" Publisher="CN=Elephas" Version="1.0.0.3" />
   <Properties>
     <DisplayName>FanfouWP2.Windows</DisplayName>
     <PublisherDisplayName>Elephas</PublisherDisplayName>

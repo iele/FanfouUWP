@@ -180,12 +180,16 @@
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
         <Rectangle Height="20" Margin="0" Stroke="#FF006FA6" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF006FA6"/>
-        <Popup x:Name="sendPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Height="{Binding ActualHeight, ElementName=pageRoot}" HorizontalAlignment="Right" Width="500">
-            <customcontrol:SendSettingsFlyout x:Name="send" Width="500" BackClick="send_BackClick" HorizontalAlignment="Right" Height="768" Margin="0"/>
+        <Popup x:Name="sendPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" HorizontalAlignment="Right" Width="500">
+            <Grid Width="500" Height="{Binding ActualHeight, ElementName=sendPopup}">
+        		<customcontrol:SendSettingsFlyout x:Name="send" Width="500" BackClick="send_BackClick" HorizontalAlignment="Right" Margin="0" Height="{Binding ActualHeight, ElementName=pageRoot}"/>
+        	</Grid>
         </Popup>
         <GridView x:Name="statusesGridView" Margin="0" Grid.Row="1" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" FontFamily="Microsoft YaHei" Padding="10,0,10,10"/>
-        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right">
-        	<customcontrol:StatusSettingsFlyout x:Name="status" Width="500" BackClick="status_BackClick" Height="768"/>
+        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right" Height="{Binding ActualHeight, ElementName=pageRoot}">
+        	<Grid Width="500" Height="{Binding ActualHeight, ElementName=statusPopup}">
+        		<customcontrol:StatusSettingsFlyout x:Name="status" Width="Auto" BackClick="status_BackClick"/>
+        	</Grid>
         </Popup>
         <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,38.317" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding date}" FontSize="16" Grid.Row="1"/>
 

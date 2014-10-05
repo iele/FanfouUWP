@@ -66,7 +66,9 @@
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
         <Popup x:Name="sendPopup" IsOpen="False" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right">
-            <customcontrol:SendSettingsFlyout x:Name="send" Width="500" BackClick="send_BackClick" Height="768"/>
+            <Grid Width="500"  Height="{Binding ActualHeight, ElementName=sendPopup}">
+        		<customcontrol:SendSettingsFlyout  x:Name="send" Width="Auto" BackClick="send_BackClick"/>
+        	</Grid>
         </Popup>
         <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16" Grid.Row="1"/>
     </Grid>

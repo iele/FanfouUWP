@@ -131,10 +131,14 @@
         </Hub>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
         <Popup x:Name="sendPopup" IsOpen="False" Width="500" HorizontalAlignment="Right">
-            <customcontrol:SendSettingsFlyout x:Name="send" Width="500" BackClick="send_BackClick" Height="768"/>
+            <Grid Height="{Binding ActualHeight, ElementName=sendPopup}" Width="500">
+        		<customcontrol:SendSettingsFlyout x:Name="send" Width="Auto" BackClick="send_BackClick"/>
+        	</Grid>
         </Popup>
         <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Width="500" HorizontalAlignment="Right">
-            <customcontrol:StatusSettingsFlyout x:Name="status" Width="500" BackClick="status_BackClick" Height="768"/>
+            <Grid Height="{Binding ActualHeight, ElementName=statusPopup}" Width="500">
+        		<customcontrol:StatusSettingsFlyout x:Name="status" Width="Auto" BackClick="status_BackClick"/>
+        	</Grid>
         </Popup>
     </Grid>
 </Page>

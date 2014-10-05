@@ -71,7 +71,9 @@
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
         <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16" Grid.Row="1"/>
         <Popup x:Name="popup" Margin="0" Grid.RowSpan="2" IsOpen="False" HorizontalAlignment="Right" Width="500">
-        	<customcontrol:ConversationSettingsFlyout x:Name="message" HorizontalAlignment="Right" FontFamily="Microsoft YaHei" BackClick="message_BackClick" Height="768"/>
+        	<Grid Height="{Binding ActualHeight, ElementName=pageRoot}" Width="500">
+        		<customcontrol:ConversationSettingsFlyout x:Name="message" HorizontalAlignment="Right" FontFamily="Microsoft YaHei" BackClick="message_BackClick"/>
+        	</Grid>
         </Popup>
     </Grid>
 </Page>
