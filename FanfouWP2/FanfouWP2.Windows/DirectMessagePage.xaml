@@ -21,6 +21,12 @@
             <itemcontrol:DirectOtherItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
         </DataTemplate>
     </Page.Resources>
+	<Page.BottomAppBar>
+		<CommandBar Background="#FF006FA6" BorderBrush="#FF3A9DCF" Foreground="#FF006FA6">
+			<AppBarButton HorizontalAlignment="Right" Icon="Previous" x:Name="LeftButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="LeftButton_Click" Label="前页" Background="Black"/>
+			<AppBarButton HorizontalAlignment="Right" Icon="Next" x:Name="RightButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="RightButton_Click" Label="次页"/>
+		</CommandBar>
+	</Page.BottomAppBar>
 
     <Grid>
     	<Grid.Background>
@@ -61,10 +67,6 @@
 				AutomationProperties.ItemType="Navigation Button"/>
             <TextBlock x:Name="pageTitle" Text="私信箱" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
 				IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40" FontFamily="Microsoft YaHei" FontSize="56"/>
-            <StackPanel Grid.Column="1" Margin="0,45,40,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <AppBarButton HorizontalAlignment="Right" Icon="Previous" x:Name="LeftButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="LeftButton_Click"/>
-                <AppBarButton HorizontalAlignment="Right" Icon="Next" x:Name="RightButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="RightButton_Click"/>
-            </StackPanel>
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
         <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16" Grid.Row="1"/>

@@ -118,6 +118,12 @@
         	</Setter>
         </Style>
     </Page.Resources>
+	<Page.BottomAppBar>
+		<CommandBar Background="#FF006FA6" BorderBrush="#FF3A9DCF" Foreground="#FF006FA6">
+			<AppBarButton x:Name="RefreshButton" HorizontalAlignment="Right" IsCompact="True" Click="RefreshButton_Click"  FontFamily="Microsoft YaHei" Icon="Refresh" Label="刷新"/>
+			<AppBarButton x:Name="SendButton" HorizontalAlignment="Right" IsCompact="True" Click="SendButton_Click" FontFamily="Microsoft YaHei" Margin="0" Label="新饭" Icon="Edit"/>
+		</CommandBar>
+	</Page.BottomAppBar>
 
     <Page.TopAppBar>
         <AppBar Height="120" Background="#FF006FA6" BorderBrush="#FF006FA6">
@@ -172,11 +178,6 @@
             </StackPanel>
 
         </Grid>
-
-        <StackPanel Margin="0,45,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <AppBarButton x:Name="RefreshButton" HorizontalAlignment="Right" IsCompact="True" Click="RefreshButton_Click"  FontFamily="Microsoft YaHei" Icon="Refresh"/>
-            <AppBarButton x:Name="SendButton" HorizontalAlignment="Right" Icon="Edit" IsCompact="True" Click="SendButton_Click" FontFamily="Microsoft YaHei" Margin="0"/>
-        </StackPanel>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" FontFamily="Microsoft YaHei"/>
         <Rectangle Height="20" Margin="0" Stroke="#FF006FA6" StrokeThickness="2" VerticalAlignment="Top" Canvas.ZIndex="-10" Fill="#FF006FA6"/>
         <Popup x:Name="sendPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Height="{Binding ActualHeight, ElementName=pageRoot}" HorizontalAlignment="Right" Width="500">

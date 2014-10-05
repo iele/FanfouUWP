@@ -10,7 +10,7 @@
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
    mc:Ignorable="d"
     IconSource="Assets/SmallLogo.png"
-    Title="消息详情" Width="500" HeaderBackground="#FF006FA6" Background="#FF399DCE" RequestedTheme="Dark"
+    Title="更多" Width="500" HeaderBackground="#FF006FA6" Background="#FF399DCE" RequestedTheme="Dark"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}" FontFamily="Microsoft YaHei">
     <SettingsFlyout.Resources>
         <Style x:Key="StatusSettingsFlyout" TargetType="SettingsFlyout">
@@ -159,9 +159,9 @@
 					<RowDefinition Height="Auto"/>
 					<RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-				<StackPanel Margin="10,10,10,0" Orientation="Horizontal">
-                    <Rectangle StrokeThickness="0" RadiusY="5" Canvas.ZIndex="2" Margin="0" RadiusX="5" Width="40" Height="40">
-                        <Rectangle.Fill>
+				<StackPanel Orientation="Horizontal" Margin="10,10,10,5">
+					<Rectangle StrokeThickness="0" RadiusY="5" Canvas.ZIndex="2" Margin="0" RadiusX="5" Width="40" Height="40">
+						<Rectangle.Fill>
 							<ImageBrush Stretch="UniformToFill" ImageSource="{Binding status.user.profile_image_url_large}"/>
 						</Rectangle.Fill>
 					</Rectangle>
