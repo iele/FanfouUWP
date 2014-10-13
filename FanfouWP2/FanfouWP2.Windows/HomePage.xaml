@@ -126,15 +126,14 @@
 	</Page.BottomAppBar>
 
     <Page.TopAppBar>
-        <AppBar Height="120" Background="#FF006FA6" BorderBrush="#FF006FA6">
-            <Viewbox ScrollViewer.HorizontalScrollMode="Disabled" Height="70" Margin="0" ScrollViewer.ZoomMode="Disabled" HorizontalAlignment="Left" >
-        		<StackPanel Orientation="Horizontal" Height="70" Margin="15,0">
-        			<Button Content="我的主页" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Margin="0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
-        			<Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
-        			<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
-        			<Button x:Name="SearchButton" Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}"/>
-        		</StackPanel>
-        	</Viewbox>
+        <AppBar Background="#FF006FA6" BorderBrush="#FF006FA6">
+        	<GridView x:Name="gridView" Margin="15,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" FontFamily="Microsoft YaHei" IsZoomedInView="True" DataFetchSize="3" Height="120" Padding="0,10">
+        		<Button Content="我的主页" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" Margin="0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Height="80"/>
+        		<Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Height="80" Margin="0"/>
+        		<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Height="80" Margin="0"/>
+        		<Button x:Name="SearchButton" Content="搜索" Click="SearchButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Height="80" Margin="0"/>
+        		<Button x:Name="FindButton" Content="找人" Click="FindButton_Click" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" FontFamily="Microsoft YaHei" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Margin="0" Height="80"/>
+        	</GridView>
         </AppBar>
     </Page.TopAppBar>
 
@@ -152,7 +151,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="grid1">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>

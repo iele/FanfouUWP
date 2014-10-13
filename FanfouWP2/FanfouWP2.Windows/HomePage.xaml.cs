@@ -448,5 +448,10 @@ namespace FanfouWP2
         {
             Frame.Navigate(typeof(SelfPage));
         }
+
+        private void FindButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(FindPage));
+        }
     }
 }

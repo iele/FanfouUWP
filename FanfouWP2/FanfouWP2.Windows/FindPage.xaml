@@ -9,37 +9,37 @@
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
     xmlns:selector="using:FanfouWP2.ItemControl.TemplateSelector"
     x:Name="pageRoot"
-    x:Class="FanfouWP2.SearchPage"
+    x:Class="FanfouWP2.FindPage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d">
 
     <Grid>
-    	<Grid.Background>
-    		<ImageBrush ImageSource="Assets/10.png" Stretch="UniformToFill"/>
-    	</Grid.Background>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/10.png" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-        	<RowDefinition Height="140"/>
-        	<RowDefinition/>
+            <RowDefinition Height="140"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <GridView ItemsSource="{Binding data}"  Margin="0" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <itemcontrol:StatusItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
+                    <itemcontrol:UserItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
         <Grid>
             <Grid.ColumnDefinitions>
-            	<ColumnDefinition Width="120"/>
-            	<ColumnDefinition Width="Auto"/>
-            	<ColumnDefinition/>
-            	<ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Margin="39,60,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
 				Style="{StaticResource NavigationBackButtonNormalStyle}"
@@ -47,19 +47,9 @@
 				AutomationProperties.Name="Back"
 				AutomationProperties.AutomationId="BackButton"
 				AutomationProperties.ItemType="Navigation Button"/>
-            <TextBox x:Name="search" Grid.Column="2" Margin="10,57,20,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="24" InputScope="Search" AcceptsReturn="False" PlaceholderText="搜索内容" FontFamily="Microsoft YaHei"/>
+            <TextBox x:Name="search" Grid.Column="2" Margin="10,57,20,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="24" InputScope="Search" AcceptsReturn="False" PlaceholderText="搜索用户" FontFamily="Microsoft YaHei"/>
             <AppBarButton HorizontalAlignment="Right" Icon="Zoom" x:Name="SearchButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Margin="0,45,40,0" Grid.Column="3" Click="SearchButton_Click"/>
         </Grid>
         <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
-        <Popup x:Name="sendPopup" IsOpen="False" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right">
-            <Grid Height="{Binding ActualHeight, ElementName=sendPopup}" Width="500">
-        		<customcontrol:SendSettingsFlyout x:Name="send" Width="Auto" BackClick="send_BackClick"/>
-        	</Grid>
-        </Popup>
-        <Popup x:Name="statusPopup" IsOpen="False" Canvas.ZIndex="10" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right">
-            <Grid Height="{Binding ActualHeight, ElementName=statusPopup}" Width="500">
-        		<customcontrol:StatusSettingsFlyout x:Name="status" Width="Auto" BackClick="status_BackClick"/>
-        	</Grid>
-        </Popup>
     </Grid>
 </Page>

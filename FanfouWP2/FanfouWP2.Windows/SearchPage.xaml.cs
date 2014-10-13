@@ -24,15 +24,10 @@ namespace FanfouWP2
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
-        private ObservableCollection<User> users = new ObservableCollection<User>();
 
         private Status currentClick;
 
         private string query;
-
-        private enum PageType { Timeline, User };
-
-        private PageType currentType;
 
         public ObservableDictionary DefaultViewModel
         {
@@ -54,9 +49,6 @@ namespace FanfouWP2
 
             FanfouAPI.FanfouAPI.Instance.SearchTimelineSuccess += Instance_SearchTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.SearchTimelineFailed += Instance_SearchTimelineFailed;
-
-            FanfouAPI.FanfouAPI.Instance.SearchUserSuccess += Instance_SearchUserSuccess;
-            FanfouAPI.FanfouAPI.Instance.SearchUserFailed += Instance_SearchUserFailed;
 
             this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
             this.send.StatusUpdateFailed += send_StatusUpdateFailed;
@@ -89,21 +81,7 @@ namespace FanfouWP2
                 {
                     i.favorited = true;
                 }
-            }        
-        }
-
-        void Instance_SearchUserFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-        }
-
-        void Instance_SearchUserSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss =(sender as UserList).users;
-            users.Clear();
-            foreach (var item in ss)
-                users.Add(item);
+            }
         }
 
         void Instance_SearchTimelineFailed(object sender, FailedEventArgs e)
@@ -157,9 +135,6 @@ namespace FanfouWP2
             loading.Visibility = Visibility.Collapsed;
 
             this.defaultViewModel["data"] = statuses;
-            this.type.ItemsSource = new string[2] { "搜索时间线", "搜索用户" };
-            this.type.SelectedIndex = 0;
-            currentType = PageType.Timeline;
         }
 
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -191,17 +166,9 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (currentType == PageType.Timeline)
-            {
-                currentClick = e.ClickedItem as Status;
-                this.status.setStatus(currentClick);
-                this.statusPopup.IsOpen = true;
-            }
-            else if (currentType == PageType.User)
-            {
-                var c = e.ClickedItem as User;
-                Frame.Navigate(typeof(UserPage), c);
-            }
+            currentClick = e.ClickedItem as Status;
+            this.status.setStatus(currentClick);
+            this.statusPopup.IsOpen = true;
         }
 
         private void send_BackClick(object sender, BackClickEventArgs e)
@@ -218,31 +185,8 @@ namespace FanfouWP2
         {
             query = this.search.Text;
             this.statuses.Clear();
-            switch (currentType)
-            {
-                case PageType.Timeline:
-                    this.defaultViewModel["data"] = statuses;
-                    FanfouAPI.FanfouAPI.Instance.SearchTimeline(query, 60);
-                    break;
-                case PageType.User:
-                    this.defaultViewModel["data"] = users;
-                    FanfouAPI.FanfouAPI.Instance.SearchUser(query, 60);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void type_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (type.SelectedIndex == 0)
-            {
-                currentType = PageType.Timeline;
-            }
-            else if (type.SelectedIndex == 1)
-            {
-                currentType = PageType.User;
-            }
+            this.defaultViewModel["data"] = statuses;
+            FanfouAPI.FanfouAPI.Instance.SearchTimeline(query, 60);
         }
     }
 }
