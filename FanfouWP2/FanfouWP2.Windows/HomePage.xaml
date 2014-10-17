@@ -127,7 +127,51 @@
 
     <Page.TopAppBar>
         <AppBar Background="#FF006FA6" BorderBrush="#FF006FA6">
-        	<GridView x:Name="gridView" Margin="15,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" FontFamily="Microsoft YaHei" IsZoomedInView="True" DataFetchSize="3" Height="120" Padding="0,10">
+        	<GridView x:Name="gridView" Margin="15,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" FontFamily="Microsoft YaHei" IsZoomedInView="True" DataFetchSize="3" Height="120" Padding="0,10" SelectionMode="None" IsSwipeEnabled="False">
+        		<GridView.Resources>
+        			<Style x:Key="GridViewStyle" TargetType="GridView">
+        				<Setter Property="Padding" Value="0,0,0,10"/>
+        				<Setter Property="IsTabStop" Value="False"/>
+        				<Setter Property="TabNavigation" Value="Once"/>
+        				<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        				<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        				<Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled"/>
+        				<Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False"/>
+        				<Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled"/>
+        				<Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="False"/>
+        				<Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
+        				<Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
+        				<Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True"/>
+        				<Setter Property="IsSwipeEnabled" Value="True"/>
+        				<Setter Property="ItemContainerTransitions">
+        					<Setter.Value>
+        						<TransitionCollection>
+        						</TransitionCollection>
+        					</Setter.Value>
+        				</Setter>
+        				<Setter Property="ItemsPanel">
+        					<Setter.Value>
+        						<ItemsPanelTemplate>
+        							<ItemsWrapGrid Orientation="Vertical"/>
+        						</ItemsPanelTemplate>
+        					</Setter.Value>
+        				</Setter>
+        				<Setter Property="Template">
+        					<Setter.Value>
+        						<ControlTemplate TargetType="GridView">
+        							<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+        								<ScrollViewer x:Name="ScrollViewer" AutomationProperties.AccessibilityView="Raw" BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}" IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" TabNavigation="{TemplateBinding TabNavigation}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+        									<ItemsPresenter FooterTransitions="{TemplateBinding FooterTransitions}" FooterTemplate="{TemplateBinding FooterTemplate}" Footer="{TemplateBinding Footer}" HeaderTemplate="{TemplateBinding HeaderTemplate}" Header="{TemplateBinding Header}" HeaderTransitions="{TemplateBinding HeaderTransitions}" Padding="{TemplateBinding Padding}"/>
+        								</ScrollViewer>
+        							</Border>
+        						</ControlTemplate>
+        					</Setter.Value>
+        				</Setter>
+        			</Style>
+        		</GridView.Resources>
+        		<GridView.Style>
+        			<StaticResource ResourceKey="GridViewStyle"/>
+        		</GridView.Style>
         		<Button Content="我的主页" x:Name="SelfButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" Margin="0" FontFamily="Microsoft YaHei" FontSize="18.667" Click="SelfButton_Click" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Height="80"/>
         		<Button Content="私信" x:Name="DirectButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" FontFamily="Microsoft YaHei" Click="DirectButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Height="80" Margin="0"/>
         		<Button Content="收藏" x:Name="FavAppButton" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="180" FontFamily="Microsoft YaHei" Click="FavAppButton_Click" FontSize="18.667" FontWeight="ExtraLight" Background="#FF3A9DCF" BorderBrush="{x:Null}" Style="{StaticResource ButtonStyle}" Height="80" Margin="0"/>
