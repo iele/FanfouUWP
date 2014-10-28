@@ -1,4 +1,5 @@
-﻿using FanfouWP2.FanfouAPI;
+﻿using FanfouWP.Storage;
+using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,22 +24,33 @@ namespace FanfouWP2
         {
             this.InitializeComponent();
 
-            FanfouAPI.FanfouAPI.Instance.LoginSuccess += Instance_LoginSuccess;
-            FanfouAPI.FanfouAPI.Instance.LoginFailed += Instance_LoginFailed;
+            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
+            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
+
+            this.Loaded += MainPage_Loaded;            
         }
 
-        void Instance_LoginFailed(object sender, FailedEventArgs e)
+        void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            if (SettingStorage.Instance.currentUserAuth == null)
+            {
+                Frame.Navigate(typeof(LoginPage));
+            }
+            else
+            {
+                FanfouAPI.FanfouAPI.Instance.setUserAuth(SettingStorage.Instance.currentUserAuth);
+                FanfouAPI.FanfouAPI.Instance.VerifyCredentials();
+            }
         }
 
-        void Instance_LoginSuccess(object sender, EventArgs e)
+        void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
         {
-            Frame.Navigate(typeof(TimelinePage));
+            Frame.Navigate(typeof(LoginPage));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
         {
-            FanfouAPI.FanfouAPI.Instance.Login("elephas", "myelephas");
+            Frame.Navigate(typeof(HomePage));
         }
     }
 }

@@ -11,7 +11,7 @@
     x:Name="pageRoot"
     x:Class="FanfouWP2.SearchPage"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
-    mc:Ignorable="d">
+    mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Grid>
     	<Grid.Background>

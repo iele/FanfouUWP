@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:itemcontrol="using:FanfouWP2.ItemControl" FontFamily="Microsoft YaHei"
     xmlns:customcontrol="using:FanfouWP2.CustomControl"
-    mc:Ignorable="d" NavigationCacheMode="Required" Background="#FF006FA6" BorderBrush="#FF006FA6" SizeChanged="pageRoot_SizeChanged">
+    mc:Ignorable="d" Background="#FF006FA6" BorderBrush="#FF006FA6" SizeChanged="pageRoot_SizeChanged">
 
     <Page.Resources>
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
