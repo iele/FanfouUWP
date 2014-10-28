@@ -27,13 +27,14 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
 
-            this.Loaded += MainPage_Loaded;            
+            this.Loaded += MainPage_Loaded;
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             if (SettingStorage.Instance.currentUserAuth == null)
             {
+                Utils.NavigationControl.ClearStack(Frame);
                 Frame.Navigate(typeof(LoginPage));
             }
             else
@@ -45,11 +46,13 @@ namespace FanfouWP2
 
         void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
         {
+            Utils.NavigationControl.ClearStack(Frame);
             Frame.Navigate(typeof(LoginPage));
         }
 
         void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
         {
+            Utils.NavigationControl.ClearStack(Frame);
             Frame.Navigate(typeof(HomePage));
         }
     }

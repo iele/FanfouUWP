@@ -10,10 +10,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="#FF3A9DCF">
+    <Grid Background="DeepSkyBlue">
 		<StackPanel Margin="0" VerticalAlignment="Top">
 
-			<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="assets/login.png" Width="200">
+			<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="assets/login.png" Width="180">
 				<Image.Transitions>
 					<TransitionCollection>
 						<EntranceThemeTransition/>
@@ -21,7 +21,7 @@
 				</Image.Transitions>
 			</Image>
 
-			<StackPanel Margin="12,0">
+			<StackPanel Margin="12,-20,12,0">
 				<StackPanel.Transitions>
 					<TransitionCollection>
 						<EntranceThemeTransition/>
