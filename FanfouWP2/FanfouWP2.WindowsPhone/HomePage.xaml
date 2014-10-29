@@ -8,7 +8,7 @@
     x:Class="FanfouWP2.HomePage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" Width="Auto" Height="Auto" IsTextScaleFactorEnabled="True"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}" NavigationCacheMode="Required">
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl  DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=statusesGridView}"
@@ -34,13 +34,13 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Margin="0,0,0,0" x:Name="LayoutRoot" Background="#33808080">
+    <Grid Margin="0,0,0,0" x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Rectangle Fill="DeepSkyBlue" Height="28" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Top" Margin="0,-28,0,0"/>
+        <Rectangle Fill="DeepSkyBlue" Height="88" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Top" Margin="0,-28,0,0" Canvas.ZIndex="-10"/>
         <Grid Margin="0,0,0,12" Background="DeepSkyBlue">
             <StackPanel Margin="0" Height="60" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Rectangle HorizontalAlignment="Left" Height="40" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Center" Width="40" Margin="12,0,0,0">
@@ -76,26 +76,32 @@
                 				<Grid Margin="6" Height="160" Width="160">
                 				<Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
                 				<TextBlock TextWrapping="Wrap" Text="私信" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12" FontSize="16"/>
+                				<Image Height="64" Source="Assets/message_outline-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 			</Grid>
-                				<Grid Height="160" Width="160">
+                				<Grid Height="160" Width="160" x:Name="FavoriteGrid" Tapped="FavoriteGrid_Tapped">
                 					<Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
                 					<TextBlock TextWrapping="Wrap" Text="收藏" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12" FontSize="16"/>
+                					<Image Height="64" Source="Assets/bookmark-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 				</Grid>
                 				<Grid Height="160" Width="160">
                 					<Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
                 					<TextBlock TextWrapping="Wrap" Text="搜索" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12" FontSize="16"/>
+                					<Image Height="64" Source="Assets/search-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 				</Grid>
                 				<Grid Height="160" Width="160">
                 					<Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
                 					<TextBlock TextWrapping="Wrap" Text="热门话题" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12" FontSize="16"/>
+                					<Image Height="64" Source="Assets/newspaper-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 				</Grid>
                 				<Grid Height="160" Width="160">
                 					<Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
                 					<TextBlock TextWrapping="Wrap" Text="个人标签" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12" FontSize="16"/>
+                					<Image Height="64" Source="Assets/tag-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 				</Grid>
                 				<Grid Height="160" Width="160">
                 					<Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
                 					<TextBlock TextWrapping="Wrap" Text="设置" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,12" FontSize="16"/>
+                					<Image Height="64" Source="Assets/services-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 				</Grid>
                 		</GridView>
                 	</Viewbox>

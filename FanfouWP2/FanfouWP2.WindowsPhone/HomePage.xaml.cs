@@ -155,5 +155,10 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
             FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);     
         }
+
+        private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(FavoritePage), this.currentUser);
+        }
     }
 }

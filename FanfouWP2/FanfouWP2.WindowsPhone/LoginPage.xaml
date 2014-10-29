@@ -28,15 +28,15 @@
 					</TransitionCollection>
 				</StackPanel.Transitions>
 
-				<TextBox x:Name="username" Margin="0,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="账户名或注册邮箱" FontFamily="Microsoft YaHei" FontSize="24"/>
-				<PasswordBox x:Name="password" Margin="0,20,0,0" VerticalAlignment="Top" PlaceholderText="密码" FontFamily="Global User Interface" IsPasswordRevealButtonEnabled="True" FontSize="24"/>
+				<TextBox x:Name="username" Margin="0,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="账户名或注册邮箱"/>
+				<PasswordBox x:Name="password" Margin="0,20,0,0" VerticalAlignment="Top" PlaceholderText="密码" IsPasswordRevealButtonEnabled="True"/>
 				<Grid Height="50" Margin="0,32,0,0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="1*"/>
 						<ColumnDefinition Width="1*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="SinginButton" Content="注册" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24" FontFamily="Microsoft YaHei" Margin="0,0,2,0" Click="SinginButton_Click"/>
-					<Button x:Name="LoginButton" Content="登录" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="24" FontFamily="Microsoft YaHei" Grid.Column="1" Margin="4.857,0,0,0" Grid.ColumnSpan="2" Click="LoginButton_Click"/>
+					<Button x:Name="SinginButton" Content="注册" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,2,0" Click="SinginButton_Click"/>
+					<Button x:Name="LoginButton" Content="登录" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Margin="4.857,0,0,0" Grid.ColumnSpan="2" Click="LoginButton_Click"/>
 
 				</Grid>
 
