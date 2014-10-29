@@ -42,7 +42,7 @@ namespace FanfouWP2
             var ss = sender as List<Status>;
             this.statuses.Clear();
             Utils.StatusesReform.reform(this.statuses, ss);
-            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
+            this.defaultViewModel["date"] = DateTime.Now.ToString();
         }
         private void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
         {
