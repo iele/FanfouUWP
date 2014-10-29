@@ -30,7 +30,7 @@
         <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0"/>
         <Grid Margin="0" VerticalAlignment="Top" Grid.RowSpan="2">
             <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0"/>
-            <TextBlock TextWrapping="Wrap" Text="随便看看" Margin="12,0,0,0" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+            <TextBlock TextWrapping="Wrap" Text="随便看看" Margin="12,0,0,0" VerticalAlignment="Center" FontSize="18.667" Foreground="White"/>
         </Grid>
         <ListView Margin="12,0" x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"/>
     </Grid>
