@@ -24,10 +24,10 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="个人资料"/>
                 <AppBarButton Label="好友请求"/>
-                <AppBarButton Label="随便看看"/>
+                <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click"/>
                 <AppBarButton Label="设置"/>
             </CommandBar.SecondaryCommands>
-            <AppBarButton Icon="Refresh" Label="刷新"/>
+            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click"/>
             <AppBarButton Label="照片" Icon="Camera"/>
             <AppBarButton Icon="Zoom" Label="搜索"/>
             <AppBarButton Icon="Edit" Label="新饭"/>
@@ -102,6 +102,6 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
-        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Canvas.ZIndex="10"/>
+        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Canvas.ZIndex="10" Margin="0,-28,0,0"/>
     </Grid>
 </Page>

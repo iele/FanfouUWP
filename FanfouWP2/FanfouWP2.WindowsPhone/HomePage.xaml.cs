@@ -143,5 +143,17 @@ namespace FanfouWP2
             Utils.StatusesReform.reform(this.statuses, ss);
             this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
         }
+
+        private void PublicItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(PublicPage));
+        }
+
+        private void RefreshItem_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);     
+        }
     }
 }
