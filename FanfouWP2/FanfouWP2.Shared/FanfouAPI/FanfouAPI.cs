@@ -107,7 +107,7 @@ namespace FanfouWP2.FanfouAPI
         public event SearchUserSuccessHandler SearchUserSuccess;
         public event SearchUserFailedHandler SearchUserFailed;
 
-        public delegate void TrendsListSuccessHandler(object sender, TrendsListEventArgs e);
+        public delegate void TrendsListSuccessHandler(object sender, EventArgs e);
         public delegate void TrendsListFailedHandler(object sender, FailedEventArgs e);
 
         public event TrendsListSuccessHandler TrendsListSuccess;
@@ -560,8 +560,21 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public void TrendsList()
+        public async void TrendsList()
         {
+            try
+            {
+                var client = GetClient();
+                var parameters = new Parameters();
+                var result = await client.GetRequestObject<TrendsList>(FanfouConsts.TRENDS_LIST, parameters);
+                if (TrendsListSuccess != null)
+                    TrendsListSuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (TrendsListFailed != null)
+                    TrendsListFailed(this, new FailedEventArgs());
+            }
         }
 
         public void TaggedList(string id)

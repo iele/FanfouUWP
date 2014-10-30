@@ -18,14 +18,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FanfouWP2
 {
-    public sealed partial class FindPage : Page
+    public sealed partial class TrendsPage : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private ObservableCollection<User> users = new ObservableCollection<User>();
+        private ObservableCollection<Trends> trends = new ObservableCollection<Trends>();
 
-        public FindPage()
+        public TrendsPage()
         {
             this.InitializeComponent();
 
@@ -33,26 +33,24 @@ namespace FanfouWP2
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            FanfouAPI.FanfouAPI.Instance.SearchUserSuccess += Instance_SearchUserSuccess;
-            FanfouAPI.FanfouAPI.Instance.SearchUserFailed += Instance_SearchUserFailed;
+            FanfouAPI.FanfouAPI.Instance.TrendsListSuccess += Instance_TrendsListSuccess;
+            FanfouAPI.FanfouAPI.Instance.TrendsListFailed += Instance_TrendsListFailed;
         }
 
-        void Instance_SearchUserFailed(object sender, FailedEventArgs e)
+        void Instance_TrendsListFailed(object sender, FailedEventArgs e)
         {
         }
 
-        void Instance_SearchUserSuccess(object sender, EventArgs e)
+        void Instance_TrendsListSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
-            var ss = (sender as UserList).users;
-            this.users.Clear();
-            foreach (var i in ss)
+            var ss = (sender as TrendsList).trends;
+            this.trends.Clear();
+            foreach (var item in ss)
             {
-                this.users.Add(i);
+                this.trends.Add(item);
             }
-            this.defaultViewModel["date"] = DateTime.Now.ToString();
         }
-
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
@@ -65,9 +63,10 @@ namespace FanfouWP2
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.defaultViewModel["users"] = users;
+            this.defaultViewModel["trends"] = trends;
 
-            loading.Visibility = Visibility.Collapsed;
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.TrendsList();
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -100,11 +99,13 @@ namespace FanfouWP2
         }
         #endregion
 
-        private void SearchItem_Click(object sender, RoutedEventArgs e)
+        private void trendsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.SearchUser(this.search.Text, 60);
+            if (this.trendsGridView.SelectedIndex != -1)
+            {
+                var t = this.trendsGridView.SelectedItem as Trends;
+                Frame.Navigate(typeof(SearchPage), t);
+            }
         }
-
     }
 }

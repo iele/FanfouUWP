@@ -87,7 +87,7 @@
         								<TextBlock TextWrapping="Wrap" Text="收藏" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
         								<Image Height="64" Source="Assets/bookmark-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         							</Grid>
-        							<Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0">
+        							<Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" x:Name="TrendsGrid" Tapped="TrendsGrid_Tapped">
         								<Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
         								<TextBlock TextWrapping="Wrap" Text="热门话题" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
         								<Image Height="64" Source="Assets/newspaper-512.png" Stretch="Fill" Width="64" Margin="6,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>

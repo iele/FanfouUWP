@@ -10,8 +10,8 @@
     mc:Ignorable="d" RequestedTheme="Light">
    
     <Page.Resources>
-        <DataTemplate x:Key="StatusItemControl">
-            <ItemControl:StatusItemControl  DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=statusesGridView}"
+        <DataTemplate x:Key="UserItemControl">
+            <ItemControl:UserItemControl  DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=userGridView}"
               Margin="0,3"/>
         </DataTemplate>
     </Page.Resources>
@@ -30,10 +30,10 @@
         <Grid Margin="0" VerticalAlignment="Top">
             <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,-28,0,0"/>
             <StackPanel Margin="12,0" Orientation="Vertical">
-            	<TextBox Margin="0,12,-0.167,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" AcceptsReturn="True" InputScope="Search" PlaceholderText="键入以寻找用户"/>
+            	<TextBox x:Name="search" Margin="0,12,-0.167,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" InputScope="Search" PlaceholderText="键入以寻找用户"/>
             	<Grid Margin="0" VerticalAlignment="Center" Height="57"/>
             </StackPanel>
         </Grid>
-        <ListView Margin="12,2,12,-2" x:Name="statusesGridView" Grid.Row="1"/>
+        <ListView Margin="12,2,12,-2" x:Name="userGridView" ItemsSource="{Binding users}" ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1"/>
     </Grid>
 </Page>

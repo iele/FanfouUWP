@@ -105,6 +105,9 @@
     <Compile Include="ItemControl\TemplateSelector\ConversationItemTemplateSelector.cs" />
     <Compile Include="ItemControl\TemplateSelector\MessageItemTemplateSelector.cs" />
     <Compile Include="ItemControl\TemplateSelector\TimelineTemplateSelector.cs" />
+    <Compile Include="ItemControl\TrendsItemControl.xaml.cs">
+      <DependentUpon>TrendsItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ItemControl\UserItemControl.xaml.cs">
       <DependentUpon>UserItemControl.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,9 @@
     </Compile>
     <Compile Include="FindPage.xaml.cs">
       <DependentUpon>FindPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TrendsPage.xaml.cs">
+      <DependentUpon>TrendsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
@@ -220,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ItemControl\TrendsItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ItemControl\UserItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -237,6 +247,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FindPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TrendsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

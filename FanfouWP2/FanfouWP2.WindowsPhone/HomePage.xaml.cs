@@ -175,5 +175,10 @@ namespace FanfouWP2
         {
             this.hub.ScrollToSection(this.hub.Sections.First());
         }
+
+       private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
+       {
+           Frame.Navigate(typeof(TrendsPage));  
+       }
     }
 }

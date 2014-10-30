@@ -38,7 +38,7 @@ namespace FanfouWP2
         }
 
         void Instance_SearchTimelineFailed(object sender, FailedEventArgs e)
-        { 
+        {
         }
 
         void Instance_SearchTimelineSuccess(object sender, EventArgs e)
@@ -49,7 +49,7 @@ namespace FanfouWP2
             Utils.StatusesReform.reform(this.statuses, ss);
             this.defaultViewModel["date"] = DateTime.Now.ToString();
         }
-    
+
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
@@ -63,8 +63,15 @@ namespace FanfouWP2
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             this.defaultViewModel["statuses"] = statuses;
-           
-            loading.Visibility = Visibility.Collapsed;           
+            loading.Visibility = Visibility.Collapsed;
+
+            if (e.NavigationParameter != null)
+            {
+                var t = e.NavigationParameter as Trends;
+                this.search.Text = t.query;
+                loading.Visibility = Visibility.Visible;
+                FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
