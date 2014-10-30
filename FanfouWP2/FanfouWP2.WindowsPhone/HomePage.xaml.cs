@@ -160,5 +160,20 @@ namespace FanfouWP2
         {
             Frame.Navigate(typeof(FavoritePage), this.currentUser);
         }
+
+        private void SearchGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SearchPage));    
+        }
+
+        private void FindGrid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(FindPage));  
+        }
+
+       private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.hub.ScrollToSection(this.hub.Sections.First());
+        }
     }
 }
