@@ -180,5 +180,20 @@ namespace FanfouWP2
        {
            Frame.Navigate(typeof(TrendsPage));  
        }
+
+       private void SearchItem_Click(object sender, RoutedEventArgs e)
+       {
+           Frame.Navigate(typeof(SearchPage));         
+       }
+
+       private void AboutButton_Click(object sender, RoutedEventArgs e)
+       {
+           Frame.Navigate(typeof(AboutPage));
+       }
+
+       private void SendItem_Click(object sender, RoutedEventArgs e)
+       {
+           Frame.Navigate(typeof(SendPage));
+       }
     }
 }

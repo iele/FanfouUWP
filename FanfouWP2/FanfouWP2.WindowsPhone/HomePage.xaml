@@ -29,8 +29,8 @@
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click"/>
             <AppBarButton Label="照片" Icon="Camera"/>
-            <AppBarButton Icon="Zoom" Label="搜索"/>
-            <AppBarButton Icon="Edit" Label="新饭"/>
+            <AppBarButton Icon="Zoom" Label="搜索" x:Name="SearchItem" Click="SearchItem_Click"/>
+            <AppBarButton Icon="Edit" Label="新饭" x:Name="SendItem" Click="SendItem_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -119,8 +119,10 @@
         						</StackPanel>
         					</StackPanel>
         				</Viewbox>
-        				<StackPanel Margin="0.5,0,-0.5,0" Grid.Column="1" VerticalAlignment="Top" Height="78">
-        					<AppBarButton HorizontalAlignment="Center" Icon="Forward" Label="" Margin="0" VerticalAlignment="Top" Click="NextButton_Click"/>
+        				<StackPanel Margin="0.5,0,-0.5,0" Grid.Column="1" VerticalAlignment="Top">
+        					<AppBarButton HorizontalAlignment="Stretch" Icon="Forward" Label="" Margin="0" VerticalAlignment="Top" Click="NextButton_Click" FontFamily="Global User Interface"/>
+        					<AppBarButton HorizontalAlignment="Stretch" Icon="Mail" Label="" Margin="0,-10,0,0" VerticalAlignment="Top" Click="NextButton_Click"/>
+        					<AppBarButton HorizontalAlignment="Stretch" Icon="Help" Label="" Margin="0,-10,0,0" VerticalAlignment="Top" Click="AboutButton_Click"/>
         				</StackPanel>
         			</Grid>
         		</DataTemplate>
