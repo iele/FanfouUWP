@@ -39,7 +39,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <StackPanel Grid.Column="1" Margin="9.833,0,10,0" Orientation="Vertical" VerticalAlignment="Center">
-        	<TextBlock Margin="0,0,-0.167,0" Text="{Binding screen_name}" VerticalAlignment="Top" FontSize="21.333"/>
+        	<TextBlock Margin="0,0,-0.167,0" Text="{Binding screen_name}" VerticalAlignment="Top" FontSize="20"/>
         	<StackPanel Orientation="Horizontal" Margin="0,6,-0.167,0" VerticalAlignment="Top">
         		<TextBlock TextWrapping="Wrap" Text="{Binding statuses_count}" Margin="0" FontSize="18.667" Foreground="Gray"/>
         		<TextBlock TextWrapping="Wrap" Text="{Binding followers_count}" Margin="5,0,0,0" FontSize="18.667" Foreground="Gray"/>

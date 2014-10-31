@@ -48,7 +48,7 @@
                         <ImageBrush Stretch="Fill" ImageSource="{Binding currentUser.profile_image_url}"/>
                     </Rectangle.Fill>
                 </Rectangle>
-                <TextBlock TextWrapping="Wrap" Text="{Binding currentUser.screen_name}" VerticalAlignment="Center" Margin="12,0,0,0" Foreground="White" FontSize="21.333"/>
+                <TextBlock TextWrapping="NoWrap" Text="{Binding currentUser.screen_name}" VerticalAlignment="Center" Margin="12,17,0,17" Foreground="White" FontSize="20" Width="239"/>
             </StackPanel>
             <Image Margin="0,0,12,0" Source="/Assets/fanfou_beta.png" HorizontalAlignment="Right" Width="120"/>
 
