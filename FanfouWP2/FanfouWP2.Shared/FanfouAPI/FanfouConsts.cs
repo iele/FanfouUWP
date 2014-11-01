@@ -8,8 +8,14 @@ namespace FanfouWP2.FanfouAPI
 {
     public sealed class FanfouConsts
     {
+        #if WINDOWS_APP
         public const string CONSUMER_KEY = "5ac166bc080d3a4b2d76683e4f503b81";
         public const string CONSUMER_SECRET = "acbd97d4108e5dedbb466e53bc84fc77";
+        #endif
+        #if WINDOWS_PHONE_APP
+        public const string CONSUMER_KEY = "105927463df3dbf466ba5195f8f64a95";
+        public const string CONSUMER_SECRET = "6686029b7224a53c9a9bf0bdc3d6ce7f";
+        #endif
         public const string BASE_URL = "http://fanfou.com";
         public const string API_URL = "http://api.fanfou.com";
         public const string ACCESS_TOKEN = "oauth/access_token";

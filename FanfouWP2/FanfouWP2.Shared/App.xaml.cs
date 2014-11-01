@@ -1,7 +1,10 @@
-﻿using System;
+﻿// Copyright (c) Microsoft. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -13,124 +16,142 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-
-// 有关“空白应用程序”模板的信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=234227
+using FanfouWP2.Common;
 
 namespace FanfouWP2
 {
     /// <summary>
-    /// 提供特定于应用程序的行为，以补充默认的应用程序类。
+    /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App : Application
+    sealed partial class App : Application
     {
 #if WINDOWS_PHONE_APP
-        private TransitionCollection transitions;
+        ContinuationManager continuationManager;
 #endif
-
         /// <summary>
-        /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
-        /// 逻辑上等同于 main() 或 WinMain()。
+        /// Initializes the singleton Application object.  This is the first line of authored code
+        /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += this.OnSuspending;
+            this.Suspending += OnSuspending;
         }
 
-        /// <summary>
-        /// 在应用程序由最终用户正常启动时进行调用。
-        /// 当启动应用程序以打开特定的文件或显示搜索结果等操作时，
-        /// 将使用其他入口点。
-        /// </summary>
-        /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        private Frame CreateRootFrame()
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
-
             Frame rootFrame = Window.Current.Content as Frame;
 
-            // 不要在窗口已包含内容时重复应用程序初始化，
-            // 只需确保窗口处于活动状态
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
             if (rootFrame == null)
             {
-                // 创建要充当导航上下文的框架，并导航到第一页
+                // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                // TODO: 将此值更改为适合您的应用程序的缓存大小
-                rootFrame.CacheSize = 1;
+                // Set the default language
+                rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+                rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // TODO: 从之前挂起的应用程序加载状态
-                }
-
-                // 将框架放在当前窗口中
+                // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
+            return rootFrame;
+        }
+
+        private async Task RestoreStatusAsync(ApplicationExecutionState previousExecutionState)
+        {
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (previousExecutionState == ApplicationExecutionState.Terminated)
+            {
+                // Restore the saved session state only when appropriate
+                try
+                {
+                    await SuspensionManager.RestoreAsync();
+                }
+                catch (SuspensionManagerException)
+                {
+                    //Something went wrong restoring state.
+                    //Assume there is no state and continue
+                }
+            }
+        }
+
+#if WINDOWS_PHONE_APP
+        /// <summary>
+        /// Handle OnActivated event to deal with File Open/Save continuation activation kinds
+        /// </summary>
+        /// <param name="e">Application activated event arguments, it can be casted to proper sub-type based on ActivationKind</param>
+        protected async override void OnActivated(IActivatedEventArgs e)
+        {
+            base.OnActivated(e);
+
+            continuationManager = new ContinuationManager();
+
+            Frame rootFrame = CreateRootFrame();
+            await RestoreStatusAsync(e.PreviousExecutionState);
+
             if (rootFrame.Content == null)
             {
-#if WINDOWS_PHONE_APP
-                // 删除用于启动的旋转门导航。
-                if (rootFrame.ContentTransitions != null)
-                {
-                    this.transitions = new TransitionCollection();
-                    foreach (var c in rootFrame.ContentTransitions)
-                    {
-                        this.transitions.Add(c);
-                    }
-                }
+                rootFrame.Navigate(typeof(MainPage));
+            }
 
-                rootFrame.ContentTransitions = null;
-                rootFrame.Navigated += this.RootFrame_FirstNavigated;
-#endif
-
-                // 当未还原导航堆栈时，导航到第一页，
-                // 并通过将所需信息作为导航参数传入来配置
-                // 参数
-                if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+            var continuationEventArgs = e as IContinuationActivatedEventArgs;
+            if (continuationEventArgs != null)
+            {
+                Frame scenarioFrame = MainPage.Current.FindName("ScenarioFrame") as Frame;
+                if (scenarioFrame != null)
                 {
-                    throw new Exception("Failed to create initial page");
+                    // Call ContinuationManager to handle continuation activation
+                    continuationManager.Continue(continuationEventArgs, scenarioFrame);
                 }
             }
 
-            // 确保当前窗口处于活动状态
             Window.Current.Activate();
-        }
-
-#if WINDOWS_PHONE_APP
-        /// <summary>
-        /// 启动应用程序后还原内容转换。
-        /// </summary>
-        /// <param name="sender">附加了处理程序的对象。</param>
-        /// <param name="e">有关导航事件的详细信息。</param>
-        private void RootFrame_FirstNavigated(object sender, NavigationEventArgs e)
-        {
-            var rootFrame = sender as Frame;
-            rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
-            rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
 #endif
 
         /// <summary>
-        /// 在将要挂起应用程序执行时调用。    将保存应用程序状态
-        /// 将被终止还是恢复的情况下保存应用程序状态，
-        /// 并让内存内容保持不变。
+        /// Invoked when the application is launched normally by the end user.  Other entry points
+        /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="sender">挂起的请求的源。</param>
-        /// <param name="e">有关挂起的请求的详细信息。</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        /// <param name="e">Details about the launch request and process.</param>
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            Frame rootFrame = CreateRootFrame();
+            await RestoreStatusAsync(e.PreviousExecutionState);
+
+            //MainPage is always in rootFrame so we don't have to worry about restoring the navigation state on resume
+            rootFrame.Navigate(typeof(MainPage), e.Arguments);
+
+            // Ensure the current window is active
+            Window.Current.Activate();
+        }
+
+        /// <summary>
+        /// Invoked when Navigation to a certain page fails
+        /// </summary>
+        /// <param name="sender">The Frame which failed navigation</param>
+        /// <param name="e">Details about the navigation failure</param>
+        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+        }
+
+        /// <summary>
+        /// Invoked when application execution is being suspended.  Application state is saved
+        /// without knowing whether the application will be terminated or resumed with the contents
+        /// of memory still intact.
+        /// </summary>
+        /// <param name="sender">The source of the suspend request.</param>
+        /// <param name="e">Details about the suspend request.</param>
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-
-            // TODO: 保存应用程序状态并停止任何后台活动
+            await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
     }

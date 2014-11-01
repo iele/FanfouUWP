@@ -1,12 +1,17 @@
 ﻿using FanfouWP2.Common;
+using FanfouWP2.CustomControl;
+using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,6 +19,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
@@ -23,10 +29,16 @@ namespace FanfouWP2
     /// <summary>
     /// 可独立使用或用于导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class SendPage : Page
+    public sealed partial class SendPage : Page, IFileOpenPickerContinuable
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+
+        private string location;
+        public enum SendMode { Normal, Reply, Repose, ReplyUser, Photo };
+        private SendMode mode = SendMode.Normal;
+        private Item data;
+        private StorageFile file;
 
         public SendPage()
         {
@@ -35,6 +47,32 @@ namespace FanfouWP2
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            FanfouAPI.FanfouAPI.Instance.StatusUpdateSuccess += Instance_StatusUpdateSuccess;
+            FanfouAPI.FanfouAPI.Instance.StatusUpdateFailed += Instance_StatusUpdateFailed;
+
+            FanfouAPI.FanfouAPI.Instance.PhotosUploadSuccess += Instance_PhotosUploadSuccess;
+            FanfouAPI.FanfouAPI.Instance.PhotosUploadFailed += Instance_PhotosUploadFailed;
+        }
+
+        void Instance_PhotosUploadFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_PhotosUploadSuccess(object sender, EventArgs e)
+        {
+            this.loading.Visibility = Visibility.Collapsed;
+            this.navigationHelper.GoBack();
+        }
+
+        void Instance_StatusUpdateFailed(object sender, FanfouAPI.FailedEventArgs e)
+        {
+        }
+
+        void Instance_StatusUpdateSuccess(object sender, EventArgs e)
+        {
+            this.loading.Visibility = Visibility.Collapsed;
+            this.navigationHelper.GoBack();
         }
 
         /// <summary>
@@ -107,6 +145,81 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void SendItem_Click(object sender, RoutedEventArgs e)
+        {
+            var text = this.send.Text;
+            if (this.send.Text.Length > 140)
+                text = text.Substring(0, 140);
+            switch (mode)
+            {
+                case SendMode.Normal:
+                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text);
+                    break;
+                case SendMode.Photo:
+                    FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file);
+                    break;
+                case SendMode.Reply:
+                    break;
+                case SendMode.ReplyUser:
+                    break;
+                case SendMode.Repose:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void PhotoItem_Click(object sender, RoutedEventArgs e)
+        {
+            var openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".png");
+            openPicker.FileTypeFilter.Add(".bmp");
+            openPicker.PickSingleFileAndContinue();
+           
+        }
+
+        public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
+        {
+            if (args.Files.Count > 0)
+            {
+                file = args.Files[0];
+                if (null != file)
+                {
+                    var bi = new BitmapImage();
+                    var s = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                    await bi.SetSourceAsync(s);
+                    this.photo.Source = bi;
+                    mode = SendMode.Photo;
+                }
+            }
+            else
+            { 
+}
+        }
+
+
+        private void AtItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void TopicItem_Click(object sender, RoutedEventArgs e)
+        {
+            TagDialog msg = new TagDialog();
+            msg.PrimaryButtonClick += msg_PrimaryButtonClick;
+            await msg.ShowAsync();
+        }
+
+        void msg_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            var str = (sender as TagDialog).content;
+            send.Text += " #" + str + "#";
+        }
 
     }
 }

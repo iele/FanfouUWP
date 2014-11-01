@@ -7,7 +7,7 @@
     xmlns:ValueConverter="using:FanfouWP2.ItemControl.ValueConverter"
     x:Class="FanfouWP2.SendPage"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" FontFamily="Global User Interface">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
 	<Page.Resources>
 		<ValueConverter:TextToLeftCountTextConverter x:Key="TextToLeftCountTextConverter"/>
 	</Page.Resources>
@@ -16,14 +16,14 @@
 			<CommandBar.SecondaryCommands>
 				<AppBarButton x:Name="TileItem" Label="将此页面固定为磁贴"/>
 			</CommandBar.SecondaryCommands>
-			<AppBarButton x:Name="SendItem" Icon="Send" Label="发送"/>
-			<AppBarButton x:Name="PhotoItem" Icon="Camera" Label="照片"/>
-			<AppBarButton x:Name="AtItem" Icon="AddFriend" Label="提及好友"/>
-			<AppBarButton x:Name="TopicItem" Icon="Comment" Label="话题"/>
+			<AppBarButton x:Name="SendItem" Icon="Send" Label="发送" Click="SendItem_Click"/>
+			<AppBarButton x:Name="PhotoItem" Icon="Camera" Label="照片" Click="PhotoItem_Click"/>
+			<AppBarButton x:Name="AtItem" Icon="AddFriend" Label="提及好友" Click="AtItem_Click"/>
+			<AppBarButton x:Name="TopicItem" Icon="Comment" Label="话题" Click="TopicItem_Click"/>
 		</CommandBar>
 	</Page.BottomAppBar>
 
-	<Grid x:Name="LayoutRoot">
+	<Grid x:Name="LayoutRoot" Background="White">
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="48"/>
@@ -31,6 +31,8 @@
 		</Grid.RowDefinitions>
 
 		<!-- 标题面板 -->
+
+		<!--TODO: 应将内容放入以下网格-->
 
 		<!--TODO: 应将内容放入以下网格-->
 		<Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue"/>
@@ -48,11 +50,8 @@
 			</Grid.RowDefinitions>
 			<TextBox x:Name="send" Margin="12,12,12,11.542" TextWrapping="Wrap" VerticalAlignment="Stretch" AcceptsReturn="True" InputScope="Chat" FontFamily="Global User Interface" MaxLength="140"/>
 			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="已定位" VerticalAlignment="Top"  FontFamily="Global User Interface" FontSize="16" Margin="12,0.458,0,0" Grid.Row="1" Foreground="Gray" />
-			<Rectangle Margin="12" Grid.Row="2" Stroke="Transparent">
-				<Rectangle.Fill>
-					<ImageBrush Stretch="Fill"/>
-				</Rectangle.Fill>
-			</Rectangle>
+			<Image x:Name="photo" Margin="12" Grid.Row="2" />
 		</Grid>
+		<ProgressBar x:Name="loading" Height="10" Margin="0,-28,0,0" VerticalAlignment="Top" IsIndeterminate="True"/>
 	</Grid>
 </Page>
