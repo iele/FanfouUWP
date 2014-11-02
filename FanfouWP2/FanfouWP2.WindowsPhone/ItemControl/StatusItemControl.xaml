@@ -39,7 +39,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <StackPanel Grid.Column="1" Margin="9.667,0,10,0" Orientation="Vertical" VerticalAlignment="Center">
-            <TextBlock Margin="0" Text="{Binding rawid}" VerticalAlignment="Top" FontSize="20"/>
+            <TextBlock Margin="0" Text="{Binding user.screen_name}" VerticalAlignment="Top" FontSize="20"/>
         	<StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Top">
         		<TextBlock Padding="0,5,0,0" Text="{Binding created_at, Converter={StaticResource DateToTextConverter}}" VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0" HorizontalAlignment="Left"/>
         		<TextBlock Padding="5,5,0,0" Text="{Binding source, Converter={StaticResource SourceToTextConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"/>

@@ -1,5 +1,6 @@
 ﻿using FanfouWP2.Common;
 using FanfouWP2.FanfouAPI;
+using FanfouWP2.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,65 +30,8 @@ namespace FanfouWP2
 
         private User currentUser = new User();
 
-        private bool is_loading = false;
-        class StatusObservableCollection : ObservableCollection<Status>, ISupportIncrementalLoading
-        {
-            IAsyncOperation<LoadMoreItemsResult> ISupportIncrementalLoading.LoadMoreItemsAsync(uint count)
-            {
-                CoreDispatcher dispatcher = Window.Current.Dispatcher;
-                return Task.Run<LoadMoreItemsResult>(
-                    async () =>
-                    {
-                        await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            if (this.Count != 0)
-                                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id: this.Last().id);
-                        });
-                        return new LoadMoreItemsResult() { Count = 60 };
-                    }).AsAsyncOperation<LoadMoreItemsResult>();
-            }
-
-            bool ISupportIncrementalLoading.HasMoreItems
-            {
-                get { return true; }
-            }
-        }
-        class MentionObservableCollection<Status> : ObservableCollection<Status>, ISupportIncrementalLoading
-        {
-            IAsyncOperation<LoadMoreItemsResult> ISupportIncrementalLoading.LoadMoreItemsAsync(uint count)
-            {
-                CoreDispatcher dispatcher = Window.Current.Dispatcher;
-                return Task.Run<LoadMoreItemsResult>(
-                   async () =>
-                   {
-
-                       // IPagedResponse<K> result = await this.Source.GetPage(this.Query, ++this.CurrentPage, 25);
-
-
-
-                       // this.VirtualCount = result.VirtualCount;
-
-
-                       //await dispatcher.RunAsync(
-
-                       //   CoreDispatcherPriority.Normal,
-
-                       //    () =>
-                       // {
-                       //       foreach (K item in result.Items)                           this.Add(item);
-                       //  });
-                       return new LoadMoreItemsResult() { Count = 60 };
-                   }).AsAsyncOperation<LoadMoreItemsResult>();
-            }
-
-            bool ISupportIncrementalLoading.HasMoreItems
-            {
-                get { return true; }
-            }
-        }
-
-        private ObservableCollection<Status> statuses = new StatusObservableCollection();
-        private ObservableCollection<Status> mentions = new MentionObservableCollection<Status>();
+        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
         public HomePage()
         {
             this.InitializeComponent();
@@ -233,6 +177,41 @@ namespace FanfouWP2
         private void SendItem_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(SendPage));
+        }
+
+        private void moreStatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id:statuses.Last().id);       
+        }
+
+   
+        private void upStatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            var grid = VisualTreeHelper.GetChild(statusesSection, 0) as Grid;
+            var lv = VisualHelper.FindVisualChildByName<ListView>(grid, "statusesGridView");
+            lv.ScrollIntoView(lv.Items.First());
+         }
+
+        private void moreMentionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, max_id: mentions.Last().id);    
+        }
+
+        private void upMentionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var grid = VisualTreeHelper.GetChild(mentionsSection, 0) as Grid;
+            var lv = VisualHelper.FindVisualChildByName<ListView>(grid, "mentionsGridView");
+            lv.ScrollIntoView(lv.Items.First());
+        }
+
+        private void statusesGridView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+        }
+
+        private void mentionsGridView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
         }
     }
 }
