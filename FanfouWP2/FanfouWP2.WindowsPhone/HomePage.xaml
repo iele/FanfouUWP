@@ -57,14 +57,14 @@
         	<HubSection x:Name="statusesSection" Header="我的消息" Height="Auto">
         		<DataTemplate>
         			<Grid>
-        				<ListView x:Name="statusesGridView"  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,-20,0,0" />
+        				<ListView x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,-20,0,0" />
         			</Grid>
         		</DataTemplate>
         	</HubSection>
         	<HubSection Header="提及我的">
         		<DataTemplate>
         			<Grid>
-        				<ListView x:Name="mentionsGridView"  ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}" Margin="0,-20,0,0"/>
+        				<ListView x:Name="mentionsGridView" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}" Margin="0,-20,0,0"/>
         			</Grid>
         		</DataTemplate>
         	</HubSection>

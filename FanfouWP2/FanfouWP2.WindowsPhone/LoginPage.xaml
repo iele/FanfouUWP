@@ -11,6 +11,15 @@
     mc:Ignorable="d">
 
     <Grid Background="DeepSkyBlue">
+		<Grid Margin="12,0" VerticalAlignment="Bottom">
+    		<Grid.ColumnDefinitions>
+    			<ColumnDefinition Width="1*"/>
+    			<ColumnDefinition Width="1*"/>
+    		</Grid.ColumnDefinitions>
+    		<Button x:Name="SinginButton" Content="注册" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,2,0" Click="SinginButton_Click"/>
+    		<Button x:Name="LoginButton" Content="登录" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Margin="4.857,0,0,0" Grid.ColumnSpan="2" Click="LoginButton_Click"/>
+
+    	</Grid>
 		<StackPanel Margin="0" VerticalAlignment="Top">
 
 			<Image HorizontalAlignment="Center" VerticalAlignment="Top" Source="assets/login.png" Width="180">
@@ -20,7 +29,6 @@
 					</TransitionCollection>
 				</Image.Transitions>
 			</Image>
-
 			<StackPanel Margin="12,-20,12,0">
 				<StackPanel.Transitions>
 					<TransitionCollection>
@@ -30,15 +38,6 @@
 
 				<TextBox x:Name="username" Margin="0,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="账户名或注册邮箱"/>
 				<PasswordBox x:Name="password" Margin="0,20,0,0" VerticalAlignment="Top" PlaceholderText="密码" IsPasswordRevealButtonEnabled="True"/>
-				<Grid Height="50" Margin="0,32,0,0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="1*"/>
-					</Grid.ColumnDefinitions>
-					<Button x:Name="SinginButton" Content="注册" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,2,0" Click="SinginButton_Click"/>
-					<Button x:Name="LoginButton" Content="登录" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Margin="4.857,0,0,0" Grid.ColumnSpan="2" Click="LoginButton_Click"/>
-
-				</Grid>
 
 			</StackPanel>
 		</StackPanel>

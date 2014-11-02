@@ -6,9 +6,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,19 +28,73 @@ namespace FanfouWP2
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         private User currentUser = new User();
-        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
-        private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
 
+        private bool is_loading = false;
+        class StatusObservableCollection : ObservableCollection<Status>, ISupportIncrementalLoading
+        {
+            IAsyncOperation<LoadMoreItemsResult> ISupportIncrementalLoading.LoadMoreItemsAsync(uint count)
+            {
+                CoreDispatcher dispatcher = Window.Current.Dispatcher;
+                return Task.Run<LoadMoreItemsResult>(
+                    async () =>
+                    {
+                        await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            if (this.Count != 0)
+                                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id: this.Last().id);
+                        });
+                        return new LoadMoreItemsResult() { Count = 60 };
+                    }).AsAsyncOperation<LoadMoreItemsResult>();
+            }
+
+            bool ISupportIncrementalLoading.HasMoreItems
+            {
+                get { return true; }
+            }
+        }
+        class MentionObservableCollection<Status> : ObservableCollection<Status>, ISupportIncrementalLoading
+        {
+            IAsyncOperation<LoadMoreItemsResult> ISupportIncrementalLoading.LoadMoreItemsAsync(uint count)
+            {
+                CoreDispatcher dispatcher = Window.Current.Dispatcher;
+                return Task.Run<LoadMoreItemsResult>(
+                   async () =>
+                   {
+
+                       // IPagedResponse<K> result = await this.Source.GetPage(this.Query, ++this.CurrentPage, 25);
+
+
+
+                       // this.VirtualCount = result.VirtualCount;
+
+
+                       //await dispatcher.RunAsync(
+
+                       //   CoreDispatcherPriority.Normal,
+
+                       //    () =>
+                       // {
+                       //       foreach (K item in result.Items)                           this.Add(item);
+                       //  });
+                       return new LoadMoreItemsResult() { Count = 60 };
+                   }).AsAsyncOperation<LoadMoreItemsResult>();
+            }
+
+            bool ISupportIncrementalLoading.HasMoreItems
+            {
+                get { return true; }
+            }
+        }
+
+        private ObservableCollection<Status> statuses = new StatusObservableCollection();
+        private ObservableCollection<Status> mentions = new MentionObservableCollection<Status>();
         public HomePage()
         {
             this.InitializeComponent();
 
-            this.Loaded += HomePage_Loaded;
-
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
 
             FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_HomeTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_HomeTimelineFailed;
@@ -46,20 +102,7 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.MentionTimelineSuccess += Instance_MentionTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.MentionTimelineFailed += Instance_MentionTimelineFailed;
         }
-        void HomePage_Loaded(object sender, RoutedEventArgs e)
-        {
-            //ScrollViewer sv = Utils.VisualHelper.FindVisualChildByName<ScrollViewer>(this.statusesGridView, "ScrollViewer");
-            //ScrollBar sb = Utils.VisualHelper.FindVisualChildByName<ScrollBar>(sv, "HorizontalScrollBar");
-            //sb.ValueChanged += sb_ValueChanged;
 
-        }
-
-        bool is_loading = false;
-        bool can_loading = false;
-        void sb_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            can_loading = true;
-        }
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
@@ -116,13 +159,11 @@ namespace FanfouWP2
 
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
         {
-            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
         }
 
         private void Instance_MentionTimelineSuccess(object sender, EventArgs e)
         {
-            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             Utils.StatusesReform.reform(this.mentions, ss);
@@ -131,13 +172,11 @@ namespace FanfouWP2
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
         {
-            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
         }
 
         private void Instance_HomeTimelineSuccess(object sender, EventArgs e)
         {
-            is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             Utils.StatusesReform.reform(this.statuses, ss);
@@ -153,7 +192,7 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Visible;
             FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);     
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
         }
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -163,37 +202,37 @@ namespace FanfouWP2
 
         private void SearchGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SearchPage));    
+            Frame.Navigate(typeof(SearchPage));
         }
 
         private void FindGrid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FindPage));  
+            Frame.Navigate(typeof(FindPage));
         }
 
-       private void NextButton_Click(object sender, RoutedEventArgs e)
+        private void NextButton_Click(object sender, RoutedEventArgs e)
         {
             this.hub.ScrollToSection(this.hub.Sections.First());
         }
 
-       private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
-       {
-           Frame.Navigate(typeof(TrendsPage));  
-       }
+        private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TrendsPage));
+        }
 
-       private void SearchItem_Click(object sender, RoutedEventArgs e)
-       {
-           Frame.Navigate(typeof(SearchPage));         
-       }
+        private void SearchItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SearchPage));
+        }
 
-       private void AboutButton_Click(object sender, RoutedEventArgs e)
-       {
-           Frame.Navigate(typeof(AboutPage));
-       }
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AboutPage));
+        }
 
-       private void SendItem_Click(object sender, RoutedEventArgs e)
-       {
-           Frame.Navigate(typeof(SendPage));
-       }
+        private void SendItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SendPage));
+        }
     }
 }
