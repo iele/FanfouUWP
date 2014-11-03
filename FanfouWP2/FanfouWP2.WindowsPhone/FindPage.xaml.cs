@@ -68,10 +68,24 @@ namespace FanfouWP2
             this.defaultViewModel["users"] = users;
 
             loading.Visibility = Visibility.Collapsed;
+
+            if (e.PageState != null)
+            {
+                if (e.PageState.ContainsKey("search"))
+                    this.search.Text = e.PageState["search"].ToString();
+                if (e.PageState.ContainsKey("users"))
+                {
+                    this.users = e.PageState["users"] as ObservableCollection<User>;
+                    this.defaultViewModel["users"] = users;
+                }
+                return;
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            e.PageState["search"] = search.Text;
+            e.PageState["users"] = this.users;
         }
 
         #region NavigationHelper 注册

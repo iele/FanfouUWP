@@ -54,7 +54,8 @@ namespace FanfouWP2
                 this.defaultViewModel["page"] = "第" + page + "页";
                 changeMenu(false);
             }
-            else {
+            else
+            {
                 changeMenu(true);
             }
         }
@@ -73,6 +74,20 @@ namespace FanfouWP2
         {
             user = e.NavigationParameter as User;
 
+            if (e.PageState != null)
+            {
+                if (e.PageState["page"] != null)
+                    page = (int)e.PageState["page"];
+                if (e.PageState["user"] != null)
+                    user = e.PageState["user"] as User;
+                if (e.PageState["statuses"] != null)
+                    statuses = e.PageState["statuses"] as ObservableCollection<Status>;
+                if (e.PageState["PrevItem.IsEnabled"] != null)
+                    PrevItem.IsEnabled = (bool)e.PageState["PrevItem.IsEnabled"];
+                if (e.PageState["NextItem.IsEnabled"] != null)
+                    NextItem.IsEnabled = (bool)e.PageState["NextItem.IsEnabled"];
+            }
+
             this.defaultViewModel["statuses"] = statuses;
 
             if (user.id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
@@ -82,12 +97,22 @@ namespace FanfouWP2
 
             this.defaultViewModel["page"] = "第" + page + "页";
 
-            loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, 1);
+            loading.Visibility = Visibility.Collapsed;
+
+            if (e.PageState == null)
+            {
+                loading.Visibility = Visibility.Visible;
+                FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, 1);
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            e.PageState["page"] = page;
+            e.PageState["user"] = user;
+            e.PageState["statuses"] = statuses;
+            e.PageState["PrevItem.IsEnabled"] = PrevItem.IsEnabled;
+            e.PageState["NextItem.IsEnabled"] = NextItem.IsEnabled;
         }
 
         #region NavigationHelper 注册
@@ -116,7 +141,7 @@ namespace FanfouWP2
         }
         #endregion
 
-      
+
         private void PrevItem_Click(object sender, RoutedEventArgs e)
         {
             this.loading.Visibility = Visibility.Visible;
@@ -147,6 +172,11 @@ namespace FanfouWP2
                 NextItem.IsEnabled = false;
             else
                 NextItem.IsEnabled = true;
+        }
+
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
     }
 }

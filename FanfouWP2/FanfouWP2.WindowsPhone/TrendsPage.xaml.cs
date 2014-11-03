@@ -64,13 +64,22 @@ namespace FanfouWP2
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             this.defaultViewModel["trends"] = trends;
-
             loading.Visibility = Visibility.Visible;
+
+            if (e.PageState != null && e.PageState["trends"] != null)
+            {
+                loading.Visibility = Visibility.Collapsed;
+                this.trends = e.PageState["trends"] as ObservableCollection<Trends>;
+                this.defaultViewModel["trends"] = trends;
+                return;
+            }
+
             FanfouAPI.FanfouAPI.Instance.TrendsList();
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            e.PageState["trends"] = trends;
         }
 
         #region NavigationHelper 注册
@@ -104,7 +113,7 @@ namespace FanfouWP2
             if (this.trendsGridView.SelectedIndex != -1)
             {
                 var t = this.trendsGridView.SelectedItem as Trends;
-                 Frame.Navigate(typeof(SearchPage), t);
+                Frame.Navigate(typeof(SearchPage), t);
             }
         }
     }

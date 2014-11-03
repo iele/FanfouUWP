@@ -102,5 +102,10 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
         }
 
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
+        }
+
     }
 }

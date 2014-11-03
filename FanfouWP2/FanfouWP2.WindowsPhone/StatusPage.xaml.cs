@@ -1,10 +1,12 @@
 ﻿using FanfouWP2.Common;
 using FanfouWP2.FanfouAPI;
+using FanfouWP2.ItemControl;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
@@ -38,6 +40,29 @@ namespace FanfouWP2
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            FanfouAPI.FanfouAPI.Instance.ContextTimelineSuccess += Instance_ContextTimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.ContextTimelineFailed += Instance_ContextTimelineFailed;
+        }
+
+        void Instance_ContextTimelineFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_ContextTimelineSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+
+            var ss = sender as List<Status>;
+
+            foreach (var item in ss)
+            {
+                var sic = new StatusItemControl();
+                sic.DataContext = item;
+                sic.Margin = new Thickness(0, 6, 0, 0);
+                this.context.Children.Add(sic);
+            }
+            this.context.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -72,6 +97,14 @@ namespace FanfouWP2
         {
             this.status = e.NavigationParameter as Status;
             this.defaultViewModel["status"] = status;
+
+            loading.Visibility = Visibility.Collapsed;
+
+            if (status.in_reply_to_status_id != null && status.in_reply_to_status_id != "")
+            {
+                loading.Visibility = Visibility.Visible;
+                FanfouAPI.FanfouAPI.Instance.StatusContextTimeline(status.id);
+            }
         }
 
         /// <summary>
@@ -115,7 +148,7 @@ namespace FanfouWP2
 
         private void RepostItem_Click(object sender, RoutedEventArgs e)
         {
-             Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
+            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
         }
 
         private void UserItem_Click(object sender, RoutedEventArgs e)

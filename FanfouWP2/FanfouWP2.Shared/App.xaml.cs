@@ -9,7 +9,6 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,13 +34,16 @@ namespace FanfouWP2
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+#if WINDOWS_PHONE_APP
             ContinuationManager = new ContinuationManager();
+#endif
         }
 
         public static Frame RootFrame { get; private set; }
 
+#if WINDOWS_PHONE_APP
         public static ContinuationManager ContinuationManager { get; private set; }
-
+#endif
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used when the application is launched to open a specific file, to display
@@ -126,6 +128,7 @@ namespace FanfouWP2
                     //Assume there is no state and continue
                 }
             }
+#if WINDOWS_PHONE_APP
 
             //Check if this is a continuation
             var continuationEventArgs = e as IContinuationActivatedEventArgs;
@@ -133,7 +136,7 @@ namespace FanfouWP2
             {
                 ContinuationManager.Continue(continuationEventArgs);
             }
-
+#endif
             Window.Current.Activate();
         }
 
@@ -160,7 +163,9 @@ namespace FanfouWP2
 
             var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
+#if WINDOWS_PHONE_APP
             ContinuationManager.MarkAsStale();
+#endif
             deferral.Complete();
         }
     }

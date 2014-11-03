@@ -34,6 +34,6 @@
             	<Grid Margin="0" VerticalAlignment="Center" Height="57"/>
             </StackPanel>
         </Grid>
-        <ListView Margin="12,2,12,-2" x:Name="statusesGridView"  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"/>
+        <ListView Margin="12,2,12,-2" x:Name="statusesGridView"  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick"/>
     </Grid>
 </Page>

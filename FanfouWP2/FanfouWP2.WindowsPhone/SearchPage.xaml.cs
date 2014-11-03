@@ -65,6 +65,19 @@ namespace FanfouWP2
             this.defaultViewModel["statuses"] = statuses;
             loading.Visibility = Visibility.Collapsed;
 
+            if (e.PageState != null)
+            {
+                if (e.PageState.ContainsKey("search"))
+                    this.search.Text = e.PageState["search"].ToString();
+                if (e.PageState.ContainsKey("statuses"))
+                {
+                    this.statuses = e.PageState["statuses"] as ObservableCollection<Status>;
+                    this.defaultViewModel["statuses"] = statuses;
+                } 
+                return;
+            }
+
+
             if (e.NavigationParameter != null)
             {
                 var t = e.NavigationParameter as Trends;
@@ -76,6 +89,8 @@ namespace FanfouWP2
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            e.PageState["search"] = search.Text;
+            e.PageState["statuses"] = this.statuses;
         }
 
         #region NavigationHelper 注册
@@ -108,6 +123,11 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Visible;
             FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+        }
+
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
     }

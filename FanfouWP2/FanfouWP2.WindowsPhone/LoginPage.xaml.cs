@@ -68,7 +68,7 @@ namespace FanfouWP2
 
         void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
         {
-             Frame.Navigate(typeof(HomePage));
+            Frame.Navigate(typeof(HomePage));
         }
 
         void Instance_LoginFailed(object sender, FanfouAPI.FailedEventArgs e)
@@ -95,6 +95,13 @@ namespace FanfouWP2
         /// 的字典。 首次访问页面时，该状态将为 null。</param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            if (e.PageState != null)
+            {
+                if (e.PageState["username"] != null)
+                    username.Text = e.PageState["username"].ToString();
+                if (e.PageState["username"] != null)
+                    password.Password = e.PageState["password"].ToString();
+            }
         }
 
         /// <summary>
@@ -107,6 +114,8 @@ namespace FanfouWP2
         ///的事件数据。</param>
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            e.PageState["username"] = username;
+            e.PageState["password"] = password;
         }
 
         #region NavigationHelper 注册

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="f17209a7-2b96-4fd7-bf33-de8af1d104c0" Publisher="CN=Elephas" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="f17209a7-2b96-4fd7-bf33-de8af1d104c0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="3ce021e3-19a8-4869-8184-2372420bf27f" Publisher="CN=Elephas" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="3ce021e3-19a8-4869-8184-2372420bf27f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>饭窗WP8.1</DisplayName>
     <PublisherDisplayName>Elephas</PublisherDisplayName>
