@@ -179,39 +179,14 @@ namespace FanfouWP2
             Frame.Navigate(typeof(SendPage));
         }
 
-        private void moreStatusButton_Click(object sender, RoutedEventArgs e)
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id:statuses.Last().id);       
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
-   
-        private void upStatusButton_Click(object sender, RoutedEventArgs e)
+        private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var grid = VisualTreeHelper.GetChild(statusesSection, 0) as Grid;
-            var lv = VisualHelper.FindVisualChildByName<ListView>(grid, "statusesGridView");
-            lv.ScrollIntoView(lv.Items.First());
-         }
-
-        private void moreMentionsButton_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, max_id: mentions.Last().id);    
-        }
-
-        private void upMentionsButton_Click(object sender, RoutedEventArgs e)
-        {
-            var grid = VisualTreeHelper.GetChild(mentionsSection, 0) as Grid;
-            var lv = VisualHelper.FindVisualChildByName<ListView>(grid, "mentionsGridView");
-            lv.ScrollIntoView(lv.Items.First());
-        }
-
-        private void statusesGridView_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-        }
-
-        private void mentionsGridView_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);    
         }
     }
 }

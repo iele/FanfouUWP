@@ -42,32 +42,26 @@
 
         <Rectangle Fill="DeepSkyBlue" Height="88" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Top" Margin="0,-28,0,0" Canvas.ZIndex="-10"/>
         <Grid Margin="0,0,0,12" Background="DeepSkyBlue">
-        	<StackPanel Margin="0" Height="60" Orientation="Horizontal" HorizontalAlignment="Left">
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition/>
+        		<ColumnDefinition Width="Auto"/>
+        	</Grid.ColumnDefinitions>
+        	<StackPanel Margin="0" Height="60" Orientation="Horizontal">
         		<Rectangle HorizontalAlignment="Left" Height="40" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Center" Width="40" Margin="12,0,0,0">
         			<Rectangle.Fill>
         				<ImageBrush Stretch="Fill" ImageSource="{Binding currentUser.profile_image_url}"/>
         			</Rectangle.Fill>
         		</Rectangle>
-        		<TextBlock TextWrapping="NoWrap" Text="{Binding currentUser.screen_name}" VerticalAlignment="Center" Margin="12,17,0,17" Foreground="White" FontSize="20" Width="239"/>
+        		<TextBlock TextWrapping="NoWrap" VerticalAlignment="Center" Margin="12,0" Foreground="White" FontSize="20" HorizontalAlignment="Left" Text="{Binding currentUser.screen_name}"/>
         	</StackPanel>
-        	<Image Margin="0,0,12,0" Source="/Assets/fanfou_beta.png" HorizontalAlignment="Right" Width="120"/>
+        	<Image Margin="0,0,12,0" Source="/Assets/fanfou_beta.png" HorizontalAlignment="Right" Width="120" Grid.Column="1"/>
 
         </Grid>
         <Hub x:Name="hub" Header="" Margin="0,26,0,0" Orientation="Horizontal" Grid.Row="1">
             <HubSection x:Name="statusesSection" Header="我的消息" Height="Auto">
                 <DataTemplate>
                     <Grid>
-                        <ListView x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,-20,0,0" SizeChanged="statusesGridView_SizeChanged">
-                            <ListView.FooterTemplate>
-                                <DataTemplate>
-                                	<Grid>
-                                		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:Name="statusFooter">
-                                			<AppBarButton x:Name="moreStatusButton" Icon="More" Label="" Click="moreStatusButton_Click" Margin="0,0,0,0"/>
-                                            <AppBarButton x:Name="upStatusButton" Icon="Up" Label="" HorizontalAlignment="Center" Margin="0,0,0,0" Click="upStatusButton_Click"/>
-                                		</StackPanel>
-                                	</Grid>
-                                </DataTemplate>
-                            </ListView.FooterTemplate>
+                        <ListView x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
                         </ListView>
                     </Grid>
                 </DataTemplate>
@@ -75,17 +69,7 @@
             <HubSection Header="提及我的" x:Name="mentionsSection">
                 <DataTemplate>
                     <Grid>
-                        <ListView x:Name="mentionsGridView" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}" Margin="0,-20,0,0" SizeChanged="mentionsGridView_SizeChanged" >
-                            <ListView.FooterTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:Name="mentionsFooter">
-                                            <AppBarButton x:Name="moreMentionsButton" Icon="More" Label="" Click="moreMentionsButton_Click" Margin="0,0,0,0"/>
-                                            <AppBarButton x:Name="upMentionsButton" Icon="Up" Label="" HorizontalAlignment="Center" Margin="0,0,0,0" Click="upMentionsButton_Click"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.FooterTemplate>
+                        <ListView x:Name="mentionsGridView" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}" Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
                         </ListView>
                     </Grid>
                 </DataTemplate>

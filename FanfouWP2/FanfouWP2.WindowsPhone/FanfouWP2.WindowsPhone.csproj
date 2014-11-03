@@ -80,6 +80,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="StatusPage.xaml.cs">
+      <DependentUpon>StatusPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControl\TagDialog.xaml.cs">
       <DependentUpon>TagDialog.xaml</DependentUpon>
     </Compile>
@@ -207,6 +210,10 @@
     <Content Include="StoreManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="StatusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CustomControl\TagDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
