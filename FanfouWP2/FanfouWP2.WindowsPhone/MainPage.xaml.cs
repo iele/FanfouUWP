@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Security.Authentication.Web;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,8 +23,7 @@ namespace FanfouWP2
 {
     public sealed partial class MainPage : Page
     {
-        public static MainPage Current;
-        public MainPage()
+          public MainPage()
         {
             this.InitializeComponent();
 
@@ -30,10 +31,6 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
 
             this.Loaded += MainPage_Loaded;
-        }
-
-        void ScenarioFrame_Navigating(object sender, NavigatingCancelEventArgs e)
-        {
         }
 
         /// <summary> 
