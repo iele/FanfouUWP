@@ -426,7 +426,7 @@ namespace FanfouWP2.Common
     public class LoadStateEventArgs : EventArgs
     {
         /// <summary>
-        /// 最初请求此页时传递给 <see cref="Frame.Navigate(Type, Object)"/> 
+        /// 最初请求此页时传递给 <see cref=" Frame.Navigate(Type, Object)"/> 
         /// 的参数值。
         /// </summary>
         public Object NavigationParameter { get; private set; }
@@ -440,7 +440,7 @@ namespace FanfouWP2.Common
         /// 初始化 <see cref="LoadStateEventArgs"/> 类的新实例。
         /// </summary>
         /// <param name="navigationParameter">
-        /// 最初请求此页时传递给 <see cref="Frame.Navigate(Type, Object)"/> 
+        /// 最初请求此页时传递给 <see cref=" Frame.Navigate(Type, Object)"/> 
         /// 的参数值。
         /// </param>
         /// <param name="pageState">

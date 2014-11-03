@@ -35,9 +35,12 @@ namespace FanfouWP2
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         private string location;
-        public enum SendMode { Normal, Reply, Repose, ReplyUser, Photo };
+
+        public enum SendMode { Normal, Reply, Repost, ReplyUser, Photo };
         private SendMode mode = SendMode.Normal;
-        private Item data;
+        private Status status;
+        private User user;
+
         private StorageFile file;
 
         public SendPage()
@@ -100,11 +103,37 @@ namespace FanfouWP2
         /// 事件的来源; 通常为 <see cref="NavigationHelper"/>
         /// </param>
         /// <param name="e">事件数据，其中既提供在最初请求此页时传递给
-        /// <see cref="Frame.Navigate(Type, Object)"/> 的导航参数，又提供
+        /// <see cref=" Frame.Navigate(Type, Object)"/> 的导航参数，又提供
         /// 此页在以前会话期间保留的状态的
         /// 字典。 首次访问页面时，该状态将为 null。</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            if (e.NavigationParameter != null)
+            {
+                var param = e.NavigationParameter as Tuple<Status, SendMode>;
+                mode = param.Item2;
+                status = param.Item1;
+                switch (mode)
+                {
+                    case SendMode.Normal:
+                        this.title.Text = "你在做什么?";
+                        break;
+                    case SendMode.Photo:
+                        break;
+                    case SendMode.Reply:
+                        this.title.Text = "回复" + status.user.screen_name;
+                        send.Text = "@" + status.user.screen_name;
+                        break;
+                    case SendMode.ReplyUser:
+                        break;
+                    case SendMode.Repost:
+                        this.title.Text = "转发" + status.user.screen_name;
+                        send.Text = "转@" + status.user.screen_name + " " + status.text;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -160,10 +189,12 @@ namespace FanfouWP2
                     FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file);
                     break;
                 case SendMode.Reply:
+                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_status_id: status.id);
                     break;
                 case SendMode.ReplyUser:
                     break;
-                case SendMode.Repose:
+                case SendMode.Repost:
+                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id);
                     break;
                 default:
                     break;
@@ -180,7 +211,7 @@ namespace FanfouWP2
             openPicker.FileTypeFilter.Add(".png");
             openPicker.FileTypeFilter.Add(".bmp");
             openPicker.PickSingleFileAndContinue();
-           
+
         }
 
         public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
@@ -198,8 +229,8 @@ namespace FanfouWP2
                 }
             }
             else
-            { 
-}
+            {
+            }
         }
 
 

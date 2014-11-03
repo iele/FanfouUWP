@@ -7,7 +7,7 @@
     xmlns:ValueConverter="using:FanfouWP2.ItemControl.ValueConverter"
     x:Class="FanfouWP2.SendPage"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
 	<Page.Resources>
 		<ValueConverter:TextToLeftCountTextConverter x:Key="TextToLeftCountTextConverter"/>
 	</Page.Resources>
@@ -37,8 +37,8 @@
 		<!--TODO: 应将内容放入以下网格-->
 		<Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue"/>
 		<Grid VerticalAlignment="Center" Margin="12,11,12,12" Height="25">
-			<TextBlock x:Name="textBlock" Text="你在做什么?" Style="{ThemeResource TitleTextBlockStyle}" Margin="0" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="White"/>
-			<TextBlock x:Name="count" Text="{Binding Text, Converter={StaticResource TextToLeftCountTextConverter}, ElementName=send}" Style="{ThemeResource TitleTextBlockStyle}" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="White" Margin="0" HorizontalAlignment="Right" Width="70"/>
+			<TextBlock x:Name="title" Text="你在做什么?" Margin="0" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="White"/>
+			<TextBlock x:Name="count" Text="{Binding Text, Converter={StaticResource TextToLeftCountTextConverter}, ElementName=send}" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="White" Margin="0" HorizontalAlignment="Right" Width="70"/>
 		</Grid>
 
         <!--TODO: 应将内容放入以下网格-->

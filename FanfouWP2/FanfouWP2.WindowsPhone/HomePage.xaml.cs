@@ -129,7 +129,7 @@ namespace FanfouWP2
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(PublicPage));
+             Frame.Navigate(typeof(PublicPage));
         }
 
         private void RefreshItem_Click(object sender, RoutedEventArgs e)
@@ -141,17 +141,17 @@ namespace FanfouWP2
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FavoritePage), this.currentUser);
+             Frame.Navigate(typeof(FavoritePage), this.currentUser);
         }
 
         private void SearchGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SearchPage));
+             Frame.Navigate(typeof(SearchPage));
         }
 
         private void FindGrid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FindPage));
+             Frame.Navigate(typeof(FindPage));
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -161,32 +161,32 @@ namespace FanfouWP2
 
         private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(TrendsPage));
+             Frame.Navigate(typeof(TrendsPage));
         }
 
         private void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SearchPage));
+             Frame.Navigate(typeof(SearchPage));
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(AboutPage));
+             Frame.Navigate(typeof(AboutPage));
         }
 
         private void SendItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage));
+             Frame.Navigate(typeof(SendPage));
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
+             Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(StatusPage), e.ClickedItem);    
+             Frame.Navigate(typeof(StatusPage), e.ClickedItem);    
         }
     }
 }

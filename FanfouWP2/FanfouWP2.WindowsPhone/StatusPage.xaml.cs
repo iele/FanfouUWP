@@ -65,7 +65,7 @@ namespace FanfouWP2
         /// 事件的来源; 通常为 <see cref="NavigationHelper"/>
         /// </param>
         /// <param name="e">事件数据，其中既提供在最初请求此页时传递给
-        /// <see cref="Frame.Navigate(Type, Object)"/> 的导航参数，又提供
+        /// <see cref=" Frame.Navigate(Type, Object)"/> 的导航参数，又提供
         /// 此页在以前会话期间保留的状态的
         /// 字典。 首次访问页面时，该状态将为 null。</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -112,5 +112,24 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void RepostItem_Click(object sender, RoutedEventArgs e)
+        {
+             Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
+        }
+
+        private void UserItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void FavItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ReplyItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
+        }
     }
 }

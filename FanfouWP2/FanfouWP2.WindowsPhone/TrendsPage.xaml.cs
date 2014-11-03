@@ -104,7 +104,7 @@ namespace FanfouWP2
             if (this.trendsGridView.SelectedIndex != -1)
             {
                 var t = this.trendsGridView.SelectedItem as Trends;
-                Frame.Navigate(typeof(SearchPage), t);
+                 Frame.Navigate(typeof(SearchPage), t);
             }
         }
     }
