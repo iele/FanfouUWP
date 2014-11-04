@@ -35,51 +35,51 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-	<Grid x:Name="LayoutRoot" Background="White">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition/>
-		</Grid.RowDefinitions>
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-		<!-- 标题面板 -->
+        <!-- 标题面板 -->
 
-		<!--TODO: 应将内容放入以下网格-->
-		<ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Margin="0,-28,0,0" Canvas.ZIndex="10"/>
+        <!--TODO: 应将内容放入以下网格-->
+        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Margin="0,-28,0,0" Canvas.ZIndex="10"/>
 
-		<!--TODO: 应将内容放入以下网格-->
-		<Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue"/>
-		<StackPanel Grid.Row="0" Margin="12,12,0,12" VerticalAlignment="Center" Orientation="Horizontal">
-			<Rectangle HorizontalAlignment="Left" Height="40" Stroke="Transparent" VerticalAlignment="Center" Width="40" RadiusX="3" RadiusY="3">
-				<Rectangle.Fill>
-					<ImageBrush Stretch="Fill" ImageSource="{Binding status.user.profile_image_url}"/>
-				</Rectangle.Fill>
-			</Rectangle>
-			<TextBlock Text="{Binding status.user.screen_name}" Margin="12,0,0,0" FontSize="21.333" VerticalAlignment="Center" Foreground="White"/>
-		</StackPanel>
-		<ScrollViewer Margin="0" Grid.Row="1">
-			<Grid x:Name="ContentRoot">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition/>
-				</Grid.RowDefinitions>
-				<TextBlock Margin="12,12,12,0" TextWrapping="Wrap" Text="{Binding status.text}" VerticalAlignment="Top" FontSize="18.667"/>
-				<StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1">
-					<TextBlock Padding="0,5,0,0" Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0" HorizontalAlignment="Left"/>
-					<TextBlock Padding="5,5,0,0" Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"/>
-					<TextBlock Padding="5,5,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"  />
-					<TextBlock Padding="5,5,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
-					<TextBlock Padding="5,5,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}"/>
-				</StackPanel>
+        <!--TODO: 应将内容放入以下网格-->
+        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue"/>
+        <StackPanel Grid.Row="0" Margin="12,12,0,12" VerticalAlignment="Center" Orientation="Horizontal">
+            <Rectangle HorizontalAlignment="Left" Height="40" Stroke="Transparent" VerticalAlignment="Center" Width="40" RadiusX="3" RadiusY="3">
+                <Rectangle.Fill>
+                    <ImageBrush Stretch="Fill" ImageSource="{Binding status.user.profile_image_url}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock Text="{Binding status.user.screen_name}" Margin="12,0,0,0" FontSize="21.333" VerticalAlignment="Center" Foreground="White"/>
+        </StackPanel>
+        <ScrollViewer Margin="0" Grid.Row="1">
+            <Grid x:Name="ContentRoot">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Margin="12,12,12,0" TextWrapping="Wrap" Text="{Binding status.text}" VerticalAlignment="Top" FontSize="18.667"/>
+                <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1">
+                    <TextBlock Padding="0,5,0,0" Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}" VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0" HorizontalAlignment="Left"/>
+                    <TextBlock Padding="5,5,0,0" Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"/>
+                    <TextBlock Padding="5,5,0,0" Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}"  />
+                    <TextBlock Padding="5,5,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
+                    <TextBlock Padding="5,5,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}"/>
+                </StackPanel>
                 <Image Margin="12,6,12,0" Grid.Row="2" VerticalAlignment="Top" Source="{Binding status.photo.largeurl}"/>
                 <StackPanel x:Name="context" Margin="12,6,12,0" VerticalAlignment="Top" Grid.Row="3" Visibility="Collapsed">
-                	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="此消息包含的上下文" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="16" Foreground="Gray"/>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="此消息包含的上下文" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="16" Foreground="Gray"/>
                 </StackPanel>
             </Grid>
-		</ScrollViewer>
+        </ScrollViewer>
 
-		<!--TODO: 应将内容放入以下网格-->
-	</Grid>
+        <!--TODO: 应将内容放入以下网格-->
+    </Grid>
 </Page>

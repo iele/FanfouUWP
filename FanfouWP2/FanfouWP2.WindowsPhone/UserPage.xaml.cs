@@ -1,13 +1,13 @@
 ﻿using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -16,76 +16,69 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
+
 namespace FanfouWP2
 {
-    public sealed partial class FindPage : Page
+    /// <summary>
+    /// 可独立使用或用于导航至 Frame 内部的空白页。
+    /// </summary>
+    public sealed partial class UserPage : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private ObservableCollection<User> users = new ObservableCollection<User>();
-
-        public FindPage()
+        public UserPage()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.SearchUserSuccess += Instance_SearchUserSuccess;
-            FanfouAPI.FanfouAPI.Instance.SearchUserFailed += Instance_SearchUserFailed;
         }
 
-        void Instance_SearchUserFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        void Instance_SearchUserSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = (sender as UserList).users;
-            this.users.Clear();
-            foreach (var i in ss)
-            {
-                this.users.Add(i);
-            }
-            this.defaultViewModel["date"] = DateTime.Now.ToString();
-        }
-
+        /// <summary>
+        /// 获取与此 <see cref="Page"/> 关联的 <see cref="NavigationHelper"/>。
+        /// </summary>
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// 获取此 <see cref="Page"/> 的视图模型。
+        /// 可将其更改为强类型视图模型。
+        /// </summary>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
+        /// <summary>
+        /// 使用在导航过程中传递的内容填充页。  在从以前的会话
+        /// 重新创建页时，也会提供任何已保存状态。
+        /// </summary>
+        /// <param name="sender">
+        /// 事件的来源; 通常为 <see cref="NavigationHelper"/>
+        /// </param>
+        /// <param name="e">事件数据，其中既提供在最初请求此页时传递给
+        /// <see cref=" Frame.Navigate(Type, Object)"/> 的导航参数，又提供
+        /// 此页在以前会话期间保留的状态的
+        /// 字典。 首次访问页面时，该状态将为 null。</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.defaultViewModel["users"] = users;
-
-            loading.Visibility = Visibility.Collapsed;
-
-            if (e.PageState != null)
-            {
-                if (e.PageState.ContainsKey("search"))
-                    this.search.Text = e.PageState["search"].ToString();
-                if (e.PageState.ContainsKey("users"))
-                {
-                    this.users = e.PageState["users"] as ObservableCollection<User>;
-                    this.defaultViewModel["users"] = users;
-                }
-                return;
-            }
         }
 
+        /// <summary>
+        /// 保留与此页关联的状态，以防挂起应用程序或
+        /// 从导航缓存中放弃此页。值必须符合
+        /// <see cref="SuspensionManager.SessionState"/> 的序列化要求。
+        /// </summary>
+        /// <param name="sender">事件的来源；通常为 <see cref="NavigationHelper"/></param>
+        ///<param name="e">提供要使用可序列化状态填充的空字典
+        ///的事件数据。</param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["search"] = search.Text;
-            e.PageState["users"] = this.users;
         }
 
         #region NavigationHelper 注册
@@ -112,18 +105,7 @@ namespace FanfouWP2
         {
             this.navigationHelper.OnNavigatedFrom(e);
         }
+
         #endregion
-
-        private void SearchItem_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.SearchUser(this.search.Text, 60);
-        }
-
-        private void userGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            Frame.Navigate(typeof(UserPage), e.ClickedItem);
-        }
-
     }
 }

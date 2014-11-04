@@ -14,7 +14,8 @@ namespace FanfouWP2.ItemControl.ValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-
+            if (value == null || value as string == "")
+                return "";
             return "回复" + value as string;
         }
 

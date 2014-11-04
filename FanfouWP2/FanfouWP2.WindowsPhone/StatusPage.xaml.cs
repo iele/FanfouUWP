@@ -153,6 +153,7 @@ namespace FanfouWP2
 
         private void UserItem_Click(object sender, RoutedEventArgs e)
         {
+            Frame.Navigate(typeof(UserPage), this.status.user);      
         }
 
         private void FavItem_Click(object sender, RoutedEventArgs e)
