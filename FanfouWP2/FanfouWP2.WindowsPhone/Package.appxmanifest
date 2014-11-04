@@ -3,7 +3,7 @@
   <Identity Name="3ce021e3-19a8-4869-8184-2372420bf27f" Publisher="CN=Elephas" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="3ce021e3-19a8-4869-8184-2372420bf27f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>FanfouWP2.WindowsPhone</DisplayName>
+    <DisplayName>饭窗WP8.1</DisplayName>
     <PublisherDisplayName>Elephas</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FanfouWP2.WindowsPhone.App">
-      <m3:VisualElements DisplayName="FanfouWP2.WindowsPhone" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="FanfouWP2.WindowsPhone" ForegroundText="light" BackgroundColor="transparent">
+      <m3:VisualElements DisplayName="饭窗WP8.1" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="饭窗 Windows Phone 8.1" ForegroundText="light" BackgroundColor="transparent">
         <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
@@ -27,5 +27,9 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClientServer" />
+    <Capability Name="picturesLibrary" />
+    <Capability Name="removableStorage" />
+    <DeviceCapability Name="location" />
+    <DeviceCapability Name="webcam" />
   </Capabilities>
 </Package>
