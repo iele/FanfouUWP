@@ -63,7 +63,7 @@ namespace FanfouWP2
 
             if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
-                // Restore the saved session state only when appropriate                
+                // Restore the saved session state only when appropriate
                 try
                 {
                     await SuspensionManager.RestoreAsync();
@@ -74,7 +74,6 @@ namespace FanfouWP2
                     //Assume there is no state and continue
                 }
             }
-
 
             if (RootFrame.Content == null)
             {
