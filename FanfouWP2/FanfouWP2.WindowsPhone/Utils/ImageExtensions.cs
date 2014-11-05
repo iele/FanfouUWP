@@ -18,7 +18,7 @@ namespace FanfouWP2.Utils
         public static readonly DependencyProperty CacheUriProperty =
             DependencyProperty.RegisterAttached(
                 "CacheUri",
-                typeof(string),
+                typeof(Uri),
                 typeof(ImageExtensions),
                 new PropertyMetadata(null, OnCacheUriChanged));
 
@@ -26,16 +26,16 @@ namespace FanfouWP2.Utils
         /// Gets the CacheUri property. This dependency property 
         /// WebUri that has to be cached
         /// </summary>
-        public static string GetCacheUri(DependencyObject d)
+        public static Uri GetCacheUri(DependencyObject d)
         {
-            return (string)d.GetValue(CacheUriProperty);
+            return (Uri)d.GetValue(CacheUriProperty);
         }
 
         /// <summary>
         /// Sets the CacheUri property. This dependency property 
         /// WebUri that has to be cached
         /// </summary>
-        public static void SetCacheUri(DependencyObject d, string value)
+        public static void SetCacheUri(DependencyObject d, Uri value)
         {
             d.SetValue(CacheUriProperty, value);
         }
@@ -44,7 +44,10 @@ namespace FanfouWP2.Utils
         {
 
             //Uri oldCacheUri = (Uri)e.OldValue;
-            Uri newCacheUri = new Uri((string)d.GetValue(CacheUriProperty));
+            if (d.GetValue(CacheUriProperty) == null)
+                return;
+
+            Uri newCacheUri = (Uri)d.GetValue(CacheUriProperty);
             var image = (Image)d;
 
             if (newCacheUri != null)
