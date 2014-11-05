@@ -35,7 +35,7 @@
         </Grid.ColumnDefinitions>
         <Rectangle Height="48" StrokeThickness="0" Width="48" RadiusY="5" Canvas.ZIndex="2" Margin="20,10,10,10" Tapped="Rectangle_Tapped" RadiusX="5">
             <Rectangle.Fill>
-                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding user.profile_image_url_large}"/>
+                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding user.profile_image_url_large, Converter={StaticResource ImageSourceToCacheConverter}}"/>
             </Rectangle.Fill>
         </Rectangle>
         <StackPanel Grid.Column="1" Margin="9.667,0,10,0" Orientation="Vertical" VerticalAlignment="Center">
@@ -54,7 +54,7 @@
             	<RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
         	<TextBlock TextWrapping="Wrap" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}" FontSize="18.667" Margin="10,5,10,0"/>
-        	<Image Source="{Binding photo.largeurl}" Margin="0,10,0,0" Grid.Row="1" Tapped="RectangleImage_Tapped" VerticalAlignment="Top" Stretch="UniformToFill" MaxHeight="150"/>
+        	<Image Source="{Binding photo.largeurl, Converter={StaticResource ImageSourceToCacheConverter}}" Margin="0,10,0,0" Grid.Row="1" Tapped="RectangleImage_Tapped" VerticalAlignment="Top" Stretch="UniformToFill" MaxHeight="150"/>
         </Grid>
         <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" Stroke="DeepSkyBlue" StrokeThickness="2"/>
         <Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Margin="0" Stroke="DeepSkyBlue" Width="5" StrokeThickness="2"/>
