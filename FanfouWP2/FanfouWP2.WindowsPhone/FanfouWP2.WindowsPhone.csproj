@@ -161,7 +161,9 @@
     <Compile Include="PublicPage.xaml.cs">
       <DependentUpon>PublicPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ImageExtensions.cs" />
     <Compile Include="Utils\ToastShow.cs" />
+    <Compile Include="Utils\WebDataCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

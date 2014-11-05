@@ -18,13 +18,15 @@ namespace FanfouWP2.ItemControl.ValueConverter
 
         public delegate void ImageCompletedHander(object sender, EventArgs e);
         public event ImageCompletedHander ImageCompleted;
-     
+
+        private BitmapImage bitmap;
+
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<object> Convert(object value, Type targetType, object parameter, string language)
+        public object Convert(object value, Type targetType, object parameter, string language)
         {
             try
             {
@@ -47,12 +49,13 @@ namespace FanfouWP2.ItemControl.ValueConverter
             {
                 try
                 {
-                    var file =  _storage.GetFileAsync(GetFileNameInIsolatedStorage(imageFileUri));
-                    return await ExtractFromLocalStorage(imageFileUri);
+                    ExtractFromLocalStorage(imageFileUri);
+                    return bitmap;
                 }
                 catch (Exception)
                 {
-                    return await DownloadFromWeb(imageFileUri);
+                    DownloadFromWeb(imageFileUri);
+                    return bitmap;
                 }
             }
 
@@ -71,6 +74,7 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 var bm = new BitmapImage(new Uri(defaultImageUri, UriKind.Relative)); //Load default Image  
                 if (ImageCompleted != null)
                     ImageCompleted(this, new EventArgs());
+                bitmap = bm;
                 return bm;
             }
             else
@@ -78,11 +82,12 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 var bm = new BitmapImage(imageFileUri);
                 if (ImageCompleted != null)
                     ImageCompleted(this, new EventArgs());
+                bitmap = bm;
                 return bm;
             }
         }
 
-        private async Task<object> DownloadFromWeb(Uri imageFileUri)
+        private async void DownloadFromWeb(Uri imageFileUri)
         {
             try
             {
@@ -95,15 +100,14 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 bm.SetSource(await sourceFile.OpenAsync(FileAccessMode.Read));
                 if (ImageCompleted != null)
                     ImageCompleted(this, new EventArgs());
-                return bm;
+                bitmap = bm;
             }
             catch (Exception e)
             {
-                return null;
             }
         }
 
-        private async Task<object> ExtractFromLocalStorage(Uri imageFileUri)
+        private async void ExtractFromLocalStorage(Uri imageFileUri)
         {
             try
             {
@@ -113,11 +117,10 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 bm.SetSource(await sourceFile.OpenAsync(FileAccessMode.Read));
                 if (ImageCompleted != null)
                     ImageCompleted(this, new EventArgs());
-                return bm;
+                bitmap = bm;
             }
             catch (Exception e)
             {
-                return null;
             }
         }
 
