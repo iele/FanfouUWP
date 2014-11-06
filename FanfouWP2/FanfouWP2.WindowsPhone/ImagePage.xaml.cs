@@ -137,11 +137,26 @@ namespace FanfouWP2
 
         private async void SaveItem_Click(object sender, RoutedEventArgs e)
         {
-            HttpClient webClient = new HttpClient();
-            var bytes = await webClient.GetByteArrayAsync(new Uri(this.photo)).ConfigureAwait(false);
-            var folder = Windows.Storage.KnownFolders.SavedPictures;
-            var file = await folder.CreateFileAsync(FanfouWP2.Utils.WebDataCache.ToCacheKey(new Uri(this.photo)) + ".jpg", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteBytesAsync(file, bytes);
+            try
+            {
+                string ext = ".jpg";
+                if (this.photo.Substring(this.photo.Length - 3, 3) == "jpg")
+                    ext = ".jpg";
+                if (this.photo.Substring(this.photo.Length - 3, 3) == "png")
+                    ext = ".png";
+                if (this.photo.Substring(this.photo.Length - 3, 3) == "gif")
+                    ext = ".gif";
+                if (this.photo.Substring(this.photo.Length - 4, 4) == "jpeg")
+                    ext = ".jpg";
+
+                HttpClient webClient = new HttpClient();
+                var bytes = await webClient.GetByteArrayAsync(new Uri(this.photo)).ConfigureAwait(false);
+                var folder = Windows.Storage.KnownFolders.SavedPictures;
+                var file = await folder.CreateFileAsync(FanfouWP2.Utils.WebDataCache.ToCacheKey(new Uri(this.photo)) + ext, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteBytesAsync(file, bytes);
+            }
+            catch (Exception) { 
+            }
         }
     }
 }

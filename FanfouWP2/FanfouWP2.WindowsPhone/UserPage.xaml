@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" Background="white">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition/>
@@ -19,10 +19,67 @@
         <!--TODO: 应将内容放入以下网格-->
         <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" Height="76" VerticalAlignment="Top"/>
         <StackPanel Grid.Row="0" Margin="12,0,0,0" VerticalAlignment="Center">
-        	<TextBlock Text="关于" Margin="0" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="White"/>
+        	<TextBlock Text="关于" Margin="0" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="white"/>
         </StackPanel>
 
         <!--TODO: 应将内容放入以下网格-->
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="0"/>
+        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="0">
+        	<Hub Header="" Margin="0,27,0,0">
+                <HubSection Header="">
+                    <DataTemplate>
+                        <Grid Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="0,0,0,10" Grid.RowSpan="3" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Ellipse Stroke="gray" Height="64" StrokeThickness="2" Margin="0,0,0,20" HorizontalAlignment="Center" Width="64">
+                                        <Ellipse.Fill>
+                                            <ImageBrush Stretch="Fill" ImageSource="{Binding user.profile_image_url_large}"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding user.screen_name}" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,16,0,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0">
+                                        <StackPanel Margin="0" Orientation="Vertical">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" FontSize="24"/>
+                                            <TextBlock Foreground="gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.statuses_count}" VerticalAlignment="Top" FontSize="32"/>
+                                        </StackPanel>
+                                        <StackPanel Margin="0,10,0,0" Orientation="Vertical">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top" FontSize="24"/>
+                                            <TextBlock Foreground="gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.favourites_count}" VerticalAlignment="Top" FontSize="32"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" >
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top" FontSize="24"/>
+                                            <TextBlock Foreground="gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.followers_count}"  VerticalAlignment="Top" FontSize="32"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top" FontSize="24"/>
+                                            <TextBlock Foreground="gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.friends_count}"  VerticalAlignment="Top" FontSize="32"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <ScrollViewer MaxWidth="400" Margin="0,10,0,0" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="16"/>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </HubSection>
+        		<HubSection Header="">
+        			<DataTemplate>
+        				<Grid/>
+        			</DataTemplate>
+        		</HubSection>
+        	</Hub>
+        </Grid>
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
 ﻿using FanfouWP2.Common;
+using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,8 @@ namespace FanfouWP2
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+
+        private User user;
 
         public UserPage()
         {
@@ -67,6 +70,8 @@ namespace FanfouWP2
         /// 字典。 首次访问页面时，该状态将为 null。</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            this.user = e.NavigationParameter as User;
+            this.defaultViewModel["user"] = user;
         }
 
         /// <summary>
