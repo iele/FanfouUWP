@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:utils="using:FanfouWP2.Utils"
     x:Class="FanfouWP2.StatusPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}">
@@ -49,11 +50,7 @@
         <!--TODO: 应将内容放入以下网格-->
         <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue"/>
         <StackPanel Grid.Row="0" Margin="12,12,0,12" VerticalAlignment="Center" Orientation="Horizontal">
-            <Rectangle HorizontalAlignment="Left" Height="40" Stroke="Transparent" VerticalAlignment="Center" Width="40" RadiusX="3" RadiusY="3">
-                <Rectangle.Fill>
-                    <ImageBrush Stretch="Fill" ImageSource="{Binding status.user.profile_image_url}"/>
-                </Rectangle.Fill>
-            </Rectangle>
+            <Image Tapped="Profile_Tapped" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40" utils:ImageExtensions.CacheUri="{Binding status.user.profile_image_url}" />
             <TextBlock Text="{Binding status.user.screen_name}" Margin="12,0,0,0" FontSize="21.333" VerticalAlignment="Center" Foreground="White"/>
         </StackPanel>
         <ScrollViewer Margin="0" Grid.Row="1">
@@ -73,7 +70,7 @@
                     <TextBlock Padding="5,5,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
                     <TextBlock Padding="5,5,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}"/>
                 </StackPanel>
-                <Image Margin="12,6,12,0" Grid.Row="2" VerticalAlignment="Top" Source="{Binding status.photo.largeurl}"/>
+                <Image Tapped="Image_Tapped" Margin="12,6,12,0" Grid.Row="2" VerticalAlignment="Top" utils:ImageExtensions.CacheUri="{Binding status.photo.largeurl}" HorizontalAlignment="Center" MaxHeight="400"/>
                 <StackPanel x:Name="context" Margin="12,6,12,0" VerticalAlignment="Top" Grid.Row="3" Visibility="Collapsed">
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="此消息包含的上下文" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="16" Foreground="Gray"/>
                 </StackPanel>

@@ -43,7 +43,6 @@ namespace FanfouWP2.Utils
         private static async void OnCacheUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-            //Uri oldCacheUri = (Uri)e.OldValue;
             Uri newCacheUri = (Uri)d.GetValue(CacheUriProperty);
             var image = (Image)d;
 

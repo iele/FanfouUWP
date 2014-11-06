@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FanfouWP2.App" Collapsed="true">
+    <Position X="29.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAQAAAQIAIAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.IncrementalObservableCollection&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAgAAAAAAAAAAAAAAAAAABAAAgAAABAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\IncrementalObservableCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ImagePage" Collapsed="true">
+    <Position X="27.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAQAAAACQAAAAAAAAAQAAAAAAAQAAAAAAAEAAEA=</HashCode>
+      <FileName>ImagePage.xaml.cs</FileName>
+      <NewMemberFileName>AboutPage.xaml.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FavoritePage" Collapsed="true">
+    <Position X="34.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CUCAAARAAAQCRAAAEAAAAAQAAAAAAAQIAAAAAAEAAUA=</HashCode>
+      <FileName>FavoritePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FindPage" Collapsed="true">
+    <Position X="36.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQAAAAQAAAADQAAAAABBAAQQAAAAAAQAAAAAAAEAAEA=</HashCode>
+      <FileName>FindPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.HomePage" Collapsed="true">
+    <Position X="40" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAAAQAAEQCQACAAAACAAQQABcAABQAAgAACAMGAMA=</HashCode>
+      <FileName>HomePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.LoginPage" Collapsed="true">
+    <Position X="40" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQAAAAcAAAAAAAAAAAAAAAQAAAAQEIQAAACEAAEAAEA=</HashCode>
+      <FileName>LoginPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.MainPage" Collapsed="true">
+    <Position X="41.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAEAAAAAAAAAAACAAAQQAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.PublicPage" Collapsed="true">
+    <Position X="41.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAAAQAAAQCQAAAAAAAAAQAQAQAAAQAAEAAAAEAAEA=</HashCode>
+      <FileName>PublicPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.SearchPage" Collapsed="true">
+    <Position X="36.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAAAQAAAQCQCAAAAAAAAQQAAAAAAQAAAAAAAEAAEA=</HashCode>
+      <FileName>SearchPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.StatusPage" Collapsed="true">
+    <Position X="33" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQACCQAAAASQAAAAAAAAAQQAUAAAAcAAAAAAAEAAEA=</HashCode>
+      <FileName>StatusPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.TrendsPage" Collapsed="true">
+    <Position X="38.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAQAAAACQAAAAAAAAQQAAAAAAAQAAAAAQAEkAEA=</HashCode>
+      <FileName>TrendsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.UserPage" Collapsed="true">
+    <Position X="41.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAQAAAACQAAAAAAAAAQAAAAAAAQAAAAAAAEAAEA=</HashCode>
+      <FileName>UserPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Common.NavigationHelper" Collapsed="true">
+    <Position X="34.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQAAAAUCAQAAAACAAIRAQAAAQAAAUAAAAAAAABAAk=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\NavigationHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Common.LoadStateEventArgs" Collapsed="true">
+    <Position X="38.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\NavigationHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Common.SaveStateEventArgs" Collapsed="true">
+    <Position X="34.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\NavigationHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Common.ObservableDictionary" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="38.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCIAAABAAAAEABAQCAAABAQBAAAAAAAAAAAgAABQIAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\ObservableDictionary.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.Common.RelayCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.Common.SuspensionManager" Collapsed="true">
+    <Position X="36.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAaIAASCBEAAAICAAAAAIAAAAAAAAAAIAAAAhA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\SuspensionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Common.SuspensionManagerException" Collapsed="true">
+    <Position X="38.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\SuspensionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.FailedEventArgs" Collapsed="true">
+    <Position X="29.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Events\FailedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.ListEventArgs&lt;T&gt;" Collapsed="true">
+    <Position X="36.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Events\ListEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.TrendsListEventArgs" Collapsed="true">
+    <Position X="36.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Events\TrendsListEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.UserTimelineEventArgs&lt;T&gt;" Collapsed="true">
+    <Position X="27.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Events\UserTimelineEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.FanfouAPI" Collapsed="true">
+    <Position X="31.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>fDimnJAkBwB0gkTWRqBTHCuqQEzoWRWCQgSQi8jkUsA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\FanfouAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.FanfouConsts" Collapsed="true">
+    <Position X="33" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMKAIIgAMCgkRgQgDIcAAABIAAYxBiAAAEgAQAAQAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\FanfouConsts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.DirectMessage" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAIgAAEAAAAAIAAAAACACAgAAAIAAAAAAAAAgA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\DirectMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.DirectMessageItem" Collapsed="true">
+    <Position X="23" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAEAAAAAAAIAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\DirectMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Error" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Error.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Item" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Notifications" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAIAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Notifications.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Photo" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Photo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Search" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAEAAAAAAAIAAAAAgA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Search.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Status" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAQIAAACAQAACACoBIIQIAAgEAAAAAwA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Status.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Trends" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Trends.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.TrendsList" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\Trends.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.UserAuth" Collapsed="true">
+    <Position X="20.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAABAAAAAAAEAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.UserList" Collapsed="true">
+    <Position X="25.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.User" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACABgAwCAAAEIAAggAgCQCAOAAkAABCAAAQAAsA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Items\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.Parameters" Collapsed="true">
+    <Position X="40" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAKAAAAAAAAACAAAAAAQAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\Parameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.RestClient" Collapsed="true">
+    <Position X="31.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQEAAAIAQBAAEAAAAAAAAACgAgAAAAIAAAAQICgAACA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\RestClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.FanfouAPI.XAuthHelper" Collapsed="true">
+    <Position X="33" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAEAIAAQAAAAAAAAAAABAAAAAAQAAAAAAAAAAAAE=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\FanfouAPI\XAuthHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.EvilTransform" Collapsed="true">
+    <Position X="27.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAgEAAAAEAAAiAAAAAACAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Utils\EvilTransform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.GeoLocator" Collapsed="true">
+    <Position X="38.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Utils\GeoLocator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.NavigationControl" Collapsed="true">
+    <Position X="33" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Utils\NavigationControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.StatusesReform" Collapsed="true">
+    <Position X="27.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Utils\StatusesReform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.TimelineStorage&lt;T&gt;" Collapsed="true">
+    <Position X="29.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Utils\TimelineStorage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.VisualHelper" Collapsed="true">
+    <Position X="29.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Utils\VisualHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.ImageExtensions" Collapsed="true">
+    <Position X="27.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAEAAAAAg=</HashCode>
+      <FileName>Utils\ImageExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.ToastShow" Collapsed="true">
+    <Position X="33" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Utils\ToastShow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.Utils.WebDataCache" Collapsed="true">
+    <Position X="31.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAACABBAAAAAAAAAAAEABAAAAAACIAACAAA=</HashCode>
+      <FileName>Utils\WebDataCache.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP.Storage.SettingStorage" Collapsed="true">
+    <Position X="38.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAkIggAAABAAAAAQAAAAAAABAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Utils\SettingStorage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.CustomControl.TagDialog" Collapsed="true">
+    <Position X="40" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>CustomControl\TagDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.DirectItemControl" Collapsed="true">
+    <Position X="38.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>ItemControl\DirectItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.DirectOtherItemControl" Collapsed="true">
+    <Position X="40" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>ItemControl\DirectOtherItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.MessageItemControl" Collapsed="true">
+    <Position X="27.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\MessageItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.MessageOtherItemControl" Collapsed="true">
+    <Position X="31.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\MessageOtherItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.StatusItemControl" Collapsed="true">
+    <Position X="31.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\StatusItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.TrendsItemControl" Collapsed="true">
+    <Position X="34.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\TrendsItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.UserItemControl" Collapsed="true">
+    <Position X="40" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>ItemControl\UserItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.TemplateSelector.ConversationItemTemplateSelector" Collapsed="true">
+    <Position X="33" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAAAAAgAA=</HashCode>
+      <FileName>ItemControl\TemplateSelector\ConversationItemTemplateSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.TemplateSelector.MessageItemTemplateSelector" Collapsed="true">
+    <Position X="29.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAgAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\TemplateSelector\MessageItemTemplateSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.TemplateSelector.TimelineTemplateSelector" Collapsed="true">
+    <Position X="31.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAEAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\TemplateSelector\TimelineTemplateSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.BoolToFavoritedConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="31.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\BoolToFavoritedConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.CountToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="34.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\CountToVisibilityCOnverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.DateToTextConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="36.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\DateToTextConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.DisplayImageToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="41.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\DisplayImageToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.HtmlToTextConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="41.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\HtmlToTextConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.ImageSourceToCacheConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="29.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAIAAAABIAAgAAAACAAAIAIAAgQA=</HashCode>
+      <FileName>ItemControl\ValueConverter\ImageSourceToCacheConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.ImageSourceToCacheWithWifiConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="31.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\ImageSourceToCacheWithWifiConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.IntToMsgCountStringConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="34.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\IntToMsgCountStringConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.NullToVisibilityConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="36.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\NullToVisibilityConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.ReplyToNameConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="29.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\ReplyToNameConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.RetweetToNameConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\RetweetToNameConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.SexToIconConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\SexToIconConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.SourceToTextConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="41.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\SourceToTextConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.StatusesToTimeStringConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="29.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\StatusesToTimeStringConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.StatusToFillColorConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="34.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\StatusToFillColorConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.TextToLeftCountTextConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="41.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\TextToLeftCountTextConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FanfouWP2.ItemControl.ValueConverter.TextToReplyTextConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ItemControl\ValueConverter\TextToReplyTextConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Delegate Name="FanfouWP2.Common.LoadStateEventHandler" Collapsed="true">
+    <Position X="27.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\NavigationHelper.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="FanfouWP2.Common.SaveStateEventHandler" Collapsed="true">
+    <Position X="29.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Elephas\Documents\GitHub\FanfouWP2\FanfouWP2\FanfouWP2.Shared\Common\NavigationHelper.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

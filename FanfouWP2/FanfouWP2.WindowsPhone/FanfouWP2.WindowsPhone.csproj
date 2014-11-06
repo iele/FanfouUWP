@@ -80,6 +80,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ImagePage.xaml.cs">
+      <DependentUpon>ImagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
     <Content Include="StoreManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ImagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -298,6 +305,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

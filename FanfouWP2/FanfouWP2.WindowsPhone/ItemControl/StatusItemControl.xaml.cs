@@ -24,11 +24,12 @@ namespace FanfouWP2.ItemControl
             this.InitializeComponent();
         }
 
-        private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
         }
 
-        private void RectangleImage_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Profile_Tapped(object sender, TappedRoutedEventArgs e)
         {
         }
     }
