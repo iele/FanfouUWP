@@ -4,7 +4,8 @@
     xmlns:local="using:FanfouWP2.ItemControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-     xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
+    xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
+    xmlns:utils="using:FanfouWP2.Utils"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     x:Class="FanfouWP2.ItemControl.UserItemControl"
     mc:Ignorable="d"
@@ -33,11 +34,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="20,10,10,10" Tapped="Rectangle_Tapped" RadiusX="5">
-            <Rectangle.Fill>
-                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding profile_image_url_large}"/>
-            </Rectangle.Fill>
-        </Rectangle>
+        <Image Height="64" utils:ImageExtensions.CacheUri="{Binding profile_image_url}" Width="64" Canvas.ZIndex="2" Margin="20,10,10,10" Tapped="Rectangle_Tapped" />
         <StackPanel Grid.Column="1" Margin="9.833,0,10,0" Orientation="Vertical" VerticalAlignment="Center">
         	<TextBlock Margin="0,0,-0.167,0" Text="{Binding screen_name}" VerticalAlignment="Top" FontSize="20"/>
         	<StackPanel Orientation="Horizontal" Margin="0,6,-0.167,0" VerticalAlignment="Top">

@@ -1,15 +1,14 @@
 ﻿using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
-using FanfouWP2.ItemControl;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,43 +25,19 @@ namespace FanfouWP2
     /// <summary>
     /// 可独立使用或用于导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class StatusPage : Page
+    public sealed partial class ImagePage : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private Status status;
-
-        public StatusPage()
+        private string photo;
+        public ImagePage()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.ContextTimelineSuccess += Instance_ContextTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.ContextTimelineFailed += Instance_ContextTimelineFailed;
-        }
-
-        void Instance_ContextTimelineFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        void Instance_ContextTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-
-            var ss = sender as List<Status>;
-
-            foreach (var item in ss)
-            {
-                var sic = new StatusItemControl();
-                sic.DataContext = item;
-                sic.Margin = new Thickness(0, 6, 0, 0);
-                this.context.Children.Add(sic);
-            }
-            this.context.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -95,16 +70,10 @@ namespace FanfouWP2
         /// 字典。 首次访问页面时，该状态将为 null。</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.status = e.NavigationParameter as Status;
-            this.defaultViewModel["status"] = status;
+            this.photo = e.NavigationParameter as string;
+            this.defaultViewModel["photo"] = photo;
 
-            loading.Visibility = Visibility.Collapsed;
-
-            if (status.in_reply_to_status_id != null && status.in_reply_to_status_id != "")
-            {
-                loading.Visibility = Visibility.Visible;
-                FanfouAPI.FanfouAPI.Instance.StatusContextTimeline(status.id);
-            }
+            this.touch.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY | ManipulationModes.Scale | ManipulationModes.Rotate;
         }
 
         /// <summary>
@@ -146,33 +115,33 @@ namespace FanfouWP2
 
         #endregion
 
-        private void RepostItem_Click(object sender, RoutedEventArgs e)
+        private void Rectangle_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
+            ScaleTransform.CenterX = image.ActualWidth / 2;
+            ScaleTransform.CenterY = image.ActualHeight / 2;
+            if (ScaleTransform.ScaleX > 0.75 || e.Delta.Scale > 1)
+                ScaleTransform.ScaleX = ScaleTransform.ScaleY *= e.Delta.Scale;
+
+            TranslateTransform.X += e.Delta.Translation.X / ScaleTransform.ScaleX;
+            TranslateTransform.Y += e.Delta.Translation.Y / ScaleTransform.ScaleX;
+            e.Handled = true;
         }
 
-        private void UserItem_Click(object sender, RoutedEventArgs e)
+        private void Rectangle_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage), this.status.user);      
+            TranslateTransform.X = 0;
+            TranslateTransform.Y = 0;
+            ScaleTransform.ScaleX = 1;
+            ScaleTransform.ScaleY = 1;
         }
 
-        private void FavItem_Click(object sender, RoutedEventArgs e)
+        private async void SaveItem_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void ReplyItem_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
-        }
-
-        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(ImagePage), this.status.photo.largeurl);
-        }
-        private void Profile_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(UserPage), this.status.user);      
+            HttpClient webClient = new HttpClient();
+            var bytes = await webClient.GetByteArrayAsync(new Uri(this.photo)).ConfigureAwait(false);
+            var folder = Windows.Storage.KnownFolders.SavedPictures;
+            var file = await folder.CreateFileAsync(FanfouWP2.Utils.WebDataCache.ToCacheKey(new Uri(this.photo)) + ".jpg", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteBytesAsync(file, bytes);
         }
     }
 }
