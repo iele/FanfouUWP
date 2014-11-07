@@ -73,7 +73,7 @@ namespace FanfouWP2
                 {
                     this.statuses = e.PageState["statuses"] as ObservableCollection<Status>;
                     this.defaultViewModel["statuses"] = statuses;
-                } 
+                }
                 return;
             }
 

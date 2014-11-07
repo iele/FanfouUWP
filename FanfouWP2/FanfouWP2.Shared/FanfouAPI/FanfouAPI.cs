@@ -503,7 +503,7 @@ namespace FanfouWP2.FanfouAPI
         }
         #endregion
         #region search
-        public async void SearchTimeline(string q, int count = 60)
+        public async void SearchTimeline(string q, int count = 60, string since_id = "", string max_id = "")
         {
             try
             {
@@ -511,6 +511,10 @@ namespace FanfouWP2.FanfouAPI
                 var parameters = new Parameters();
                 parameters.Add("q", q);
                 parameters.Add("count", count.ToString());
+                if (since_id != "")
+                    parameters.Add("since_id", since_id);
+                if (max_id != "")
+                    parameters.Add("max_id", max_id);
                 var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_PUBLIC_TIMELINE, parameters);
                 if (SearchTimelineSuccess != null)
                     SearchTimelineSuccess(result, new EventArgs());
@@ -522,7 +526,7 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void SearchUserTimeline(string q, string id, int count = 60)
+        public async void SearchUserTimeline(string q, string id, int count = 60, string since_id = "", string max_id = "")
         {
             try
             {
@@ -531,7 +535,10 @@ namespace FanfouWP2.FanfouAPI
                 parameters.Add("q", q);
                 parameters.Add("id", id);
                 parameters.Add("count", count.ToString());
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_USER_TIMELINE, parameters);
+                if (since_id != "")
+                    parameters.Add("since_id", since_id);
+                if (max_id != "")
+                    parameters.Add("max_id", max_id); var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_USER_TIMELINE, parameters);
                 if (SearchUserTimelineSuccess != null)
                     SearchUserTimelineSuccess(result, new EventArgs());
             }
@@ -541,7 +548,7 @@ namespace FanfouWP2.FanfouAPI
                     SearchUserTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void SearchUser(string q, int count = 60)
+        public async void SearchUser(string q, int count = 60, int page = 1)
         {
             try
             {
@@ -549,6 +556,7 @@ namespace FanfouWP2.FanfouAPI
                 var parameters = new Parameters();
                 parameters.Add("q", q);
                 parameters.Add("count", count.ToString());
+                parameters.Add("page", page.ToString());
                 var result = await client.GetRequestObject<UserList>(FanfouConsts.SEARCH_USER, parameters);
                 if (SearchUserSuccess != null)
                     SearchUserSuccess(result, new EventArgs());

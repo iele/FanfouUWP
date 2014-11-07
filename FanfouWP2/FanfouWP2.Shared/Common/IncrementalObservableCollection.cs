@@ -12,9 +12,9 @@ using Windows.UI.Xaml.Data;
 
 namespace FanfouWP2
 {
-    public abstract class IncrementalObservableCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading where T : Item
+    public class IncrementalObservableCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading where T : Item
     {
-        public abstract void action();
+        public Action action;
         bool ISupportIncrementalLoading.HasMoreItems
         {
             get { return true; }

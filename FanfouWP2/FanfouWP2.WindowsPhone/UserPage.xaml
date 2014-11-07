@@ -29,7 +29,7 @@
         <!--TODO: 应将内容放入以下网格-->
         <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" Height="76" VerticalAlignment="Top"/>
         <StackPanel Grid.Row="0" Margin="12,0,0,0" VerticalAlignment="Center">
-        	<TextBlock Text="关于" Margin="0" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="white"/>
+        	<TextBlock Text="关于" Margin="0" FontSize="18.667" VerticalAlignment="Center" Foreground="white"/>
         </StackPanel>
         <Hub Header="" Margin="0,27,0,0" Grid.Row="1">
         	<HubSection Header="资料">
