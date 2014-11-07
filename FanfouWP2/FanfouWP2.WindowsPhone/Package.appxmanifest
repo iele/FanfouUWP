@@ -22,6 +22,9 @@
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
         <m3:ApplicationView MinWidth="width320" />
         <!--Used in XAML Designer. DO NOT REMOVE-->
+        <m3:InitialRotationPreference>
+          <m3:Rotation Preference="portrait" />
+        </m3:InitialRotationPreference>
       </m3:VisualElements>
     </Application>
   </Applications>

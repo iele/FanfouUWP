@@ -2,6 +2,7 @@
 using FanfouWP2.FanfouAPI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,6 +30,8 @@ namespace FanfouWP2
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+      
         private User user;
 
         public UserPage()
@@ -38,6 +41,20 @@ namespace FanfouWP2
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            FanfouAPI.FanfouAPI.Instance.UserTimelineSuccess += Instance_UserTimelineSuccess;
+            FanfouAPI.FanfouAPI.Instance.UserTimelineFailed += Instance_UserTimelineFailed;
+        }
+
+        void Instance_UserTimelineFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_UserTimelineSuccess(object sender, EventArgs e)
+        {
+            loading.Visibility = Visibility.Collapsed;
+            var ss = sender as List<Status>;
+            Utils.StatusesReform.reform(this.statuses, ss);
         }
 
         /// <summary>
@@ -72,6 +89,10 @@ namespace FanfouWP2
         {
             this.user = e.NavigationParameter as User;
             this.defaultViewModel["user"] = user;
+            this.defaultViewModel["statuses"] = statuses;
+
+            loading.Visibility = Visibility.Visible;
+            FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 60);
         }
 
         /// <summary>
