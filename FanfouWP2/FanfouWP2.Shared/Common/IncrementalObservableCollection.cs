@@ -14,7 +14,7 @@ namespace FanfouWP2
 {
     public class IncrementalObservableCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading where T : Item
     {
-        public Action action;
+        public Action<uint> action = (e) => { };
         bool ISupportIncrementalLoading.HasMoreItems
         {
             get { return true; }
@@ -24,13 +24,13 @@ namespace FanfouWP2
         {
             try
             {
-                await Task.Run(() => action());
+                await Task.Run(() => action(count));
             }
             finally
             {
                 _busy = false;
             }
-            return new LoadMoreItemsResult();
+            return new LoadMoreItemsResult() { Count= count};
         }
         Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> ISupportIncrementalLoading.LoadMoreItemsAsync(uint count)
         {
