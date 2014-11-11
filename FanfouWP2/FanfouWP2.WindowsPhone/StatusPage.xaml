@@ -28,8 +28,7 @@
         <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="删除消息" IsEnabled="False"/>
-            </CommandBar.SecondaryCommands>
-            <AppBarButton Icon="List" Label="个人资料" x:Name="UserItem" Click="UserItem_Click"/>
+            </CommandBar.SecondaryCommands><AppBarButton Icon="List" Label="个人资料" x:Name="UserItem" Click="UserItem_Click"/>
             <AppBarButton Label="转发" Icon="ReShare" x:Name="RepostItem" Click="RepostItem_Click"/>
             <AppBarButton Icon="Favorite" Label="收藏" x:Name="FavItem" Click="FavItem_Click"/>
             <AppBarButton Icon="Redo" Label="回复" x:Name="ReplyItem" Click="ReplyItem_Click"/>
@@ -70,7 +69,7 @@
                     <TextBlock Padding="5,5,0,0" Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}"/>
                     <TextBlock Padding="5,5,0,0" Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}" VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}"/>
                 </StackPanel>
-                <Image Tapped="Image_Tapped" Margin="12,6,12,0" Grid.Row="2" VerticalAlignment="Top" utils:ImageExtensions.CacheUri="{Binding status.photo.largeurl}" HorizontalAlignment="Center" MaxHeight="400"/>
+                <Image Tapped="Image_Tapped" Margin="12,6,12,0" Grid.Row="2" VerticalAlignment="Top" utils:ImageExtensions.CacheUri="{Binding status.photo.largeurl}"/>
                 <StackPanel x:Name="context" Margin="12,6,12,0" VerticalAlignment="Top" Grid.Row="3" Visibility="Collapsed">
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="此消息包含的上下文" VerticalAlignment="Top" Margin="0,6,0,0" FontSize="16" Foreground="Gray"/>
                 </StackPanel>

@@ -83,6 +83,15 @@
     <Compile Include="ImagePage.xaml.cs">
       <DependentUpon>ImagePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FavoriteUserPage.xaml.cs">
+      <DependentUpon>FavoriteUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatusUserPage.xaml.cs">
+      <DependentUpon>StatusUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchUserPage.xaml.cs">
+      <DependentUpon>SearchUserPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
@@ -219,6 +228,18 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ImagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FavoriteUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StatusUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

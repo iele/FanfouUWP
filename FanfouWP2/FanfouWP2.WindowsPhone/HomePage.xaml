@@ -58,16 +58,14 @@
             <HubSection x:Name="statusesSection" Header="我的消息" Height="Auto">
                 <DataTemplate>
                     <Grid>
-                        <ListView x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
-                        </ListView>
+                        <ListView x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
             <HubSection Header="提及我的" x:Name="mentionsSection">
                 <DataTemplate>
                     <Grid>
-                        <ListView x:Name="mentionsGridView" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}" Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
-                        </ListView>
+                        <ListView x:Name="mentionsGridView" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}" Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
