@@ -188,5 +188,10 @@ namespace FanfouWP2
         {
              Frame.Navigate(typeof(StatusPage), e.ClickedItem);    
         }
+
+        private void InformationButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(InformationPage));    
+        }
     }
 }

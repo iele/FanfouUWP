@@ -83,13 +83,19 @@
     <Compile Include="ImagePage.xaml.cs">
       <DependentUpon>ImagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FavoriteUserPage.xaml.cs">
+    <Compile Include="InformationPage.xaml.cs">
+      <DependentUpon>InformationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\FavoriteUserPage.xaml.cs">
       <DependentUpon>FavoriteUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StatusUserPage.xaml.cs">
+    <Compile Include="UserPages\TimelineUserPage.xaml.cs">
+      <DependentUpon>TimelineUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\StatusUserPage.xaml.cs">
       <DependentUpon>StatusUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchUserPage.xaml.cs">
+    <Compile Include="UserPages\SearchUserPage.xaml.cs">
       <DependentUpon>SearchUserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserPage.xaml.cs">
@@ -231,15 +237,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FavoriteUserPage.xaml">
+    <Page Include="InformationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserPages\FavoriteUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="StatusUserPage.xaml">
+    <Page Include="UserPages\TimelineUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchUserPage.xaml">
+    <Page Include="UserPages\StatusUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\SearchUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -30,8 +30,7 @@ namespace FanfouWP2
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
-      
+        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();      
         private User user;
 
         public UserPage()
@@ -157,6 +156,11 @@ namespace FanfouWP2
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
+        }
+
+        private void StatusItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TimelineUserPage), this.user);
         }
     }
 }

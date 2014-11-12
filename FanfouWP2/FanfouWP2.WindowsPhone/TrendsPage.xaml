@@ -31,12 +31,8 @@
                 <TextBlock TextWrapping="Wrap" Text="热门话题" Margin="0,0,-0.083,0" VerticalAlignment="Center" FontSize="18.667" Foreground="White"/>
             </StackPanel>
         </Grid>
-        <ListView Margin="12,0" x:Name="trendsGridView" ItemsSource="{Binding trends}" ItemTemplate="{StaticResource TrendsItemControl}" Grid.Row="1" SelectionMode="Single" SelectionChanged="trendsGridView_SelectionChanged">
-        	<ListView.Transitions>
-        		<TransitionCollection>
-        			<EntranceThemeTransition FromHorizontalOffset="80"/>
-        		</TransitionCollection>
-        	</ListView.Transitions>
-        </ListView>
+        <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="trendsGridView" ItemsSource="{Binding trends}" ItemTemplate="{StaticResource TrendsItemControl}" Grid.Row="1" SelectionMode="Single" SelectionChanged="trendsGridView_SelectionChanged" />
+
+
     </Grid>
 </Page>

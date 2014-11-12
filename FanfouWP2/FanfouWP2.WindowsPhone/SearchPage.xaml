@@ -30,10 +30,10 @@
         <Grid Margin="0" VerticalAlignment="Top">
             <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,-28,0,0"/>
             <StackPanel Margin="12,0" Orientation="Vertical">
-            	<TextBox x:Name="search" Margin="0,12,-0.167,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" InputScope="Search" PlaceholderText="键入以搜索消息"/>
+            	<TextBox x:Name="search" Margin="0,12,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" InputScope="Search" PlaceholderText="键入以搜索消息"/>
             	<Grid Margin="0" VerticalAlignment="Center" Height="57"/>
             </StackPanel>
         </Grid>
-        <ListView Margin="12,2,12,-2" x:Name="statusesGridView"  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick"/>
+        <ListView ShowsScrollingPlaceholders="True" Margin="12,2,12,-2" x:Name="statusesGridView"  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick"/>
     </Grid>
 </Page>
