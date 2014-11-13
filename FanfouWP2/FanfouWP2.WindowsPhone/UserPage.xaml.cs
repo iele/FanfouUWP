@@ -162,5 +162,10 @@ namespace FanfouWP2
         {
             Frame.Navigate(typeof(TimelineUserPage), this.user);
         }
+
+        private void ImageItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ImageUserPage), this.user);
+        }
     }
 }

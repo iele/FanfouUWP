@@ -20,7 +20,7 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="FriendItem" Label="解除好友"/>
                 <AppBarButton x:Name="BlackListItem" Label="加入黑名单"/>
-                <AppBarButton x:Name="ImageItem" Label="查看图片流"/>
+                <AppBarButton x:Name="ImageItem" Label="查看图片流" Click="ImageItem_Click"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="StatusItem" Icon="AllApps" Label="消息" Click="StatusItem_Click"/>
             <AppBarButton Icon="Redo" Label="回复" x:Name="ReplyItem" />
