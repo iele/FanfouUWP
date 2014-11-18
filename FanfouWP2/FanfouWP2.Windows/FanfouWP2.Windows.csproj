@@ -201,7 +201,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="FanfouWP2.Windows_TemporaryKey.pfx" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\10.png" />
@@ -326,10 +325,6 @@
     </Reference>
     <Reference Include="Windows.UI.Interactivity">
       <HintPath>..\..\packages\Expression.Blend.Sdk.1.0.2\lib\netcore451\Windows.UI.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="WinRTXamlToolkit, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\WinRTXamlToolkit.Windows.1.7.4.0\lib\netcore451\WinRTXamlToolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

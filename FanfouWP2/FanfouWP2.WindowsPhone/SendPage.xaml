@@ -44,11 +44,11 @@
         <!--TODO: 应将内容放入以下网格-->
 		<Grid x:Name="ContentRoot" Margin="0,0,0,0.083" Grid.Row="1" Grid.RowSpan="2">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="2*"/>
+				<RowDefinition Height="270"/>
 				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="3*"/>
+				<RowDefinition/>
 			</Grid.RowDefinitions>
-			<TextBox x:Name="send" Margin="12,12,12,11.542" TextWrapping="Wrap" VerticalAlignment="Stretch" AcceptsReturn="True" InputScope="Chat" FontFamily="Global User Interface" MaxLength="140"/>
+			<TextBox x:Name="send" Margin="12,12,12,11.542" TextWrapping="Wrap" VerticalAlignment="Stretch" AcceptsReturn="True" InputScope="Chat" FontFamily="Global User Interface" MaxLength="140" IsSpellCheckEnabled="True" PreventKeyboardDisplayOnProgrammaticFocus="True"/>
 			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="已定位" VerticalAlignment="Top"  FontFamily="Global User Interface" FontSize="16" Margin="12,0.458,0,0" Grid.Row="1" Foreground="Gray" />
 			<Image x:Name="photo" Margin="12" Grid.Row="2" />
 		</Grid>
