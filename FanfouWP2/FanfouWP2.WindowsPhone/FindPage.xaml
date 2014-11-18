@@ -34,6 +34,6 @@
             	<Grid Margin="0" VerticalAlignment="Center" Height="57"/>
             </StackPanel>
         </Grid>
-        <ListView Margin="12,2,12,-2" x:Name="userGridView" ItemsSource="{Binding users}" ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True" ItemClick="userGridView_ItemClick"/>
+        <ListView ShowsScrollingPlaceholders="True" Margin="12,2,12,-2" x:Name="userGridView" ItemsSource="{Binding users}" ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True" ItemClick="userGridView_ItemClick"/>
     </Grid>
 </Page>

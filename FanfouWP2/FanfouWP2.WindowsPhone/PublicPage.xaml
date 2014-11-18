@@ -37,6 +37,6 @@
             	<TextBlock TextWrapping="Wrap" Text="{Binding date}" Margin="12,0,0,0" VerticalAlignment="Center" FontSize="18.667" Foreground="White"/>
             </StackPanel>
         </Grid>
-        <ListView Margin="12,0" x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1" IsItemClickEnabled="True"  ItemClick="statusesGridView_ItemClick"/>
+        <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1" IsItemClickEnabled="True"  ItemClick="statusesGridView_ItemClick"/>
     </Grid>
 </Page>

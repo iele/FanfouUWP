@@ -370,7 +370,7 @@ namespace FanfouWP2.FanfouAPI
                     UserTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void StatusHomeTimeline(int count, int page = 0, string since_id = "", string max_id = "")
+        public async void StatusHomeTimeline(int count, int page = 0, string id = "", string since_id = "", string max_id = "")
         {
             try
             {
@@ -379,6 +379,8 @@ namespace FanfouWP2.FanfouAPI
                 parameters.Add("count", count.ToString());
                 if (page > 0)
                     parameters.Add("page", page);
+                if (id != "")
+                    parameters.Add("id", id);
                 if (since_id != "")
                     parameters.Add("since_id", since_id);
                 if (max_id != "")

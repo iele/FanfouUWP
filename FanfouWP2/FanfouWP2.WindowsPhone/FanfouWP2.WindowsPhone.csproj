@@ -83,6 +83,24 @@
     <Compile Include="ImagePage.xaml.cs">
       <DependentUpon>ImagePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InformationPage.xaml.cs">
+      <DependentUpon>InformationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\ImageUserPage.xaml.cs">
+      <DependentUpon>ImageUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\FavoriteUserPage.xaml.cs">
+      <DependentUpon>FavoriteUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\TimelineUserPage.xaml.cs">
+      <DependentUpon>TimelineUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\StatusUserPage.xaml.cs">
+      <DependentUpon>StatusUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\SearchUserPage.xaml.cs">
+      <DependentUpon>SearchUserPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
@@ -219,6 +237,30 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ImagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InformationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserPages\ImageUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\FavoriteUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\TimelineUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\StatusUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\SearchUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

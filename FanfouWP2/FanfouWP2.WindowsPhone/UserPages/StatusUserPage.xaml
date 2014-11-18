@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="FanfouWP2.FavoritePage"
+    x:Class="FanfouWP2.StatusUserPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FanfouWP2"
@@ -15,10 +15,12 @@
               Margin="0,3"/>
         </DataTemplate>
     </Page.Resources>
+	<Page.Background>
+		<SolidColorBrush Color="#FFFFFFFF"/>
+	</Page.Background>
 	<Page.BottomAppBar>
 		<CommandBar IsOpen="False" ClosedDisplayMode="Compact">
-			<AppBarButton x:Name="PrevItem" Icon="Previous" Label="前页" Click="PrevItem_Click"/>
-            <AppBarButton x:Name="NextItem" Icon="Next" Label="后页" Click="NextItem_Click"/>
+			<AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click"/>
 		</CommandBar>
 	</Page.BottomAppBar>
     
@@ -31,8 +33,7 @@
         <Grid Margin="0" VerticalAlignment="Top" Grid.RowSpan="2">
             <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0"/>
             <StackPanel Margin="12,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">
-            	<TextBlock TextWrapping="Wrap" Text="{Binding title}" Margin="0" VerticalAlignment="Center" FontSize="18.667" Foreground="White" HorizontalAlignment="Left"/>
-            	<TextBlock TextWrapping="Wrap" Text="{Binding page}" Margin="12,0,0,0" VerticalAlignment="Center" FontSize="18.667" Foreground="White" HorizontalAlignment="Left"/>
+                <TextBlock TextWrapping="Wrap" x:Name="title" Margin="0,0,-0.083,0" VerticalAlignment="Center" FontSize="18.667" Foreground="White"/>
             </StackPanel>
         </Grid>
         <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1" IsItemClickEnabled="True"  ItemClick="statusesGridView_ItemClick"/>
