@@ -23,7 +23,7 @@
                 <AppBarButton x:Name="ImageItem" Label="查看图片流" Click="ImageItem_Click"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="StatusItem" Icon="AllApps" Label="消息" Click="StatusItem_Click"/>
-            <AppBarButton Icon="Redo" Label="回复" x:Name="ReplyItem" />
+            <AppBarButton Icon="Redo" Label="回复" x:Name="ReplyItem" Click="ReplyItem_Click"/>
             <AppBarButton Icon="MailForward" Label="私信" x:Name="DirectItem"/>
             <AppBarButton Label="搜索" Icon="Zoom" x:Name="SearchItem" Click="SearchItem_Click" />
         </CommandBar>

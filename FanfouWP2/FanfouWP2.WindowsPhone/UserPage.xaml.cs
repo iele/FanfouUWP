@@ -167,5 +167,10 @@ namespace FanfouWP2
         {
             Frame.Navigate(typeof(ImageUserPage), this.user);
         }
+
+        private void ReplyItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SendPage), new Tuple<User, SendPage.SendMode>(this.user, SendPage.SendMode.ReplyUser));
+        }
     }
 }

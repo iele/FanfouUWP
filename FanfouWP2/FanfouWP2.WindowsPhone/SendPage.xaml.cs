@@ -110,9 +110,8 @@ namespace FanfouWP2
         {
             if (e.NavigationParameter != null)
             {
-                var param = e.NavigationParameter as Tuple<Status, SendMode>;
-                mode = param.Item2;
-                status = param.Item1;
+                dynamic param = e.NavigationParameter;
+                mode = (SendMode)param.Item2;
                 switch (mode)
                 {
                     case SendMode.Normal:
@@ -121,12 +120,17 @@ namespace FanfouWP2
                     case SendMode.Photo:
                         break;
                     case SendMode.Reply:
+                        status = (Status)param.Item1;
                         this.title.Text = "回复" + status.user.screen_name;
                         send.Text = "@" + status.user.screen_name;
                         break;
                     case SendMode.ReplyUser:
+                        user = (User)param.Item1;
+                        this.title.Text = "提及" + user.screen_name;
+                        send.Text = "@" + user.screen_name;
                         break;
                     case SendMode.Repost:
+                        status = (Status)param.Item1;
                         this.title.Text = "转发" + status.user.screen_name;
                         send.Text = "转@" + status.user.screen_name + " " + status.text;
                         break;
@@ -192,6 +196,7 @@ namespace FanfouWP2
                     FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_status_id: status.id);
                     break;
                 case SendMode.ReplyUser:
+                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id);
                     break;
                 case SendMode.Repost:
                     FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id);

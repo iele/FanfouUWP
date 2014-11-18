@@ -71,7 +71,7 @@ namespace FanfouWP2
 
             title.Text = user.screen_name + "的听众";
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60);
+            FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60);
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -107,7 +107,7 @@ namespace FanfouWP2
         private void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60);
+            FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60);
         }
 
         private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
