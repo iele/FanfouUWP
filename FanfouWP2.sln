@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FanfouWP2", "FanfouWP2", "{66C733D5-5DF1-4D80-AEC1-BCFBC8407237}"
+	ProjectSection(SolutionItems) = preProject
+		FanfouWP2\FanfouWP2.WindowsPhone\UserPages\SearchUserPage.xaml = FanfouWP2\FanfouWP2.WindowsPhone\UserPages\SearchUserPage.xaml
+		FanfouWP2\FanfouWP2.WindowsPhone\UserPages\SearchUserPage.xaml.cs = FanfouWP2\FanfouWP2.WindowsPhone\UserPages\SearchUserPage.xaml.cs
+	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FanfouWP2.Shared", "FanfouWP2\FanfouWP2.Shared\FanfouWP2.Shared.shproj", "{A8FF9E36-9637-4251-84F0-73619B71FFFB}"
 EndProject

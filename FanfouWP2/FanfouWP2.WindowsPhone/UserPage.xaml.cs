@@ -150,12 +150,12 @@ namespace FanfouWP2
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(FollowersUserPage), this.user);
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(FriendsUserPage), this.user);
         }
 
         private void StatusItem_Click(object sender, RoutedEventArgs e)
