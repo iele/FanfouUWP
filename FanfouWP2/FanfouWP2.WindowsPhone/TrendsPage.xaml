@@ -8,30 +8,35 @@
     xmlns:ItemControl="using:FanfouWP2.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled">
-   
+
     <Page.Resources>
         <DataTemplate x:Key="TrendsItemControl">
-            <ItemControl:TrendsItemControl  DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=trendsGridView}"
-              Margin="0,3"/>
+            <ItemControl:TrendsItemControl DataContext="{Binding}"
+                                           Width="{Binding ActualWidth, ElementName=trendsGridView}"
+                                           Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
-	<Page.Background>
-		<SolidColorBrush Color="#FFFFFFFF"/>
-	</Page.Background>
-	
+    <Page.Background>
+        <SolidColorBrush Color="#FFFFFFFF" />
+    </Page.Background>
+
     <Grid Background="White">
-    	<Grid.RowDefinitions>
-    		<RowDefinition Height="48"/>
-    		<RowDefinition/>
-    	</Grid.RowDefinitions>
-        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0" IsIndeterminate="True"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0"
+                     IsIndeterminate="True" />
         <Grid Margin="0" VerticalAlignment="Top" Grid.RowSpan="2">
-            <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0"/>
+            <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0" />
             <StackPanel Margin="12,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock TextWrapping="Wrap" Text="热门话题" Margin="0,0,-0.083,0" VerticalAlignment="Center" FontSize="18.667" Foreground="White"/>
+                <TextBlock TextWrapping="Wrap" Text="热门话题" Margin="0,0,-0.083,0" VerticalAlignment="Center"
+                           FontSize="18.667" Foreground="White" />
             </StackPanel>
         </Grid>
-        <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="trendsGridView" ItemsSource="{Binding trends}" ItemTemplate="{StaticResource TrendsItemControl}" Grid.Row="1" SelectionMode="Single" SelectionChanged="trendsGridView_SelectionChanged" />
+        <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="trendsGridView"
+                  ItemsSource="{Binding trends}" ItemTemplate="{StaticResource TrendsItemControl}" Grid.Row="1"
+                  SelectionMode="Single" SelectionChanged="trendsGridView_SelectionChanged" />
 
 
     </Grid>

@@ -10,39 +10,45 @@
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light">
     <Page.Background>
-        <SolidColorBrush Color="#FFFFFFFF"/>
+        <SolidColorBrush Color="#FFFFFFFF" />
     </Page.Background>
     <Page.BottomAppBar>
         <CommandBar IsOpen="False" ClosedDisplayMode="Compact">
-            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click"/>
+            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0" IsIndeterminate="True"/>
+        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0"
+                     IsIndeterminate="True" />
         <Grid Margin="0" VerticalAlignment="Top" Grid.RowSpan="2">
-            <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0"/>
+            <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0" />
             <StackPanel Margin="12,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock TextWrapping="Wrap" x:Name="title" Margin="0,0,-0.083,0" VerticalAlignment="Center" FontSize="18.667" Foreground="White"/>
+                <TextBlock TextWrapping="Wrap" x:Name="title" Margin="0,0,-0.083,0" VerticalAlignment="Center"
+                           FontSize="18.667" Foreground="White" />
             </StackPanel>
         </Grid>
         <Viewbox Margin="0,0" Grid.Row="1" Stretch="Fill">
-            <GridView ShowsScrollingPlaceholders="True" x:Name="statusesGridView" IsItemClickEnabled="True"  ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" Width="402" Height="600" >
+            <GridView ShowsScrollingPlaceholders="True" x:Name="statusesGridView" IsItemClickEnabled="True"
+                      ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" Width="402" Height="600">
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="96" Height="96">
-                            <Image utils:ImageExtensions.CacheUri="{Binding photo.thumburl}" Stretch="UniformToFill" Margin="3" />
-                            <Rectangle Fill="Transparent" Margin="0" Stroke="DeepSkyBlue" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                        <Grid Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="96"
+                              Height="96">
+                            <Image utils:ImageExtensions.CacheUri="{Binding photo.thumburl}" Stretch="UniformToFill"
+                                   Margin="3" />
+                            <Rectangle Fill="Transparent" Margin="0" Stroke="DeepSkyBlue" VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch" />
                         </Grid>
                     </DataTemplate>
                 </GridView.ItemTemplate>
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapGrid ItemHeight="100" ItemWidth="100" Orientation="Horizontal"/>
+                        <WrapGrid ItemHeight="100" ItemWidth="100" Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>

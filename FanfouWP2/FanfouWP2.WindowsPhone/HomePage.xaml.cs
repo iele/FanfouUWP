@@ -1,44 +1,33 @@
-﻿using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
-using FanfouWP2.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using FanfouWP2.Common;
+using FanfouWP2.FanfouAPI;
+using FanfouWP2.Utils;
 
 namespace FanfouWP2
 {
     public sealed partial class HomePage : Page
     {
-        private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        private readonly ObservableCollection<Status> mentions = new ObservableCollection<Status>();
+        private readonly NavigationHelper navigationHelper;
+        private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         private User currentUser = new User();
 
-        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
-        private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
         public HomePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            navigationHelper = new NavigationHelper(this);
+            navigationHelper.LoadState += NavigationHelper_LoadState;
+            navigationHelper.SaveState += NavigationHelper_SaveState;
 
             FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_HomeTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_HomeTimelineFailed;
@@ -49,21 +38,21 @@ namespace FanfouWP2
 
         public NavigationHelper NavigationHelper
         {
-            get { return this.navigationHelper; }
+            get { return navigationHelper; }
         }
 
         public ObservableDictionary DefaultViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return defaultViewModel; }
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.defaultViewModel["statuses"] = statuses;
-            this.defaultViewModel["mentions"] = mentions;
+            defaultViewModel["statuses"] = statuses;
+            defaultViewModel["mentions"] = mentions;
 
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
-            this.defaultViewModel["currentUser"] = currentUser;
+            defaultViewModel["currentUser"] = currentUser;
 
             loading.Visibility = Visibility.Visible;
             FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
@@ -74,33 +63,6 @@ namespace FanfouWP2
         {
         }
 
-        #region NavigationHelper 注册
-
-        /// <summary>
-        /// 此部分中提供的方法只是用于使
-        /// NavigationHelper 可响应页面的导航方法。
-        /// <para>
-        /// 应将页面特有的逻辑放入用于
-        /// <see cref="NavigationHelper.LoadState"/>
-        /// 和 <see cref="NavigationHelper.SaveState"/> 的事件处理程序中。
-        /// 除了在会话期间保留的页面状态之外
-        /// LoadState 方法中还提供导航参数。
-        /// </para>
-        /// </summary>
-        /// <param name="e">提供导航方法数据和
-        /// 无法取消导航请求的事件处理程序。</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            this.navigationHelper.OnNavigatedTo(e);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.navigationHelper.OnNavigatedFrom(e);
-        }
-
-        #endregion
-
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
@@ -110,8 +72,8 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            Utils.StatusesReform.reform(this.mentions, ss);
-            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
+            StatusesReform.reform(mentions, ss);
+            defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
@@ -123,13 +85,13 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            Utils.StatusesReform.reform(this.statuses, ss);
-            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
+            StatusesReform.reform(statuses, ss);
+            defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
         {
-             Frame.Navigate(typeof(PublicPage));
+            Frame.Navigate(typeof (PublicPage));
         }
 
         private void RefreshItem_Click(object sender, RoutedEventArgs e)
@@ -141,57 +103,86 @@ namespace FanfouWP2
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-             Frame.Navigate(typeof(FavoritePage), this.currentUser);
+            Frame.Navigate(typeof (FavoritePage), currentUser);
         }
 
         private void SearchGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-             Frame.Navigate(typeof(SearchPage));
+            Frame.Navigate(typeof (SearchPage));
         }
 
-        private void FindGrid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void FindGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-             Frame.Navigate(typeof(FindPage));
+            Frame.Navigate(typeof (FindPage));
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            this.hub.ScrollToSection(this.hub.Sections.First());
+            hub.ScrollToSection(hub.Sections.First());
         }
 
         private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-             Frame.Navigate(typeof(TrendsPage));
+            Frame.Navigate(typeof (TrendsPage));
         }
 
         private void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-             Frame.Navigate(typeof(SearchPage));
+            Frame.Navigate(typeof (SearchPage));
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-             Frame.Navigate(typeof(AboutPage));
+            Frame.Navigate(typeof (AboutPage));
         }
 
         private void SendItem_Click(object sender, RoutedEventArgs e)
         {
-             Frame.Navigate(typeof(SendPage));
+            Frame.Navigate(typeof (SendPage));
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-             Frame.Navigate(typeof(StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
         }
 
         private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-             Frame.Navigate(typeof(StatusPage), e.ClickedItem);    
+            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
         }
 
         private void InformationButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(InformationPage));    
+            Frame.Navigate(typeof (InformationPage));
         }
+
+        #region NavigationHelper 注册
+
+        /// <summary>
+        ///     此部分中提供的方法只是用于使
+        ///     NavigationHelper 可响应页面的导航方法。
+        ///     <para>
+        ///         应将页面特有的逻辑放入用于
+        ///         <see cref="NavigationHelper.LoadState" />
+        ///         和 <see cref="NavigationHelper.SaveState" /> 的事件处理程序中。
+        ///         除了在会话期间保留的页面状态之外
+        ///         LoadState 方法中还提供导航参数。
+        ///     </para>
+        /// </summary>
+        /// <param name="e">
+        ///     提供导航方法数据和
+        ///     无法取消导航请求的事件处理程序。
+        /// </param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            navigationHelper.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            navigationHelper.OnNavigatedFrom(e);
+        }
+
+        #endregion
     }
 }

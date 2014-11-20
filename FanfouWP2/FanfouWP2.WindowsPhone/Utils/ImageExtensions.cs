@@ -7,33 +7,32 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace FanfouWP2.Utils
 {
     /// <summary>
-    /// Attached properties for Images
+    ///     Attached properties for Images
     /// </summary>
     public static class ImageExtensions
     {
-
         /// <summary>
-        /// Using a DependencyProperty as the backing store for WebUri.  This enables animation, styling, binding, etc...
+        ///     Using a DependencyProperty as the backing store for WebUri.  This enables animation, styling, binding, etc...
         /// </summary>
         public static readonly DependencyProperty CacheUriProperty =
             DependencyProperty.RegisterAttached(
                 "CacheUri",
-                typeof(Uri),
-                typeof(ImageExtensions),
+                typeof (Uri),
+                typeof (ImageExtensions),
                 new PropertyMetadata(null, OnCacheUriChanged));
 
         /// <summary>
-        /// Gets the CacheUri property. This dependency property 
-        /// WebUri that has to be cached
+        ///     Gets the CacheUri property. This dependency property
+        ///     WebUri that has to be cached
         /// </summary>
         public static Uri GetCacheUri(DependencyObject d)
         {
-            return (Uri)d.GetValue(CacheUriProperty);
+            return (Uri) d.GetValue(CacheUriProperty);
         }
 
         /// <summary>
-        /// Sets the CacheUri property. This dependency property 
-        /// WebUri that has to be cached
+        ///     Sets the CacheUri property. This dependency property
+        ///     WebUri that has to be cached
         /// </summary>
         public static void SetCacheUri(DependencyObject d, Uri value)
         {
@@ -42,19 +41,17 @@ namespace FanfouWP2.Utils
 
         private static async void OnCacheUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-            Uri newCacheUri = (Uri)d.GetValue(CacheUriProperty);
-            var image = (Image)d;
+            var newCacheUri = (Uri) d.GetValue(CacheUriProperty);
+            var image = (Image) d;
 
             if (newCacheUri != null)
             {
                 try
                 {
                     //Get image from cache (download and set in cache if needed)
-                    var cacheUri = await WebDataCache.GetLocalUriAsync(newCacheUri);
+                    Uri cacheUri = await WebDataCache.GetLocalUriAsync(newCacheUri);
                     //Set cache uri as source for the image
                     image.Source = new BitmapImage(cacheUri);
-
                 }
                 catch (Exception ex)
                 {
@@ -66,10 +63,6 @@ namespace FanfouWP2.Utils
             }
             else
                 image.Source = null;
-
         }
-
     }
-
 }
-

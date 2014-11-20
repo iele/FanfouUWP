@@ -6,34 +6,39 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <!-- 标题面板 -->
 
         <!--TODO: 应将内容放入以下网格-->
-        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" Height="76" VerticalAlignment="Top"/>
+        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" Height="76" VerticalAlignment="Top" />
         <StackPanel Grid.Row="0" Margin="12,0,0,0" VerticalAlignment="Center">
-        	<TextBlock Text="关于饭窗 for Windows Phone 8.1" Margin="0" FontSize="18.667" VerticalAlignment="Center" FontFamily="Global User Interface" Foreground="White"/>
+            <TextBlock Text="关于饭窗 for Windows Phone 8.1" Margin="0" FontSize="18.667" VerticalAlignment="Center"
+                       FontFamily="Global User Interface" Foreground="White" />
         </StackPanel>
 
         <!--TODO: 应将内容放入以下网格-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="0">
             <StackPanel>
-                <TextBlock Text="关于饭否" VerticalAlignment="Center" FontSize="26.667" Margin="12,12,0,0"/>
-                <TextBlock FontSize="21.333" TextWrapping="Wrap" Text="饭否是一个 140 字的迷你博客。在这里，你可以告诉大家你在做什么，可以随便看看大家都在做什么，也可以关注一些有趣的人。" Margin="12,12,0,0" />
+                <TextBlock Text="关于饭否" VerticalAlignment="Center" FontSize="26.667" Margin="12,12,0,0" />
+                <TextBlock FontSize="21.333" TextWrapping="Wrap"
+                           Text="饭否是一个 140 字的迷你博客。在这里，你可以告诉大家你在做什么，可以随便看看大家都在做什么，也可以关注一些有趣的人。" Margin="12,12,0,0" />
                 <TextBlock FontSize="21.333" Text="桌面访问 http://fanfou.com了解更多" TextWrapping="Wrap" Margin="12,12,0,0" />
-                <TextBlock Text="关于本应用" VerticalAlignment="Center" FontSize="26.667" Margin="12,12,0,0"/>
+                <TextBlock Text="关于本应用" VerticalAlignment="Center" FontSize="26.667" Margin="12,12,0,0" />
                 <TextBlock FontSize="21.333" Text="饭窗 for Windows Phone 8.1" Height="30" Margin="12,12,0,0" />
                 <TextBlock FontSize="21.333" TextWrapping="Wrap" Text="采用Windows XAML框架全新开发" Margin="12,12,0,0" />
                 <TextBlock FontSize="21.333" TextWrapping="Wrap" Text="开发者 iEle 饭否主页 @iEle" Margin="12,12,0,0" />
                 <TextBlock FontSize="21.333" TextWrapping="Wrap" Text="邮箱 melephas@outlook.com" Margin="12,12,0,0" />
-                <TextBlock FontSize="21.333" Margin="12,12,0,0" ><Run Text="感谢您对该应用的使用和支持。"/></TextBlock>
+                <TextBlock FontSize="21.333" Margin="12,12,0,0">
+                    <Run Text="感谢您对该应用的使用和支持。" />
+                </TextBlock>
             </StackPanel>
         </Grid>
     </Grid>

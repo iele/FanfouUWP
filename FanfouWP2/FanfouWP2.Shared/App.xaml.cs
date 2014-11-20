@@ -1,39 +1,30 @@
-﻿using FanfouWP2.Common;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using FanfouWP2.Common;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
 namespace FanfouWP2
 {
     /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
+    ///     Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
+        ///     Initializes the singleton application object.  This is the first line of authored code
+        ///     executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
 #if WINDOWS_PHONE_APP
             ContinuationManager = new ContinuationManager();
 #endif
@@ -44,19 +35,19 @@ namespace FanfouWP2
 #if WINDOWS_PHONE_APP
         public static ContinuationManager ContinuationManager { get; private set; }
 #endif
+
         /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used when the application is launched to open a specific file, to display
-        /// search results, and so forth.
+        ///     Invoked when the application is launched normally by the end user.  Other entry points
+        ///     will be used when the application is launched to open a specific file, to display
+        ///     search results, and so forth.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected async override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-
 #if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
+            if (Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
             CreateRootFrame();
@@ -80,7 +71,7 @@ namespace FanfouWP2
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                RootFrame.Navigate(typeof(MainPage), e.Arguments);
+                RootFrame.Navigate(typeof (MainPage), e.Arguments);
             }
 
             // Ensure the current window is active
@@ -101,7 +92,7 @@ namespace FanfouWP2
             SuspensionManager.RegisterFrame(RootFrame, "AppFrame");
 
             // Set the default language
-            RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+            RootFrame.Language = ApplicationLanguages.Languages[0];
 
             RootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -109,9 +100,9 @@ namespace FanfouWP2
             Window.Current.Content = RootFrame;
         }
 
-        protected async override void OnActivated(IActivatedEventArgs e)
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
-            Debug.WriteLine("OnActivated: " + e.PreviousExecutionState.ToString());
+            Debug.WriteLine("OnActivated: " + e.PreviousExecutionState);
 
             CreateRootFrame();
 
@@ -141,7 +132,7 @@ namespace FanfouWP2
         }
 
         /// <summary>
-        /// Invoked when Navigation to a certain page fails.
+        ///     Invoked when Navigation to a certain page fails.
         /// </summary>
         /// <param name="sender">The Frame which failed navigation.</param>
         /// <param name="e">Details about the navigation failure.</param>
@@ -151,9 +142,9 @@ namespace FanfouWP2
         }
 
         /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
+        ///     Invoked when application execution is being suspended.  Application state is saved
+        ///     without knowing whether the application will be terminated or resumed with the contents
+        ///     of memory still intact.
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
@@ -161,7 +152,7 @@ namespace FanfouWP2
         {
             Debug.WriteLine("OnSuspending");
 
-            var deferral = e.SuspendingOperation.GetDeferral();
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
 #if WINDOWS_PHONE_APP
             ContinuationManager.MarkAsStale();

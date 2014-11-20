@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
@@ -13,11 +11,10 @@ namespace FanfouWP2.ItemControl.ValueConverter
 {
     public class ImageSourceToCacheConverter : IValueConverter
     {
+        public delegate void ImageCompletedHander(object sender, EventArgs e);
+
         private const string ImageStorageFolder = "CacheImages";
         private StorageFolder _storage;
-
-        public delegate void ImageCompletedHander(object sender, EventArgs e);
-        public event ImageCompletedHander ImageCompleted;
 
         private BitmapImage bitmap;
 
@@ -32,18 +29,18 @@ namespace FanfouWP2.ItemControl.ValueConverter
             {
                 if (_storage == null)
                 {
-                    var localCache = Windows.Storage.ApplicationData.Current.LocalCacheFolder;
+                    StorageFolder localCache = ApplicationData.Current.LocalCacheFolder;
                     _storage = localCache;
                 }
             }
             catch (Exception exception)
             {
-                System.Diagnostics.Debug.WriteLine(exception.Message);
+                Debug.WriteLine(exception.Message);
                 return null;
             }
 
             var path = value as string;
-            if (String.IsNullOrEmpty(path.ToString())) return null;
+            if (String.IsNullOrEmpty(path)) return null;
             var imageFileUri = new Uri(path);
             if (imageFileUri.Scheme == "http" || imageFileUri.Scheme == "https")
             {
@@ -65,6 +62,8 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 ImageCompleted(this, new EventArgs());
             return bm;
         }
+
+        public event ImageCompletedHander ImageCompleted;
 
         private object LoadDefaultIfPassed(Uri imageFileUri, string defaultImagePath)
         {
@@ -95,7 +94,8 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 var bm = new BitmapImage();
                 Stream stream = await httpClient.GetStreamAsync(imageFileUri);
                 string isolatedStoragePath = GetFileNameInIsolatedStorage(imageFileUri);
-                StorageFile sourceFile = await _storage.CreateFileAsync(isolatedStoragePath, CreationCollisionOption.OpenIfExists);
+                StorageFile sourceFile =
+                    await _storage.CreateFileAsync(isolatedStoragePath, CreationCollisionOption.OpenIfExists);
                 await WriteToIsolatedStorage(stream, isolatedStoragePath);
                 bm.SetSource(await sourceFile.OpenAsync(FileAccessMode.Read));
                 if (ImageCompleted != null)
@@ -112,7 +112,8 @@ namespace FanfouWP2.ItemControl.ValueConverter
             try
             {
                 string isolatedStoragePath = GetFileNameInIsolatedStorage(imageFileUri);
-                StorageFile sourceFile = await _storage.CreateFileAsync(isolatedStoragePath, CreationCollisionOption.OpenIfExists);
+                StorageFile sourceFile =
+                    await _storage.CreateFileAsync(isolatedStoragePath, CreationCollisionOption.OpenIfExists);
                 var bm = new BitmapImage();
                 bm.SetSource(await sourceFile.OpenAsync(FileAccessMode.Read));
                 if (ImageCompleted != null)
@@ -127,18 +128,19 @@ namespace FanfouWP2.ItemControl.ValueConverter
 
         private async Task WriteToIsolatedStorage(Stream inputStream, string fileUri)
         {
-            var file = await _storage.CreateFileAsync(fileUri, CreationCollisionOption.OpenIfExists);
-            using (var stream = await file.OpenStreamForWriteAsync())
+            StorageFile file = await _storage.CreateFileAsync(fileUri, CreationCollisionOption.OpenIfExists);
+            using (Stream stream = await file.OpenStreamForWriteAsync())
             {
                 await inputStream.CopyToAsync(stream);
             }
         }
 
-        /// <summary>  
-        ///     Gets the file name in isolated storage for the Uri specified. This name should be used to search in the isolated storage.  
-        /// </summary>  
-        /// <param name="uri">The URI.</param>  
-        /// <returns></returns>  
+        /// <summary>
+        ///     Gets the file name in isolated storage for the Uri specified. This name should be used to search in the isolated
+        ///     storage.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns></returns>
         public string GetFileNameInIsolatedStorage(Uri uri)
         {
             return uri.AbsoluteUri.GetHashCode() + ".img";

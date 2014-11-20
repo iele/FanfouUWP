@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace FanfouWP2.Utils
@@ -15,7 +12,6 @@ namespace FanfouWP2.Utils
 
             if (frame != null)
                 frame.SetNavigationState("1,0");
-
         }
     }
 }

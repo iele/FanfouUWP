@@ -7,13 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="添加话题"
-    PrimaryButtonText="添加"  
+    PrimaryButtonText="添加"
     SecondaryButtonText="取消"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick" FullSizeDesired="True">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <TextBox x:Name="tag" Header="输入你想提到的话题" FontFamily="Global User Interface"/>
+        <TextBox x:Name="tag" Header="输入你想提到的话题" FontFamily="Global User Interface" />
 
         <!-- 内容主体 -->
     </StackPanel>

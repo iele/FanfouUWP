@@ -1,21 +1,18 @@
-﻿using FanfouWP2.FanfouAPI;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.Storage;
+using FanfouWP2.FanfouAPI;
 
 namespace FanfouWP.Storage
 {
     public sealed class SettingStorage
     {
-        public Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
         private static SettingStorage instance;
+
+        private static readonly string CONTAINER_NAME = "setting";
+        public ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public static SettingStorage Instance
         {
@@ -27,43 +24,13 @@ namespace FanfouWP.Storage
                 }
                 return instance;
             }
-            set
-            {
-                instance = value;
-            }
+            set { instance = value; }
         }
-
-        private readonly static string CONTAINER_NAME = "setting";
 
         public bool hasSetting
         {
             private set { }
-            get
-            {
-                return localSettings.Containers.ContainsKey(CONTAINER_NAME);
-            }
-        }
-
-        private ApplicationDataContainer getContainer()
-        {
-            return localSettings.CreateContainer(CONTAINER_NAME, Windows.Storage.ApplicationDataCreateDisposition.Always);
-        }
-
-        private string serialize<T>(object o) where T : Item
-        {
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
-            var ms = new MemoryStream();
-            serializer.WriteObject(ms, o);
-            var buff = new byte[ms.Length];
-            ms.Position = 0;
-            ms.Read(buff, 0, buff.Length);
-            var s= Encoding.UTF8.GetString(buff, 0, buff.Length);
-            return s;
-        }
-        private object dserialize<T>(string str) where T : Item
-        {
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
-            return serializer.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(str))) as T;
+            get { return localSettings.Containers.ContainsKey(CONTAINER_NAME); }
         }
 
         public UserAuth currentUserAuth
@@ -76,23 +43,43 @@ namespace FanfouWP.Storage
                     {
                         return dserialize<UserAuth>(getContainer().Values["currentUserAuth"] as string) as UserAuth;
                     }
-                    else
-                        return null;
+                    return null;
                 }
                 catch (Exception e)
                 {
                 }
                 return null;
-
             }
             set
             {
                 if (value != null)
                     getContainer().Values["currentUserAuth"] = serialize<UserAuth>(value);
                 else
-                    getContainer().Values.Remove("currentUserAuth");         
+                    getContainer().Values.Remove("currentUserAuth");
             }
         }
 
+        private ApplicationDataContainer getContainer()
+        {
+            return localSettings.CreateContainer(CONTAINER_NAME, ApplicationDataCreateDisposition.Always);
+        }
+
+        private string serialize<T>(object o) where T : Item
+        {
+            var serializer = new DataContractJsonSerializer(typeof (T));
+            var ms = new MemoryStream();
+            serializer.WriteObject(ms, o);
+            var buff = new byte[ms.Length];
+            ms.Position = 0;
+            ms.Read(buff, 0, buff.Length);
+            string s = Encoding.UTF8.GetString(buff, 0, buff.Length);
+            return s;
+        }
+
+        private object dserialize<T>(string str) where T : Item
+        {
+            var serializer = new DataContractJsonSerializer(typeof (T));
+            return serializer.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(str))) as T;
+        }
     }
 }

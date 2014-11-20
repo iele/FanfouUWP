@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace FanfouWP2.FanfouAPI
 {
@@ -12,20 +7,28 @@ namespace FanfouWP2.FanfouAPI
     {
         [DataMember(Name = "id", IsRequired = true)]
         public string id { get; set; }
+
         [DataMember(Name = "text", IsRequired = false)]
         public string text { get; set; }
+
         [DataMember(Name = "sender_id", IsRequired = false)]
         public string sender_id { get; set; }
+
         [DataMember(Name = "recipient_id", IsRequired = false)]
         public string recipient_id { get; set; }
+
         [DataMember(Name = "created_at", IsRequired = false)]
         public string created_at { get; set; }
+
         [DataMember(Name = "sender_screen_name", IsRequired = false)]
         public string sender_screen_name { get; set; }
+
         [DataMember(Name = "recipient_screen_name", IsRequired = false)]
         public string recipient_screen_name { get; set; }
+
         [DataMember(Name = "sender", IsRequired = false)]
         public User sender { get; set; }
+
         [DataMember(Name = "recipient", IsRequired = false)]
         public User recipient { get; set; }
 
@@ -38,10 +41,13 @@ namespace FanfouWP2.FanfouAPI
     {
         [DataMember(Name = "dm", IsRequired = false)]
         public DirectMessage dm { get; set; }
+
         [DataMember(Name = "otherid", IsRequired = false)]
         public string otherid { get; set; }
+
         [DataMember(Name = "msg_num", IsRequired = false)]
         public int msg_num { get; set; }
+
         [DataMember(Name = "new_conv", IsRequired = false)]
         public bool new_conv { get; set; }
     }

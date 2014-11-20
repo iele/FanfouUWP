@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Controls;
 
 namespace FanfouWP2.Utils
 {
@@ -14,21 +9,17 @@ namespace FanfouWP2.Utils
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                string controlName = child.GetValue(Control.NameProperty) as string;
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                var controlName = child.GetValue(FrameworkElement.NameProperty) as string;
                 if (controlName == name)
                 {
                     return child as T;
                 }
-                else
-                {
-                    T result = FindVisualChildByName<T>(child, name);
-                    if (result != null)
-                        return result;
-                }
+                var result = FindVisualChildByName<T>(child, name);
+                if (result != null)
+                    return result;
             }
             return null;
         }
-
     }
 }

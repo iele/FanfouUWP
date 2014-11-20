@@ -9,27 +9,29 @@
     mc:Ignorable="d" DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
-            <AppBarButton Icon="SaveLocal" Label="保存" x:Name="SaveItem" Click="SaveItem_Click"/>
+            <AppBarButton Icon="SaveLocal" Label="保存" x:Name="SaveItem" Click="SaveItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>
     <Page.Background>
-        <SolidColorBrush Color="Black"/>
+        <SolidColorBrush Color="Black" />
     </Page.Background>
 
     <Grid x:Name="LayoutRoot" Background="Black">
         <!-- 标题面板 -->
 
         <!--TODO: 应将内容放入以下网格-->
-        <Image x:Name="image" Margin="0" CacheMode="BitmapCache" utils:ImageExtensions.CacheUri="{Binding photo}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None">
+        <Image x:Name="image" Margin="0" CacheMode="BitmapCache" utils:ImageExtensions.CacheUri="{Binding photo}"
+               HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None">
             <Image.RenderTransform>
                 <TransformGroup>
-                    <TranslateTransform x:Name="TranslateTransform"></TranslateTransform>
-                    <RotateTransform x:Name="RotateTransform"></RotateTransform>
-                    <ScaleTransform x:Name="ScaleTransform"></ScaleTransform>
+                    <TranslateTransform x:Name="TranslateTransform" />
+                    <RotateTransform x:Name="RotateTransform" />
+                    <ScaleTransform x:Name="ScaleTransform" />
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Rectangle x:Name="touch" Fill="#00F4F4F5" Margin="0" Stroke="#00000000" Canvas.ZIndex="10" ManipulationDelta="Rectangle_ManipulationDelta" DoubleTapped="Rectangle_DoubleTapped"/>
+        <Rectangle x:Name="touch" Fill="#00F4F4F5" Margin="0" Stroke="#00000000" Canvas.ZIndex="10"
+                   ManipulationDelta="Rectangle_ManipulationDelta" DoubleTapped="Rectangle_DoubleTapped" />
 
         <!--TODO: 应将内容放入以下网格-->
     </Grid>

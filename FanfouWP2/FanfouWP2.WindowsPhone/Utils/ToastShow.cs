@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
-//using NotificationsExtensions.ToastContent;
+﻿//using NotificationsExtensions.ToastContent;
 
 namespace FanfouWP2.Utils
 {
@@ -21,6 +16,5 @@ namespace FanfouWP2.Utils
             ToastNotificationManager.CreateToastNotifier().Show(toast);
             */
         }
-
     }
 }

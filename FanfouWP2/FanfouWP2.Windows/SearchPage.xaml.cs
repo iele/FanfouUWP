@@ -1,70 +1,61 @@
-﻿using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using FanfouWP2.Common;
+using FanfouWP2.CustomControl;
+using FanfouWP2.FanfouAPI;
 
 namespace FanfouWP2
 {
     public sealed partial class SearchPage : Page
     {
-
-        private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private readonly NavigationHelper navigationHelper;
+        private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
 
         private Status currentClick;
 
         private string query;
 
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
-
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
-
-
         public SearchPage()
         {
-            this.InitializeComponent();
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.navigationHelper.SaveState += navigationHelper_SaveState;
+            InitializeComponent();
+            navigationHelper = new NavigationHelper(this);
+            navigationHelper.LoadState += navigationHelper_LoadState;
+            navigationHelper.SaveState += navigationHelper_SaveState;
 
             FanfouAPI.FanfouAPI.Instance.SearchTimelineSuccess += Instance_SearchTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.SearchTimelineFailed += Instance_SearchTimelineFailed;
 
-            this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
-            this.send.StatusUpdateFailed += send_StatusUpdateFailed;
+            send.StatusUpdateSuccess += send_StatusUpdateSuccess;
+            send.StatusUpdateFailed += send_StatusUpdateFailed;
 
-            this.status.UserButtonClick += status_UserButtonClick;
-            this.status.ReplyButtonClick += status_ReplyButtonClick;
-            this.status.RepostButtonClick += status_RepostButtonClick;
-            this.status.FavButtonClick += status_FavButtonClick;
-            this.status.FavCreateSuccess += status_FavCreateSuccess;
-            this.status.FavDestroySuccess += status_FavDestroySuccess;
+            status.UserButtonClick += status_UserButtonClick;
+            status.ReplyButtonClick += status_ReplyButtonClick;
+            status.RepostButtonClick += status_RepostButtonClick;
+            status.FavButtonClick += status_FavButtonClick;
+            status.FavCreateSuccess += status_FavCreateSuccess;
+            status.FavDestroySuccess += status_FavDestroySuccess;
         }
 
-        void status_FavDestroySuccess(object sender, EventArgs e)
+        public ObservableDictionary DefaultViewModel
+        {
+            get { return defaultViewModel; }
+        }
+
+        public NavigationHelper NavigationHelper
+        {
+            get { return navigationHelper; }
+        }
+
+
+        private void status_FavDestroySuccess(object sender, EventArgs e)
         {
             var s = sender as Status;
-            foreach (var i in statuses)
+            foreach (Status i in statuses)
             {
                 if (i.id == s.id)
                 {
@@ -72,10 +63,11 @@ namespace FanfouWP2
                 }
             }
         }
-        void status_FavCreateSuccess(object sender, EventArgs e)
+
+        private void status_FavCreateSuccess(object sender, EventArgs e)
         {
             var s = sender as Status;
-            foreach (var i in statuses)
+            foreach (Status i in statuses)
             {
                 if (i.id == s.id)
                 {
@@ -84,17 +76,17 @@ namespace FanfouWP2
             }
         }
 
-        void Instance_SearchTimelineFailed(object sender, FailedEventArgs e)
+        private void Instance_SearchTimelineFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
         }
 
-        void Instance_SearchTimelineSuccess(object sender, EventArgs e)
+        private void Instance_SearchTimelineSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             statuses.Clear();
-            foreach (var item in ss)
+            foreach (Status item in ss)
                 statuses.Add(item);
         }
 
@@ -102,31 +94,31 @@ namespace FanfouWP2
         {
         }
 
-        void status_RepostButtonClick(object sender, RoutedEventArgs e)
+        private void status_RepostButtonClick(object sender, RoutedEventArgs e)
         {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentClick);
+            sendPopup.IsOpen = true;
+            send.ChangeMode(SendSettingsFlyout.SendMode.Repose, currentClick);
         }
 
-        void status_ReplyButtonClick(object sender, RoutedEventArgs e)
+        private void status_ReplyButtonClick(object sender, RoutedEventArgs e)
         {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentClick);
+            sendPopup.IsOpen = true;
+            send.ChangeMode(SendSettingsFlyout.SendMode.Reply, currentClick);
         }
 
-        void status_UserButtonClick(object sender, RoutedEventArgs e)
+        private void status_UserButtonClick(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage), currentClick.user);
+            Frame.Navigate(typeof (UserPage), currentClick.user);
         }
 
-        void send_StatusUpdateFailed(object sender, FailedEventArgs e)
+        private void send_StatusUpdateFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
         }
 
-        void send_StatusUpdateSuccess(object sender, EventArgs e)
+        private void send_StatusUpdateSuccess(object sender, EventArgs e)
         {
-            this.sendPopup.IsOpen = false;
+            sendPopup.IsOpen = false;
             loading.Visibility = Visibility.Visible;
         }
 
@@ -134,11 +126,36 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
 
-            this.defaultViewModel["data"] = statuses;
+            defaultViewModel["data"] = statuses;
         }
 
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+        }
+
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            currentClick = e.ClickedItem as Status;
+            status.setStatus(currentClick);
+            statusPopup.IsOpen = true;
+        }
+
+        private void send_BackClick(object sender, BackClickEventArgs e)
+        {
+            sendPopup.IsOpen = false;
+        }
+
+        private void status_BackClick(object sender, BackClickEventArgs e)
+        {
+            statusPopup.IsOpen = false;
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            query = search.Text;
+            statuses.Clear();
+            defaultViewModel["data"] = statuses;
+            FanfouAPI.FanfouAPI.Instance.SearchTimeline(query, 60);
         }
 
         #region NavigationHelper 注册
@@ -147,11 +164,12 @@ namespace FanfouWP2
         /// NavigationHelper 可响应页面的导航方法。
         /// 
         /// 应将页面特有的逻辑放入用于
-        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
-        /// 和 <see cref="GridCS.Common.NavigationHelper.SaveState"/> 的事件处理程序中。
+        /// <see cref="GridCS.Common.NavigationHelper.LoadState" />
+        /// 和
+        /// <see cref="GridCS.Common.NavigationHelper.SaveState" />
+        /// 的事件处理程序中。
         /// 除了在会话期间保留的页面状态之外
         /// LoadState 方法中还提供导航参数。
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedTo(e);
@@ -163,30 +181,5 @@ namespace FanfouWP2
         }
 
         #endregion
-
-        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            currentClick = e.ClickedItem as Status;
-            this.status.setStatus(currentClick);
-            this.statusPopup.IsOpen = true;
-        }
-
-        private void send_BackClick(object sender, BackClickEventArgs e)
-        {
-            this.sendPopup.IsOpen = false;
-        }
-
-        private void status_BackClick(object sender, BackClickEventArgs e)
-        {
-            this.statusPopup.IsOpen = false;
-        }
-
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            query = this.search.Text;
-            this.statuses.Clear();
-            this.defaultViewModel["data"] = statuses;
-            FanfouAPI.FanfouAPI.Instance.SearchTimeline(query, 60);
-        }
     }
 }

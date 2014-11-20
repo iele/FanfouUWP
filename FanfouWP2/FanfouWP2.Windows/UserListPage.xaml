@@ -15,34 +15,41 @@
 
     <Page.Resources>
         <DataTemplate x:Key="UserItemControl">
-            <itemcontrol:UserItemControl  DataContext="{Binding}"  Width="400" Height="260"/>
+            <itemcontrol:UserItemControl DataContext="{Binding}" Width="400" Height="260" />
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF006FA6" BorderBrush="#FF006FA6" Visibility="Visible">
-        	<AppBarButton HorizontalAlignment="Right" Icon="Previous" x:Name="LeftButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="LeftButton_Click" Label="前页"/>
-        	<AppBarButton HorizontalAlignment="Right" Icon="Next" x:Name="RightButton" VerticalAlignment="Top" IsCompact="True" Padding="0" Click="RightButton_Click" Label="次页"/>
+        <CommandBar x:Name="commandBar" Margin="0" VerticalAlignment="Bottom" Background="#FF006FA6"
+                    BorderBrush="#FF006FA6" Visibility="Visible">
+            <AppBarButton HorizontalAlignment="Right" Icon="Previous" x:Name="LeftButton" VerticalAlignment="Top"
+                          IsCompact="True" Padding="0" Click="LeftButton_Click" Label="前页" />
+            <AppBarButton HorizontalAlignment="Right" Icon="Next" x:Name="RightButton" VerticalAlignment="Top"
+                          IsCompact="True" Padding="0" Click="RightButton_Click" Label="次页" />
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid>
-    	<Grid.Background>
-    		<ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png"/>
-    	</Grid.Background>
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/10.png" />
+        </Grid.Background>
         <Grid.ChildrenTransitions>
             <TransitionCollection>
-                <EntranceThemeTransition/>
+                <EntranceThemeTransition />
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
-            <RowDefinition/>
+            <RowDefinition Height="140" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding users}" SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged" Background="Transparent">
+        <FlipView x:Name="flipView" Margin="0" Grid.Row="1" ItemsSource="{Binding users}"
+                  SelectionChanged="flipView_SelectionChanged" SizeChanged="flipView_SizeChanged"
+                  Background="Transparent">
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <GridView ItemsSource="{Binding}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei" ItemTemplate="{StaticResource UserItemControl}" />
+                    <GridView ItemsSource="{Binding}" SelectionMode="None" IsItemClickEnabled="True"
+                              ItemClick="statusesGridView_ItemClick" Padding="10,0,10,10" FontFamily="Microsoft YaHei"
+                              ItemTemplate="{StaticResource UserItemControl}" />
 
                 </DataTemplate>
             </FlipView.ItemTemplate>
@@ -50,26 +57,30 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Margin="39,60,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
-				Style="{StaticResource NavigationBackButtonNormalStyle}"
-				VerticalAlignment="Top"
-				AutomationProperties.Name="Back"
-				AutomationProperties.AutomationId="BackButton"
-				AutomationProperties.ItemType="Navigation Button"/>
-            <TextBlock x:Name="pageTitle" Text="{Binding title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
-				IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,0,40" FontFamily="Microsoft YaHei" FontSize="56"/>
-            <StackPanel Grid.Column="2" Margin="21,45,40,0" Orientation="Horizontal" HorizontalAlignment="Right"/>
+            <Button x:Name="backButton" Margin="39,60,0,0"
+                    Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+                    Style="{StaticResource NavigationBackButtonNormalStyle}"
+                    VerticalAlignment="Top"
+                    AutomationProperties.Name="Back"
+                    AutomationProperties.AutomationId="BackButton"
+                    AutomationProperties.ItemType="Navigation Button" />
+            <TextBlock x:Name="pageTitle" Text="{Binding title}" Style="{StaticResource HeaderTextBlockStyle}"
+                       Grid.Column="1"
+                       IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,0,40"
+                       FontFamily="Microsoft YaHei" FontSize="56" />
+            <StackPanel Grid.Column="2" Margin="21,45,40,0" Orientation="Horizontal" HorizontalAlignment="Right" />
         </Grid>
-        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True"/>
+        <ProgressBar x:Name="loading" VerticalAlignment="Top" IsIndeterminate="True" />
         <Popup x:Name="sendPopup" IsOpen="False" Grid.RowSpan="2" Width="500" HorizontalAlignment="Right">
-            <Grid Width="500"  Height="{Binding ActualHeight, ElementName=sendPopup}">
-        		<customcontrol:SendSettingsFlyout  x:Name="send" Width="Auto" BackClick="send_BackClick"/>
-        	</Grid>
+            <Grid Width="500" Height="{Binding ActualHeight, ElementName=sendPopup}">
+                <customcontrol:SendSettingsFlyout x:Name="send" Width="Auto" BackClick="send_BackClick" />
+            </Grid>
         </Popup>
-        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16" Grid.Row="1"/>
+        <TextBlock x:Name="page" HorizontalAlignment="Right" Margin="0,0,45,39.117" TextWrapping="Wrap"
+                   VerticalAlignment="Bottom" Foreground="white" Text="{Binding page}" FontSize="16" Grid.Row="1" />
     </Grid>
 </Page>

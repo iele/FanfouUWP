@@ -9,20 +9,25 @@
     Background="{ThemeResource AppBarBorderThemeBrush}" RequestedTheme="Light">
 
     <Grid Background="White">
-    	<Grid.RowDefinitions>
-    		<RowDefinition Height="Auto"/>
-    		<RowDefinition/>
-    	</Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical" Margin="0,12,0,0" Grid.Row="1">
-            <Button x:Name="FollowButton" Content="关注应用账号@饭窗" VerticalAlignment="Top" Click="FollowButton_Click" HorizontalAlignment="Stretch" Margin="12,0"/>
-            <Button x:Name="NoticeButton" Content="查看@饭窗最新公告" VerticalAlignment="Top" Click="NoticeButton_Click" HorizontalAlignment="Stretch" Margin="12,0"/>
-            <Button x:Name="SendMessageButton" Content="发送饭否给@饭窗" VerticalAlignment="Top" Click="SendMessageButton_Click" HorizontalAlignment="Stretch" Margin="12,0"/>
-            <Button x:Name="EmailButton" Content="写邮件给作者本人" VerticalAlignment="Top" Click="EmailButton_Click" HorizontalAlignment="Stretch" Margin="12,0"/>
-            <Button x:Name="MarketButton" Content="到市场提出意见" VerticalAlignment="Top" Click="MarketButton_Click" HorizontalAlignment="Stretch" Margin="12,0"/>
+            <Button x:Name="FollowButton" Content="关注应用账号@饭窗" VerticalAlignment="Top" Click="FollowButton_Click"
+                    HorizontalAlignment="Stretch" Margin="12,0" />
+            <Button x:Name="NoticeButton" Content="查看@饭窗最新公告" VerticalAlignment="Top" Click="NoticeButton_Click"
+                    HorizontalAlignment="Stretch" Margin="12,0" />
+            <Button x:Name="SendMessageButton" Content="发送饭否给@饭窗" VerticalAlignment="Top"
+                    Click="SendMessageButton_Click" HorizontalAlignment="Stretch" Margin="12,0" />
+            <Button x:Name="EmailButton" Content="写邮件给作者本人" VerticalAlignment="Top" Click="EmailButton_Click"
+                    HorizontalAlignment="Stretch" Margin="12,0" />
+            <Button x:Name="MarketButton" Content="到市场提出意见" VerticalAlignment="Top" Click="MarketButton_Click"
+                    HorizontalAlignment="Stretch" Margin="12,0" />
         </StackPanel>
-        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" Height="76" VerticalAlignment="Top"/>
+        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" Height="76" VerticalAlignment="Top" />
         <StackPanel Grid.Row="0" Margin="12,13,0,11.672" VerticalAlignment="Center">
-        	<TextBlock Text="支持与反馈" Margin="0" FontSize="18.667" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock Text="支持与反馈" Margin="0" FontSize="18.667" VerticalAlignment="Center" Foreground="White" />
         </StackPanel>
     </Grid>
 </Page>

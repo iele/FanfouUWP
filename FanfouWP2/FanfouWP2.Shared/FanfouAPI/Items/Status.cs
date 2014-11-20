@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FanfouWP2.FanfouAPI
 {
@@ -11,10 +7,13 @@ namespace FanfouWP2.FanfouAPI
     public class Status : Item
     {
         public bool is_refresh { get; set; }
+
         [DataMember(Name = "created_at", IsRequired = false)]
         public string created_at { get; set; }
+
         [DataMember(Name = "id", IsRequired = true)]
         public string id { get; set; }
+
         [DataMember(Name = "rawid", IsRequired = false)]
         public UInt64 rawid { get; set; }
 

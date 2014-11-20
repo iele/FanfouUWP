@@ -8,21 +8,23 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
+
     <Grid>
-    	<Grid.RowDefinitions>
-    		<RowDefinition Height="Auto"/>
-    		<RowDefinition/>
-    	</Grid.RowDefinitions>
-    	<Grid.ColumnDefinitions>
-    		<ColumnDefinition Width="Auto"/>
-    		<ColumnDefinition/>
-    	</Grid.ColumnDefinitions>
-    	<StackPanel Grid.Column="1" Margin="12,11,0,10" Orientation="Horizontal">
-    		<TextBlock Margin="0,0,-0.083,0" Text="{Binding name}" VerticalAlignment="Center" FontSize="24"/>
-    		<TextBlock Margin="12,0,-0.083,0" Text="{Binding query}" VerticalAlignment="Center" FontSize="18.667" Foreground="Gray"/>
-    	</StackPanel>
-    	<Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Height="30" Margin="10,10,0,10" Stroke="DeepSkyBlue" VerticalAlignment="Top" Width="15"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" Margin="12,11,0,10" Orientation="Horizontal">
+            <TextBlock Margin="0,0,-0.083,0" Text="{Binding name}" VerticalAlignment="Center" FontSize="24" />
+            <TextBlock Margin="12,0,-0.083,0" Text="{Binding query}" VerticalAlignment="Center" FontSize="18.667"
+                       Foreground="Gray" />
+        </StackPanel>
+        <Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Height="30" Margin="10,10,0,10" Stroke="DeepSkyBlue"
+                   VerticalAlignment="Top" Width="15" />
 
     </Grid>
 </UserControl>

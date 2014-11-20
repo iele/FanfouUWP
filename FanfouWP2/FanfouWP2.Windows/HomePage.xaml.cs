@@ -1,59 +1,50 @@
-﻿using FanfouWP2.Common;
-using FanfouWP2.CustomControl;
-using FanfouWP2.FanfouAPI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using FanfouWP2.Common;
+using FanfouWP2.CustomControl;
+using FanfouWP2.FanfouAPI;
+using FanfouWP2.Utils;
 
 namespace FanfouWP2
 {
     public sealed partial class HomePage : Page
     {
+        public enum PageType
+        {
+            Statuses,
+            Mentions,
+            Publics
+        };
 
-        private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private User currentUser = new User();
-        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
-        private ObservableCollection<Status> mentions = new ObservableCollection<Status>();
-        private ObservableCollection<Status> publics = new ObservableCollection<Status>();
-
-        public enum PageType { Statuses, Mentions, Publics };
-        private PageType currentType = PageType.Statuses;
+        private readonly ObservableCollection<Status> mentions = new ObservableCollection<Status>();
+        private readonly NavigationHelper navigationHelper;
+        private readonly ObservableCollection<Status> publics = new ObservableCollection<Status>();
+        private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private bool can_loading;
 
         private Status currentClick;
-
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
-
-        public NavigationHelper NavigationHelper
-        {
-            get { return this.navigationHelper; }
-        }
+        private PageType currentType = PageType.Statuses;
+        private User currentUser = new User();
+        private bool is_loading;
 
         public HomePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.Loaded += HomePage_Loaded;
+            Loaded += HomePage_Loaded;
 
-            this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += navigationHelper_LoadState;
+            navigationHelper = new NavigationHelper(this);
+            navigationHelper.LoadState += navigationHelper_LoadState;
 
             FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_HomeTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_HomeTimelineFailed;
@@ -64,45 +55,56 @@ namespace FanfouWP2
             FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_PublicTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_PublicTimelineFailed;
 
-            this.send.StatusUpdateSuccess += send_StatusUpdateSuccess;
-            this.send.StatusUpdateFailed += send_StatusUpdateFailed;
+            send.StatusUpdateSuccess += send_StatusUpdateSuccess;
+            send.StatusUpdateFailed += send_StatusUpdateFailed;
 
-            this.status.UserButtonClick += status_UserButtonClick;
-            this.status.ReplyButtonClick += status_ReplyButtonClick;
-            this.status.RepostButtonClick += status_RepostButtonClick;
-            this.status.FavButtonClick += status_FavButtonClick;
-            this.status.FavCreateSuccess += status_FavCreateSuccess;
-            this.status.FavDestroySuccess += status_FavDestroySuccess;
+            status.UserButtonClick += status_UserButtonClick;
+            status.ReplyButtonClick += status_ReplyButtonClick;
+            status.RepostButtonClick += status_RepostButtonClick;
+            status.FavButtonClick += status_FavButtonClick;
+            status.FavCreateSuccess += status_FavCreateSuccess;
+            status.FavDestroySuccess += status_FavDestroySuccess;
         }
-        void onCommandsRequested(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs e)
+
+        public ObservableDictionary DefaultViewModel
         {
-            SettingsCommand defaultsCommand = new SettingsCommand("账户", "账户",
-                (handler) =>
+            get { return defaultViewModel; }
+        }
+
+        public NavigationHelper NavigationHelper
+        {
+            get { return navigationHelper; }
+        }
+
+        private void onCommandsRequested(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs e)
+        {
+            var defaultsCommand = new SettingsCommand("账户", "账户",
+                handler =>
                 {
-                    AccountSettingsFlyout sf = new AccountSettingsFlyout();
+                    var sf = new AccountSettingsFlyout();
                     sf.Show();
                 });
             e.Request.ApplicationCommands.Add(defaultsCommand);
         }
 
-        void status_FavDestroySuccess(object sender, EventArgs e)
+        private void status_FavDestroySuccess(object sender, EventArgs e)
         {
             var s = sender as Status;
-            foreach (var i in statuses)
+            foreach (Status i in statuses)
             {
                 if (i.id == s.id)
                 {
                     i.favorited = false;
                 }
             }
-            foreach (var i in mentions)
+            foreach (Status i in mentions)
             {
                 if (i.id == s.id)
                 {
                     i.favorited = false;
                 }
             }
-            foreach (var i in publics)
+            foreach (Status i in publics)
             {
                 if (i.id == s.id)
                 {
@@ -111,24 +113,24 @@ namespace FanfouWP2
             }
         }
 
-        void status_FavCreateSuccess(object sender, EventArgs e)
+        private void status_FavCreateSuccess(object sender, EventArgs e)
         {
             var s = sender as Status;
-            foreach (var i in statuses)
+            foreach (Status i in statuses)
             {
                 if (i.id == s.id)
                 {
                     i.favorited = true;
                 }
             }
-            foreach (var i in mentions)
+            foreach (Status i in mentions)
             {
                 if (i.id == s.id)
                 {
                     i.favorited = false;
                 }
             }
-            foreach (var i in publics)
+            foreach (Status i in publics)
             {
                 if (i.id == s.id)
                 {
@@ -137,16 +139,14 @@ namespace FanfouWP2
             }
         }
 
-        void HomePage_Loaded(object sender, RoutedEventArgs e)
+        private void HomePage_Loaded(object sender, RoutedEventArgs e)
         {
-            ScrollViewer sv = Utils.VisualHelper.FindVisualChildByName<ScrollViewer>(this.statusesGridView, "ScrollViewer");
-            ScrollBar sb = Utils.VisualHelper.FindVisualChildByName<ScrollBar>(sv, "HorizontalScrollBar");
+            var sv = VisualHelper.FindVisualChildByName<ScrollViewer>(statusesGridView, "ScrollViewer");
+            var sb = VisualHelper.FindVisualChildByName<ScrollBar>(sv, "HorizontalScrollBar");
             sb.ValueChanged += sb_ValueChanged;
         }
 
-        bool is_loading = false;
-        bool can_loading = false;
-        void sb_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        private void sb_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (e.NewValue >= (sender as ScrollBar).Maximum - 100 && !is_loading && can_loading)
             {
@@ -199,32 +199,32 @@ namespace FanfouWP2
         {
         }
 
-        void status_RepostButtonClick(object sender, RoutedEventArgs e)
+        private void status_RepostButtonClick(object sender, RoutedEventArgs e)
         {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Repose, currentClick);
+            sendPopup.IsOpen = true;
+            send.ChangeMode(SendSettingsFlyout.SendMode.Repose, currentClick);
         }
 
-        void status_ReplyButtonClick(object sender, RoutedEventArgs e)
+        private void status_ReplyButtonClick(object sender, RoutedEventArgs e)
         {
-            this.sendPopup.IsOpen = true;
-            this.send.ChangeMode(CustomControl.SendSettingsFlyout.SendMode.Reply, currentClick);
+            sendPopup.IsOpen = true;
+            send.ChangeMode(SendSettingsFlyout.SendMode.Reply, currentClick);
         }
 
-        void status_UserButtonClick(object sender, RoutedEventArgs e)
+        private void status_UserButtonClick(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage), currentClick.user);
+            Frame.Navigate(typeof (UserPage), currentClick.user);
         }
 
-        void send_StatusUpdateFailed(object sender, FailedEventArgs e)
+        private void send_StatusUpdateFailed(object sender, FailedEventArgs e)
         {
-            this.sendPopup.IsOpen = false;
+            sendPopup.IsOpen = false;
             loading.Visibility = Visibility.Visible;
         }
 
-        void send_StatusUpdateSuccess(object sender, EventArgs e)
+        private void send_StatusUpdateSuccess(object sender, EventArgs e)
         {
-            this.sendPopup.IsOpen = false;
+            sendPopup.IsOpen = false;
             switch (currentType)
             {
                 case PageType.Statuses:
@@ -241,20 +241,20 @@ namespace FanfouWP2
             }
         }
 
-        void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
+        private void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
         {
             is_loading = false;
             loading.Visibility = Visibility.Collapsed;
         }
 
-        void Instance_PublicTimelineSuccess(object sender, EventArgs e)
+        private void Instance_PublicTimelineSuccess(object sender, EventArgs e)
         {
             is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            this.publics.Clear();
-            Utils.StatusesReform.reform(this.publics, ss);
-            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
+            publics.Clear();
+            StatusesReform.reform(publics, ss);
+            defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
@@ -268,8 +268,8 @@ namespace FanfouWP2
             is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            Utils.StatusesReform.reform(this.mentions, ss);
-            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
+            StatusesReform.reform(mentions, ss);
+            defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
@@ -283,40 +283,161 @@ namespace FanfouWP2
             is_loading = false;
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            Utils.StatusesReform.reform(this.statuses, ss);
-            this.defaultViewModel["date"] = "更新时间 " + DateTime.Now.ToString();
+            StatusesReform.reform(statuses, ss);
+            defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
 
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            this.defaultViewModel["statuses"] = statuses;
-            this.defaultViewModel["mentions"] = mentions;
-            this.defaultViewModel["publics"] = publics;
+            defaultViewModel["statuses"] = statuses;
+            defaultViewModel["mentions"] = mentions;
+            defaultViewModel["publics"] = publics;
 
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
-            this.defaultViewModel["currentUser"] = currentUser;
+            defaultViewModel["currentUser"] = currentUser;
 
             loading.Visibility = Visibility.Visible;
             switch (currentType)
             {
                 case PageType.Statuses:
                     FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-                    this.defaultViewModel["title"] = "我的消息";
+                    defaultViewModel["title"] = "我的消息";
                     break;
                 case PageType.Mentions:
                     FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
-                    this.defaultViewModel["title"] = "提及我的";
+                    defaultViewModel["title"] = "提及我的";
                     break;
                 case PageType.Publics:
                     FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
-                    this.defaultViewModel["title"] = "随便看看";
+                    defaultViewModel["title"] = "随便看看";
                     break;
                 default:
                     break;
             }
 
-            this.defaultViewModel["page"] = "第1页";
+            defaultViewModel["page"] = "第1页";
+        }
+
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            currentClick = e.ClickedItem as Status;
+            status.setStatus(currentClick);
+            statusPopup.IsOpen = true;
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            sendPopup.IsOpen = true;
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+
+            switch (currentType)
+            {
+                case PageType.Statuses:
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, since_id: statuses.First().id);
+                    defaultViewModel["title"] = "我的消息";
+                    break;
+                case PageType.Mentions:
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, since_id: mentions.First().id);
+                    defaultViewModel["title"] = "提及我的";
+                    break;
+                case PageType.Publics:
+                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                    defaultViewModel["title"] = "随便看看";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void pageRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+        }
+
+        private void send_BackClick(object sender, BackClickEventArgs e)
+        {
+            sendPopup.IsOpen = false;
+        }
+
+        private void FavAppButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (TimelinePage),
+                new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Favorite,
+                    FanfouAPI.FanfouAPI.Instance.currentUser));
+        }
+
+        private void pageTitle_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout(pageTitle);
+        }
+
+        private void StatusesMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            currentType = PageType.Statuses;
+
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
+            defaultViewModel["title"] = "我的消息";
+            statusesGridView.ItemsSource = defaultViewModel["statuses"];
+        }
+
+        private void MentionsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            currentType = PageType.Mentions;
+
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
+            defaultViewModel["title"] = "提及我的";
+            statusesGridView.ItemsSource = defaultViewModel["mentions"];
+        }
+
+        private void PublicsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            loading.Visibility = Visibility.Visible;
+            currentType = PageType.Publics;
+
+            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
+            defaultViewModel["title"] = "随便看看";
+            statusesGridView.ItemsSource = defaultViewModel["publics"];
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (SearchPage));
+        }
+
+        private void DirectButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (DirectMessagePage));
+        }
+
+        private void status_BackClick(object sender, BackClickEventArgs e)
+        {
+            statusPopup.IsOpen = false;
+        }
+
+        private void MenuFlyout_Closed(object sender, object e)
+        {
+            rotation.Rotation = 0;
+        }
+
+        private void MenuFlyout_Opened(object sender, object e)
+        {
+            rotation.Rotation = 180;
+        }
+
+        private void SelfButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (SelfPage));
+        }
+
+        private void FindButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (FindPage));
         }
 
         #region NavigationHelper 注册
@@ -332,126 +453,5 @@ namespace FanfouWP2
         }
 
         #endregion
-
-        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            currentClick = e.ClickedItem as Status;
-            this.status.setStatus(currentClick);
-            this.statusPopup.IsOpen = true;
-        }
-
-        private void SendButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.sendPopup.IsOpen = true;
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-
-            switch (currentType)
-            {
-                case PageType.Statuses:
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, since_id: statuses.First().id);
-                    this.defaultViewModel["title"] = "我的消息";
-                    break;
-                case PageType.Mentions:
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, since_id: mentions.First().id);
-                    this.defaultViewModel["title"] = "提及我的";
-                    break;
-                case PageType.Publics:
-                    FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
-                    this.defaultViewModel["title"] = "随便看看";
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void pageRoot_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
-
-        private void send_BackClick(object sender, BackClickEventArgs e)
-        {
-            this.sendPopup.IsOpen = false;
-        }
-
-        private void FavAppButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(TimelinePage),
-                new KeyValuePair<TimelinePage.PageType, object>(TimelinePage.PageType.Favorite,
-                    FanfouAPI.FanfouAPI.Instance.currentUser));
-        }
-
-        private void pageTitle_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout(this.pageTitle as FrameworkElement);
-        }
-        private void StatusesMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-            currentType = PageType.Statuses;
-
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-            this.defaultViewModel["title"] = "我的消息";
-            this.statusesGridView.ItemsSource = this.defaultViewModel["statuses"];
-        }
-
-        private void MentionsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-            currentType = PageType.Mentions;
-
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
-            this.defaultViewModel["title"] = "提及我的";
-            this.statusesGridView.ItemsSource = this.defaultViewModel["mentions"];
-        }
-
-        private void PublicsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-            currentType = PageType.Publics;
-
-            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60);
-            this.defaultViewModel["title"] = "随便看看";
-            this.statusesGridView.ItemsSource = this.defaultViewModel["publics"];
-        }
-
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SearchPage));
-        }
-
-        private void DirectButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(DirectMessagePage));
-        }
-
-        private void status_BackClick(object sender, BackClickEventArgs e)
-        {
-            this.statusPopup.IsOpen = false;
-        }
-
-        private void MenuFlyout_Closed(object sender, object e)
-        {
-            rotation.Rotation = 0;
-        }
-
-        private void MenuFlyout_Opened(object sender, object e)
-        {
-            rotation.Rotation = 180;
-        }
-
-        private void SelfButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SelfPage));
-        }
-
-        private void FindButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(FindPage));
-        }
     }
 }

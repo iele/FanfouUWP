@@ -8,128 +8,178 @@
     x:Class="FanfouWP2.HomePage"
     xmlns:utils="using:FanfouWP2.Utils"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" Width="Auto" Height="Auto" IsTextScaleFactorEnabled="True"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" Width="Auto" Height="Auto"
+    IsTextScaleFactorEnabled="True"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}" NavigationCacheMode="Required">
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
-            <ItemControl:StatusItemControl  DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=statusesGridView}"
-              Margin="0,3"/>
+            <ItemControl:StatusItemControl DataContext="{Binding}"
+                                           Width="{Binding ActualWidth, ElementName=statusesGridView}"
+                                           Margin="0,3" />
         </DataTemplate>
         <DataTemplate x:Key="MentionsItemControl">
-            <ItemControl:StatusItemControl  DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=mentionsGridView}"
-              Margin="0,3"/>
+            <ItemControl:StatusItemControl DataContext="{Binding}"
+                                           Width="{Binding ActualWidth, ElementName=mentionsGridView}"
+                                           Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="个人资料"/>
-                <AppBarButton Label="好友请求"/>
-                <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click"/>
-                <AppBarButton Label="设置"/>
+                <AppBarButton Label="个人资料" />
+                <AppBarButton Label="好友请求" />
+                <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click" />
+                <AppBarButton Label="设置" />
             </CommandBar.SecondaryCommands>
-            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click"/>
-            <AppBarButton Label="照片" Icon="Camera"/>
-            <AppBarButton Icon="Zoom" Label="搜索" x:Name="SearchItem" Click="SearchItem_Click"/>
-            <AppBarButton Icon="Edit" Label="新饭" x:Name="SendItem" Click="SendItem_Click"/>
+            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click" />
+            <AppBarButton Label="照片" Icon="Camera" />
+            <AppBarButton Icon="Zoom" Label="搜索" x:Name="SearchItem" Click="SearchItem_Click" />
+            <AppBarButton Icon="Edit" Label="新饭" x:Name="SendItem" Click="SendItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Margin="0,0,0,0" x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="72"/>
-            <RowDefinition/>
+            <RowDefinition Height="72" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Rectangle Fill="DeepSkyBlue" Height="88" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Top" Margin="0,-28,0,0" Canvas.ZIndex="-10"/>
+        <Rectangle Fill="DeepSkyBlue" Height="88" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Top"
+                   Margin="0,-28,0,0" Canvas.ZIndex="-10" />
         <Grid Margin="0,0,0,12" Background="DeepSkyBlue">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Margin="0" Height="60" Orientation="Horizontal">
-                <Image HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40" Margin="12,0,0,0" utils:ImageExtensions.CacheUri="{Binding currentUser.profile_image_url}" />
+                <Image HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40" Margin="12,0,0,0"
+                       utils:ImageExtensions.CacheUri="{Binding currentUser.profile_image_url}" />
 
-                <TextBlock TextWrapping="NoWrap" VerticalAlignment="Center" Margin="12,0" Foreground="White" FontSize="20" HorizontalAlignment="Left" Text="{Binding currentUser.screen_name}"/>
+                <TextBlock TextWrapping="NoWrap" VerticalAlignment="Center" Margin="12,0" Foreground="White"
+                           FontSize="20" HorizontalAlignment="Left" Text="{Binding currentUser.screen_name}" />
             </StackPanel>
-            <Image Margin="0,0,12,0" Source="/Assets/fanfou_beta.png" HorizontalAlignment="Right" Width="120" Grid.Column="1"/>
+            <Image Margin="0,0,12,0" Source="/Assets/fanfou_beta.png" HorizontalAlignment="Right" Width="120"
+                   Grid.Column="1" />
         </Grid>
         <Hub x:Name="hub" Header="" Margin="0,26,0,0" Orientation="Horizontal" Grid.Row="1">
             <HubSection x:Name="statusesSection" Header="我的消息" Height="Auto">
                 <DataTemplate>
                     <Grid>
-                        <ListView ShowsScrollingPlaceholders="True" x:Name="statusesGridView" ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True"/>
+                        <ListView ShowsScrollingPlaceholders="True" x:Name="statusesGridView"
+                                  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"
+                                  Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
             <HubSection Header="提及我的" x:Name="mentionsSection">
                 <DataTemplate>
                     <Grid>
-                        <ListView ShowsScrollingPlaceholders="True" x:Name="mentionsGridView" ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}" Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True"/>
+                        <ListView ShowsScrollingPlaceholders="True" x:Name="mentionsGridView"
+                                  ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}"
+                                  Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection x:Name="moreSection" Header="更多" >
+            <HubSection x:Name="moreSection" Header="更多">
                 <DataTemplate>
                     <Grid Margin="0,-12,0,12">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="240*"/>
-                            <ColumnDefinition Width="85*"/>
+                            <ColumnDefinition Width="240*" />
+                            <ColumnDefinition Width="85*" />
                         </Grid.ColumnDefinitions>
                         <Viewbox x:Name="moreGrid" VerticalAlignment="Top" Margin="0,0,2.5,0">
                             <StackPanel>
-                                <Grid Margin="0" Width="290" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
-                                    <TextBlock TextWrapping="Wrap" Text="私信" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
-                                    <Image Height="64" Source="Assets/message_outline-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Grid Margin="0" Width="290" Height="140" HorizontalAlignment="Left"
+                                      VerticalAlignment="Top">
+                                    <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
+                                    <TextBlock TextWrapping="Wrap" Text="私信" FontFamily="Global User Interface"
+                                               Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                                               Margin="8,0,0,8" FontSize="16" />
+                                    <Image Height="64" Source="Assets/message_outline-512.png" Stretch="Fill"
+                                           Width="64" Margin="0,0,0,12" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
                                 </Grid>
                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                    <Grid x:Name="FavoriteGrid" Tapped="FavoriteGrid_Tapped" Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
-                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
-                                        <TextBlock TextWrapping="Wrap" Text="收藏" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
-                                        <Image Height="64" Source="Assets/bookmark-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Grid x:Name="FavoriteGrid" Tapped="FavoriteGrid_Tapped" Width="140" Height="140"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
+                                        <TextBlock TextWrapping="Wrap" Text="收藏" FontFamily="Global User Interface"
+                                                   Foreground="White" VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16" />
+                                        <Image Height="64" Source="Assets/bookmark-512.png" Stretch="Fill" Width="64"
+                                               Margin="0,0,0,12" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
                                     </Grid>
-                                    <Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" x:Name="TrendsGrid" Tapped="TrendsGrid_Tapped">
-                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
-                                        <TextBlock TextWrapping="Wrap" Text="热门话题" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
-                                        <Image Height="64" Source="Assets/newspaper-512.png" Stretch="Fill" Width="64" Margin="6,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          Margin="10,0,0,0" x:Name="TrendsGrid" Tapped="TrendsGrid_Tapped">
+                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
+                                        <TextBlock TextWrapping="Wrap" Text="热门话题" FontFamily="Global User Interface"
+                                                   Foreground="White" VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16" />
+                                        <Image Height="64" Source="Assets/newspaper-512.png" Stretch="Fill" Width="64"
+                                               Margin="6,0,0,12" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
                                     </Grid>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                    <Grid x:Name="SearchGrid" Tapped="SearchGrid_Tapped" Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
-                                        <TextBlock TextWrapping="Wrap" Text="搜索" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
-                                        <Image Height="64" Source="Assets/search-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Grid x:Name="SearchGrid" Tapped="SearchGrid_Tapped" Width="140" Height="140"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
+                                        <TextBlock TextWrapping="Wrap" Text="搜索" FontFamily="Global User Interface"
+                                                   Foreground="White" VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16" />
+                                        <Image Height="64" Source="Assets/search-512.png" Stretch="Fill" Width="64"
+                                               Margin="0,0,0,12" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
                                     </Grid>
-                                    <Grid x:Name="FindGrid" Tapped="FindGrid_Tapped" Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0">
-                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
-                                        <TextBlock TextWrapping="Wrap" Text="找人" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
-                                        <Image Height="64" Source="Assets/find_user-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Grid x:Name="FindGrid" Tapped="FindGrid_Tapped" Width="140" Height="140"
+                                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0">
+                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
+                                        <TextBlock TextWrapping="Wrap" Text="找人" FontFamily="Global User Interface"
+                                                   Foreground="White" VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16" />
+                                        <Image Height="64" Source="Assets/find_user-512.png" Stretch="Fill" Width="64"
+                                               Margin="0,0,0,12" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
                                     </Grid>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                                     <Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
-                                        <TextBlock TextWrapping="Wrap" Text="个人标签" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
-                                        <Image Height="64" Source="Assets/tag-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
+                                        <TextBlock TextWrapping="Wrap" Text="个人标签" FontFamily="Global User Interface"
+                                                   Foreground="White" VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16" />
+                                        <Image Height="64" Source="Assets/tag-512.png" Stretch="Fill" Width="64"
+                                               Margin="0,0,0,12" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
                                     </Grid>
-                                    <Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0">
-                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0"/>
-                                        <TextBlock TextWrapping="Wrap" Text="设置" FontFamily="Global User Interface" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16"/>
-                                        <Image Height="64" Source="Assets/services-512.png" Stretch="Fill" Width="64" Margin="0,0,0,12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          Margin="10,0,0,0">
+                                        <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
+                                        <TextBlock TextWrapping="Wrap" Text="设置" FontFamily="Global User Interface"
+                                                   Foreground="White" VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16" />
+                                        <Image Height="64" Source="Assets/services-512.png" Stretch="Fill" Width="64"
+                                               Margin="0,0,0,12" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
                                     </Grid>
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
                         <StackPanel Margin="0.5,0,-0.5,0" Grid.Column="1" VerticalAlignment="Top">
-                            <AppBarButton HorizontalAlignment="Stretch" Icon="Forward" Label="" Margin="0" VerticalAlignment="Top" Click="NextButton_Click" FontFamily="Global User Interface"/>
-                            <AppBarButton HorizontalAlignment="Stretch" Icon="Mail" Label="" Margin="0,-10,0,0" VerticalAlignment="Top" Click="InformationButton_Click"/>
-                            <AppBarButton HorizontalAlignment="Stretch" Icon="Help" Label="" Margin="0,-10,0,0" VerticalAlignment="Top" Click="AboutButton_Click"/>
+                            <AppBarButton HorizontalAlignment="Stretch" Icon="Forward" Label="" Margin="0"
+                                          VerticalAlignment="Top" Click="NextButton_Click"
+                                          FontFamily="Global User Interface" />
+                            <AppBarButton HorizontalAlignment="Stretch" Icon="Mail" Label="" Margin="0,-10,0,0"
+                                          VerticalAlignment="Top" Click="InformationButton_Click" />
+                            <AppBarButton HorizontalAlignment="Stretch" Icon="Help" Label="" Margin="0,-10,0,0"
+                                          VerticalAlignment="Top" Click="AboutButton_Click" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
             </HubSection>
         </Hub>
-        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Canvas.ZIndex="10" Margin="0,-28,0,0"/>
+        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Canvas.ZIndex="10"
+                     Margin="0,-28,0,0" />
     </Grid>
 </Page>

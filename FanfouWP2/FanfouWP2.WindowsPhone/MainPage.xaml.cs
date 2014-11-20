@@ -1,56 +1,48 @@
-﻿using FanfouWP.Storage;
-using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Security.Authentication.Web;
+﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using FanfouWP.Storage;
+using FanfouWP2.FanfouAPI;
+using FanfouWP2.Utils;
 
 namespace FanfouWP2
 {
     public sealed partial class MainPage : Page
     {
         public static MainPage Current;
+
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
             FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
 
-            this.Loaded += MainPage_Loaded;
+            Loaded += MainPage_Loaded;
         }
 
-        void ScenarioFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        private void ScenarioFrame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
         }
 
-        /// <summary> 
-        /// Invoked when this page is about to be displayed in a Frame. 
-        /// </summary> 
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter 
-        /// property is typically used to configure the page.</param> 
+        /// <summary>
+        ///     Invoked when this page is about to be displayed in a Frame.
+        /// </summary>
+        /// <param name="e">
+        ///     Event data that describes how this page was reached.  The Parameter
+        ///     property is typically used to configure the page.
+        /// </param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
 
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             if (SettingStorage.Instance.currentUserAuth == null)
             {
-                Utils.NavigationControl.ClearStack(Frame);
-                Frame.Navigate(typeof(LoginPage));
+                NavigationControl.ClearStack(Frame);
+                Frame.Navigate(typeof (LoginPage));
             }
             else
             {
@@ -59,16 +51,16 @@ namespace FanfouWP2
             }
         }
 
-        void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
+        private void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
         {
-            Utils.NavigationControl.ClearStack(Frame);
-            Frame.Navigate(typeof(LoginPage));
+            NavigationControl.ClearStack(Frame);
+            Frame.Navigate(typeof (LoginPage));
         }
 
-        void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
+        private void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
         {
-            Utils.NavigationControl.ClearStack(Frame);
-            Frame.Navigate(typeof(HomePage));
+            NavigationControl.ClearStack(Frame);
+            Frame.Navigate(typeof (HomePage));
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
-using Windows.UI.Xaml.Data;
 using Windows.UI;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
 namespace FanfouWP2.ItemControl.ValueConverter
@@ -22,18 +23,17 @@ namespace FanfouWP2.ItemControl.ValueConverter
         {
             try
             {
-
-                var offset = color.StartsWith("#") ? 1 : 0;
+                int offset = color.StartsWith("#") ? 1 : 0;
 
                 byte a = 0xff;
-                var r = Byte.Parse(color.Substring(0 + offset, 2), NumberStyles.HexNumber);
-                var g = Byte.Parse(color.Substring(2 + offset, 2), NumberStyles.HexNumber);
-                var b = Byte.Parse(color.Substring(4 + offset, 2), NumberStyles.HexNumber);
+                byte r = Byte.Parse(color.Substring(0 + offset, 2), NumberStyles.HexNumber);
+                byte g = Byte.Parse(color.Substring(2 + offset, 2), NumberStyles.HexNumber);
+                byte b = Byte.Parse(color.Substring(4 + offset, 2), NumberStyles.HexNumber);
                 return Color.FromArgb(a, r, g, b);
             }
             catch (Exception exception)
             {
-                System.Diagnostics.Debug.WriteLine(exception.Message);
+                Debug.WriteLine(exception.Message);
                 return Color.FromArgb(0xff, 0x88, 0x88, 0x88);
             }
         }

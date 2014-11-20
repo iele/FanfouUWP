@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace FanfouWP2.FanfouAPI
 {
@@ -12,6 +7,7 @@ namespace FanfouWP2.FanfouAPI
     {
         [DataMember(Name = "request", IsRequired = false)]
         public string request { get; set; }
+
         [DataMember(Name = "error", IsRequired = false)]
         public string error { get; set; }
     }

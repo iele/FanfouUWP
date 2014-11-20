@@ -8,73 +8,90 @@
     xmlns:ItemControl="using:FanfouWP2.ItemControl"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
-            <ItemControl:StatusItemControl  DataContext="{Binding}" Width="{Binding ActualWidth, ElementName=statusesGridView}"
-              Margin="0,3"/>
+            <ItemControl:StatusItemControl DataContext="{Binding}"
+                                           Width="{Binding ActualWidth, ElementName=statusesGridView}"
+                                           Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="FriendItem" Label="解除好友"/>
-                <AppBarButton x:Name="BlackListItem" Label="加入黑名单"/>
-                <AppBarButton x:Name="ImageItem" Label="查看图片流" Click="ImageItem_Click"/>
+                <AppBarButton x:Name="FriendItem" Label="解除好友" />
+                <AppBarButton x:Name="BlackListItem" Label="加入黑名单" />
+                <AppBarButton x:Name="ImageItem" Label="查看图片流" Click="ImageItem_Click" />
             </CommandBar.SecondaryCommands>
-            <AppBarButton x:Name="StatusItem" Icon="AllApps" Label="消息" Click="StatusItem_Click"/>
-            <AppBarButton Icon="Redo" Label="回复" x:Name="ReplyItem" Click="ReplyItem_Click"/>
-            <AppBarButton Icon="MailForward" Label="私信" x:Name="DirectItem"/>
+            <AppBarButton x:Name="StatusItem" Icon="AllApps" Label="消息" Click="StatusItem_Click" />
+            <AppBarButton Icon="Redo" Label="回复" x:Name="ReplyItem" Click="ReplyItem_Click" />
+            <AppBarButton Icon="MailForward" Label="私信" x:Name="DirectItem" />
             <AppBarButton Label="搜索" Icon="Zoom" x:Name="SearchItem" Click="SearchItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid x:Name="LayoutRoot" Background="white">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <!-- 标题面板 -->
 
         <!--TODO: 应将内容放入以下网格-->
-        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Margin="0,-28,0,0"/>
+        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Margin="0,-28,0,0" />
 
         <!--TODO: 应将内容放入以下网格-->
-        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue"/>
+        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" />
         <StackPanel Orientation="Horizontal" Margin="12,12,0,12">
-            <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40" utils:ImageExtensions.CacheUri="{Binding user.profile_image_url}" Margin="0" />
-            <TextBlock Text="{Binding user.screen_name}" FontSize="21.333" VerticalAlignment="Center" Foreground="White" Margin="12,0,0,0" HorizontalAlignment="Center"/>
+            <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
+                   utils:ImageExtensions.CacheUri="{Binding user.profile_image_url}" Margin="0" />
+            <TextBlock Text="{Binding user.screen_name}" FontSize="21.333" VerticalAlignment="Center"
+                       Foreground="White" Margin="12,0,0,0" HorizontalAlignment="Center" />
         </StackPanel>
         <ScrollViewer Margin="0" Grid.Row="1" HorizontalContentAlignment="Center">
             <StackPanel Margin="12,12,12,0">
-                <GridView >
-                    <StackPanel Margin="3,0,3,0"  x:Name="timeline" Orientation="Vertical" Tapped="timeline_Tapped">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top" FontSize="20" Foreground="Gray"/>
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.statuses_count}" VerticalAlignment="Top" FontSize="26.667"/>
+                <GridView>
+                    <StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" Tapped="timeline_Tapped">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
+                                   FontSize="20" Foreground="Gray" />
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                   Text="{Binding user.statuses_count}" VerticalAlignment="Top" FontSize="26.667" />
                     </StackPanel>
-                    <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1" Tapped="favorite_Tapped">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top" FontSize="20" Foreground="Gray"/>
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.favourites_count}" VerticalAlignment="Top" FontSize="26.667"/>
+                    <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
+                                Tapped="favorite_Tapped">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
+                                   FontSize="20" Foreground="Gray" />
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                   Text="{Binding user.favourites_count}" VerticalAlignment="Top" FontSize="26.667" />
                     </StackPanel>
-                    <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1" Tapped="follower_Tapped">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top" FontSize="20" Foreground="Gray"/>
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.followers_count}"  VerticalAlignment="Top" FontSize="26.667"/>
+                    <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
+                                Tapped="follower_Tapped">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
+                                   FontSize="20" Foreground="Gray" />
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                   Text="{Binding user.followers_count}" VerticalAlignment="Top" FontSize="26.667" />
                     </StackPanel>
-                    <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1" Tapped="friend_Tapped">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top" FontSize="20" Foreground="Gray" />
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding user.friends_count}"  VerticalAlignment="Top" FontSize="26.667"/>
+                    <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
+                                Tapped="friend_Tapped">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
+                                   FontSize="20" Foreground="Gray" />
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                   Text="{Binding user.friends_count}" VerticalAlignment="Top" FontSize="26.667" />
                     </StackPanel>
                 </GridView>
 
                 <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" />
                 </StackPanel>
-                <TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="18" Margin="0,12,0,0"/>
-                <TextBlock TextWrapping="Wrap" Text="{Binding user.url}" FontSize="16" Margin="0,12,0,0"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="18" Margin="0,12,0,0" />
+                <TextBlock TextWrapping="Wrap" Text="{Binding user.url}" FontSize="16" Margin="0,12,0,0" />
                 <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
-                    <TextBlock TextWrapping="Wrap" Text="{Binding user.location}" Margin="0,0,-0.167,0" FontSize="16" HorizontalAlignment="Left"/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding user.gender}" FontSize="16" Margin="6,0,-0.167,0"  HorizontalAlignment="Left"/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding user.location}" Margin="0,0,-0.167,0" FontSize="16"
+                               HorizontalAlignment="Left" />
+                    <TextBlock TextWrapping="Wrap" Text="{Binding user.gender}" FontSize="16" Margin="6,0,-0.167,0"
+                               HorizontalAlignment="Left" />
                 </StackPanel>
 
             </StackPanel>

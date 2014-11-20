@@ -1,42 +1,181 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
-using System.Runtime.Serialization.Json;
-using System.IO;
-using System.Collections.ObjectModel;
 using Windows.Storage;
-using Windows.UI.Xaml.Media.Imaging;
 using FanfouWP.Storage;
 
 namespace FanfouWP2.FanfouAPI
 {
     public class FanfouAPI
     {
-        public string oauthToken;
-        public string oauthSecret;
+        public delegate void AccountNotificationFailedHandler(object sender, FailedEventArgs e);
 
-        public string username;
-        public string password;
+        public delegate void AccountNotificationSuccessHandler(object sender, EventArgs e);
 
-        public User currentUser;
-        public void setUserAuth(UserAuth auth)
-        {
-            this.oauthToken = auth.oauthToken;
-            this.oauthSecret = auth.oauthSecret;
-            this.username = auth.username;
-            this.password = auth.password;
-        }
+        public delegate void AccountUpdateProfileFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void AccountUpdateProfileSuccessHandler(object sender, EventArgs e);
+
+        public delegate void ContextTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void ContextTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void DirectMessageConversationFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void DirectMessageConversationListFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void DirectMessageConversationListSuccessHandler(object sender, EventArgs e);
+
+        public delegate void DirectMessageConversationSuccessHandler(object sender, EventArgs e);
+
+        public delegate void DirectMessageNewFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void DirectMessageNewSuccessHandler(object sender, EventArgs e);
+
+        public delegate void FavoritesCreateFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FavoritesCreateSuccessHandler(object sender, EventArgs e);
+
+        public delegate void FavoritesDestroyFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FavoritesDestroySuccessHandler(object sender, EventArgs e);
+
+        public delegate void FavoritesFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FavoritesSuccessHandler(object sender, EventArgs e);
+
+        public delegate void FriendshipsAcceptFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FriendshipsAcceptSuccessHandler(object sender, EventArgs e);
+
+        public delegate void FriendshipsCreateFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FriendshipsCreateSuccessHandler(object sender, EventArgs e);
+
+        public delegate void FriendshipsDenyFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FriendshipsDenySuccessHandler(object sender, EventArgs e);
+
+        public delegate void FriendshipsDestroyFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FriendshipsDestroySuccessHandler(object sender, EventArgs e);
+
+        public delegate void FriendshipsExistsFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FriendshipsExistsSuccessHandler(object sender, EventArgs e);
+
+        public delegate void FriendshipsRequestsFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void FriendshipsRequestsSuccessHandler(object sender, EventArgs e);
+
+        public delegate void HomeTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void HomeTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void LoginFailedHandler(object sender, FailedEventArgs e);
 
         public delegate void LoginSuccessHandler(object sender, EventArgs e);
-        public delegate void LoginFailedHandler(object sender, FailedEventArgs e);
-        public delegate void VerifyCredentialsSuccessHandler(object sender, EventArgs e);
+
+        public delegate void MentionTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void MentionTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void PhotosUploadFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void PhotosUploadSuccessHandler(object sender, EventArgs e);
+
+        public delegate void PhotosUserTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void PhotosUserTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void PublicTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void PublicTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void SavedSearchListFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void SavedSearchListSuccessHandler(object sender, EventArgs e);
+
+        public delegate void SearchTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void SearchTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void SearchUserFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void SearchUserSuccessHandler(object sender, EventArgs e);
+
+        public delegate void SearchUserTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void SearchUserTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void StatusDestroyFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void StatusDestroySuccessHandler(object sender, EventArgs e);
+
+        public delegate void StatusUpdateFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void StatusUpdateSuccessHandler(object sender, EventArgs e);
+
+        public delegate void TagListFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void TagListSuccessHandler(object sender, EventArgs e);
+
+        public delegate void TaggedFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void TaggedSuccessHandler(object sender, EventArgs e);
+
+        public delegate void TrendsListFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void TrendsListSuccessHandler(object sender, EventArgs e);
+
+        public delegate void UserTimelineFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void UserTimelineSuccessHandler(object sender, EventArgs e);
+
+        public delegate void UsersFollowersFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void UsersFollowersSuccessHandler(object sender, EventArgs e);
+
+        public delegate void UsersFriendsFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void UsersFriendsSuccessHandler(object sender, EventArgs e);
+
+        public delegate void UsersShowFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void UsersShowSuccessHandler(object sender, EventArgs e);
+
         public delegate void VerifyCredentialsFailedHandler(object sender, FailedEventArgs e);
-        public delegate void AccountNotificationSuccessHandler(object sender, EventArgs e);
-        public delegate void AccountNotificationFailedHandler(object sender, FailedEventArgs e);
-        public delegate void AccountUpdateProfileSuccessHandler(object sender, EventArgs e);
-        public delegate void AccountUpdateProfileFailedHandler(object sender, FailedEventArgs e);
+
+        public delegate void VerifyCredentialsSuccessHandler(object sender, EventArgs e);
+
+        private static FanfouAPI instance;
+        public User currentUser;
+
+        public string oauthSecret;
+        public string oauthToken;
+
+        public string password;
+        public string username;
+
+        public static FanfouAPI Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new FanfouAPI();
+                }
+                return instance;
+            }
+            set { instance = value; }
+        }
+
+        public void setUserAuth(UserAuth auth)
+        {
+            oauthToken = auth.oauthToken;
+            oauthSecret = auth.oauthSecret;
+            username = auth.username;
+            password = auth.password;
+        }
 
         public event LoginSuccessHandler LoginSuccess;
         public event LoginFailedHandler LoginFailed;
@@ -47,26 +186,10 @@ namespace FanfouWP2.FanfouAPI
         public event AccountUpdateProfileSuccessHandler AccountUpdateProfileSuccess;
         public event AccountUpdateProfileFailedHandler AccountUpdateProfileFailed;
 
-        public delegate void StatusUpdateSuccessHandler(object sender, EventArgs e);
-        public delegate void StatusUpdateFailedHandler(object sender, FailedEventArgs e);
-        public delegate void StatusDestroySuccessHandler(object sender, EventArgs e);
-        public delegate void StatusDestroyFailedHandler(object sender, FailedEventArgs e);
-
         public event StatusUpdateSuccessHandler StatusUpdateSuccess;
         public event StatusUpdateFailedHandler StatusUpdateFailed;
         public event StatusDestroySuccessHandler StatusDestroySuccess;
         public event StatusDestroyFailedHandler StatusDestroyFailed;
-
-        public delegate void HomeTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void HomeTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void PublicTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void PublicTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void MentionTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void MentionTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void UserTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void UserTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void ContextTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void ContextTimelineFailedHandler(object sender, FailedEventArgs e);
 
         public event HomeTimelineSuccessHandler HomeTimelineSuccess;
         public event HomeTimelineFailedHandler HomeTimelineFailed;
@@ -79,26 +202,12 @@ namespace FanfouWP2.FanfouAPI
         public event ContextTimelineSuccessHandler ContextTimelineSuccess;
         public event ContextTimelineFailedHandler ContextTimelineFailed;
 
-        public delegate void FavoritesCreateSuccessHandler(object sender, EventArgs e);
-        public delegate void FavoritesCreateFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FavoritesDestroySuccessHandler(object sender, EventArgs e);
-        public delegate void FavoritesDestroyFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FavoritesSuccessHandler(object sender, EventArgs e);
-        public delegate void FavoritesFailedHandler(object sender, FailedEventArgs e);
-
         public event FavoritesCreateSuccessHandler FavoritesCreateSuccess;
         public event FavoritesCreateFailedHandler FavoritesCreateFailed;
         public event FavoritesDestroySuccessHandler FavoritesDestroySuccess;
         public event FavoritesDestroyFailedHandler FavoritesDestroyFailed;
         public event FavoritesSuccessHandler FavoritesSuccess;
         public event FavoritesFailedHandler FavoritesFailed;
-
-        public delegate void SearchTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void SearchTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void SearchUserTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void SearchUserTimelineFailedHandler(object sender, FailedEventArgs e);
-        public delegate void SearchUserSuccessHandler(object sender, EventArgs e);
-        public delegate void SearchUserFailedHandler(object sender, FailedEventArgs e);
 
         public event SearchTimelineSuccessHandler SearchTimelineSuccess;
         public event SearchTimelineFailedHandler SearchTimelineFailed;
@@ -107,28 +216,13 @@ namespace FanfouWP2.FanfouAPI
         public event SearchUserSuccessHandler SearchUserSuccess;
         public event SearchUserFailedHandler SearchUserFailed;
 
-        public delegate void TrendsListSuccessHandler(object sender, EventArgs e);
-        public delegate void TrendsListFailedHandler(object sender, FailedEventArgs e);
-
         public event TrendsListSuccessHandler TrendsListSuccess;
         public event TrendsListFailedHandler TrendsListFailed;
-
-        public delegate void TagListSuccessHandler(object sender, EventArgs e);
-        public delegate void TagListFailedHandler(object sender, FailedEventArgs e);
-        public delegate void TaggedSuccessHandler(object sender, EventArgs e);
-        public delegate void TaggedFailedHandler(object sender, FailedEventArgs e);
 
         public event TagListSuccessHandler TagListSuccess;
         public event TagListFailedHandler TagListFailed;
         public event TaggedSuccessHandler TaggedSuccess;
         public event TaggedFailedHandler TaggedFailed;
-
-        public delegate void UsersShowSuccessHandler(object sender, EventArgs e);
-        public delegate void UsersShowFailedHandler(object sender, FailedEventArgs e);
-        public delegate void UsersFollowersSuccessHandler(object sender, EventArgs e);
-        public delegate void UsersFollowersFailedHandler(object sender, FailedEventArgs e);
-        public delegate void UsersFriendsSuccessHandler(object sender, EventArgs e);
-        public delegate void UsersFriendsFailedHandler(object sender, FailedEventArgs e);
 
         public event UsersShowSuccessHandler UsersShowSuccess;
         public event UsersShowFailedHandler UsersShowFailed;
@@ -137,28 +231,10 @@ namespace FanfouWP2.FanfouAPI
         public event UsersFriendsSuccessHandler UsersFriendsSuccess;
         public event UsersFriendsFailedHandler UsersFriendsFailed;
 
-        public delegate void PhotosUploadSuccessHandler(object sender, EventArgs e);
-        public delegate void PhotosUploadFailedHandler(object sender, FailedEventArgs e);
-        public delegate void PhotosUserTimelineSuccessHandler(object sender, EventArgs e);
-        public delegate void PhotosUserTimelineFailedHandler(object sender, FailedEventArgs e);
-
         public event PhotosUploadSuccessHandler PhotosUploadSuccess;
         public event PhotosUploadFailedHandler PhotosUploadFailed;
         public event PhotosUserTimelineSuccessHandler PhotosUserTimelineSuccess;
         public event PhotosUserTimelineFailedHandler PhotosUserTimelineFailed;
-
-        public delegate void FriendshipsCreateSuccessHandler(object sender, EventArgs e);
-        public delegate void FriendshipsCreateFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FriendshipsDestroySuccessHandler(object sender, EventArgs e);
-        public delegate void FriendshipsDestroyFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FriendshipsRequestsSuccessHandler(object sender, EventArgs e);
-        public delegate void FriendshipsRequestsFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FriendshipsAcceptSuccessHandler(object sender, EventArgs e);
-        public delegate void FriendshipsAcceptFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FriendshipsDenySuccessHandler(object sender, EventArgs e);
-        public delegate void FriendshipsDenyFailedHandler(object sender, FailedEventArgs e);
-        public delegate void FriendshipsExistsSuccessHandler(object sender, EventArgs e);
-        public delegate void FriendshipsExistsFailedHandler(object sender, FailedEventArgs e);
 
         public event FriendshipsCreateSuccessHandler FriendshipsCreateSuccess;
         public event FriendshipsCreateFailedHandler FriendshipsCreateFailed;
@@ -173,13 +249,6 @@ namespace FanfouWP2.FanfouAPI
         public event FriendshipsExistsSuccessHandler FriendshipsExistsSuccess;
         public event FriendshipsExistsFailedHandler FriendshipsExistsFailed;
 
-        public delegate void DirectMessageConversationListSuccessHandler(object sender, EventArgs e);
-        public delegate void DirectMessageConversationListFailedHandler(object sender, FailedEventArgs e);
-        public delegate void DirectMessageConversationSuccessHandler(object sender, EventArgs e);
-        public delegate void DirectMessageConversationFailedHandler(object sender, FailedEventArgs e);
-        public delegate void DirectMessageNewSuccessHandler(object sender, EventArgs e);
-        public delegate void DirectMessageNewFailedHandler(object sender, FailedEventArgs e);
-
         public event DirectMessageConversationListSuccessHandler DirectMessageConversationListSuccess;
         public event DirectMessageConversationListFailedHandler DirectMessageConversationListFailed;
         public event DirectMessageConversationSuccessHandler DirectMessageConversationSuccess;
@@ -187,55 +256,29 @@ namespace FanfouWP2.FanfouAPI
         public event DirectMessageNewSuccessHandler DirectMessageNewSuccess;
         public event DirectMessageNewFailedHandler DirectMessageNewFailed;
 
-        public delegate void SavedSearchListSuccessHandler(object sender, EventArgs e);
-        public delegate void SavedSearchListFailedHandler(object sender, FailedEventArgs e);
-
         public event SavedSearchListSuccessHandler SavedSearchListSuccess;
         public event SavedSearchListFailedHandler SavedSearchListFailed;
 
-
-        private static FanfouAPI instance;
-        public static FanfouAPI Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new FanfouAPI();
-                }
-                return instance;
-            }
-            set
-            {
-                instance = value;
-            }
-        }
-        public FanfouAPI()
-        {
-
-        }
 
         private RestClient GetClient()
         {
             if (oauthToken != null && oauthSecret != null)
             {
-                return new RestClient(FanfouConsts.API_URL, FanfouConsts.CONSUMER_KEY, FanfouConsts.CONSUMER_SECRET, oauthToken, oauthSecret);
+                return new RestClient(FanfouConsts.API_URL, FanfouConsts.CONSUMER_KEY, FanfouConsts.CONSUMER_SECRET,
+                    oauthToken, oauthSecret);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         #region account
+
         public void AccountNotification()
         {
-
         }
 
-        public void AccountUpdateProfile(string url = "", string location = "", string description = "", string name = "", string email = "")
+        public void AccountUpdateProfile(string url = "", string location = "", string description = "",
+            string name = "", string email = "")
         {
-
         }
 
         public async void Login(string username, string password)
@@ -245,11 +288,12 @@ namespace FanfouWP2.FanfouAPI
 
             try
             {
-                var client = new RestClient(FanfouConsts.BASE_URL, FanfouConsts.CONSUMER_KEY, FanfouConsts.CONSUMER_SECRET);
+                var client = new RestClient(FanfouConsts.BASE_URL, FanfouConsts.CONSUMER_KEY,
+                    FanfouConsts.CONSUMER_SECRET);
                 await client.Login(FanfouConsts.ACCESS_TOKEN, username, password);
 
-                this.oauthToken = client.token;
-                this.oauthSecret = client.tokenSecret;
+                oauthToken = client.token;
+                oauthSecret = client.tokenSecret;
 
                 if (LoginSuccess != null)
                     LoginSuccess(this, new EventArgs());
@@ -264,21 +308,22 @@ namespace FanfouWP2.FanfouAPI
 
         public void Logout()
         {
-            this.setUserAuth(new UserAuth());
-            this.currentUser = null;
+            setUserAuth(new UserAuth());
+            currentUser = null;
             SettingStorage.Instance.currentUserAuth = null;
         }
+
         public async void VerifyCredentials()
         {
             try
             {
-                var result = await GetClient().GetRequestObject<User>(FanfouConsts.VERIFY_CREDENTIALS);
+                User result = await GetClient().GetRequestObject<User>(FanfouConsts.VERIFY_CREDENTIALS);
                 currentUser = result;
                 var ua = new UserAuth();
-                ua.oauthToken = this.oauthToken;
-                ua.oauthSecret = this.oauthSecret;
-                ua.username = this.username;
-                ua.password = this.password;
+                ua.oauthToken = oauthToken;
+                ua.oauthSecret = oauthSecret;
+                ua.username = username;
+                ua.password = password;
                 SettingStorage.Instance.currentUserAuth = ua;
 
                 if (VerifyCredentialsSuccess != null)
@@ -292,12 +337,15 @@ namespace FanfouWP2.FanfouAPI
         }
 
         #endregion
+
         #region status
-        public async void StatusUpdate(string status, string in_reply_to_status_id = "", string in_reply_to_user_id = "", string repost_status_id = "", string location = "")
+
+        public async void StatusUpdate(string status, string in_reply_to_status_id = "", string in_reply_to_user_id = "",
+            string repost_status_id = "", string location = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("status", status);
                 if (in_reply_to_status_id != "")
@@ -309,7 +357,7 @@ namespace FanfouWP2.FanfouAPI
                 if (location != "")
                     parameters.Add("location", location);
 
-                var result = await client.PostRequestObject<Status>(FanfouConsts.STATUS_UPDATE, parameters);
+                Status result = await client.PostRequestObject<Status>(FanfouConsts.STATUS_UPDATE, parameters);
                 if (StatusUpdateSuccess != null)
                     StatusUpdateSuccess(result, new EventArgs());
             }
@@ -323,18 +371,18 @@ namespace FanfouWP2.FanfouAPI
 
         public void StatusDestroy(string id)
         {
-
         }
 
         public async void StatusContextTimeline(string id)
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
 
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUSES_CONTEXT_TIMELINE, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUSES_CONTEXT_TIMELINE, parameters);
                 if (ContextTimelineSuccess != null)
                     ContextTimelineSuccess(result, new EventArgs());
             }
@@ -345,11 +393,12 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void StatusUserTimeline(string id, int count, int page = 0, string since_id = "", string max_id = "")
+        public async void StatusUserTimeline(string id, int count, int page = 0, string since_id = "",
+            string max_id = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
                 parameters.Add("count", count.ToString());
@@ -360,7 +409,8 @@ namespace FanfouWP2.FanfouAPI
                 if (max_id != "")
                     parameters.Add("max_id", max_id);
 
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_USER_TIMELINE, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_USER_TIMELINE, parameters);
                 if (UserTimelineSuccess != null)
                     UserTimelineSuccess(result, new EventArgs());
             }
@@ -370,11 +420,13 @@ namespace FanfouWP2.FanfouAPI
                     UserTimelineFailed(this, new FailedEventArgs());
             }
         }
-        public async void StatusHomeTimeline(int count, int page = 0, string id = "", string since_id = "", string max_id = "")
+
+        public async void StatusHomeTimeline(int count, int page = 0, string id = "", string since_id = "",
+            string max_id = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("count", count.ToString());
                 if (page > 0)
@@ -386,7 +438,8 @@ namespace FanfouWP2.FanfouAPI
                 if (max_id != "")
                     parameters.Add("max_id", max_id);
 
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_HOME_TIMELINE, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_HOME_TIMELINE, parameters);
                 if (HomeTimelineSuccess != null)
                     HomeTimelineSuccess(result, new EventArgs());
             }
@@ -401,7 +454,7 @@ namespace FanfouWP2.FanfouAPI
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("count", count.ToString());
                 if (page > 0)
@@ -411,7 +464,8 @@ namespace FanfouWP2.FanfouAPI
                 if (max_id != "")
                     parameters.Add("max_id", max_id);
 
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_PUBLIC_TIMELINE, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_PUBLIC_TIMELINE, parameters);
                 if (PublicTimelineSuccess != null)
                     PublicTimelineSuccess(result, new EventArgs());
             }
@@ -421,11 +475,12 @@ namespace FanfouWP2.FanfouAPI
                     PublicTimelineFailed(this, new FailedEventArgs());
             }
         }
+
         public async void StatusMentionTimeline(int count, int page = 0, string since_id = "", string max_id = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("count", count.ToString());
                 if (page > 0)
@@ -435,7 +490,8 @@ namespace FanfouWP2.FanfouAPI
                 if (max_id != "")
                     parameters.Add("max_id", max_id);
 
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_MENTION_TIMELINE, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_MENTION_TIMELINE, parameters);
                 if (MentionTimelineSuccess != null)
                     MentionTimelineSuccess(result, new EventArgs());
             }
@@ -445,20 +501,23 @@ namespace FanfouWP2.FanfouAPI
                     MentionTimelineFailed(this, new FailedEventArgs());
             }
         }
+
         #endregion
+
         #region favorite
 
         public async void FavoritesId(string id, int count, int page = 0)
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
                 if (page > 0)
                     parameters.Add("page", page);
                 parameters.Add("count", count.ToString());
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.FAVORITES_ID, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.FAVORITES_ID, parameters);
                 if (FavoritesSuccess != null)
                     FavoritesSuccess(result, new EventArgs());
             }
@@ -468,14 +527,18 @@ namespace FanfouWP2.FanfouAPI
                     FavoritesFailed(this, new FailedEventArgs());
             }
         }
+
         public async void FavoritesCreate(string id)
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
-                var result = await client.PostRequestObject<Status>(FanfouConsts.FAVORITES_CREATE_ID + ":" + id + ".json", parameters);
+                Status result =
+                    await
+                        client.PostRequestObject<Status>(FanfouConsts.FAVORITES_CREATE_ID + ":" + id + ".json",
+                            parameters);
                 if (FavoritesCreateSuccess != null)
                     FavoritesCreateSuccess(result, new EventArgs());
             }
@@ -490,10 +553,11 @@ namespace FanfouWP2.FanfouAPI
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
-                var result = await client.PostRequestObject<Status>(FanfouConsts.FAVORITES_DESTROY_ID + id + ".json", parameters);
+                Status result =
+                    await client.PostRequestObject<Status>(FanfouConsts.FAVORITES_DESTROY_ID + id + ".json", parameters);
                 if (FavoritesDestroySuccess != null)
                     FavoritesDestroySuccess(result, new EventArgs());
             }
@@ -503,13 +567,16 @@ namespace FanfouWP2.FanfouAPI
                     FavoritesDestroyFailed(this, new FailedEventArgs());
             }
         }
+
         #endregion
+
         #region search
+
         public async void SearchTimeline(string q, int count = 60, string since_id = "", string max_id = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("q", q);
                 parameters.Add("count", count.ToString());
@@ -517,7 +584,8 @@ namespace FanfouWP2.FanfouAPI
                     parameters.Add("since_id", since_id);
                 if (max_id != "")
                     parameters.Add("max_id", max_id);
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_PUBLIC_TIMELINE, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_PUBLIC_TIMELINE, parameters);
                 if (SearchTimelineSuccess != null)
                     SearchTimelineSuccess(result, new EventArgs());
             }
@@ -528,11 +596,12 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-        public async void SearchUserTimeline(string q, string id, int count = 60, string since_id = "", string max_id = "")
+        public async void SearchUserTimeline(string q, string id, int count = 60, string since_id = "",
+            string max_id = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("q", q);
                 parameters.Add("id", id);
@@ -540,7 +609,9 @@ namespace FanfouWP2.FanfouAPI
                 if (since_id != "")
                     parameters.Add("since_id", since_id);
                 if (max_id != "")
-                    parameters.Add("max_id", max_id); var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_USER_TIMELINE, parameters);
+                    parameters.Add("max_id", max_id);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.SEARCH_USER_TIMELINE, parameters);
                 if (SearchUserTimelineSuccess != null)
                     SearchUserTimelineSuccess(result, new EventArgs());
             }
@@ -550,16 +621,17 @@ namespace FanfouWP2.FanfouAPI
                     SearchUserTimelineFailed(this, new FailedEventArgs());
             }
         }
+
         public async void SearchUser(string q, int count = 60, int page = 1)
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("q", q);
                 parameters.Add("count", count.ToString());
                 parameters.Add("page", page.ToString());
-                var result = await client.GetRequestObject<UserList>(FanfouConsts.SEARCH_USER, parameters);
+                UserList result = await client.GetRequestObject<UserList>(FanfouConsts.SEARCH_USER, parameters);
                 if (SearchUserSuccess != null)
                     SearchUserSuccess(result, new EventArgs());
             }
@@ -574,9 +646,9 @@ namespace FanfouWP2.FanfouAPI
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
-                var result = await client.GetRequestObject<TrendsList>(FanfouConsts.TRENDS_LIST, parameters);
+                TrendsList result = await client.GetRequestObject<TrendsList>(FanfouConsts.TRENDS_LIST, parameters);
                 if (TrendsListSuccess != null)
                     TrendsListSuccess(result, new EventArgs());
             }
@@ -589,28 +661,28 @@ namespace FanfouWP2.FanfouAPI
 
         public void TaggedList(string id)
         {
-
         }
 
         public void Tagged(string tag)
         {
-
         }
 
         public void SavedSearchList()
         {
-
         }
+
         #endregion
+
         #region user
+
         public async void UsersShow(string id)
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
-                var result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_SHOW, parameters);
+                List<User> result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_SHOW, parameters);
                 if (UsersShowSuccess != null)
                     UsersShowSuccess(result, new EventArgs());
             }
@@ -620,17 +692,19 @@ namespace FanfouWP2.FanfouAPI
                     UsersShowFailed(this, new FailedEventArgs());
             }
         }
+
         public async void UsersFollowers(string id, int count = 60, int page = 0)
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
                 if (page > 0)
                     parameters.Add("page", page);
                 parameters.Add("count", count.ToString());
-                var result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_FOLLOWERS, parameters);
+                List<User> result =
+                    await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_FOLLOWERS, parameters);
                 if (UsersFollowersSuccess != null)
                     UsersFollowersSuccess(result, new EventArgs());
             }
@@ -645,13 +719,14 @@ namespace FanfouWP2.FanfouAPI
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
                 if (page > 0)
                     parameters.Add("page", page);
                 parameters.Add("count", count.ToString());
-                var result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_FRIENDS, parameters);
+                List<User> result =
+                    await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_FRIENDS, parameters);
                 if (UsersFriendsSuccess != null)
                     UsersFriendsSuccess(result, new EventArgs());
             }
@@ -661,19 +736,21 @@ namespace FanfouWP2.FanfouAPI
                     UsersFriendsFailed(this, new FailedEventArgs());
             }
         }
+
         #endregion
+
         #region friendship
+
         public void FriendshipCreate(string id)
         {
-
         }
+
         public void FriendshipDestroy(string id)
         {
-
         }
+
         public void FriendshipRequests(int page = 0)
         {
-
         }
 
         public void FriendshipAccept(string id)
@@ -682,19 +759,22 @@ namespace FanfouWP2.FanfouAPI
 
         public void FriendshipDeny(string id)
         {
-
         }
+
         public void FriendshipExists(string user_a, string user_b)
         {
-
         }
+
         #endregion
+
         #region photo
-        public async void PhotosUserTimeline(string id, int count, int page = 0, string since_id = "", string max_id = "")
+
+        public async void PhotosUserTimeline(string id, int count, int page = 0, string since_id = "",
+            string max_id = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
                 parameters.Add("count", count.ToString());
@@ -705,7 +785,8 @@ namespace FanfouWP2.FanfouAPI
                 if (max_id != "")
                     parameters.Add("max_id", max_id);
 
-                var result = await client.GetRequestObjectCollection<Status>(FanfouConsts.PHOTOS_USER_TIMELINE, parameters);
+                List<Status> result =
+                    await client.GetRequestObjectCollection<Status>(FanfouConsts.PHOTOS_USER_TIMELINE, parameters);
                 if (PhotosUserTimelineSuccess != null)
                     PhotosUserTimelineSuccess(result, new EventArgs());
             }
@@ -715,17 +796,19 @@ namespace FanfouWP2.FanfouAPI
                     PhotosUserTimelineFailed(this, new FailedEventArgs());
             }
         }
+
         public async void PhotoUpload(string status, StorageFile photo, string location = "")
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("status", status);
                 if (location != "")
                     parameters.Add("location", location);
 
-                var result = await client.PostRequestWithFile<Status>(FanfouConsts.PHOTOS_UPLOAD, parameters, "photo", photo);
+                Status result =
+                    await client.PostRequestWithFile<Status>(FanfouConsts.PHOTOS_UPLOAD, parameters, "photo", photo);
                 if (PhotosUploadSuccess != null)
                     PhotosUploadSuccess(result, new EventArgs());
             }
@@ -736,20 +819,24 @@ namespace FanfouWP2.FanfouAPI
             }
         }
 
-
         #endregion
+
         #region direct
+
         public async void DirectMessagesConversationList(int page = 0, int count = 20)
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("count", count.ToString());
                 if (page > 0)
                     parameters.Add("page", page);
 
-                var result = await client.GetRequestObjectCollection<DirectMessageItem>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION_LIST, parameters);
+                List<DirectMessageItem> result =
+                    await
+                        client.GetRequestObjectCollection<DirectMessageItem>(
+                            FanfouConsts.DIRECT_MESSAGES_CONVERSATION_LIST, parameters);
                 if (DirectMessageConversationListSuccess != null)
                     DirectMessageConversationListSuccess(result, new EventArgs());
             }
@@ -764,14 +851,17 @@ namespace FanfouWP2.FanfouAPI
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("id", id);
                 parameters.Add("count", count.ToString());
                 if (page > 0)
                     parameters.Add("page", page);
 
-                var result = await client.GetRequestObjectCollection<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION, parameters);
+                List<DirectMessage> result =
+                    await
+                        client.GetRequestObjectCollection<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_CONVERSATION,
+                            parameters);
                 if (DirectMessageConversationSuccess != null)
                     DirectMessageConversationSuccess(result, new EventArgs());
             }
@@ -786,14 +876,15 @@ namespace FanfouWP2.FanfouAPI
         {
             try
             {
-                var client = GetClient();
+                RestClient client = GetClient();
                 var parameters = new Parameters();
                 parameters.Add("user", user);
                 parameters.Add("text", text);
                 if (in_reply_to_id != "")
                     parameters.Add("in_reply_to_id", in_reply_to_id);
 
-                var result = await client.PostRequestObject<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_NEW, parameters);
+                DirectMessage result =
+                    await client.PostRequestObject<DirectMessage>(FanfouConsts.DIRECT_MESSAGES_NEW, parameters);
                 if (DirectMessageNewSuccess != null)
                     DirectMessageNewSuccess(result, new EventArgs());
             }
@@ -803,8 +894,7 @@ namespace FanfouWP2.FanfouAPI
                     DirectMessageNewFailed(this, new FailedEventArgs());
             }
         }
-        #endregion
 
+        #endregion
     }
 }
-

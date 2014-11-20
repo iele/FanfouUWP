@@ -9,17 +9,19 @@ using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
+using Buffer = Windows.Storage.Streams.Buffer;
 
 namespace FanfouWP2.FanfouAPI
 {
     public class RestClient
     {
-        private string baseUrl;
-        private string consumer;
-        private string secret;
-        public string token { get; private set; }
-        public string tokenSecret { get; private set; }
-        public RestClient(string baseUrl, string consumer = "", string secret = "", string token = "", string tokenSecret = "")
+        private readonly string baseUrl;
+        private readonly string consumer;
+        private readonly HttpBaseProtocolFilter protocolFilter = new HttpBaseProtocolFilter();
+        private readonly string secret;
+
+        public RestClient(string baseUrl, string consumer = "", string secret = "", string token = "",
+            string tokenSecret = "")
         {
             this.baseUrl = baseUrl;
             this.consumer = consumer;
@@ -30,11 +32,12 @@ namespace FanfouWP2.FanfouAPI
             protocolFilter.AllowUI = false;
         }
 
-        private HttpBaseProtocolFilter protocolFilter = new HttpBaseProtocolFilter();
+        public string token { get; private set; }
+        public string tokenSecret { get; private set; }
 
         private string generateXAuthHeader(string url, string username, string password)
         {
-            Parameters oParameters = new Parameters();
+            var oParameters = new Parameters();
 
             oParameters.Add("x_auth_username", username);
             oParameters.Add("x_auth_password", password);
@@ -53,12 +56,14 @@ namespace FanfouWP2.FanfouAPI
             {
                 xauth += oParameters.Items[i].Key + "=\"" + oParameters.Items[i].Value + '"' + ",";
             }
-            xauth += oParameters.Items[oParameters.Items.Count - 1].Key + "=\"" + oParameters.Items[oParameters.Items.Count - 1].Value + '"';
+            xauth += oParameters.Items[oParameters.Items.Count - 1].Key + "=\"" +
+                     oParameters.Items[oParameters.Items.Count - 1].Value + '"';
             return xauth;
         }
+
         private string generateOAuthHeader(Parameters parameters, string url, string method)
         {
-            Parameters oParameters = new Parameters();
+            var oParameters = new Parameters();
             oParameters.Add("oauth_consumer_key", consumer);
             oParameters.Add("oauth_token", token);
             oParameters.Add("oauth_signature_method", "HMAC-SHA1");
@@ -69,7 +74,8 @@ namespace FanfouWP2.FanfouAPI
             foreach (var p in parameters.Items)
                 oParameters.Add(p.Key, p.Value);
 
-            oParameters.Add("oauth_signature", XAuthHelper.GenerateSignature(secret, tokenSecret, method, baseUrl + "/" + url, oParameters));
+            oParameters.Add("oauth_signature",
+                XAuthHelper.GenerateSignature(secret, tokenSecret, method, baseUrl + "/" + url, oParameters));
 
             foreach (var p in parameters.Items)
                 oParameters.Items.Remove(p);
@@ -79,23 +85,25 @@ namespace FanfouWP2.FanfouAPI
             {
                 oauth += oParameters.Items[i].Key + "=\"" + oParameters.Items[i].Value + '"' + ",";
             }
-            oauth += oParameters.Items[oParameters.Items.Count - 1].Key + "=\"" + oParameters.Items[oParameters.Items.Count - 1].Value + '"';
+            oauth += oParameters.Items[oParameters.Items.Count - 1].Key + "=\"" +
+                     oParameters.Items[oParameters.Items.Count - 1].Value + '"';
             return oauth;
         }
+
         public async Task Login(string url, string username, string password)
         {
             using (var client = new HttpClient(protocolFilter))
             {
-                var oauth = generateXAuthHeader(url, username, password);
+                string oauth = generateXAuthHeader(url, username, password);
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
-                using (var response = await client.GetAsync(new Uri(baseUrl + "/" + url)))
+                using (HttpResponseMessage response = await client.GetAsync(new Uri(baseUrl + "/" + url)))
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    string result = await response.Content.ReadAsStringAsync();
                     response.EnsureSuccessStatusCode();
-                    string[] content = result.Split(new char[] { '=', '&' });
-                    this.token = content[1];
-                    this.tokenSecret = content[3];
+                    string[] content = result.Split(new[] {'=', '&'});
+                    token = content[1];
+                    tokenSecret = content[3];
                 }
             }
         }
@@ -104,9 +112,9 @@ namespace FanfouWP2.FanfouAPI
         {
             using (var client = new HttpClient(protocolFilter))
             {
-                var urlStr = baseUrl + "/" + url;
+                string urlStr = baseUrl + "/" + url;
 
-                var str = "?";
+                string str = "?";
                 if (parameters != null)
                 {
                     foreach (var i in parameters.Items)
@@ -119,21 +127,22 @@ namespace FanfouWP2.FanfouAPI
                     parameters = new Parameters();
                 }
 
-                var oauth = generateOAuthHeader(parameters, url, "GET");
+                string oauth = generateOAuthHeader(parameters, url, "GET");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
                 str = str.Substring(0, str.Length - 1);
-                using (var response = await client.GetAsync(new Uri(urlStr + str)))
+                using (HttpResponseMessage response = await client.GetAsync(new Uri(urlStr + str)))
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    string result = await response.Content.ReadAsStringAsync();
                     response.EnsureSuccessStatusCode();
                     return result;
                 }
             }
         }
+
         public async Task<T> GetRequestObject<T>(string url, Parameters parameters = null) where T : Item
         {
-            var ds = new DataContractJsonSerializer(typeof(T));
+            var ds = new DataContractJsonSerializer(typeof (T));
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await GetRequest(url, parameters))))
             {
                 var obj = ds.ReadObject(ms) as T;
@@ -144,7 +153,7 @@ namespace FanfouWP2.FanfouAPI
         public async Task<List<T>> GetRequestObjectCollection<T>(string url, Parameters parameters = null)
             where T : Item
         {
-            var ds = new DataContractJsonSerializer(typeof(List<T>));
+            var ds = new DataContractJsonSerializer(typeof (List<T>));
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await GetRequest(url, parameters))))
             {
                 var obj = ds.ReadObject(ms) as List<T>;
@@ -156,15 +165,15 @@ namespace FanfouWP2.FanfouAPI
         {
             using (var client = new HttpClient(protocolFilter))
             {
-                var urlStr = baseUrl + "/" + url;
+                string urlStr = baseUrl + "/" + url;
 
-                var oauth = generateOAuthHeader(parameters, url, "POST");
+                string oauth = generateOAuthHeader(parameters, url, "POST");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
 
                 var content = new HttpFormUrlEncodedContent(parameters.Items);
-                using (var response = await client.PostAsync(new Uri(urlStr), content))
+                using (HttpResponseMessage response = await client.PostAsync(new Uri(urlStr), content))
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    string result = await response.Content.ReadAsStringAsync();
                     response.EnsureSuccessStatusCode();
                     return result;
                 }
@@ -173,46 +182,50 @@ namespace FanfouWP2.FanfouAPI
 
         public async Task<T> PostRequestObject<T>(string url, Parameters parameters = null) where T : Item
         {
-            var ds = new DataContractJsonSerializer(typeof(T));
+            var ds = new DataContractJsonSerializer(typeof (T));
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await PostRequest(url, parameters))))
             {
                 var obj = ds.ReadObject(ms) as T;
                 return obj;
             }
         }
-        public async Task<List<T>> PostRequestObjectCollection<T>(string url, Parameters parameters = null) where T : Item
+
+        public async Task<List<T>> PostRequestObjectCollection<T>(string url, Parameters parameters = null)
+            where T : Item
         {
-            var ds = new DataContractJsonSerializer(typeof(List<T>));
+            var ds = new DataContractJsonSerializer(typeof (List<T>));
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await PostRequest(url, parameters))))
             {
                 var obj = ds.ReadObject(ms) as List<T>;
                 return obj;
             }
         }
-        public async Task<T> PostRequestWithFile<T>(string url, Parameters parameters, string filePara, StorageFile file) where T : Item
+
+        public async Task<T> PostRequestWithFile<T>(string url, Parameters parameters, string filePara, StorageFile file)
+            where T : Item
         {
             using (var client = new HttpClient(protocolFilter))
             {
-                var urlStr = baseUrl + "/" + url;
+                string urlStr = baseUrl + "/" + url;
 
-                var oauth = generateOAuthHeader(new Parameters(), url, "POST");
+                string oauth = generateOAuthHeader(new Parameters(), url, "POST");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
-                Windows.Storage.Streams.Buffer buff = new Windows.Storage.Streams.Buffer(1024);
+                var buff = new Buffer(1024);
                 var content = new HttpMultipartFormDataContent();
                 foreach (var item in parameters.Items)
                 {
                     var c = new HttpStringContent(item.Value);
                     content.Add(c, item.Key);
                 }
-                var s = await file.OpenStreamForReadAsync();
+                Stream s = await file.OpenStreamForReadAsync();
                 var f = new HttpStreamContent(s.AsInputStream());
                 f.Headers.ContentType = new HttpMediaTypeHeaderValue(file.ContentType);
                 content.Add(f, filePara, file.Name);
-                using (var response = await client.PostAsync(new Uri(urlStr), content))
+                using (HttpResponseMessage response = await client.PostAsync(new Uri(urlStr), content))
                 {
-                    var result = await response.Content.ReadAsStringAsync();
+                    string result = await response.Content.ReadAsStringAsync();
                     response.EnsureSuccessStatusCode();
-                    var ds = new DataContractJsonSerializer(typeof(T));
+                    var ds = new DataContractJsonSerializer(typeof (T));
                     using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(result)))
                     {
                         var obj = ds.ReadObject(ms) as T;

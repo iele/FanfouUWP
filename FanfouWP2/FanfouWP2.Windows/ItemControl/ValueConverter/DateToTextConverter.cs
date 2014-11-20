@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
 namespace FanfouWP2.ItemControl.ValueConverter
@@ -13,7 +8,7 @@ namespace FanfouWP2.ItemControl.ValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            CultureInfo cultureInfo = new CultureInfo("en-US");
+            var cultureInfo = new CultureInfo("en-US");
             string format = "ddd MMM d HH:mm:ss zz00 yyyy";
             string stringValue = DateTime.Now.ToString(format, cultureInfo);
             DateTime datetime = DateTime.ParseExact(value as string, format, cultureInfo);
@@ -22,8 +17,8 @@ namespace FanfouWP2.ItemControl.ValueConverter
             string dateDiff = "";
             try
             {
-                TimeSpan ts1 = new TimeSpan(currenttime.Ticks);
-                TimeSpan ts2 = new TimeSpan(datetime.Ticks);
+                var ts1 = new TimeSpan(currenttime.Ticks);
+                var ts2 = new TimeSpan(datetime.Ticks);
                 TimeSpan ts = ts1.Subtract(ts2).Duration();
                 if (ts1 < ts2)
                 {
@@ -34,20 +29,18 @@ namespace FanfouWP2.ItemControl.ValueConverter
                 if (ts.Days != 0)
                 {
                     if (ts.Days < 60)
-                        return ts.Days.ToString() + "天";
-                    else
-                        return datetime.Year + "年" + datetime.Month + "月" + datetime.Day + "日";
+                        return ts.Days + "天";
+                    return datetime.Year + "年" + datetime.Month + "月" + datetime.Day + "日";
                 }
                 if (ts.Hours != 0)
-                    return ts.Hours.ToString() + "小时";
+                    return ts.Hours + "小时";
                 if (ts.Minutes != 0)
-                    return ts.Minutes.ToString() + "分钟";
+                    return ts.Minutes + "分钟";
                 if (ts.Seconds != 0)
-                    return ts.Seconds.ToString() + "秒";
+                    return ts.Seconds + "秒";
             }
             catch
             {
-
             }
             return dateDiff;
         }

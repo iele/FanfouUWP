@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace FanfouWP2.CustomControl
 {
@@ -19,10 +7,10 @@ namespace FanfouWP2.CustomControl
     {
         public AccountSettingsFlyout()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             if (FanfouAPI.FanfouAPI.Instance.currentUser != null)
-                this.DataContext = FanfouAPI.FanfouAPI.Instance.currentUser;
+                DataContext = FanfouAPI.FanfouAPI.Instance.currentUser;
             else
             {
                 text.Text = "尚未登录";
@@ -39,7 +27,7 @@ namespace FanfouWP2.CustomControl
             logout.Visibility = Visibility.Collapsed;
             var rootFrame = new Frame();
             Window.Current.Content = rootFrame;
-            rootFrame.Navigate(typeof(LoginPage));
+            rootFrame.Navigate(typeof (LoginPage));
         }
     }
 }

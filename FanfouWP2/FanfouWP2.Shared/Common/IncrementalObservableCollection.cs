@@ -1,26 +1,35 @@
-﻿using FanfouWP2.FanfouAPI;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
+using Windows.Foundation;
 using Windows.UI.Xaml.Data;
+using FanfouWP2.FanfouAPI;
 
 namespace FanfouWP2
 {
     public class IncrementalObservableCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading where T : Item
     {
-        public Action<uint> action = (e) => { };
+        private bool _busy;
+        public Action<uint> action = e => { };
+
         bool ISupportIncrementalLoading.HasMoreItems
         {
             get { return true; }
         }
-        bool _busy = false;
-        async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, uint count)
+
+        IAsyncOperation<LoadMoreItemsResult> ISupportIncrementalLoading.LoadMoreItemsAsync(uint count)
+        {
+            if (_busy)
+            {
+                throw new InvalidOperationException("Only one operation in flight at a time");
+            }
+            _busy = true;
+            return AsyncInfo.Run(c => LoadMoreItemsAsync(c, count));
+        }
+
+        private async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, uint count)
         {
             try
             {
@@ -30,16 +39,7 @@ namespace FanfouWP2
             {
                 _busy = false;
             }
-            return new LoadMoreItemsResult() { Count= count};
-        }
-        Windows.Foundation.IAsyncOperation<LoadMoreItemsResult> ISupportIncrementalLoading.LoadMoreItemsAsync(uint count)
-        {
-            if (_busy)
-            {
-                throw new InvalidOperationException("Only one operation in flight at a time");
-            }
-            _busy = true;
-            return AsyncInfo.Run((c) => LoadMoreItemsAsync(c, count));
+            return new LoadMoreItemsResult {Count = count};
         }
     }
 }
