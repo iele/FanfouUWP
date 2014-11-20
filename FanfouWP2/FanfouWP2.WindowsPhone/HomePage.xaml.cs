@@ -15,15 +15,34 @@ namespace FanfouWP2
     public sealed partial class HomePage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
-
-        private readonly ObservableCollection<Status> mentions = new ObservableCollection<Status>();
         private readonly NavigationHelper navigationHelper;
-        private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+
+        private readonly PaginatedCollection<Status> mentions = new PaginatedCollection<Status>();
+        private readonly PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
         private User currentUser = new User();
 
         public HomePage()
         {
             InitializeComponent();
+
+            this.mentions.load = async c =>
+            {
+                if (this.mentions.Count > 0)
+                {             
+                    loading.Visibility = Visibility.Visible;
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, max_id: mentions.Last().id);
+                }
+                return new List<Status>();
+            };
+            this.statuses.load = async c =>
+            {
+                if (this.statuses.Count > 0)
+                {
+                    loading.Visibility = Visibility.Visible;
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id: statuses.Last().id);
+                }
+                return new List<Status>();
+            };
 
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
@@ -91,7 +110,7 @@ namespace FanfouWP2
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (PublicPage));
+            Frame.Navigate(typeof(PublicPage));
         }
 
         private void RefreshItem_Click(object sender, RoutedEventArgs e)
@@ -103,17 +122,17 @@ namespace FanfouWP2
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (FavoritePage), currentUser);
+            Frame.Navigate(typeof(FavoritePage), currentUser);
         }
 
         private void SearchGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SearchPage));
+            Frame.Navigate(typeof(SearchPage));
         }
 
         private void FindGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (FindPage));
+            Frame.Navigate(typeof(FindPage));
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -123,37 +142,37 @@ namespace FanfouWP2
 
         private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (TrendsPage));
+            Frame.Navigate(typeof(TrendsPage));
         }
 
         private void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SearchPage));
+            Frame.Navigate(typeof(SearchPage));
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (AboutPage));
+            Frame.Navigate(typeof(AboutPage));
         }
 
         private void SendItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SendPage));
+            Frame.Navigate(typeof(SendPage));
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void InformationButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (InformationPage));
+            Frame.Navigate(typeof(InformationPage));
         }
 
         #region NavigationHelper 注册
