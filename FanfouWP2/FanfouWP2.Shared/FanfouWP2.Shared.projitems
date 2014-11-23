@@ -16,9 +16,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Common\ContinuationManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\IncrementalObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\PaginatedCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\FanfouAPI.cs" />
@@ -39,7 +39,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Items\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Parameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\XAuthHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\PaginatedCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NavigationControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TimelineStorage.cs" />

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.Storage;
-using FanfouWP.Storage;
+using FanfouWP2.FanfouAPI.Events;
+using FanfouWP2.FanfouAPI.Items;
+using FanfouWP2.Utils;
 
 namespace FanfouWP2.FanfouAPI
 {

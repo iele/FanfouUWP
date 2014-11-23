@@ -81,14 +81,14 @@ namespace FanfouWP2.Common
                 HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 #else
     // 仅当占用整个窗口时，键盘和鼠标导航才适用
-                if (this.Page.ActualHeight == Window.Current.Bounds.Height &&
-                    this.Page.ActualWidth == Window.Current.Bounds.Width)
+                if (Page.ActualHeight == Window.Current.Bounds.Height &&
+                    Page.ActualWidth == Window.Current.Bounds.Width)
                 {
                     // 直接侦听窗口，因此无需焦点
                     Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
                         CoreDispatcher_AcceleratorKeyActivated;
                     Window.Current.CoreWindow.PointerPressed +=
-                        this.CoreWindow_PointerPressed;
+                        CoreWindow_PointerPressed;
                 }
 #endif
             };
@@ -102,7 +102,7 @@ namespace FanfouWP2.Common
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
                     CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -=
-                    this.CoreWindow_PointerPressed;
+                    CoreWindow_PointerPressed;
 #endif
             };
         }
@@ -214,9 +214,9 @@ namespace FanfouWP2.Common
         }
 #else
     /// <summary>
-    /// 当此页处于活动状态并占用整个窗口时，在每次
-    /// 击键(包括系统键，如 Alt 组合键)时调用。    用于检测页之间的键盘
-    /// 导航(即使在页本身没有焦点时)。
+    ///     当此页处于活动状态并占用整个窗口时，在每次
+    ///     击键(包括系统键，如 Alt 组合键)时调用。    用于检测页之间的键盘
+    ///     导航(即使在页本身没有焦点时)。
     /// </summary>
     /// <param name="sender">触发事件的实例。</param>
     /// <param name="e">描述导致事件的条件的事件数据。</param>
@@ -228,11 +228,11 @@ namespace FanfouWP2.Common
             // 仅当按向左、向右或专用上一页或下一页键时才进一步
             // 调查
             if ((e.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||
-                e.EventType == CoreAcceleratorKeyEventType.KeyDown) &&
+                 e.EventType == CoreAcceleratorKeyEventType.KeyDown) &&
                 (virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right ||
-                (int)virtualKey == 166 || (int)virtualKey == 167))
+                 (int) virtualKey == 166 || (int) virtualKey == 167))
             {
-                var coreWindow = Window.Current.CoreWindow;
+                CoreWindow coreWindow = Window.Current.CoreWindow;
                 var downState = CoreVirtualKeyStates.Down;
                 bool menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
                 bool controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
@@ -240,34 +240,34 @@ namespace FanfouWP2.Common
                 bool noModifiers = !menuKey && !controlKey && !shiftKey;
                 bool onlyAlt = menuKey && !controlKey && !shiftKey;
 
-                if (((int)virtualKey == 166 && noModifiers) ||
+                if (((int) virtualKey == 166 && noModifiers) ||
                     (virtualKey == VirtualKey.Left && onlyAlt))
                 {
                     // 在按上一页键或 Alt+向左键时向后导航
                     e.Handled = true;
-                    this.GoBackCommand.Execute(null);
+                    GoBackCommand.Execute(null);
                 }
-                else if (((int)virtualKey == 167 && noModifiers) ||
-                    (virtualKey == VirtualKey.Right && onlyAlt))
+                else if (((int) virtualKey == 167 && noModifiers) ||
+                         (virtualKey == VirtualKey.Right && onlyAlt))
                 {
                     // 在按下一页键或 Alt+向右键时向前导航
                     e.Handled = true;
-                    this.GoForwardCommand.Execute(null);
+                    GoForwardCommand.Execute(null);
                 }
             }
         }
 
         /// <summary>
-        /// 当此页处于活动状态并占用整个窗口时，在每次鼠标单击、触摸屏点击
-        /// 或执行等效交互时调用。    用于检测浏览器样式下一页和
-        /// 上一步鼠标按钮单击以在页之间导航。
+        ///     当此页处于活动状态并占用整个窗口时，在每次鼠标单击、触摸屏点击
+        ///     或执行等效交互时调用。    用于检测浏览器样式下一页和
+        ///     上一步鼠标按钮单击以在页之间导航。
         /// </summary>
         /// <param name="sender">触发事件的实例。</param>
         /// <param name="e">描述导致事件的条件的事件数据。</param>
         private void CoreWindow_PointerPressed(CoreWindow sender,
             PointerEventArgs e)
         {
-            var properties = e.CurrentPoint.Properties;
+            PointerPointProperties properties = e.CurrentPoint.Properties;
 
             // 忽略与鼠标左键、右键和中键的键关联
             if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed ||
@@ -279,8 +279,8 @@ namespace FanfouWP2.Common
             if (backPressed ^ forwardPressed)
             {
                 e.Handled = true;
-                if (backPressed) this.GoBackCommand.Execute(null);
-                if (forwardPressed) this.GoForwardCommand.Execute(null);
+                if (backPressed) GoBackCommand.Execute(null);
+                if (forwardPressed) GoForwardCommand.Execute(null);
             }
         }
 #endif

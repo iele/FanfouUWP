@@ -5,9 +5,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Events;
+using FanfouWP2.FanfouAPI.Items;
 
-namespace FanfouWP2
+namespace FanfouWP2.UserPages
 {
     public sealed partial class FriendsUserPage : Page
     {

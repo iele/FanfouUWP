@@ -1,4 +1,5 @@
-﻿using System;
+﻿// “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
+using System;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -9,9 +10,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using FanfouWP2.Common;
 using FanfouWP2.CustomControl;
-using FanfouWP2.FanfouAPI;
-
-// “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
+using FanfouWP2.FanfouAPI.Events;
+using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2
 {

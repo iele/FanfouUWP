@@ -9,6 +9,7 @@ using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
+using FanfouWP2.FanfouAPI.Items;
 using Buffer = Windows.Storage.Streams.Buffer;
 
 namespace FanfouWP2.FanfouAPI

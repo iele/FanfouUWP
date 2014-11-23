@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Data;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.ItemControl.ValueConverter
 {

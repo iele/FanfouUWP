@@ -2,8 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP.Storage;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.Utils;
 
 namespace FanfouWP2

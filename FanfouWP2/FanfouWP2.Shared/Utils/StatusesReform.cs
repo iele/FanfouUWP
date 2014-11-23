@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.Utils
 {

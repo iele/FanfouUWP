@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.Utils
 {

@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.Utils;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234237 上有介绍

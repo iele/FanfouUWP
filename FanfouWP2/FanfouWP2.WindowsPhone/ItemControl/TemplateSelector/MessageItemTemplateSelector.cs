@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.ItemControl.TemplateSelector
 {

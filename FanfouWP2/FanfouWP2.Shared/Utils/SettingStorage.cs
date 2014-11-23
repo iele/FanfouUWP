@@ -1,11 +1,10 @@
-﻿using System;
+﻿using FanfouWP2.FanfouAPI.Items;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using Windows.Storage;
-using FanfouWP2.FanfouAPI;
-
-namespace FanfouWP.Storage
+namespace FanfouWP2.Utils
 {
     public sealed class SettingStorage
     {

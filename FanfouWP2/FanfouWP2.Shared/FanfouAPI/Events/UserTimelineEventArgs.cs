@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using FanfouWP2.FanfouAPI.Items;
 
-namespace FanfouWP2.FanfouAPI
+namespace FanfouWP2.FanfouAPI.Events
 {
     public class UserTimelineEventArgs<T> : EventArgs where T : Item
     {

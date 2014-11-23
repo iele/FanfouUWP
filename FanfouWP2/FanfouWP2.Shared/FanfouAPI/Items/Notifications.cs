@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace FanfouWP2.FanfouAPI
+namespace FanfouWP2.FanfouAPI.Items
 {
     [DataContract]
     public class Notifications : Item

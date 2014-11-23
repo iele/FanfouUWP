@@ -1,27 +1,25 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.Utils
+namespace FanfouWP2.Common
 {
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
+        private bool is_loading;
         public Func<uint, Task<IEnumerable<T>>> load;
-
-        private bool is_loading = false;
-        public bool HasMoreItems { get; protected set; }
 
         public PaginatedCollection()
         {
             HasMoreItems = true;
         }
+
+        public bool HasMoreItems { get; set; }
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
@@ -32,26 +30,21 @@ namespace FanfouWP2.Utils
                     is_loading = true;
                     try
                     {
-                        var data = await load(count);
+                        IEnumerable<T> data = await load(count);
 
-                        foreach (var item in data)
+                        foreach (T item in data)
                         {
                             Add(item);
                         }
 
-                        //HasMoreItems = data.Any();
-
-                        return new LoadMoreItemsResult() { Count = (uint)data.Count() };
+                        return new LoadMoreItemsResult { Count = (uint)data.Count() };
                     }
                     finally
                     {
                         is_loading = false;
                     }
                 }
-                else
-                {
-                    return new LoadMoreItemsResult() { Count = 0 };
-                }
+                return new LoadMoreItemsResult { Count = 0 };
             });
         }
     }

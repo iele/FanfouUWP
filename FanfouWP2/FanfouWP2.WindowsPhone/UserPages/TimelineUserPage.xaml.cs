@@ -5,10 +5,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI;
+using FanfouWP2.FanfouAPI.Events;
+using FanfouWP2.FanfouAPI.Items;
 using FanfouWP2.Utils;
 
-namespace FanfouWP2
+namespace FanfouWP2.UserPages
 {
     public sealed partial class TimelineUserPage : Page
     {
@@ -25,9 +26,6 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_HomeTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_HomeTimelineFailed;
         }
 
         public NavigationHelper NavigationHelper

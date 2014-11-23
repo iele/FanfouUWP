@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FanfouWP2.FanfouAPI
+namespace FanfouWP2.FanfouAPI.Events
 {
     public class ListEventArgs<T> : EventArgs
     {
