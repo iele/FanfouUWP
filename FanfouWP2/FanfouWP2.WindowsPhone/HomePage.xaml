@@ -53,7 +53,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Margin="0" Height="60" Orientation="Horizontal">
                 <Image HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40" Margin="12,0,0,0"
-                       utils:ImageExtensions.CacheUri="{Binding currentUser.profile_image_url}" />
+                       utils:ImageExtensions.CacheUri="{Binding currentUser.profile_image_url}" CacheMode="BitmapCache" />
 
                 <TextBlock TextWrapping="NoWrap" VerticalAlignment="Center" Margin="12,0" Foreground="White"
                            FontSize="20" HorizontalAlignment="Left" Text="{Binding currentUser.screen_name}" />

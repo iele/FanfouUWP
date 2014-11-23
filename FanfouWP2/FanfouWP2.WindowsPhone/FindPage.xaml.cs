@@ -19,7 +19,7 @@ namespace FanfouWP2
         public FindPage()
         {
             InitializeComponent();
-
+            
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
@@ -86,7 +86,7 @@ namespace FanfouWP2
 
         private void userGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (UserPage), e.ClickedItem);
+            Frame.Navigate(typeof(UserPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册

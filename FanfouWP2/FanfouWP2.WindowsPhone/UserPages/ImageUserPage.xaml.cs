@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -16,13 +17,22 @@ namespace FanfouWP2.UserPages
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
-        private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private readonly PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
         private User user;
 
         public ImageUserPage()
         {
             InitializeComponent();
 
+            statuses.load = async c =>
+            {
+                if (statuses.Count > 0)
+                {
+                    loading.Visibility = Visibility.Visible;
+                    FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60, max_id: statuses.Last().id);
+                }
+                return new List<Status>();
+            };
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
@@ -77,7 +87,7 @@ namespace FanfouWP2.UserPages
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册

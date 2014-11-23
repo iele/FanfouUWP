@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -16,11 +17,21 @@ namespace FanfouWP2
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
-        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
+        private PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
 
         public SearchPage()
         {
             InitializeComponent();
+
+            statuses.load = async c =>
+            {
+                if (statuses.Count > 0)
+                {
+                    loading.Visibility = Visibility.Visible;
+                    FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60, max_id: this.statuses.Last().id);
+                }
+                return new List<Status>();
+            };
 
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
@@ -64,7 +75,7 @@ namespace FanfouWP2
                     search.Text = e.PageState["search"].ToString();
                 if (e.PageState.ContainsKey("statuses"))
                 {
-                    statuses = e.PageState["statuses"] as ObservableCollection<Status>;
+                    statuses = e.PageState["statuses"] as PaginatedCollection<Status>;
                     defaultViewModel["statuses"] = statuses;
                 }
                 return;
@@ -94,7 +105,7 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册
