@@ -171,12 +171,14 @@ namespace FanfouWP2.FanfouAPI
             set { instance = value; }
         }
 
-        public void setUserAuth(UserAuth auth)
+        public void setUser(User user)
         {
-            oauthToken = auth.oauthToken;
-            oauthSecret = auth.oauthSecret;
-            username = auth.username;
-            password = auth.password;
+            oauthToken = user.auth.oauthToken;
+            oauthSecret = user.auth.oauthSecret;
+            username = user.auth.username;
+            password = user.auth.password;
+
+            this.currentUser = user;
         }
 
         public event LoginSuccessHandler LoginSuccess;
@@ -310,9 +312,13 @@ namespace FanfouWP2.FanfouAPI
 
         public void Logout()
         {
-            setUserAuth(new UserAuth());
+            oauthToken = "";
+            oauthSecret = "";
+            username = "";
+            password = "";
             currentUser = null;
-            SettingStorage.Instance.currentUserAuth = null;
+
+            SettingStorage.Instance.currentUser = null;
         }
 
         public async void VerifyCredentials()
@@ -326,7 +332,9 @@ namespace FanfouWP2.FanfouAPI
                 ua.oauthSecret = oauthSecret;
                 ua.username = username;
                 ua.password = password;
-                SettingStorage.Instance.currentUserAuth = ua;
+                result.auth = ua;
+
+                SettingStorage.Instance.currentUser = result;
 
                 if (VerifyCredentialsSuccess != null)
                     VerifyCredentialsSuccess(result, new EventArgs());

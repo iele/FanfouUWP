@@ -111,5 +111,8 @@ namespace FanfouWP2.FanfouAPI.Items
 
         [DataMember(Name = "status", IsRequired = false)]
         public Status status { get; set; }
+
+        [DataMember(Name = "auth", IsRequired = false)]
+        public UserAuth auth { get; set; }
     }
 }

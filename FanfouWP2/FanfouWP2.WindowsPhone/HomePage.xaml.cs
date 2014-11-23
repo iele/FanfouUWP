@@ -15,11 +15,13 @@ namespace FanfouWP2
     public sealed partial class HomePage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private readonly NavigationHelper navigationHelper;
 
         private readonly PaginatedCollection<Status> mentions = new PaginatedCollection<Status>();
-        private readonly NavigationHelper navigationHelper;
         private readonly PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
         private User currentUser = new User();
+        
+        private TimelineStorage<Status> storage = new TimelineStorage<Status>();
 
         public HomePage()
         {
@@ -65,13 +67,20 @@ namespace FanfouWP2
             get { return defaultViewModel; }
         }
 
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            defaultViewModel["statuses"] = statuses;
-            defaultViewModel["mentions"] = mentions;
-
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["currentUser"] = currentUser;
+            
+            var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
+            if (s1 != null)
+                StatusesReform.reform(this.statuses, s1.ToList());
+            var s2 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
+            if (s2 != null)
+                StatusesReform.reform(this.mentions, s2.ToList());
+
+            defaultViewModel["statuses"] = statuses;
+            defaultViewModel["mentions"] = mentions;
 
             loading.Visibility = Visibility.Visible;
             FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
@@ -80,6 +89,8 @@ namespace FanfouWP2
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions);
+            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses);
         }
 
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
@@ -96,6 +107,9 @@ namespace FanfouWP2
                 mentions.HasMoreItems = false;
             }
             StatusesReform.reform(mentions, ss);
+
+            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions);
+
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
@@ -113,6 +127,9 @@ namespace FanfouWP2
                 statuses.HasMoreItems = false;
             }
             StatusesReform.reform(statuses, ss);
+
+            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses);
+
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 

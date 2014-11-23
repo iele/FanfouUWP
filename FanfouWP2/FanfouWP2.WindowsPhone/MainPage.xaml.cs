@@ -15,9 +15,6 @@ namespace FanfouWP2
         {
             InitializeComponent();
 
-            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
-            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
-
             Loaded += MainPage_Loaded;
         }
 
@@ -38,28 +35,17 @@ namespace FanfouWP2
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (SettingStorage.Instance.currentUserAuth == null)
+            if (SettingStorage.Instance.currentUser== null)
             {
                 NavigationControl.ClearStack(Frame);
                 Frame.Navigate(typeof (LoginPage));
             }
             else
             {
-                FanfouAPI.FanfouAPI.Instance.setUserAuth(SettingStorage.Instance.currentUserAuth);
-                FanfouAPI.FanfouAPI.Instance.VerifyCredentials();
+                FanfouAPI.FanfouAPI.Instance.setUser(SettingStorage.Instance.currentUser);
+                NavigationControl.ClearStack(Frame);
+                Frame.Navigate(typeof(HomePage));
             }
-        }
-
-        private void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
-        {
-            NavigationControl.ClearStack(Frame);
-            Frame.Navigate(typeof (LoginPage));
-        }
-
-        private void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
-        {
-            NavigationControl.ClearStack(Frame);
-            Frame.Navigate(typeof (HomePage));
         }
     }
 }

@@ -32,15 +32,15 @@ namespace FanfouWP2.Utils
             get { return localSettings.Containers.ContainsKey(CONTAINER_NAME); }
         }
 
-        public UserAuth currentUserAuth
+        public User currentUser
         {
             get
             {
                 try
                 {
-                    if (getContainer().Values.ContainsKey("currentUserAuth"))
+                    if (getContainer().Values.ContainsKey("currentUser"))
                     {
-                        return dserialize<UserAuth>(getContainer().Values["currentUserAuth"] as string) as UserAuth;
+                        return dserialize<User>(getContainer().Values["currentUser"] as string) as User;
                     }
                     return null;
                 }
@@ -52,9 +52,9 @@ namespace FanfouWP2.Utils
             set
             {
                 if (value != null)
-                    getContainer().Values["currentUserAuth"] = serialize<UserAuth>(value);
+                    getContainer().Values["currentUser"] = serialize<User>(value);
                 else
-                    getContainer().Values.Remove("currentUserAuth");
+                    getContainer().Values.Remove("currentUser");
             }
         }
 
