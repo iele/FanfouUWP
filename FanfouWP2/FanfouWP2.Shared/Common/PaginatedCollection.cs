@@ -5,14 +5,15 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.System.Threading;
 using Windows.UI.Xaml.Data;
 
 namespace FanfouWP2.Common
 {
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
-        private bool is_loading;
-        public Func<uint, Task<IEnumerable<T>>> load;
+        public bool is_loading = false;
+        public Func<Task> load;
 
         public PaginatedCollection()
         {
@@ -27,24 +28,16 @@ namespace FanfouWP2.Common
             {
                 if (!is_loading)
                 {
-                    is_loading = true;
                     try
                     {
-                        IEnumerable<T> data = await load(count);
-
-                        foreach (T item in data)
-                        {
-                            Add(item);
-                        }
-
-                        return new LoadMoreItemsResult { Count = (uint)data.Count() };
+                        load();
                     }
-                    finally
+                    catch (Exception e)
                     {
-                        is_loading = false;
+                        System.Diagnostics.Debug.WriteLine(e.Message);
                     }
                 }
-                return new LoadMoreItemsResult { Count = 0 };
+                return new LoadMoreItemsResult() { Count = 0 };
             });
         }
     }

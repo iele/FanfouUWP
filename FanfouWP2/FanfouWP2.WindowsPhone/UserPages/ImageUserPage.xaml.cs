@@ -24,14 +24,13 @@ namespace FanfouWP2.UserPages
         {
             InitializeComponent();
 
-            statuses.load = async c =>
+            statuses.load = async () =>
             {
                 if (statuses.Count > 0)
                 {
                     loading.Visibility = Visibility.Visible;
                     FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60, max_id: statuses.Last().id);
                 }
-                return new List<Status>();
             };
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;

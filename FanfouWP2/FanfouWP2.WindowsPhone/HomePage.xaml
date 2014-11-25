@@ -17,9 +17,14 @@
                                            Width="{Binding ActualWidth, ElementName=statusesGridView}"
                                            Margin="0,3" />
         </DataTemplate>
+
         <DataTemplate x:Key="MentionsItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}"
                                            Width="{Binding ActualWidth, ElementName=mentionsGridView}"
+                                           Margin="0,3" />
+        </DataTemplate>
+        <DataTemplate x:Key="FooterControl">
+            <ItemControl:FooterControl Width="{Binding ActualWidth, ElementName=statusesGridView}"
                                            Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
@@ -62,25 +67,32 @@
                    Grid.Column="1" />
         </Grid>
         <Hub x:Name="hub" Header="" Margin="0,26,0,0" Orientation="Horizontal" Grid.Row="1">
-            <HubSection x:Name="statusesSection" Header="我的消息" Height="Auto">
+            <Hub.Resources>
+                <DataTemplate x:Key="HubSectionHeader">
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="{Binding}" Foreground="Gray"/>
+                    </Grid>
+                </DataTemplate>
+            </Hub.Resources>
+            <HubSection x:Name="statusesSection" Header="我的消息" Height="Auto" HeaderTemplate="{StaticResource HubSectionHeader}">
                 <DataTemplate>
                     <Grid>
-                        <ListView ShowsScrollingPlaceholders="True" x:Name="statusesGridView"
+                        <ListView ShowsScrollingPlaceholders="False" x:Name="statusesGridView"
                                   ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}"
-                                  Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" />
+                                  Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection Header="提及我的" x:Name="mentionsSection">
+            <HubSection Header="提及我的" x:Name="mentionsSection" HeaderTemplate="{StaticResource HubSectionHeader}">
                 <DataTemplate>
                     <Grid>
                         <ListView ShowsScrollingPlaceholders="True" x:Name="mentionsGridView"
                                   ItemsSource="{Binding mentions}" ItemTemplate="{StaticResource MentionsItemControl}"
-                                  Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True" />
+                                  Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}" />
                     </Grid>
                 </DataTemplate>
             </HubSection>
-            <HubSection x:Name="moreSection" Header="更多">
+            <HubSection x:Name="moreSection" Header="更多" HeaderTemplate="{StaticResource HubSectionHeader}">
                 <DataTemplate>
                     <Grid Margin="0,-12,0,12">
                         <Grid.ColumnDefinitions>

@@ -1,16 +1,32 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
+using System.Linq;
 using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.Utils
 {
     public class TimelineStorage<T> where T : Item
     {
+        public async Task<bool> SaveDataToIsolatedStorageWithLimit(string name, string user, IList<T> data, int limit = 100)
+        {
+            if (data.Count < limit)
+                return await SaveDataToIsolatedStorage(name, user, data);
+            else
+            {
+                ObservableCollection<T> list = new ObservableCollection<T>();
+                for (int i = 0; i < limit; i++)
+                    list.Add(data[i]);
+                return await SaveDataToIsolatedStorage(name, user, list);
+            }
+        }
+
         public async Task<bool> SaveDataToIsolatedStorage(string name, string user, object data)
         {
             try

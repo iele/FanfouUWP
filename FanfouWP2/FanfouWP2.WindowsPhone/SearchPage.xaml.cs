@@ -23,14 +23,13 @@ namespace FanfouWP2
         {
             InitializeComponent();
 
-            statuses.load = async c =>
+            statuses.load = async () =>
             {
                 if (statuses.Count > 0)
                 {
                     loading.Visibility = Visibility.Visible;
                     FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60, max_id: this.statuses.Last().id);
                 }
-                return new List<Status>();
             };
 
             navigationHelper = new NavigationHelper(this);

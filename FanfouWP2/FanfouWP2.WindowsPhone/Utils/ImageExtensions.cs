@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,8 +18,8 @@ namespace FanfouWP2.Utils
         public static readonly DependencyProperty CacheUriProperty =
             DependencyProperty.RegisterAttached(
                 "CacheUri",
-                typeof (Uri),
-                typeof (ImageExtensions),
+                typeof(Uri),
+                typeof(ImageExtensions),
                 new PropertyMetadata(null, OnCacheUriChanged));
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace FanfouWP2.Utils
         /// </summary>
         public static Uri GetCacheUri(DependencyObject d)
         {
-            return (Uri) d.GetValue(CacheUriProperty);
+            return (Uri)d.GetValue(CacheUriProperty);
         }
 
         /// <summary>
@@ -41,9 +42,11 @@ namespace FanfouWP2.Utils
 
         private static async void OnCacheUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var newCacheUri = (Uri) d.GetValue(CacheUriProperty);
-            var image = (Image) d;
+            var newCacheUri = (Uri)d.GetValue(CacheUriProperty);
+            var image = (Image)d;
 
+            image.Source = null;
+           
             if (newCacheUri != null)
             {
                 try
@@ -56,13 +59,14 @@ namespace FanfouWP2.Utils
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-
                     //Revert to using passed URI
-                    image.Source = new BitmapImage(newCacheUri);
+                    image.Source = null;
                 }
             }
+
             else
                 image.Source = null;
+
         }
     }
 }

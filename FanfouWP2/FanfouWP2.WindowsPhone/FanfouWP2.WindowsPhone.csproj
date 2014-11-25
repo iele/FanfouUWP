@@ -15,6 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
+    <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -85,6 +86,9 @@
     </Compile>
     <Compile Include="InformationPage.xaml.cs">
       <DependentUpon>InformationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\FooterControl.xaml.cs">
+      <DependentUpon>FooterControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserPages\FollowersUserPage.xaml.cs">
       <DependentUpon>FollowersUserPage.xaml</DependentUpon>
@@ -249,6 +253,10 @@
     <Page Include="InformationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemControl\FooterControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserPages\FollowersUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>

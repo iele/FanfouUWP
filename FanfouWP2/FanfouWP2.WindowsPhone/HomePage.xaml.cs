@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -20,30 +21,30 @@ namespace FanfouWP2
         private readonly PaginatedCollection<Status> mentions = new PaginatedCollection<Status>();
         private readonly PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
         private User currentUser = new User();
-        
+
         private TimelineStorage<Status> storage = new TimelineStorage<Status>();
 
         public HomePage()
         {
             InitializeComponent();
 
-            mentions.load = async c =>
+            mentions.load = async () =>
             {
                 if (mentions.Count > 0)
                 {
+                    mentions.is_loading = true;
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, max_id: mentions.Last().id);
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, max_id: mentions.Last().id);
                 }
-                return new List<Status>();
             };
-            statuses.load = async c =>
+            statuses.load = async () =>
             {
                 if (statuses.Count > 0)
                 {
+                    statuses.is_loading = true;
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, max_id: statuses.Last().id);
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, max_id: statuses.Last().id);
                 }
-                return new List<Status>();
             };
 
             navigationHelper = new NavigationHelper(this);
@@ -71,7 +72,7 @@ namespace FanfouWP2
         {
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["currentUser"] = currentUser;
-            
+
             var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
             if (s1 != null)
                 StatusesReform.reform(this.statuses, s1.ToList());
@@ -83,14 +84,14 @@ namespace FanfouWP2
             defaultViewModel["mentions"] = mentions;
 
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions);
-            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses);
+            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
+            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
         }
 
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
@@ -108,8 +109,10 @@ namespace FanfouWP2
             }
             StatusesReform.reform(mentions, ss);
 
-            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions);
-
+            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
+    
+            mentions.is_loading = false;
+    
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
@@ -128,36 +131,37 @@ namespace FanfouWP2
             }
             StatusesReform.reform(statuses, ss);
 
-            storage.SaveDataToIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses);
-
+            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
+            statuses.is_loading = false;
+        
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (PublicPage));
+            Frame.Navigate(typeof(PublicPage));
         }
 
         private void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(60, 1);
+            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
         }
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (FavoritePage), currentUser);
+            Frame.Navigate(typeof(FavoritePage), currentUser);
         }
 
         private void SearchGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SearchPage));
+            Frame.Navigate(typeof(SearchPage));
         }
 
         private void FindGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (FindPage));
+            Frame.Navigate(typeof(FindPage));
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -167,37 +171,37 @@ namespace FanfouWP2
 
         private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (TrendsPage));
+            Frame.Navigate(typeof(TrendsPage));
         }
 
         private void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SearchPage));
+            Frame.Navigate(typeof(SearchPage));
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (AboutPage));
+            Frame.Navigate(typeof(AboutPage));
         }
 
         private void SendItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SendPage));
+            Frame.Navigate(typeof(SendPage));
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void InformationButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (InformationPage));
+            Frame.Navigate(typeof(InformationPage));
         }
 
         #region NavigationHelper 注册
