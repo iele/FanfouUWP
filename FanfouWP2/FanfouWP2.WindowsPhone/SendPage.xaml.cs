@@ -73,17 +73,29 @@ namespace FanfouWP2
 
         public async void ContinueFileOpenPicker(FileOpenPickerContinuationEventArgs args)
         {
-            if (args.Files.Count > 0)
+            try
             {
-                file = args.Files[0];
-                if (null != file)
+                if (args.Files.Count > 0)
+                {
+                    file = args.Files[0];
+                    if (null != file)
+                    {
+                        var bi = new BitmapImage();
+                        IRandomAccessStream s = await file.OpenAsync(FileAccessMode.Read);
+                        await bi.SetSourceAsync(s);
+                        photo.Source = bi;
+                        mode = SendMode.Photo;
+                    }
+                }
+                else
                 {
                     var bi = new BitmapImage();
-                    IRandomAccessStream s = await file.OpenAsync(FileAccessMode.Read);
-                    await bi.SetSourceAsync(s);
                     photo.Source = bi;
-                    mode = SendMode.Photo;
+                    mode = SendMode.Normal;                
                 }
+            }
+            catch (Exception e)
+            {
             }
         }
 

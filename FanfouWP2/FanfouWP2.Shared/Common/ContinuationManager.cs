@@ -58,8 +58,8 @@ namespace FanfouWP2.Common
             if (args == null)
                 throw new ArgumentNullException("args");
 
-            if (this.args != null && !handled)
-                throw new InvalidOperationException("Can't set args more than once");
+            //if (this.args != null && !handled)
+            //    throw new InvalidOperationException("Can't set args more than once");
 
             this.args = args;
             handled = false;
