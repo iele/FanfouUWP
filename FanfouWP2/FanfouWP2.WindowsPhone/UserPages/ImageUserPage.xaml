@@ -9,6 +9,13 @@
     xmlns:ItemControl="using:FanfouWP2.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light">
+    <Page.Resources>
+        <DataTemplate x:Key="StatusItemControl">
+            <ItemControl:StatusItemControl DataContext="{Binding}"
+                                           Width="{Binding ActualWidth, ElementName=statusesGridView}"
+                                           Margin="0,3" />
+        </DataTemplate>
+    </Page.Resources>
     <Page.Background>
         <SolidColorBrush Color="#FFFFFFFF" />
     </Page.Background>
@@ -32,26 +39,8 @@
                            FontSize="18.667" Foreground="White" />
             </StackPanel>
         </Grid>
-        <Viewbox Margin="0,0" Grid.Row="1" Stretch="Fill">
-        	<GridView ShowsScrollingPlaceholders="True" x:Name="statusesGridView" IsItemClickEnabled="True"
-        		ItemClick="statusesGridView_ItemClick" ItemsSource="{Binding statuses}" Width="402" Height="600">
-        		<GridView.ItemTemplate>
-        			<DataTemplate>
-        				<Grid Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="96"
-        					Height="96">
-        					<Image utils:ImageExtensions.CacheUri="{Binding photo.thumburl}" Stretch="UniformToFill"
-        						Margin="3" CacheMode="BitmapCache" />
-        					<Rectangle Fill="Transparent" Margin="0" Stroke="DeepSkyBlue" VerticalAlignment="Stretch"
-        						HorizontalAlignment="Stretch" />
-        				</Grid>
-        			</DataTemplate>
-        		</GridView.ItemTemplate>
-        		<GridView.ItemsPanel>
-        			<ItemsPanelTemplate>
-        				<WrapGrid ItemHeight="100" ItemWidth="100" Orientation="Horizontal" />
-        			</ItemsPanelTemplate>
-        		</GridView.ItemsPanel>
-        	</GridView>
-        </Viewbox>
+        <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="statusesGridView"
+                  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
     </Grid>
 </Page>

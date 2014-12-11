@@ -91,7 +91,7 @@ namespace FanfouWP2
                 {
                     var bi = new BitmapImage();
                     photo.Source = bi;
-                    mode = SendMode.Normal;                
+                    mode = SendMode.Normal;
                 }
             }
             catch (Exception e)
@@ -137,26 +137,34 @@ namespace FanfouWP2
             if (e.NavigationParameter != null)
             {
                 dynamic param = e.NavigationParameter;
-                mode = (SendMode) param.Item2;
+                mode = (SendMode)param.Item2;
                 switch (mode)
                 {
                     case SendMode.Normal:
                         title.Text = "你在做什么?";
                         break;
                     case SendMode.Photo:
+                        var openPicker = new FileOpenPicker();
+                        openPicker.ViewMode = PickerViewMode.Thumbnail;
+                        openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+                        openPicker.FileTypeFilter.Add(".jpg");
+                        openPicker.FileTypeFilter.Add(".jpeg");
+                        openPicker.FileTypeFilter.Add(".png");
+                        openPicker.FileTypeFilter.Add(".bmp");
+                        openPicker.PickSingleFileAndContinue(); 
                         break;
                     case SendMode.Reply:
-                        status = (Status) param.Item1;
+                        status = (Status)param.Item1;
                         title.Text = "回复" + status.user.screen_name;
                         send.Text = "@" + status.user.screen_name;
                         break;
                     case SendMode.ReplyUser:
-                        user = (User) param.Item1;
+                        user = (User)param.Item1;
                         title.Text = "提及" + user.screen_name;
                         send.Text = "@" + user.screen_name;
                         break;
                     case SendMode.Repost:
-                        status = (Status) param.Item1;
+                        status = (Status)param.Item1;
                         title.Text = "转发" + status.user.screen_name;
                         send.Text = "转@" + status.user.screen_name + " " + status.text;
                         break;

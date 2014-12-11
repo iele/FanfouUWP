@@ -110,9 +110,9 @@ namespace FanfouWP2
             StatusesReform.reform(mentions, ss);
 
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
-    
+
             mentions.is_loading = false;
-    
+
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
@@ -133,7 +133,7 @@ namespace FanfouWP2
 
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
             statuses.is_loading = false;
-        
+
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
@@ -232,5 +232,10 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void CameraItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
+        }
     }
 }

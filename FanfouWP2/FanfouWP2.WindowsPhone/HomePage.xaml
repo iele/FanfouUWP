@@ -36,8 +36,8 @@
                 <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click" />
                 <AppBarButton Label="设置" />
             </CommandBar.SecondaryCommands>
-            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click" />
-            <AppBarButton Label="照片" Icon="Camera" />
+            <AppBarButton Label="刷新" Icon="Refresh" x:Name="RefreshItem" Click="RefreshItem_Click" />
+            <AppBarButton Label="照片" Icon="Camera" x:Name="CameraItem" Click="CameraItem_Click"/>
             <AppBarButton Icon="Zoom" Label="搜索" x:Name="SearchItem" Click="SearchItem_Click" />
             <AppBarButton Icon="Edit" Label="新饭" x:Name="SendItem" Click="SendItem_Click" />
         </CommandBar>
