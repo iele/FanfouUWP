@@ -15,7 +15,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="TileItem" Label="将此页面固定为磁贴" />
+                <AppBarButton x:Name="TileItem" Label="将此页面固定为磁贴" Click="TileItem_Click" />
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="SendItem" Icon="Send" Label="发送" Click="SendItem_Click" />
             <AppBarButton x:Name="PhotoItem" Icon="Camera" Label="照片" Click="PhotoItem_Click" />
@@ -58,7 +58,7 @@
                      IsSpellCheckEnabled="True" PreventKeyboardDisplayOnProgrammaticFocus="True" />
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="已定位" VerticalAlignment="Top"
                        FontFamily="Global User Interface" FontSize="16" Margin="12,0.458,0,0" Grid.Row="1"
-                       Foreground="Gray" />
+                       Foreground="Gray" x:Name="locationText" Visibility="Collapsed"/>
             <Image x:Name="photo" Margin="12" Grid.Row="2" />
         </Grid>
         <ProgressBar x:Name="loading" Height="10" Margin="0,-28,0,0" VerticalAlignment="Top" IsIndeterminate="True" />

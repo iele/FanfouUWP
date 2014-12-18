@@ -14,7 +14,13 @@ namespace FanfouWP2.Utils
             try
             {
                 Geoposition pos = await geolocator.GetGeopositionAsync();
-                return pos.Coordinate.Point.Position.Latitude + ", " + pos.Coordinate.Point.Position.Longitude;
+                double lat = pos.Coordinate.Point.Position.Latitude;
+                double lon = pos.Coordinate.Point.Position.Longitude;
+                double nlat, nlon;
+                Utils.EvilTransform.transform(lat, lon, out nlat, out nlon);
+
+
+                return nlat + "," + nlon;
             }
             catch (Exception)
             {

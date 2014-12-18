@@ -12,6 +12,7 @@ using FanfouWP2.Common;
 using FanfouWP2.CustomControl;
 using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.FanfouAPI.Items;
+using Windows.UI.StartScreen;
 
 namespace FanfouWP2
 {
@@ -134,6 +135,8 @@ namespace FanfouWP2
         /// </param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            getLocation(); 
+            
             if (e.NavigationParameter != null)
             {
                 dynamic param = e.NavigationParameter;
@@ -151,7 +154,7 @@ namespace FanfouWP2
                         openPicker.FileTypeFilter.Add(".jpeg");
                         openPicker.FileTypeFilter.Add(".png");
                         openPicker.FileTypeFilter.Add(".bmp");
-                        openPicker.PickSingleFileAndContinue(); 
+                        openPicker.PickSingleFileAndContinue();
                         break;
                     case SendMode.Reply:
                         status = (Status)param.Item1;
@@ -174,6 +177,19 @@ namespace FanfouWP2
             }
         }
 
+        private async void getLocation()
+        {
+            location = await Utils.GeoLocator.getGeolocator();
+            if (location == "")
+            {
+                this.locationText.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.locationText.Visibility = Visibility.Visible;
+            }
+        }
+
         /// <summary>
         ///     保留与此页关联的状态，以防挂起应用程序或
         ///     从导航缓存中放弃此页。值必须符合
@@ -193,25 +209,51 @@ namespace FanfouWP2
             string text = send.Text;
             if (send.Text.Length > 140)
                 text = text.Substring(0, 140);
-            switch (mode)
+            if (location == null || location == "")
             {
-                case SendMode.Normal:
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text);
-                    break;
-                case SendMode.Photo:
-                    FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file);
-                    break;
-                case SendMode.Reply:
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, status.id);
-                    break;
-                case SendMode.ReplyUser:
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id);
-                    break;
-                case SendMode.Repost:
-                    FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id);
-                    break;
-                default:
-                    break;
+                switch (mode)
+                {
+                    case SendMode.Normal:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text);
+                        break;
+                    case SendMode.Photo:
+                        FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file);
+                        break;
+                    case SendMode.Reply:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, status.id);
+                        break;
+                    case SendMode.ReplyUser:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id);
+                        break;
+                    case SendMode.Repost:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (mode)
+                {
+                    case SendMode.Normal:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, location: location);
+                        break;
+                    case SendMode.Photo:
+                        FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file, location: location);
+                        break;
+                    case SendMode.Reply:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, status.id, location: location);
+                        break;
+                    case SendMode.ReplyUser:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id, location: location);
+                        break;
+                    case SendMode.Repost:
+                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id, location: location);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -273,5 +315,19 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void TileItem_Click(object sender, RoutedEventArgs e)
+        {
+            Uri square150x150Logo = new Uri("ms-appx:///Assets/Logo.png");
+            SecondaryTile secondaryTile = new SecondaryTile("FanfouWP_SendPage",
+                                                            "饭窗 - 发送消息",
+                                                            "FanfouWP_SendPage",
+                                                            square150x150Logo,
+                                                            TileSize.Square150x150);
+            secondaryTile.VisualElements.Square30x30Logo = new Uri("ms-appx:///Assets/SmallLogo.png");
+            secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+            secondaryTile.VisualElements.ForegroundText = ForegroundText.Dark;
+            secondaryTile.RequestCreateAsync();
+        }
     }
 }

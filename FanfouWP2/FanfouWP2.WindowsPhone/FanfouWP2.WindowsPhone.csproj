@@ -90,6 +90,9 @@
     <Compile Include="ItemControl\FooterControl.xaml.cs">
       <DependentUpon>FooterControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelfPage.xaml.cs">
+      <DependentUpon>SelfPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPages\FollowersUserPage.xaml.cs">
       <DependentUpon>FollowersUserPage.xaml</DependentUpon>
     </Compile>
@@ -255,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ItemControl\FooterControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelfPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

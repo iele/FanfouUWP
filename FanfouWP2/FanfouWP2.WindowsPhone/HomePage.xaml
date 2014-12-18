@@ -31,7 +31,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="个人资料" />
+                <AppBarButton x:Name="SelfItem" Label="个人资料" Click="SelfItem_Click"/>
                 <AppBarButton Label="好友请求" />
                 <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click" />
                 <AppBarButton Label="设置" />
@@ -192,6 +192,6 @@
             </HubSection>
         </Hub>
         <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Canvas.ZIndex="10"
-                     Margin="0,-28,0,0" />
+                     Margin="0,-28,0,0"/>
     </Grid>
 </Page>

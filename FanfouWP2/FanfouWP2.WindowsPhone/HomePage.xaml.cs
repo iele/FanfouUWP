@@ -145,8 +145,15 @@ namespace FanfouWP2
         private void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
+            if (this.statuses.Count != 0)
+                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
+            else
+                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+
+            if (this.mentions.Count != 0)
+                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
+            else
+                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
         }
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -236,6 +243,11 @@ namespace FanfouWP2
         private void CameraItem_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
+        }
+
+        private void SelfItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SelfPage), currentUser);
         }
     }
 }
