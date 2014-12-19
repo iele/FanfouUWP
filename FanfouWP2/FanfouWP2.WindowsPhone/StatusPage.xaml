@@ -28,7 +28,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="删除消息" IsEnabled="False" />
+                <AppBarButton Label="删除消息" x:Name="DeleteItem" IsEnabled="False" Click="DeleteItem_Click"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton Icon="List" Label="个人资料" x:Name="UserItem" Click="UserItem_Click" />
             <AppBarButton Label="转发" Icon="ReShare" x:Name="RepostItem" Click="RepostItem_Click" />

@@ -379,8 +379,23 @@ namespace FanfouWP2.FanfouAPI
         }
 
 
-        public void StatusDestroy(string id)
+        public async void StatusDestroy(string id)
         {
+            try
+            {
+                RestClient client = GetClient();
+                var parameters = new Parameters();
+                parameters.Add("id", id);
+               
+                Status result = await client.PostRequestObject<Status>(FanfouConsts.STATUS_DESTROY, parameters);
+                if (StatusDestroySuccess != null)
+                    StatusDestroySuccess(result, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                if (StatusDestroyFailed != null)
+                    StatusDestroyFailed(this, new FailedEventArgs());
+            }
         }
 
         public async void StatusContextTimeline(string id)

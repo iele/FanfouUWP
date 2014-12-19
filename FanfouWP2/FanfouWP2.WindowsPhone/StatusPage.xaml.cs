@@ -33,7 +33,52 @@ namespace FanfouWP2
 
             FanfouAPI.FanfouAPI.Instance.ContextTimelineSuccess += Instance_ContextTimelineSuccess;
             FanfouAPI.FanfouAPI.Instance.ContextTimelineFailed += Instance_ContextTimelineFailed;
+
+            FanfouAPI.FanfouAPI.Instance.FavoritesCreateSuccess += Instance_FavoritesCreateSuccess;
+            FanfouAPI.FanfouAPI.Instance.FavoritesCreateFailed += Instance_FavoritesCreateFailed;
+
+            FanfouAPI.FanfouAPI.Instance.FavoritesDestroySuccess += Instance_FavoritesDestroySuccess;
+            FanfouAPI.FanfouAPI.Instance.FavoritesDestroyFailed += Instance_FavoritesDestroyFailed;
+
+            FanfouAPI.FanfouAPI.Instance.StatusDestroySuccess += Instance_StatusDestroySuccess;
+            FanfouAPI.FanfouAPI.Instance.StatusDestroyFailed += Instance_StatusDestroyFailed;
         }
+
+        void Instance_StatusDestroyFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_StatusDestroySuccess(object sender, EventArgs e)
+        {
+            navigationHelper.GoBack();
+        }
+
+        void Instance_FavoritesDestroyFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_FavoritesDestroySuccess(object sender, EventArgs e)
+        {
+            status = sender as Status;
+            defaultViewModel["status"] = status;
+
+            this.FavItem.Label = "收藏";
+            this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
+        }
+
+        void Instance_FavoritesCreateFailed(object sender, FailedEventArgs e)
+        {
+        }
+
+        void Instance_FavoritesCreateSuccess(object sender, EventArgs e)
+        {
+            status = sender as Status;
+            defaultViewModel["status"] = status;
+
+            this.FavItem.Label = "取消收藏";
+            this.FavItem.Icon = new SymbolIcon(Symbol.UnFavorite);
+        }
+
 
         /// <summary>
         ///     获取与此 <see cref="Page" /> 关联的 <see cref="NavigationHelper" />。
@@ -92,6 +137,27 @@ namespace FanfouWP2
 
             loading.Visibility = Visibility.Collapsed;
 
+            if (this.status.favorited)
+            {
+                this.FavItem.Label = "取消收藏";
+                this.FavItem.Icon = new SymbolIcon(Symbol.UnFavorite);
+            }
+            else
+            {
+                this.FavItem.Label = "收藏";
+                this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
+            }
+
+            if (this.status.user.id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
+            {
+                this.DeleteItem.Visibility = Visibility.Visible;
+                this.DeleteItem.IsEnabled = true;
+            }
+            else {
+                this.DeleteItem.Visibility = Visibility.Collapsed;
+                this.DeleteItem.IsEnabled = false;
+            }
+
             if (status.in_reply_to_status_id != null && status.in_reply_to_status_id != "")
             {
                 loading.Visibility = Visibility.Visible;
@@ -115,31 +181,35 @@ namespace FanfouWP2
 
         private void RepostItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
+            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
         }
 
         private void UserItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (UserPage), status.user);
+            Frame.Navigate(typeof(UserPage), status.user);
         }
 
         private void FavItem_Click(object sender, RoutedEventArgs e)
         {
+            if (!this.status.favorited)
+                FanfouAPI.FanfouAPI.Instance.FavoritesCreate(this.status.id);
+            else
+                FanfouAPI.FanfouAPI.Instance.FavoritesDestroy(this.status.id);
         }
 
         private void ReplyItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
+            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
         }
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (ImagePage), status.photo.largeurl);
+            Frame.Navigate(typeof(ImagePage), status.photo.largeurl);
         }
 
         private void Profile_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (UserPage), status.user);
+            Frame.Navigate(typeof(UserPage), status.user);
         }
 
         #region NavigationHelper 注册
@@ -170,5 +240,10 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        {
+            FanfouAPI.FanfouAPI.Instance.StatusDestroy(this.status.id);
+        }
     }
 }

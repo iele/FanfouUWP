@@ -319,14 +319,6 @@
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="NotificationsExtensions.WinRT">
-      <HintPath>..\..\packages\NotificationsExtensions.WinRT.1.0.1\lib\netcore45\NotificationsExtensions.WinRT.dll</HintPath>
-    </Reference>
-    <Reference Include="Windows.UI.Interactivity">
-      <HintPath>..\..\packages\Expression.Blend.Sdk.1.0.2\lib\netcore451\Windows.UI.Interactivity.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
