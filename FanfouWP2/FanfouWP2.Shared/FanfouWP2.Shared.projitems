@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\XAuthHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NavigationControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\TimelineCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TimelineStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\EvilTransform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\GeoLocator.cs" />

@@ -50,6 +50,7 @@ namespace FanfouWP2
 
         void Instance_StatusDestroySuccess(object sender, EventArgs e)
         {
+            Utils.TimelineCache.Instance.FindAndDelete(this.status);
             navigationHelper.GoBack();
         }
 
@@ -61,9 +62,10 @@ namespace FanfouWP2
         {
             status = sender as Status;
             defaultViewModel["status"] = status;
-
             this.FavItem.Label = "收藏";
             this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
+
+            Utils.TimelineCache.Instance.FindAndChange(status);
         }
 
         void Instance_FavoritesCreateFailed(object sender, FailedEventArgs e)
@@ -74,9 +76,10 @@ namespace FanfouWP2
         {
             status = sender as Status;
             defaultViewModel["status"] = status;
-
             this.FavItem.Label = "取消收藏";
             this.FavItem.Icon = new SymbolIcon(Symbol.UnFavorite);
+
+            Utils.TimelineCache.Instance.FindAndChange(status);
         }
 
 

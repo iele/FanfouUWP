@@ -18,8 +18,11 @@ namespace FanfouWP2
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
-        private readonly PaginatedCollection<Status> mentions = new PaginatedCollection<Status>();
-        private readonly PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
+        private readonly TimelineCache cache = Utils.TimelineCache.Instance;
+
+        public readonly PaginatedCollection<Status> mentions;
+        public readonly PaginatedCollection<Status> statuses;
+        
         private User currentUser = new User();
 
         private TimelineStorage<Status> storage = new TimelineStorage<Status>();
@@ -27,6 +30,9 @@ namespace FanfouWP2
         public HomePage()
         {
             InitializeComponent();
+
+            statuses = cache.statuses;
+            mentions = cache.mentions;
 
             mentions.load = async () =>
             {
@@ -73,12 +79,18 @@ namespace FanfouWP2
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["currentUser"] = currentUser;
 
-            var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
-            if (s1 != null)
-                StatusesReform.reform(this.statuses, s1.ToList());
-            var s2 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
-            if (s2 != null)
-                StatusesReform.reform(this.mentions, s2.ToList());
+            if (this.statuses.Count == 0)
+            {
+                var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
+                if (s1 != null)
+                    StatusesReform.reform(this.statuses, s1.ToList());
+            }
+            if (this.mentions.Count == 0)
+            {
+                var s2 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
+                if (s2 != null)
+                    StatusesReform.reform(this.mentions, s2.ToList());
+            }
 
             defaultViewModel["statuses"] = statuses;
             defaultViewModel["mentions"] = mentions;
