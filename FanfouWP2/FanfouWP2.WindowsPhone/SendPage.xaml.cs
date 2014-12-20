@@ -117,6 +117,9 @@ namespace FanfouWP2
         private void Instance_StatusUpdateSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
+
+            Utils.ToastShow.ShowToast("饭窗","消息发送成功");
+
             navigationHelper.GoBack();
         }
 
