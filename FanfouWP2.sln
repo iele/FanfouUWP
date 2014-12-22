@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanfouWP2.WindowsPhone", "F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4310FA65-2B1F-4A95-ABD1-8AC141EA164C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit.Controls (WP81)", "..\..\..\Source\Repos\coding4fun\source\Coding4Fun.Toolkit.Controls.WindowsPhone81\Coding4Fun.Toolkit.Controls (WP81).csproj", "{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit (Universal)", "..\coding4fun\source\Coding4Fun.Toolkit\Coding4Fun.Toolkit (Universal).csproj", "{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit (Universal)", "..\..\..\Source\Repos\coding4fun\source\Coding4Fun.Toolkit\Coding4Fun.Toolkit (Universal).csproj", "{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit.Controls (WP81)", "..\coding4fun\source\Coding4Fun.Toolkit.Controls.WindowsPhone81\Coding4Fun.Toolkit.Controls (WP81).csproj", "{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -55,16 +55,6 @@ Global
 		{73DD8DB4-7275-4D8B-9777-143D8E52A20A}.Release|x86.ActiveCfg = Release|x86
 		{73DD8DB4-7275-4D8B-9777-143D8E52A20A}.Release|x86.Build.0 = Release|x86
 		{73DD8DB4-7275-4D8B-9777-143D8E52A20A}.Release|x86.Deploy.0 = Release|x86
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|ARM.ActiveCfg = Release|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|x64.ActiveCfg = Release|Any CPU
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|x86.ActiveCfg = Release|Any CPU
 		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -81,6 +71,16 @@ Global
 		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}.Release|x64.Build.0 = Release|x64
 		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}.Release|x86.ActiveCfg = Release|x86
 		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}.Release|x86.Build.0 = Release|x86
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|ARM.ActiveCfg = Release|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|x64.ActiveCfg = Release|Any CPU
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,7 +88,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A8FF9E36-9637-4251-84F0-73619B71FFFB} = {66C733D5-5DF1-4D80-AEC1-BCFBC8407237}
 		{73DD8DB4-7275-4D8B-9777-143D8E52A20A} = {66C733D5-5DF1-4D80-AEC1-BCFBC8407237}
-		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829} = {66C733D5-5DF1-4D80-AEC1-BCFBC8407237}
 		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8} = {66C733D5-5DF1-4D80-AEC1-BCFBC8407237}
+		{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829} = {66C733D5-5DF1-4D80-AEC1-BCFBC8407237}
 	EndGlobalSection
 EndGlobal
