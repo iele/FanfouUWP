@@ -7,6 +7,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using FanfouWP2.FanfouAPI;
 using FanfouWP2.Utils;
+using FanfouWP2.FanfouAPI.Events;
+using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.CustomControl
 {

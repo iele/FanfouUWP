@@ -102,25 +102,25 @@ namespace FanfouWP2
 
         private void Instance_PhotosUploadFailed(object sender, FailedEventArgs e)
         {
+            Utils.ToastShow.ShowInformation("图片发送失败");
         }
 
         private void Instance_PhotosUploadSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
-            navigationHelper.GoBack();
+            Utils.ToastShow.ShowInformation("图片发送成功", () => navigationHelper.GoBack());
         }
 
         private void Instance_StatusUpdateFailed(object sender, FailedEventArgs e)
         {
+            Utils.ToastShow.ShowInformation("消息发送失败");
         }
 
         private void Instance_StatusUpdateSuccess(object sender, EventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
+            Utils.ToastShow.ShowInformation("消息发送成功", () => navigationHelper.GoBack());
 
-            Utils.ToastShow.ShowToast("饭窗","消息发送成功");
-
-            navigationHelper.GoBack();
         }
 
         /// <summary>
@@ -138,8 +138,8 @@ namespace FanfouWP2
         /// </param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            getLocation(); 
-            
+            getLocation();
+
             if (e.NavigationParameter != null)
             {
                 dynamic param = e.NavigationParameter;

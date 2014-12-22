@@ -1,5 +1,5 @@
-﻿using Windows.UI.Notifications;
-using NotificationsExtensions.ToastContent;
+﻿using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 
 namespace FanfouWP2.Utils
 {
@@ -7,12 +7,12 @@ namespace FanfouWP2.Utils
     {
         public static void ShowToast(string title, string content)
         {
-            IToastText02 templateContent = ToastContentFactory.CreateToastText02();
-            templateContent.TextHeading.Text = title;
-            templateContent.TextBodyWrap.Text = content;
-            templateContent.Duration = ToastDuration.Short;
+            XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            XmlNodeList toastNodeList = toastXml.GetElementsByTagName("text");
+            toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(title));
+            toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(content));
 
-            var toast = new ToastNotification(templateContent.GetXml());
+            ToastNotification toast = new ToastNotification(toastXml);
             ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
     }

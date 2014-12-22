@@ -109,6 +109,8 @@ namespace FanfouWP2
         private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
+
+            Utils.ToastShow.ShowInformation("时间线更新失败");
         }
 
         private void Instance_MentionTimelineSuccess(object sender, EventArgs e)
@@ -131,6 +133,8 @@ namespace FanfouWP2
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
+
+            Utils.ToastShow.ShowInformation("时间线更新失败");
         }
 
         private void Instance_HomeTimelineSuccess(object sender, EventArgs e)
