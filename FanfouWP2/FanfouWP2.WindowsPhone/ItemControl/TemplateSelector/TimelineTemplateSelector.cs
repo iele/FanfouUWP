@@ -8,12 +8,12 @@ namespace FanfouWP2.ItemControl.TemplateSelector
     {
         public DataTemplate StatusTemplate { get; set; }
 
-        public DataTemplate UserTemplate { get; set; }
+        public DataTemplate RefreshTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            if (item is User)
-                return UserTemplate;
+            if ((item as Status).is_refresh == true)
+                return RefreshTemplate;
             return StatusTemplate;
         }
     }
