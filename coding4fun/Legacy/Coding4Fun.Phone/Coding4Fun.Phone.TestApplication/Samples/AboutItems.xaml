@@ -1,0 +1,109 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Coding4Fun.Phone.TestApplication.Samples.AboutItems"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:c4f="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls" 
+    xmlns:ms="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:Controls="clr-namespace:Coding4Fun.Phone.Site.Controls;assembly=Coding4Fun.Phone.Site.Controls"
+    xmlns:Converters="clr-namespace:Coding4Fun.Phone.Controls.Converters;assembly=Coding4Fun.Phone.Controls"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480">
+    <phone:PhoneApplicationPage.Resources>
+        <Converters:ThemedImageConverter x:Key="c4fThemedImageConverter" />
+    </phone:PhoneApplicationPage.Resources>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+		<ms:Pivot Title="{StaticResource AppName}">
+			<ms:PivotItem Header="static">
+				<Grid Margin="-12, 0">
+					
+                    <Controls:Coding4FunFooter />
+                    <Controls:Coding4FunWaterMark />
+					
+					<c4f:AboutPrompt IsPromptMode="False">
+						<c4f:AboutPrompt.Body>
+							<StackPanel>
+								<c4f:AboutPersonItem 
+									EmailAddress="clint@rutkas.com" 
+									Role="foo" />
+								<c4f:AboutPersonItem
+									WebSiteUrl="www.twitter.com/clintrutkas" 
+									AuthorName="Clint Rutkas"
+									EmailAddress="foo@bar.com"
+									Role="bar" />
+							</StackPanel>
+						</c4f:AboutPrompt.Body>
+						<c4f:AboutPrompt.WaterMark>
+							<Image 
+								Opacity=".05"  
+								Stretch="None"
+								VerticalAlignment="Bottom"
+								HorizontalAlignment="Right"
+								Source="/Coding4Fun.Phone.Site.Controls;component/Media/icons/dark/head.png"
+								Margin="-20, -20">
+								<Image.Clip>
+									<RectangleGeometry Rect="0,0,255,274" />
+								</Image.Clip>
+							</Image>
+						</c4f:AboutPrompt.WaterMark>
+						<c4f:AboutPrompt.Footer>
+							<StackPanel>
+								<TextBlock 
+									TextWrapping="Wrap"
+									Margin="0">
+										Application has been open sourced by
+								</TextBlock>
+								<Image 
+									Margin="0,5,10,5"
+									Source="/Coding4Fun.Phone.Site.Controls;component/Media/icons/dark/coding4funLogo.png"
+									Stretch="None"
+									HorizontalAlignment="Right" />
+							</StackPanel>
+						</c4f:AboutPrompt.Footer>
+					</c4f:AboutPrompt>
+				</Grid>
+			</ms:PivotItem>
+			
+			<ms:PivotItem Header="prompts">
+				<StackPanel>
+					<Button Content="Basic" Click="About_Click" />
+					<Button Content="Advanced" Click="C4F_Click" />
+				</StackPanel>
+			</ms:PivotItem>
+
+			<ms:PivotItem Header="item">
+				<StackPanel>
+
+					<c4f:AboutPersonItem 
+						EmailAddress="clint@rutkas.com" 
+						Role="foo" />
+					<c4f:AboutPersonItem
+						WebSiteUrl="www.twitter.com/clintrutkas" 
+						AuthorName="Clint Rutkas"
+						EmailAddress="foo@bar.com"
+						Role="me" />
+				</StackPanel>
+			</ms:PivotItem>
+		</ms:Pivot>
+    </Grid>
+ 
+    <!--Sample code showing usage of ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+</phone:PhoneApplicationPage>

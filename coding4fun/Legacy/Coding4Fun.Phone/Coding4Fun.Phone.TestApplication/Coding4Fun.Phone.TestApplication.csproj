@@ -1,0 +1,428 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53FC1A6D-5AC5-4E03-BF76-015D6014DC2E}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Coding4Fun.Phone.TestApplication</RootNamespace>
+    <AssemblyName>Coding4Fun.Phone.TestApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>fr;es;it;de;kr</SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>Coding4Fun.Phone.TestApplication.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Coding4Fun.Phone.TestApplication.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug\WP7\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release\WP7\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <HintPath>..\packages\SilverlightToolkitWP.4.2011.12.14\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls">
+      <HintPath>External\System.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>External\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Samples\AboutItems.xaml.cs">
+      <DependentUpon>AboutItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Audio.xaml.cs">
+      <DependentUpon>Audio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Binding.xaml.cs">
+      <DependentUpon>Binding.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Buttons\ImageTiles.xaml.cs">
+      <DependentUpon>ImageTiles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Buttons\OpacityToggleButtons.xaml.cs">
+      <DependentUpon>OpacityToggleButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Buttons\RoundButtons.xaml.cs">
+      <DependentUpon>RoundButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Buttons\RoundToggleButtons.xaml.cs">
+      <DependentUpon>RoundToggleButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Buttons\StressTests.xaml.cs">
+      <DependentUpon>StressTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Buttons\Tiles.xaml.cs">
+      <DependentUpon>Tiles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ChatBubbleControls.xaml.cs">
+      <DependentUpon>ChatBubbleControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ChatBubbles\ChatBubbles.xaml.cs">
+      <DependentUpon>ChatBubbles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ChatBubbles\ChatBubbleTextBoxes.xaml.cs">
+      <DependentUpon>ChatBubbleTextBoxes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ColorControls.xaml.cs">
+      <DependentUpon>ColorControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Color\ColorHexPicker.xaml.cs">
+      <DependentUpon>ColorHexPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Color\ColorPicker.xaml.cs">
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Color\ColorSlider.xaml.cs">
+      <DependentUpon>ColorSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\ButtonControls.xaml.cs">
+      <DependentUpon>ButtonControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Gzip.xaml.cs">
+      <DependentUpon>Gzip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Memory.xaml.cs">
+      <DependentUpon>Memory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\MetroFlow.xaml.cs">
+      <DependentUpon>MetroFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Overlays.xaml.cs">
+      <DependentUpon>Overlays.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\PromptControls.xaml.cs">
+      <DependentUpon>PromptControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\PromptStressTest.xaml.cs">
+      <DependentUpon>PromptStressTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Prompts\AboutPrompts.xaml.cs">
+      <DependentUpon>AboutPrompts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Prompts\AppBarPrompts.xaml.cs">
+      <DependentUpon>AppBarPrompts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Prompts\InputPrompts.xaml.cs">
+      <DependentUpon>InputPrompts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Prompts\MessagePrompts.xaml.cs">
+      <DependentUpon>MessagePrompts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Prompts\PasswordInputPrompts.xaml.cs">
+      <DependentUpon>PasswordInputPrompts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Prompts\ToastPrompts.xaml.cs">
+      <DependentUpon>ToastPrompts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Slider.xaml.cs">
+      <DependentUpon>Slider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Storage.xaml.cs">
+      <DependentUpon>Storage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Samples\Timespan.xaml.cs">
+      <DependentUpon>Timespan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Test\InheritedTextBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test\TestSerializeClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\AboutItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Audio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Binding.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Buttons\ImageTiles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Buttons\OpacityToggleButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Buttons\RoundButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Buttons\RoundToggleButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Buttons\StressTests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Buttons\Tiles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ChatBubbleControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ChatBubbles\ChatBubbles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ChatBubbles\ChatBubbleTextBoxes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\ColorControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Color\ColorHexPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Color\ColorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Color\ColorSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\ButtonControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Gzip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Memory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\MetroFlow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Overlays.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\PromptControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\PromptStressTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Prompts\AboutPrompts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Prompts\AppBarPrompts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Samples\Prompts\InputPrompts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Prompts\MessagePrompts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Prompts\PasswordInputPrompts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Prompts\ToastPrompts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Slider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Storage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Samples\Timespan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Media\images\0.jpg" />
+    <Resource Include="Media\images\1.jpg" />
+    <Resource Include="Media\images\10.jpg" />
+    <Resource Include="Media\images\11.jpg" />
+    <Resource Include="Media\images\12.jpg" />
+    <Resource Include="Media\images\13.jpg" />
+    <Resource Include="Media\images\14.jpg" />
+    <Resource Include="Media\images\15.jpg" />
+    <Resource Include="Media\images\16.jpg" />
+    <Resource Include="Media\images\17.jpg" />
+    <Resource Include="Media\images\18.jpg" />
+    <Resource Include="Media\images\19.jpg" />
+    <Resource Include="Media\images\2.jpg" />
+    <Resource Include="Media\images\20.jpg" />
+    <Resource Include="Media\images\21.jpg" />
+    <Resource Include="Media\images\22.jpg" />
+    <Resource Include="Media\images\23.jpg" />
+    <Resource Include="Media\images\24.jpg" />
+    <Resource Include="Media\images\25.jpg" />
+    <Resource Include="Media\images\26.jpg" />
+    <Resource Include="Media\images\27.jpg" />
+    <Resource Include="Media\images\28.jpg" />
+    <Resource Include="Media\images\29.jpg" />
+    <Resource Include="Media\images\3.jpg" />
+    <Resource Include="Media\images\30.jpg" />
+    <Resource Include="Media\images\31.jpg" />
+    <Resource Include="Media\images\32.jpg" />
+    <Resource Include="Media\images\33.jpg" />
+    <Resource Include="Media\images\34.jpg" />
+    <Resource Include="Media\images\4.jpg" />
+    <Resource Include="Media\images\5.jpg" />
+    <Resource Include="Media\images\6.jpg" />
+    <Resource Include="Media\images\7.jpg" />
+    <Resource Include="Media\images\8.jpg" />
+    <Resource Include="Media\images\9.jpg" />
+    <Resource Include="Media\images\PlaceholderPhoto.png" />
+    <None Include="Manifests\WP7.xml" />
+    <Content Include="Media\icons\appbar.prompt.four.rest.png" />
+    <Content Include="Media\icons\appbar.prompt.three.rest.png" />
+    <Content Include="Media\icons\appbar.prompt.two.rest.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+    <Resource Include="Media\c4f_26x26.png" />
+    <Resource Include="Media\head.png" />
+    <Resource Include="Media\headWhite.png" />
+    <Resource Include="Media\headWhite_100.png" />
+    <Content Include="Media\icons\appbar.share.rest.png" />
+    <Content Include="Media\icons\appbar.add.rest.png" />
+    <Content Include="Media\icons\appbar.check.rest.png" />
+    <Resource Include="Media\Coding4FunProject.png" />
+    <Content Include="Media\icons\appbar.minus.rest.png" />
+    <Content Include="Media\icons\appbar.repeat.png" />
+    <Resource Include="Media\images\trex_360width.jpg" />
+    <Resource Include="Media\images\lamp.jpg" />
+    <Resource Include="Media\images\robot.jpg" />
+    <Resource Include="Media\images\Seattle.jpg" />
+    <Content Include="SplashScreenImage.jpg" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coding4Fun.Phone.Audio\Coding4Fun.Phone.Audio.csproj">
+      <Project>{78BFE08B-7F0A-4A2E-8000-B75E6B97536E}</Project>
+      <Name>Coding4Fun.Phone.Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Coding4Fun.Phone.Controls.Toolkit\Coding4Fun.Phone.Controls.Toolkit.csproj">
+      <Project>{B58CFF25-E379-4719-81A3-59905027BC00}</Project>
+      <Name>Coding4Fun.Phone.Controls.Toolkit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Coding4Fun.Phone.Controls\Coding4Fun.Phone.Controls.csproj">
+      <Project>{09AC45C7-27E8-4A39-B2C4-0031111595D5}</Project>
+      <Name>Coding4Fun.Phone.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Coding4Fun.Phone.Net\Coding4Fun.Phone.Net.csproj">
+      <Project>{E3E35B44-6B0A-49B6-8396-E4A3FAA98E28}</Project>
+      <Name>Coding4Fun.Phone.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Coding4Fun.Phone.Site.Controls\Coding4Fun.Phone.Site.Controls.csproj">
+      <Project>{B5067622-7764-488C-AABE-FBE0D3BE9F65}</Project>
+      <Name>Coding4Fun.Phone.Site.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Coding4Fun.Phone.Storage\Coding4Fun.Phone.Storage.csproj">
+      <Project>{C0ACC865-5179-41F4-A517-044E2784A805}</Project>
+      <Name>Coding4Fun.Phone.Storage</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+  <PropertyGroup>
+    <PreBuildEvent>copy "$(ProjectDir)Manifests\WP7.xml" "$(ProjectDir)Properties\WMAppManifest.xml"</PreBuildEvent>
+  </PropertyGroup>
+</Project>

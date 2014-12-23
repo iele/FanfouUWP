@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="FileExplorerExperimental.Control.FileExplorer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    xmlns:stock="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:converters="clr-namespace:FileExplorerExperimental.Control.Interop.Converters">
+
+    <UserControl.Resources>
+        <converters:ExplorerTypeToIconConverter x:Key="ExplorerTypeToIconConverter"></converters:ExplorerTypeToIconConverter>
+        <converters:SelectionModeToVisibilityConverter x:Key="SelectionModeToVisibility" ParentSelectionMode="{Binding SelectionMode}"></converters:SelectionModeToVisibilityConverter>
+    </UserControl.Resources>
+
+    <Popup x:Name="RootPopup">
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="90"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.Background>
+                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"></SolidColorBrush>
+            </Grid.Background>
+
+            <Grid Margin="8">
+                <TextBox IsReadOnly="True" Text="{Binding Path=CurrentPath}"></TextBox>
+            </Grid>
+
+            <stock:LongListSelector Margin="8" Grid.Row="1" x:Name="lstCore" 
+                 ItemsSource="{Binding CurrentItems}">
+                <stock:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Visibility="{Binding ConverterParameter=selector,Converter={StaticResource SelectionModeToVisibility}}" IsChecked="{Binding Selected, Mode=TwoWay}"></CheckBox>
+                            
+                            <StackPanel Tag="{Binding}" Orientation="Horizontal" Tap="FileExplorerItemSelect">
+                                <Image Height="64" Width="64" VerticalAlignment="Center" Source="{Binding IsFolder, Converter={StaticResource ExplorerTypeToIconConverter}}"></Image>
+                                <TextBlock VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}" Foreground="White" Text="{Binding}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </stock:LongListSelector.ItemTemplate>
+            </stock:LongListSelector>
+
+            <StackPanel VerticalAlignment="Top" Grid.Row="2" Orientation="Horizontal">
+                <Button x:Name="btnOpen" Click="btnOpen_Click" Height="90"  Visibility="{Binding SelectionMode, ConverterParameter=opener,Converter={StaticResource SelectionModeToVisibility}}">
+                    <Image Source="/Assets/Icons/appbar.folder.open.png"></Image>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Popup>
+</UserControl>

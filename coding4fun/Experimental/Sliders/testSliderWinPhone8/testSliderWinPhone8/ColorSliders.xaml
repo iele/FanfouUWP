@@ -1,0 +1,67 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="testSliderWinPhone8.ColorSliders"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Coding4Fun.Toolkit.Controls"
+    xmlns:testSliderWinPhone8="clr-namespace:testSliderWinPhone8"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <!--ContentPanel - place additional content here-->
+		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+			<!--<controls:ColorSlider 
+				Height="100" 
+				Orientation="Horizontal" />
+			<controls:ColorSlider 
+				Width="100" />-->
+			<StackPanel>
+				<StackPanel>
+					<controls:ColorSlider2 
+						Orientation="Horizontal" />
+					<controls:ColorSlider2 
+						IsColorVisible="False"
+						Orientation="Horizontal" />
+					<controls:ColorSlider2 
+						IsEnabled="False"
+						Orientation="Horizontal" />
+					<controls:ColorSlider2 
+						IsEnabled="False"
+						IsColorVisible="False"
+						Orientation="Horizontal" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" Height="300">
+					<controls:ColorSlider2 
+						Orientation="Vertical" />
+					<controls:ColorSlider2 
+						IsColorVisible="False"
+						Orientation="Vertical" />
+					<controls:ColorSlider2 
+						IsEnabled="False"
+						Orientation="Vertical" />
+					<controls:ColorSlider2 
+						IsEnabled="False"
+						IsColorVisible="False"
+						Orientation="Vertical" />
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+		<StackPanel Grid.Row="2" Orientation="Horizontal">
+			<Button Click="HorizontalClick">Horizontal</Button>
+			<Button Click="VerticalClick">Vertical</Button>
+			<Button Click="ColorClick">Color</Button>
+		</StackPanel>
+	</Grid>
+
+</phone:PhoneApplicationPage>
