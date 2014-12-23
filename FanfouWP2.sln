@@ -15,12 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanfouWP2.WindowsPhone", "F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4310FA65-2B1F-4A95-ABD1-8AC141EA164C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit (Universal)", "..\coding4fun\source\Coding4Fun.Toolkit\Coding4Fun.Toolkit (Universal).csproj", "{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit (Universal)", "coding4fun\source\Coding4Fun.Toolkit\Coding4Fun.Toolkit (Universal).csproj", "{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit.Controls (WP81)", "..\coding4fun\source\Coding4Fun.Toolkit.Controls.WindowsPhone81\Coding4Fun.Toolkit.Controls (WP81).csproj", "{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}"
-	ProjectSection(ProjectDependencies) = postProject
-		{260C066D-2DB6-4AC1-B69B-138C8C5CE4A8} = {260C066D-2DB6-4AC1-B69B-138C8C5CE4A8}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding4Fun.Toolkit.Controls (WP81)", "coding4fun\source\Coding4Fun.Toolkit.Controls.WindowsPhone81\Coding4Fun.Toolkit.Controls (WP81).csproj", "{37393A3C-DF37-4E1B-8B8A-2D91D6DC7829}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
