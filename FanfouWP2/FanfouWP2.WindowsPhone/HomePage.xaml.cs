@@ -22,7 +22,7 @@ namespace FanfouWP2
 
         public readonly PaginatedCollection<Status> mentions;
         public readonly PaginatedCollection<Status> statuses;
-        
+
         private User currentUser = new User();
 
         private TimelineStorage<Status> storage = new TimelineStorage<Status>();
@@ -85,11 +85,18 @@ namespace FanfouWP2
                 if (s1 != null)
                     StatusesReform.reform(this.statuses, s1.ToList());
             }
+            else {
+                StatusesReform.reform(this.statuses, new List<Status>());
+            }
             if (this.mentions.Count == 0)
             {
                 var s2 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
                 if (s2 != null)
                     StatusesReform.reform(this.mentions, s2.ToList());
+            }
+            else
+            {
+                StatusesReform.reform(this.mentions, new List<Status>());
             }
 
             defaultViewModel["statuses"] = statuses;
@@ -214,12 +221,39 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
+            if ((e.ClickedItem as Status).is_refresh)
+            {
+                try
+                {
+                    var prev = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) - 1];
+                    var next = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) + 1];
+                    if (prev.id != null && next.id != null)
+                        FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: next.id, max_id: prev.id);
+                }
+                catch (Exception) { 
+                }
+            }
+            else
+                Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
+            if ((e.ClickedItem as Status).is_refresh)
+            {
+                try
+                {
+                    var prev = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) - 1];
+                    var next = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) + 1];
+                    if (prev.id != null && next.id != null)
+                        FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: next.id, max_id: prev.id);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            else
+                Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         private void InformationButton_Click(object sender, RoutedEventArgs e)

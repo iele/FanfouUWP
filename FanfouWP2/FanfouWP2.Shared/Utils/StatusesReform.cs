@@ -13,19 +13,19 @@ namespace FanfouWP2.Utils
             lock (new Object())
             {
                 if (list.Count == 0)
-                    return;
+                    goto end;
 
                 if (statuses.Count == 0)
                 {
                     foreach (Status item in list)
                         statuses.Add(item);
-                    return;
+                    goto end;
                 }
 
                 if (list.Last().rawid > statuses.Last().rawid)
                 {
                     list.Reverse();
-                    if (list.Count >= 2)
+                    if (list.Count >= 20)
                     {
                         statuses.Insert(0, new Status { is_refresh = true });
                     }
@@ -36,7 +36,7 @@ namespace FanfouWP2.Utils
                             statuses.Insert(0, i);
                     }
 
-                    return;
+                    goto end;
                 }
 
                 if (list.First().rawid < statuses.First().rawid)
@@ -46,7 +46,7 @@ namespace FanfouWP2.Utils
                         if ((from s in statuses where s.id == i.id select s).Count() == 0)
                             statuses.Add(i);
                     }
-                    return;
+                    goto end;
                 }
 
                 for (int i = 0; i < list.Count; i++)
@@ -66,6 +66,21 @@ namespace FanfouWP2.Utils
                         statuses.Insert(j, list[i]);
                 equal:
                     ;
+                }
+
+            end:
+
+                if (statuses[0].is_refresh == true)
+                    statuses.Remove(statuses[0]);
+                if (statuses[statuses.Count - 1].is_refresh == true)
+                    statuses.Remove(statuses[statuses.Count - 1]);
+                for (int i = 0; i < statuses.Count - 1; i++)
+                {
+                    if (statuses[i].is_refresh == true && statuses[i + 1].is_refresh == true)
+                    {
+                        statuses.Remove(statuses[i + 1]);
+                        i += 1;
+                    }
                 }
             }
         }
