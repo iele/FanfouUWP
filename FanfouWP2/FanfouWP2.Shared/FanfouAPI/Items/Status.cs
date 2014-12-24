@@ -6,12 +6,13 @@ namespace FanfouWP2.FanfouAPI.Items
     [DataContract]
     public class Status : Item
     {
+        [DataMember(Name = "is_refresh", IsRequired = false)]
         public bool is_refresh { get; set; }
 
         [DataMember(Name = "created_at", IsRequired = false)]
         public string created_at { get; set; }
 
-        [DataMember(Name = "id", IsRequired = true)]
+        [DataMember(Name = "id", IsRequired = false)]
         public string id { get; set; }
 
         [DataMember(Name = "rawid", IsRequired = false)]

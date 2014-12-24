@@ -384,6 +384,16 @@
   <ItemGroup>
     <Folder Include="Themes\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\coding4fun\source\Coding4Fun.Toolkit.Controls.WindowsPhone81\Coding4Fun.Toolkit.Controls %28WP81%29.csproj">
+      <Project>{37393a3c-df37-4e1b-8b8a-2d91d6dc7829}</Project>
+      <Name>Coding4Fun.Toolkit.Controls %28WP81%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\coding4fun\source\Coding4Fun.Toolkit\Coding4Fun.Toolkit %28Universal%29.csproj">
+      <Project>{260c066d-2db6-4ac1-b69b-138c8c5ce4a8}</Project>
+      <Name>Coding4Fun.Toolkit %28Universal%29</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

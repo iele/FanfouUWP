@@ -25,11 +25,17 @@ namespace FanfouWP2.Utils
                 if (list.Last().rawid > statuses.Last().rawid)
                 {
                     list.Reverse();
+                    if (list.Count >= 2)
+                    {
+                        statuses.Insert(0, new Status { is_refresh = true });
+                    }
+
                     foreach (Status i in list)
                     {
                         if ((from s in statuses where s.id == i.id select s).Count() == 0)
                             statuses.Insert(0, i);
                     }
+
                     return;
                 }
 
@@ -58,7 +64,7 @@ namespace FanfouWP2.Utils
 
                     if ((from s in statuses where s.id == list[i].id select s).Count() == 0)
                         statuses.Insert(j, list[i]);
-                    equal:
+                equal:
                     ;
                 }
             }
