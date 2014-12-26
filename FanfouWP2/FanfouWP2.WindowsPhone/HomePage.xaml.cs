@@ -103,8 +103,15 @@ namespace FanfouWP2
             defaultViewModel["mentions"] = mentions;
 
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
-            FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
+            if (this.statuses.Count != 0)
+                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
+            else
+                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+
+            if (this.mentions.Count != 0)
+                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
+            else
+                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -227,8 +234,11 @@ namespace FanfouWP2
                 {
                     var prev = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) - 1];
                     var next = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) + 1];
+                    this.statuses.Remove(e.ClickedItem as Status);
                     if (prev.id != null && next.id != null)
+                    {
                         FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: next.id, max_id: prev.id);
+                    }
                 }
                 catch (Exception) { 
                 }
@@ -245,8 +255,11 @@ namespace FanfouWP2
                 {
                     var prev = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) - 1];
                     var next = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) + 1];
+                    this.mentions.Remove(e.ClickedItem as Status);
                     if (prev.id != null && next.id != null)
+                    {
                         FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: next.id, max_id: prev.id);
+                    }
                 }
                 catch (Exception)
                 {

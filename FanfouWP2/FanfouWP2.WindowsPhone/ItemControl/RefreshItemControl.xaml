@@ -9,9 +9,8 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     
-    <Grid>
+    <Grid Margin="0,24">
 	<ProgressBar x:Name="progressBar" Visibility="Collapsed" Margin="0" IsIndeterminate="True" Height="64" FontFamily="Portable User Interface"/>
-		<TextBlock Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Portable User Interface" Width="65536" Canvas.ZIndex="-3" Grid.Column="1"/>
 		<Grid Margin="0" Height="64">
 			<TextBlock x:Name="TextBlock" TextWrapping="Wrap" Text="点击此处加载未读消息" FontSize="24" TextAlignment="Center" FontFamily="Portable User Interface" LineHeight="16" Margin="0,0,0,-1" VerticalAlignment="Center" Foreground="{StaticResource PhoneAccentBrush}" Tapped="TextBlock_Tapped"/>
 		</Grid>

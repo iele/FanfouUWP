@@ -67,7 +67,7 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}"
                        FontSize="18.667" Margin="10,5,10,0" />
             <Image Margin="0,10,0,0" Grid.Row="1" Tapped="Image_Tapped" VerticalAlignment="Top" Stretch="UniformToFill"
-                   MaxHeight="150" utils:ImageExtensions.CacheUri="{Binding photo.largeurl}" />
+                   MaxHeight="150" utils:ImageExtensions.CacheUri="{Binding photo.thumburl}" />
         </Grid>
         <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" Stroke="DeepSkyBlue" StrokeThickness="2" />
         <Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Margin="0" Stroke="DeepSkyBlue" Width="5"
