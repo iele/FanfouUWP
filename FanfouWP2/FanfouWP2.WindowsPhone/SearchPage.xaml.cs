@@ -23,12 +23,12 @@ namespace FanfouWP2
         {
             InitializeComponent();
 
-            statuses.load = async () =>
+            statuses.load = async (c) =>
             {
                 if (statuses.Count > 0)
                 {
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60, max_id: this.statuses.Last().id);
+                    FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, c, max_id: this.statuses.Last().id);
                 }
             };
 
@@ -58,7 +58,6 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            statuses.Clear();
             StatusesReform.reform(statuses, ss);
             defaultViewModel["date"] = DateTime.Now.ToString();
         }

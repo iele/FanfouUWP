@@ -13,7 +13,6 @@
     IsTextScaleFactorEnabled="True"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}" NavigationCacheMode="Required">
     <Page.Resources>
-       
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}"
                                            Width="{Binding ActualWidth, ElementName=statusesGridView}"
@@ -41,9 +40,25 @@
             <ItemControl:FooterControl Width="{Binding ActualWidth, ElementName=statusesGridView}"
                                            Margin="0,3" />
         </DataTemplate>
-   
+
         <selector:TimelineTemplateSelector x:Key="StatusSelector" StatusTemplate="{StaticResource StatusItemControl}" RefreshTemplate="{StaticResource Refresh1ItemControl}"/>
         <selector:TimelineTemplateSelector x:Key="MentionsSelector" StatusTemplate="{StaticResource MentionsItemControl}" RefreshTemplate="{StaticResource Refresh2ItemControl}"/>
+
+        <DataTemplate x:Key="StatusesGridView">
+            <Grid>
+                <ListView ShowsScrollingPlaceholders="False" x:Name="statusesGridView"
+                                  ItemsSource="{Binding statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
+                                  Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}">
+                </ListView>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate  x:Key="MentionsGridView">
+            <Grid>
+                <ListView ShowsScrollingPlaceholders="True" x:Name="mentionsGridView"
+                                  ItemsSource="{Binding mentions}" ItemTemplateSelector="{StaticResource MentionsSelector}" 
+                                  Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}" />
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
@@ -87,28 +102,12 @@
             <Hub.Resources>
                 <DataTemplate x:Key="HubSectionHeader">
                     <Grid>
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="{Binding}" Foreground="Gray"/>
+                    	<TextBlock TextWrapping="NoWrap" VerticalAlignment="Top" Text="{Binding}" Foreground="Gray" HorizontalAlignment="Left"/>
                     </Grid>
                 </DataTemplate>
             </Hub.Resources>
-            <HubSection x:Name="statusesSection" Header="我的消息" Height="Auto" HeaderTemplate="{StaticResource HubSectionHeader}">
-                <DataTemplate>
-                    <Grid>
-                        <ListView ShowsScrollingPlaceholders="False" x:Name="statusesGridView"
-                                  ItemsSource="{Binding statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
-                                  Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}">
-                        </ListView>
-                    </Grid>
-                </DataTemplate>
-            </HubSection>
-            <HubSection Header="提及我的" x:Name="mentionsSection" HeaderTemplate="{StaticResource HubSectionHeader}">
-                <DataTemplate>
-                    <Grid>
-                        <ListView ShowsScrollingPlaceholders="True" x:Name="mentionsGridView"
-                                  ItemsSource="{Binding mentions}" ItemTemplateSelector="{StaticResource MentionsSelector}" 
-                                  Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}" />
-                    </Grid>
-                </DataTemplate>
+            <HubSection x:Name="statusesSection" Header="我的消息" Height="Auto" HeaderTemplate="{StaticResource HubSectionHeader}" ContentTemplate="{StaticResource StatusesGridView}" IsHeaderInteractive="True"/>
+            <HubSection Header="提及我的" x:Name="mentionsSection" HeaderTemplate="{StaticResource HubSectionHeader}" ContentTemplate="{StaticResource MentionsGridView}" IsHeaderInteractive="True">
             </HubSection>
             <HubSection x:Name="moreSection" Header="更多" HeaderTemplate="{StaticResource HubSectionHeader}">
                 <DataTemplate>

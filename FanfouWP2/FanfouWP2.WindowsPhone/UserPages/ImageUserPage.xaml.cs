@@ -24,12 +24,12 @@ namespace FanfouWP2.UserPages
         {
             InitializeComponent();
 
-            statuses.load = async () =>
+            statuses.load = async (c) =>
             {
                 if (statuses.Count > 0)
                 {
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60, max_id: statuses.Last().id);
+                    FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, c, max_id: statuses.Last().id);
                 }
             };
             navigationHelper = new NavigationHelper(this);
@@ -59,7 +59,6 @@ namespace FanfouWP2.UserPages
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            statuses.Clear();
             StatusesReform.reform(statuses, ss);
             defaultViewModel["date"] = DateTime.Now.ToString();
         }

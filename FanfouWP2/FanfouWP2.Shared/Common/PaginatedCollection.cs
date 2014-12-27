@@ -13,7 +13,7 @@ namespace FanfouWP2.Common
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
         public bool is_loading = false;
-        public Func<Task> load;
+        public Func<int, Task> load;
 
         public PaginatedCollection()
         {
@@ -30,7 +30,7 @@ namespace FanfouWP2.Common
                 {
                     try
                     {
-                        load();
+                        await load((int)count);
                     }
                     catch (Exception e)
                     {

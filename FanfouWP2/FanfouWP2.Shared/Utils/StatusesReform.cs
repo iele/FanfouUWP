@@ -22,7 +22,7 @@ namespace FanfouWP2.Utils
                         statuses.Add(item);
                     goto end;
                 }
-                else if (list.Last().rawid > statuses.Last().rawid)
+                else if (list.Last().rawid > statuses.First().rawid)
                 {
                     list.Reverse();
                     if (list.Count >= 20)
@@ -38,7 +38,7 @@ namespace FanfouWP2.Utils
                     goto end;
 
                 }
-                else if (list.First().rawid < statuses.First().rawid)
+                else if (list.First().rawid < statuses.Last().rawid)
                 {
                     foreach (Status i in list)
                     {
@@ -51,29 +51,30 @@ namespace FanfouWP2.Utils
                 {
                     for (int i = 0; i < list.Count; i++)
                     {
-                        int j = 0;
-                        for (j = 0; j < statuses.Count; j++)
+                        for (int j = 0; j < statuses.Count; j++)
                         {
                             if (list[i].rawid < statuses[j].rawid)
                                 continue;
                             if (list[i].rawid > statuses[j].rawid)
+                            {
+                                statuses.Insert(j, list[i]);
                                 break;
+                            }
                             if (list[i].rawid == statuses[j].rawid)
                                 goto equal;
                         }
 
-                        if ((from s in statuses where s.id == list[i].id select s).Count() == 0)
-                            statuses.Insert(j, list[i]);
                     equal:
                         ;
-                    }
-                    int k = 0;
-                    for (k = 0; k < statuses.Count; k++)
+                    } 
+                    if (list.Count >= 20)
                     {
-                        if (list.Last().rawid < statuses[k].rawid)
+                        int k = 0;
+                        for (k = 0; k < statuses.Count; k++)
                         {
-                            if (list.Count >= 20)
+                            if (list.Last().rawid > statuses[k].rawid)
                             {
+
                                 statuses.Insert(k, new Status { is_refresh = true });
                             }
                             break;

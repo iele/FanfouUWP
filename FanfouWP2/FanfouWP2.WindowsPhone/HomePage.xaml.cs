@@ -34,22 +34,22 @@ namespace FanfouWP2
             statuses = cache.statuses;
             mentions = cache.mentions;
 
-            mentions.load = async () =>
+            mentions.load = async (c) =>
             {
                 if (mentions.Count > 0)
                 {
                     mentions.is_loading = true;
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, max_id: mentions.Last().id);
+                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(c, max_id: mentions.Last().id);
                 }
             };
-            statuses.load = async () =>
+            statuses.load = async (c) =>
             {
                 if (statuses.Count > 0)
                 {
                     statuses.is_loading = true;
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, max_id: statuses.Last().id);
+                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(c, max_id: statuses.Last().id);
                 }
             };
 
@@ -85,14 +85,15 @@ namespace FanfouWP2
                 if (s1 != null)
                     StatusesReform.reform(this.statuses, s1.ToList());
             }
-            else {
+            else
+            {
                 StatusesReform.reform(this.statuses, new List<Status>());
             }
             if (this.mentions.Count == 0)
             {
-                var s2 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
-                if (s2 != null)
-                    StatusesReform.reform(this.mentions, s2.ToList());
+                var s20 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
+                if (s20 != null)
+                    StatusesReform.reform(this.mentions, s20.ToList());
             }
             else
             {
@@ -124,6 +125,8 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
 
+            mentions.is_loading = false;
+
             Utils.ToastShow.ShowInformation("时间线更新失败");
         }
 
@@ -131,10 +134,6 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            if (ss.Count == 0)
-            {
-                mentions.HasMoreItems = false;
-            }
             StatusesReform.reform(mentions, ss);
 
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
@@ -148,6 +147,8 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
 
+            statuses.is_loading = false;
+
             Utils.ToastShow.ShowInformation("时间线更新失败");
         }
 
@@ -155,10 +156,6 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
-            if (ss.Count == 0)
-            {
-                statuses.HasMoreItems = false;
-            }
             StatusesReform.reform(statuses, ss);
 
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
@@ -240,7 +237,8 @@ namespace FanfouWP2
                         FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: next.id, max_id: prev.id);
                     }
                 }
-                catch (Exception) { 
+                catch (Exception)
+                {
                 }
             }
             else
