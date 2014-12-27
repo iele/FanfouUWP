@@ -28,9 +28,6 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.FavoritesSuccess += Instance_FavoritesSuccess;
-            FanfouAPI.FanfouAPI.Instance.FavoritesFailed += Instance_FavoritesFailed;
         }
 
         public NavigationHelper NavigationHelper
@@ -43,43 +40,22 @@ namespace FanfouWP2
             get { return defaultViewModel; }
         }
 
-        private void Instance_FavoritesFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_FavoritesSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            if (ss.Count() != 0)
-            {
-                statuses.Clear();
-                StatusesReform.reform(statuses, ss);
-                defaultViewModel["page"] = "第" + page + "页";
-                changeMenu(false);
-            }
-            else
-            {
-                changeMenu(true);
-            }
-        }
-
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             user = e.NavigationParameter as User;
 
             if (e.PageState != null)
             {
                 if (e.PageState["page"] != null)
-                    page = (int) e.PageState["page"];
+                    page = (int)e.PageState["page"];
                 if (e.PageState["user"] != null)
                     user = e.PageState["user"] as User;
                 if (e.PageState["statuses"] != null)
                     statuses = e.PageState["statuses"] as ObservableCollection<Status>;
                 if (e.PageState["PrevItem.IsEnabled"] != null)
-                    PrevItem.IsEnabled = (bool) e.PageState["PrevItem.IsEnabled"];
+                    PrevItem.IsEnabled = (bool)e.PageState["PrevItem.IsEnabled"];
                 if (e.PageState["NextItem.IsEnabled"] != null)
-                    NextItem.IsEnabled = (bool) e.PageState["NextItem.IsEnabled"];
+                    NextItem.IsEnabled = (bool)e.PageState["NextItem.IsEnabled"];
             }
 
             defaultViewModel["statuses"] = statuses;
@@ -96,7 +72,28 @@ namespace FanfouWP2
             if (e.PageState == null)
             {
                 loading.Visibility = Visibility.Visible;
-                FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, 1);
+                try
+                {
+                    var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, 1);
+                    if (ss.Count() != 0)
+                    {
+                        statuses.Clear();
+                        StatusesReform.reform(statuses, ss);
+                        defaultViewModel["page"] = "第" + page + "页";
+                        changeMenu(false);
+                    }
+                    else
+                    {
+                        changeMenu(true);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    loading.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
@@ -109,23 +106,68 @@ namespace FanfouWP2
             e.PageState["NextItem.IsEnabled"] = NextItem.IsEnabled;
         }
 
-        private void PrevItem_Click(object sender, RoutedEventArgs e)
+        private async void PrevItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
             if (page >= 1)
             {
                 page--;
-                FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
-                changeMenu(false, true);
+
+                loading.Visibility = Visibility.Visible;
+                try
+                {
+                    changeMenu(false, true);
+                    var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
+                    if (ss.Count() != 0)
+                    {
+                        statuses.Clear();
+                        StatusesReform.reform(statuses, ss);
+                        defaultViewModel["page"] = "第" + page + "页";
+                        changeMenu(false);
+                    }
+                    else
+                    {
+                        changeMenu(true);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    loading.Visibility = Visibility.Collapsed;
+                }              
             }
         }
 
-        private void NextItem_Click(object sender, RoutedEventArgs e)
+        private async void NextItem_Click(object sender, RoutedEventArgs e)
         {
-            loading.Visibility = Visibility.Visible;
             page++;
-            FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
-            changeMenu(false, true);
+
+            loading.Visibility = Visibility.Visible;
+            try
+            {
+                changeMenu(false, true);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
+                if (ss.Count() != 0)
+                {
+                    statuses.Clear();
+                    StatusesReform.reform(statuses, ss);
+                    defaultViewModel["page"] = "第" + page + "页";
+                    changeMenu(false);
+                }
+                else
+                {
+                    changeMenu(true);
+                }
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }                          
         }
 
         private void changeMenu(bool is_end, bool is_disabled = false)
@@ -143,7 +185,7 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册

@@ -26,9 +26,6 @@ namespace FanfouWP2.UserPages
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.FavoritesSuccess += Instance_FavoritesSuccess;
-            FanfouAPI.FanfouAPI.Instance.FavoritesFailed += Instance_FavoritesFailed;
         }
 
         public NavigationHelper NavigationHelper
@@ -41,42 +38,56 @@ namespace FanfouWP2.UserPages
             get { return defaultViewModel; }
         }
 
-        private void Instance_FavoritesFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_FavoritesSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            statuses.Clear();
-            StatusesReform.reform(statuses, ss);
-            defaultViewModel["date"] = DateTime.Now.ToString();
-        }
-
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["statuses"] = statuses;
             user = e.NavigationParameter as User;
 
             title.Text = user.screen_name + "的收藏";
+
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60);
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60);
+                statuses.Clear();
+                StatusesReform.reform(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
 
-        private void RefreshItem_Click(object sender, RoutedEventArgs e)
+        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60);
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60);
+                statuses.Clear();
+                StatusesReform.reform(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册

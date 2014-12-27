@@ -23,7 +23,6 @@ namespace FanfouWP2
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
-        private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         private User user;
 
         public SelfPage()
@@ -33,9 +32,6 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.UserTimelineSuccess += Instance_UserTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.UserTimelineFailed += Instance_UserTimelineFailed;
         }
 
         /// <summary>
@@ -55,17 +51,6 @@ namespace FanfouWP2
             get { return defaultViewModel; }
         }
 
-        private void Instance_UserTimelineFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_UserTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            StatusesReform.reform(statuses, ss);
-        }
-
         /// <summary>
         ///     使用在导航过程中传递的内容填充页。  在从以前的会话
         ///     重新创建页时，也会提供任何已保存状态。
@@ -83,10 +68,6 @@ namespace FanfouWP2
         {
             user = e.NavigationParameter as User;
             defaultViewModel["user"] = user;
-            defaultViewModel["statuses"] = statuses;
-
-            loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 60);
         }
 
         /// <summary>
@@ -105,37 +86,37 @@ namespace FanfouWP2
 
         private void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (SearchUserPage), user);
+            Frame.Navigate(typeof(SearchUserPage), user);
         }
 
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (StatusUserPage), user);
+            Frame.Navigate(typeof(StatusUserPage), user);
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (FavoriteUserPage), user);
+            Frame.Navigate(typeof(FavoriteUserPage), user);
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (FollowersUserPage), user);
+            Frame.Navigate(typeof(FollowersUserPage), user);
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof (FriendsUserPage), user);
+            Frame.Navigate(typeof(FriendsUserPage), user);
         }
 
         private void StatusItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (TimelineUserPage), user);
+            Frame.Navigate(typeof(TimelineUserPage), user);
         }
 
         private void ImageItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof (ImageUserPage), user);
+            Frame.Navigate(typeof(ImageUserPage), user);
         }
 
         #region NavigationHelper 注册

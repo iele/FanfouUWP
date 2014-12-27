@@ -30,58 +30,7 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.ContextTimelineSuccess += Instance_ContextTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.ContextTimelineFailed += Instance_ContextTimelineFailed;
-
-            FanfouAPI.FanfouAPI.Instance.FavoritesCreateSuccess += Instance_FavoritesCreateSuccess;
-            FanfouAPI.FanfouAPI.Instance.FavoritesCreateFailed += Instance_FavoritesCreateFailed;
-
-            FanfouAPI.FanfouAPI.Instance.FavoritesDestroySuccess += Instance_FavoritesDestroySuccess;
-            FanfouAPI.FanfouAPI.Instance.FavoritesDestroyFailed += Instance_FavoritesDestroyFailed;
-
-            FanfouAPI.FanfouAPI.Instance.StatusDestroySuccess += Instance_StatusDestroySuccess;
-            FanfouAPI.FanfouAPI.Instance.StatusDestroyFailed += Instance_StatusDestroyFailed;
         }
-
-        void Instance_StatusDestroyFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        void Instance_StatusDestroySuccess(object sender, EventArgs e)
-        {
-            Utils.TimelineCache.Instance.FindAndDelete(this.status);
-            navigationHelper.GoBack();
-        }
-
-        void Instance_FavoritesDestroyFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        void Instance_FavoritesDestroySuccess(object sender, EventArgs e)
-        {
-            status = sender as Status;
-            defaultViewModel["status"] = status;
-            this.FavItem.Label = "收藏";
-            this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
-
-            Utils.TimelineCache.Instance.FindAndChange(status);
-        }
-
-        void Instance_FavoritesCreateFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        void Instance_FavoritesCreateSuccess(object sender, EventArgs e)
-        {
-            status = sender as Status;
-            defaultViewModel["status"] = status;
-            this.FavItem.Label = "取消收藏";
-            this.FavItem.Icon = new SymbolIcon(Symbol.UnFavorite);
-
-            Utils.TimelineCache.Instance.FindAndChange(status);
-        }
-
 
         /// <summary>
         ///     获取与此 <see cref="Page" /> 关联的 <see cref="NavigationHelper" />。
@@ -100,26 +49,6 @@ namespace FanfouWP2
             get { return defaultViewModel; }
         }
 
-        private void Instance_ContextTimelineFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_ContextTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-
-            var ss = sender as List<Status>;
-
-            foreach (Status item in ss)
-            {
-                var sic = new StatusItemControl();
-                sic.DataContext = item;
-                sic.Margin = new Thickness(0, 6, 0, 0);
-                context.Children.Add(sic);
-            }
-            context.Visibility = Visibility.Visible;
-        }
-
         /// <summary>
         ///     使用在导航过程中传递的内容填充页。  在从以前的会话
         ///     重新创建页时，也会提供任何已保存状态。
@@ -133,7 +62,7 @@ namespace FanfouWP2
         ///     此页在以前会话期间保留的状态的
         ///     字典。 首次访问页面时，该状态将为 null。
         /// </param>
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             status = e.NavigationParameter as Status;
             defaultViewModel["status"] = status;
@@ -156,7 +85,8 @@ namespace FanfouWP2
                 this.DeleteItem.Visibility = Visibility.Visible;
                 this.DeleteItem.IsEnabled = true;
             }
-            else {
+            else
+            {
                 this.DeleteItem.Visibility = Visibility.Collapsed;
                 this.DeleteItem.IsEnabled = false;
             }
@@ -164,7 +94,26 @@ namespace FanfouWP2
             if (status.in_reply_to_status_id != null && status.in_reply_to_status_id != "")
             {
                 loading.Visibility = Visibility.Visible;
-                FanfouAPI.FanfouAPI.Instance.StatusContextTimeline(status.id);
+                try
+                {
+                    var ss = await FanfouAPI.FanfouAPI.Instance.StatusContextTimeline(status.id);
+                    foreach (Status item in ss)
+                    {
+                        var sic = new StatusItemControl();
+                        sic.DataContext = item;
+                        sic.Margin = new Thickness(0, 6, 0, 0);
+                        context.Children.Add(sic);
+                    }
+                    context.Visibility = Visibility.Visible;
+                }
+                catch (Exception)
+                {
+
+                }
+                finally
+                {
+                    loading.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
@@ -192,12 +141,39 @@ namespace FanfouWP2
             Frame.Navigate(typeof(UserPage), status.user);
         }
 
-        private void FavItem_Click(object sender, RoutedEventArgs e)
+        private async void FavItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.status.favorited)
-                FanfouAPI.FanfouAPI.Instance.FavoritesCreate(this.status.id);
-            else
-                FanfouAPI.FanfouAPI.Instance.FavoritesDestroy(this.status.id);
+            loading.Visibility = Visibility.Visible;
+            try
+            {
+                if (!this.status.favorited)
+                {
+                    status = await FanfouAPI.FanfouAPI.Instance.FavoritesCreate(this.status.id);
+                    defaultViewModel["status"] = status;
+                    this.FavItem.Label = "取消收藏";
+                    this.FavItem.Icon = new SymbolIcon(Symbol.UnFavorite);
+
+                    Utils.TimelineCache.Instance.FindAndChange(status);
+                }
+
+                else
+                {
+                    status = await FanfouAPI.FanfouAPI.Instance.FavoritesDestroy(this.status.id);
+                    defaultViewModel["status"] = status;
+                    this.FavItem.Label = "收藏";
+                    this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
+                    Utils.TimelineCache.Instance.FindAndChange(status);
+                }
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+
+            }
+
         }
 
         private void ReplyItem_Click(object sender, RoutedEventArgs e)
@@ -244,9 +220,23 @@ namespace FanfouWP2
 
         #endregion
 
-        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        private async void DeleteItem_Click(object sender, RoutedEventArgs e)
         {
-            FanfouAPI.FanfouAPI.Instance.StatusDestroy(this.status.id);
+            loading.Visibility = Visibility.Visible;
+            try
+            {
+                var result = await FanfouAPI.FanfouAPI.Instance.StatusDestroy(this.status.id);
+                Utils.TimelineCache.Instance.FindAndDelete(this.status);
+                navigationHelper.GoBack();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

@@ -40,7 +40,20 @@ namespace FanfouWP2
                 {
                     mentions.is_loading = true;
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(c, max_id: mentions.Last().id);
+                    try
+                    {
+                        var result =
+                            await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(c, max_id: mentions.Last().id);
+                        Utils.StatusesReform.reform(mentions, result);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    finally
+                    {
+                        loading.Visibility = Visibility.Collapsed;
+                        mentions.is_loading = false;
+                    }
                 }
             };
             statuses.load = async (c) =>
@@ -49,19 +62,26 @@ namespace FanfouWP2
                 {
                     statuses.is_loading = true;
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(c, max_id: statuses.Last().id);
+                    try
+                    {
+                        var result =
+                            await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(c, max_id: statuses.Last().id);
+                        Utils.StatusesReform.reform(statuses, result);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    finally
+                    {
+                        loading.Visibility = Visibility.Collapsed;
+                        statuses.is_loading = false;
+                    }
                 }
             };
 
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineSuccess += Instance_HomeTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.HomeTimelineFailed += Instance_HomeTimelineFailed;
-
-            FanfouAPI.FanfouAPI.Instance.MentionTimelineSuccess += Instance_MentionTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.MentionTimelineFailed += Instance_MentionTimelineFailed;
         }
 
         public NavigationHelper NavigationHelper
@@ -104,15 +124,44 @@ namespace FanfouWP2
             defaultViewModel["mentions"] = mentions;
 
             loading.Visibility = Visibility.Visible;
-            if (this.statuses.Count != 0)
-                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
-            else
-                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+            try
+            {
+                if (this.statuses.Count != 0)
+                {
+                    var result =
+                        await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
+                    Utils.StatusesReform.reform(statuses, result);
+                }
+                else
+                {
+                    var result = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+                    Utils.StatusesReform.reform(statuses, result);
+                }
+            }
+            catch (Exception)
+            {
+            }
 
-            if (this.mentions.Count != 0)
-                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
-            else
-                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
+            try
+            {
+                if (this.mentions.Count != 0)
+                {
+                    var result =
+                        await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
+
+                    Utils.StatusesReform.reform(mentions, result);
+                }
+                else
+                {
+                    var result = await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
+                    Utils.StatusesReform.reform(mentions, result);
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            loading.Visibility = Visibility.Collapsed;
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -169,18 +218,47 @@ namespace FanfouWP2
             Frame.Navigate(typeof(PublicPage));
         }
 
-        private void RefreshItem_Click(object sender, RoutedEventArgs e)
+        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            if (this.statuses.Count != 0)
-                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
-            else
-                FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+            try
+            {
+                if (this.statuses.Count != 0)
+                {
+                    var result =
+                        await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
+                    Utils.StatusesReform.reform(statuses, result);
+                }
+                else
+                {
+                    var result = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+                    Utils.StatusesReform.reform(statuses, result);
+                }
+            }
+            catch (Exception)
+            {
+            }
 
-            if (this.mentions.Count != 0)
-                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
-            else
-                FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
+            try
+            {
+                if (this.mentions.Count != 0)
+                {
+                    var result =
+                        await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
+
+                    Utils.StatusesReform.reform(mentions, result);
+                }
+                else
+                {
+                    var result = await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
+                    Utils.StatusesReform.reform(mentions, result);
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            loading.Visibility = Visibility.Collapsed;
         }
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -223,7 +301,7 @@ namespace FanfouWP2
             Frame.Navigate(typeof(SendPage));
         }
 
-        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private async void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if ((e.ClickedItem as Status).is_refresh)
             {
@@ -234,7 +312,22 @@ namespace FanfouWP2
                     this.statuses.Remove(e.ClickedItem as Status);
                     if (prev.id != null && next.id != null)
                     {
-                        FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: next.id, max_id: prev.id);
+                        try
+                        {
+                            loading.Visibility = Visibility.Visible;
+                            var result =
+                                await
+                                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: next.id,
+                                        max_id: prev.id);
+                            Utils.StatusesReform.reform(statuses, result);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        finally
+                        {
+                            loading.Visibility = Visibility.Collapsed;
+                        }
                     }
                 }
                 catch (Exception)
@@ -245,7 +338,7 @@ namespace FanfouWP2
                 Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
-        private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private async void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if ((e.ClickedItem as Status).is_refresh)
             {
@@ -256,7 +349,22 @@ namespace FanfouWP2
                     this.mentions.Remove(e.ClickedItem as Status);
                     if (prev.id != null && next.id != null)
                     {
-                        FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: next.id, max_id: prev.id);
+                        try
+                        {
+                            loading.Visibility = Visibility.Visible;
+                            var result =
+                                await
+                                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: next.id,
+                                        max_id: prev.id);
+                            Utils.StatusesReform.reform(mentions, result);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        finally
+                        {
+                            loading.Visibility = Visibility.Collapsed;
+                        }
                     }
                 }
                 catch (Exception)

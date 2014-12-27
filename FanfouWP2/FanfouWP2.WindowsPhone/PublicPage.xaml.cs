@@ -25,9 +25,6 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.PublicTimelineSuccess += Instance_PublicTimelineSuccesss;
-            FanfouAPI.FanfouAPI.Instance.PublicTimelineFailed += Instance_PublicTimelineFailed;
         }
 
         public NavigationHelper NavigationHelper
@@ -42,38 +39,59 @@ namespace FanfouWP2
 
         private void Instance_PublicTimelineSuccesss(object sender, EventArgs e)
         {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            statuses.Clear();
-            StatusesReform.reform(statuses, ss);
-            defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
         private void Instance_PublicTimelineFailed(object sender, FailedEventArgs e)
         {
         }
 
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["statuses"] = statuses;
 
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                statuses.Clear();
+                StatusesReform.reform(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
 
-        private void RefreshItem_Click(object sender, RoutedEventArgs e)
+        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                statuses.Clear();
+                StatusesReform.reform(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册

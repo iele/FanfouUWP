@@ -23,10 +23,7 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.TrendsListSuccess += Instance_TrendsListSuccess;
-            FanfouAPI.FanfouAPI.Instance.TrendsListFailed += Instance_TrendsListFailed;
-        }
+       }
 
         public NavigationHelper NavigationHelper
         {
@@ -38,22 +35,7 @@ namespace FanfouWP2
             get { return defaultViewModel; }
         }
 
-        private void Instance_TrendsListFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_TrendsListSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            ObservableCollection<Trends> ss = (sender as TrendsList).trends;
-            trends.Clear();
-            foreach (Trends item in ss)
-            {
-                trends.Add(item);
-            }
-        }
-
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["trends"] = trends;
             loading.Visibility = Visibility.Visible;
@@ -66,7 +48,22 @@ namespace FanfouWP2
                 return;
             }
 
-            FanfouAPI.FanfouAPI.Instance.TrendsList();
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.TrendsList();
+                trends.Clear();
+                foreach (Trends item in ss.trends)
+                {
+                    trends.Add(item);
+                }
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

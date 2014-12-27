@@ -13,6 +13,7 @@ using FanfouWP2.CustomControl;
 using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.FanfouAPI.Items;
 using Windows.UI.StartScreen;
+using FanfouWP2.Utils;
 
 namespace FanfouWP2
 {
@@ -47,12 +48,6 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.StatusUpdateSuccess += Instance_StatusUpdateSuccess;
-            FanfouAPI.FanfouAPI.Instance.StatusUpdateFailed += Instance_StatusUpdateFailed;
-
-            FanfouAPI.FanfouAPI.Instance.PhotosUploadSuccess += Instance_PhotosUploadSuccess;
-            FanfouAPI.FanfouAPI.Instance.PhotosUploadFailed += Instance_PhotosUploadFailed;
         }
 
         /// <summary>
@@ -95,32 +90,9 @@ namespace FanfouWP2
                     mode = SendMode.Normal;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
-        }
-
-        private void Instance_PhotosUploadFailed(object sender, FailedEventArgs e)
-        {
-            Utils.ToastShow.ShowInformation("图片发送失败");
-        }
-
-        private void Instance_PhotosUploadSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            Utils.ToastShow.ShowInformation("图片发送成功", () => navigationHelper.GoBack());
-        }
-
-        private void Instance_StatusUpdateFailed(object sender, FailedEventArgs e)
-        {
-            Utils.ToastShow.ShowInformation("消息发送失败");
-        }
-
-        private void Instance_StatusUpdateSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            Utils.ToastShow.ShowInformation("消息发送成功", () => navigationHelper.GoBack());
-
         }
 
         /// <summary>
@@ -207,55 +179,77 @@ namespace FanfouWP2
         {
         }
 
-        private void SendItem_Click(object sender, RoutedEventArgs e)
+        private async void SendItem_Click(object sender, RoutedEventArgs e)
         {
+            loading.Visibility = Visibility.Visible;
             string text = send.Text;
             if (send.Text.Length > 140)
                 text = text.Substring(0, 140);
+            Status result;
             if (location == null || location == "")
             {
-                switch (mode)
+                try
                 {
-                    case SendMode.Normal:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text);
-                        break;
-                    case SendMode.Photo:
-                        FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file);
-                        break;
-                    case SendMode.Reply:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, status.id);
-                        break;
-                    case SendMode.ReplyUser:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id);
-                        break;
-                    case SendMode.Repost:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id);
-                        break;
-                    default:
-                        break;
+                    switch (mode)
+                    {
+                        case SendMode.Normal:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text);
+                            break;
+                        case SendMode.Photo:
+                            result = await FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file);
+                            break;
+                        case SendMode.Reply:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, status.id);
+                            break;
+                        case SendMode.ReplyUser:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id);
+                            break;
+                        case SendMode.Repost:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    loading.Visibility = Visibility.Collapsed;
+                    Utils.ToastShow.ShowInformation("图片发送失败");
+                    return;
                 }
             }
             else
             {
-                switch (mode)
+                try
                 {
-                    case SendMode.Normal:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, location: location);
-                        break;
-                    case SendMode.Photo:
-                        FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file, location: location);
-                        break;
-                    case SendMode.Reply:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, status.id, location: location);
-                        break;
-                    case SendMode.ReplyUser:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id, location: location);
-                        break;
-                    case SendMode.Repost:
-                        FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id, location: location);
-                        break;
-                    default:
-                        break;
+                    switch (mode)
+                    {
+                        case SendMode.Normal:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, location: location);
+                            break;
+                        case SendMode.Photo:
+                            result = await FanfouAPI.FanfouAPI.Instance.PhotoUpload(text, file, location: location);
+                            break;
+                        case SendMode.Reply:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, status.id, location: location);
+                            break;
+                        case SendMode.ReplyUser:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, in_reply_to_user_id: user.id,
+                                location: location);
+                            break;
+                        case SendMode.Repost:
+                            result = await FanfouAPI.FanfouAPI.Instance.StatusUpdate(text, repost_status_id: status.id,
+                                location: location);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    loading.Visibility = Visibility.Collapsed;
+                    Utils.ToastShow.ShowInformation("图片发送失败");
+                    return;
                 }
             }
         }

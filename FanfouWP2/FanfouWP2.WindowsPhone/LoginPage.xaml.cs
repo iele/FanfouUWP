@@ -24,13 +24,9 @@ namespace FanfouWP2
         {
             InitializeComponent();
             navigationHelper = new NavigationHelper(this);
+
             navigationHelper.LoadState += navigationHelper_LoadState;
             navigationHelper.SaveState += navigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.LoginSuccess += Instance_LoginSuccess;
-            FanfouAPI.FanfouAPI.Instance.LoginFailed += Instance_LoginFailed;
-            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsSuccess += Instance_VerifyCredentialsSuccess;
-            FanfouAPI.FanfouAPI.Instance.VerifyCredentialsFailed += Instance_VerifyCredentialsFailed;
         }
 
         /// <summary>
@@ -49,28 +45,6 @@ namespace FanfouWP2
         {
             get { return navigationHelper; }
         }
-
-
-        private void Instance_VerifyCredentialsFailed(object sender, FailedEventArgs e)
-        {
-            ToastShow.ShowToast("登陆失败", "登录用户名或密码有误");
-        }
-
-        private void Instance_VerifyCredentialsSuccess(object sender, EventArgs e)
-        {
-            Frame.Navigate(typeof (HomePage));
-        }
-
-        private void Instance_LoginFailed(object sender, FailedEventArgs e)
-        {
-            ToastShow.ShowToast("登陆失败", "登录用户名或密码有误");
-        }
-
-        private void Instance_LoginSuccess(object sender, EventArgs e)
-        {
-            FanfouAPI.FanfouAPI.Instance.VerifyCredentials();
-        }
-
 
         /// <summary>
         ///     使用在导航过程中传递的内容填充页。 在从以前的会话
@@ -117,10 +91,22 @@ namespace FanfouWP2
             await Launcher.LaunchUriAsync(new Uri("http://fanfou.com/register"));
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             if (username.Text.Count() != 0 && password.Password.Count() != 0)
-                FanfouAPI.FanfouAPI.Instance.Login(username.Text, password.Password);
+            {
+                try
+                {
+                    await FanfouAPI.FanfouAPI.Instance.Login(username.Text, password.Password);
+                    await FanfouAPI.FanfouAPI.Instance.VerifyCredentials();
+                }
+                catch (Exception)
+                {
+                    ToastShow.ShowToast("登陆失败", "登录用户名或密码有误");
+                    return;
+                }
+                Frame.Navigate(typeof (HomePage));
+            }
         }
 
         #region NavigationHelper 注册
