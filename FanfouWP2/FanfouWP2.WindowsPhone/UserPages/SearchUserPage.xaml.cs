@@ -26,9 +26,6 @@ namespace FanfouWP2.UserPages
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.SearchUserTimelineSuccess += Instance_SearchUserTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.SearchUserTimelineFailed += Instance_SearchUserTimelineFailed;
         }
 
         public NavigationHelper NavigationHelper
@@ -85,15 +82,20 @@ namespace FanfouWP2.UserPages
             e.PageState["user"] = user;
         }
 
-        private void SearchItem_Click(object sender, RoutedEventArgs e)
+        private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
+            var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
+
+            loading.Visibility = Visibility.Collapsed;
+            statuses.Clear();
+            StatusesReform.reform(statuses, ss);
+            defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册

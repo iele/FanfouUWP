@@ -25,9 +25,6 @@ namespace FanfouWP2.UserPages
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.UsersFriendsSuccess += Instance_UsersFriendsSuccess;
-            FanfouAPI.FanfouAPI.Instance.UsersFriendsFailed += Instance_UsersFriendsFailed;
         }
 
         public NavigationHelper NavigationHelper
@@ -56,29 +53,45 @@ namespace FanfouWP2.UserPages
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["users"] = users;
             user = e.NavigationParameter as User;
 
             title.Text = user.screen_name + "的朋友";
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60);
+            var ss = await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60);
+            loading.Visibility = Visibility.Collapsed;
+
+            users.Clear();
+            foreach (User i in ss)
+            {
+                users.Add(i);
+            }
+            defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
 
-        private void RefreshItem_Click(object sender, RoutedEventArgs e)
+        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60);
+            var ss = await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60);
+            loading.Visibility = Visibility.Collapsed;
+
+            users.Clear();
+            foreach (User i in ss)
+            {
+                users.Add(i);
+            }
+            defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
         private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (UserPage), e.ClickedItem);
+            Frame.Navigate(typeof(UserPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册

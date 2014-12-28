@@ -28,17 +28,16 @@ namespace FanfouWP2
                 if (statuses.Count > 0)
                 {
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, c, max_id: this.statuses.Last().id);
+                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, c, max_id: this.statuses.Last().id);
+                    loading.Visibility = Visibility.Collapsed;
+                    Utils.StatusesReform.reform(statuses, list);
                 }
             };
 
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.SearchTimelineSuccess += Instance_SearchTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.SearchTimelineFailed += Instance_SearchTimelineFailed;
-        }
+    }
 
         public NavigationHelper NavigationHelper
         {
@@ -62,7 +61,7 @@ namespace FanfouWP2
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["statuses"] = statuses;
             loading.Visibility = Visibility.Collapsed;
@@ -85,7 +84,9 @@ namespace FanfouWP2
                 var t = e.NavigationParameter as Trends;
                 search.Text = t.query;
                 loading.Visibility = Visibility.Visible;
-                FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text,60);
+                loading.Visibility = Visibility.Collapsed;
+                Utils.StatusesReform.reform(statuses, list);
             }
         }
 
@@ -95,10 +96,12 @@ namespace FanfouWP2
             e.PageState["statuses"] = statuses;
         }
 
-        private void SearchItem_Click(object sender, RoutedEventArgs e)
+        private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+            var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text,60);
+            loading.Visibility = Visibility.Collapsed;
+            Utils.StatusesReform.reform(statuses, list);
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)

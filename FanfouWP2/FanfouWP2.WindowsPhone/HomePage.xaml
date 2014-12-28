@@ -36,11 +36,6 @@
                                            Width="{Binding ActualWidth, ElementName=mentionsGridView}"
                                            Margin="0,3" />
         </DataTemplate>
-        <DataTemplate x:Key="FooterControl">
-            <ItemControl:FooterControl Width="{Binding ActualWidth, ElementName=statusesGridView}"
-                                           Margin="0,3" />
-        </DataTemplate>
-
         <selector:TimelineTemplateSelector x:Key="StatusSelector" StatusTemplate="{StaticResource StatusItemControl}" RefreshTemplate="{StaticResource Refresh1ItemControl}"/>
         <selector:TimelineTemplateSelector x:Key="MentionsSelector" StatusTemplate="{StaticResource MentionsItemControl}" RefreshTemplate="{StaticResource Refresh2ItemControl}"/>
 
@@ -48,7 +43,7 @@
             <Grid>
                 <ListView ShowsScrollingPlaceholders="False" x:Name="statusesGridView"
                                   ItemsSource="{Binding statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
-                                  Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}">
+                                  Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" >
                 </ListView>
             </Grid>
         </DataTemplate>
@@ -56,7 +51,7 @@
             <Grid>
                 <ListView ShowsScrollingPlaceholders="True" x:Name="mentionsGridView"
                                   ItemsSource="{Binding mentions}" ItemTemplateSelector="{StaticResource MentionsSelector}" 
-                                  Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True" FooterTemplate="{StaticResource FooterControl}" />
+                                  Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True"  />
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -102,7 +97,7 @@
             <Hub.Resources>
                 <DataTemplate x:Key="HubSectionHeader">
                     <Grid>
-                    	<TextBlock TextWrapping="NoWrap" VerticalAlignment="Top" Text="{Binding}" Foreground="Gray" HorizontalAlignment="Left"/>
+                        <TextBlock TextWrapping="NoWrap" VerticalAlignment="Top" Text="{Binding}" Foreground="Gray" HorizontalAlignment="Left"/>
                     </Grid>
                 </DataTemplate>
             </Hub.Resources>

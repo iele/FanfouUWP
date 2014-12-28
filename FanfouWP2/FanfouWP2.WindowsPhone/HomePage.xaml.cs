@@ -44,6 +44,8 @@ namespace FanfouWP2
                     {
                         var result =
                             await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(c, max_id: mentions.Last().id);
+                        if (result.Count == 0) 
+                            mentions.HasMoreItems = false;
                         Utils.StatusesReform.reform(mentions, result);
                     }
                     catch (Exception)
@@ -66,6 +68,8 @@ namespace FanfouWP2
                     {
                         var result =
                             await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(c, max_id: statuses.Last().id);
+                        if (result.Count == 0)
+                            statuses.HasMoreItems = false;
                         Utils.StatusesReform.reform(statuses, result);
                     }
                     catch (Exception)

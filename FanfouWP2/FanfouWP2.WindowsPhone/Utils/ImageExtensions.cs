@@ -12,6 +12,8 @@ namespace FanfouWP2.Utils
     /// </summary>
     public static class ImageExtensions
     {
+        private static BitmapImage blank = new BitmapImage(new Uri("ms-appx:///Assets/blank.bmp"));
+
         /// <summary>
         ///     Using a DependencyProperty as the backing store for WebUri.  This enables animation, styling, binding, etc...
         /// </summary>
@@ -45,7 +47,7 @@ namespace FanfouWP2.Utils
             var newCacheUri = (Uri)d.GetValue(CacheUriProperty);
             var image = (Image)d;
 
-            image.Source = null;
+            image.Source = blank;
            
             if (newCacheUri != null)
             {

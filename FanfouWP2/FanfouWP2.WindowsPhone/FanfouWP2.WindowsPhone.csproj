@@ -209,6 +209,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\10.png" />
+    <Content Include="Assets\blank.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\bookmark-512.png" />
     <Content Include="Assets\email-512.png" />
     <Content Include="Assets\fanfou_beta.png">

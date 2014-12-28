@@ -252,6 +252,9 @@ namespace FanfouWP2
                     return;
                 }
             }
+            loading.Visibility = Visibility.Visible;
+            Utils.ToastShow.ShowInformation("图片发送成功");
+            navigationHelper.GoBack();
         }
 
         private void PhotoItem_Click(object sender, RoutedEventArgs e)

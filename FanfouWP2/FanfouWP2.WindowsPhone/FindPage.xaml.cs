@@ -19,13 +19,10 @@ namespace FanfouWP2
         public FindPage()
         {
             InitializeComponent();
-            
+
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.SearchUserSuccess += Instance_SearchUserSuccess;
-            FanfouAPI.FanfouAPI.Instance.SearchUserFailed += Instance_SearchUserFailed;
         }
 
         public NavigationHelper NavigationHelper
@@ -36,22 +33,6 @@ namespace FanfouWP2
         public ObservableDictionary DefaultViewModel
         {
             get { return defaultViewModel; }
-        }
-
-        private void Instance_SearchUserFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_SearchUserSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            ObservableCollection<User> ss = (sender as UserList).users;
-            users.Clear();
-            foreach (User i in ss)
-            {
-                users.Add(i);
-            }
-            defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -78,10 +59,18 @@ namespace FanfouWP2
             e.PageState["users"] = users;
         }
 
-        private void SearchItem_Click(object sender, RoutedEventArgs e)
+        private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+            var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+
+            loading.Visibility = Visibility.Collapsed;
+            users.Clear();
+            foreach (User i in ss.users)
+            {
+                users.Add(i);
+            }
+            defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
         private void userGridView_ItemClick(object sender, ItemClickEventArgs e)

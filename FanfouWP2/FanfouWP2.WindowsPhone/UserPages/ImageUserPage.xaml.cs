@@ -29,15 +29,14 @@ namespace FanfouWP2.UserPages
                 if (statuses.Count > 0)
                 {
                     loading.Visibility = Visibility.Visible;
-                    FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, c, max_id: statuses.Last().id);
+                    var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, c, max_id: statuses.Last().id);
+                    loading.Visibility = Visibility.Collapsed;
+                    Utils.StatusesReform.reform(statuses, list);
                 }
             };
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            FanfouAPI.FanfouAPI.Instance.PhotosUserTimelineSuccess += Instance_PhotosUserTimelineSuccess;
-            FanfouAPI.FanfouAPI.Instance.PhotosUserTimelineFailed += Instance_PhotosUserTimelineFailed;
         }
 
 
@@ -63,24 +62,28 @@ namespace FanfouWP2.UserPages
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["statuses"] = statuses;
             user = e.NavigationParameter as User;
 
             title.Text = user.screen_name + "的图片";
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+            var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+            loading.Visibility = Visibility.Collapsed;
+            Utils.StatusesReform.reform(statuses, list);
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
 
-        private void RefreshItem_Click(object sender, RoutedEventArgs e)
+        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+            var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+            loading.Visibility = Visibility.Collapsed;
+            Utils.StatusesReform.reform(statuses, list);
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
