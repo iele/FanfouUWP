@@ -13,7 +13,7 @@ namespace FanfouWP2.Common
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
         public bool is_loading = false;
-        public Func<int, Task> load;
+        public Func<int, Task<int?>> load;
 
         public PaginatedCollection()
         {
@@ -30,11 +30,14 @@ namespace FanfouWP2.Common
                 {
                     try
                     {
-                        await load((int)count);
+                        var ct = await load((int)count);
+                        return new LoadMoreItemsResult() { Count = (uint)ct };
                     }
                     catch (Exception e)
                     {
                         System.Diagnostics.Debug.WriteLine(e.Message);
+
+                        return new LoadMoreItemsResult() { Count = 0 };
                     }
                 }
                 return new LoadMoreItemsResult() { Count = 0 };

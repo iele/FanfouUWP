@@ -47,16 +47,19 @@ namespace FanfouWP2
                         if (result.Count == 0) 
                             mentions.HasMoreItems = false;
                         Utils.StatusesReform.reform(mentions, result);
+                        return result.Count;
                     }
                     catch (Exception)
                     {
+                        return 0;
                     }
                     finally
                     {
                         loading.Visibility = Visibility.Collapsed;
                         mentions.is_loading = false;
                     }
-                }
+                } 
+                return 0;
             };
             statuses.load = async (c) =>
             {
@@ -71,16 +74,19 @@ namespace FanfouWP2
                         if (result.Count == 0)
                             statuses.HasMoreItems = false;
                         Utils.StatusesReform.reform(statuses, result);
+                        return result.Count;
                     }
                     catch (Exception)
                     {
+                        return 0;
                     }
                     finally
                     {
                         loading.Visibility = Visibility.Collapsed;
-                        statuses.is_loading = false;
+                        statuses.is_loading = false;                        
                     }
-                }
+                } 
+                return 0;
             };
 
             navigationHelper = new NavigationHelper(this);

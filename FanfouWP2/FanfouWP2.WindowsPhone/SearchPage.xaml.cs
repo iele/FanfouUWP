@@ -31,7 +31,9 @@ namespace FanfouWP2
                     var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, c, max_id: this.statuses.Last().id);
                     loading.Visibility = Visibility.Collapsed;
                     Utils.StatusesReform.reform(statuses, list);
+                    return list.Count;
                 }
+                return 0;
             };
 
             navigationHelper = new NavigationHelper(this);

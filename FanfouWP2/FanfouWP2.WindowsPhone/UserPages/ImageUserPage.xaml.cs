@@ -32,7 +32,9 @@ namespace FanfouWP2.UserPages
                     var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, c, max_id: statuses.Last().id);
                     loading.Visibility = Visibility.Collapsed;
                     Utils.StatusesReform.reform(statuses, list);
+                    return list.Count;
                 }
+                return 0;
             };
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
