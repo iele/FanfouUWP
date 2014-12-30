@@ -28,6 +28,7 @@ namespace FanfouWP2.Common
             {
                 if (!is_loading)
                 {
+                    is_loading = true;
                     try
                     {
                         var ct = await load((int)count);
@@ -38,6 +39,10 @@ namespace FanfouWP2.Common
                         System.Diagnostics.Debug.WriteLine(e.Message);
 
                         return new LoadMoreItemsResult() { Count = 0 };
+                    }
+                    finally
+                    {
+                        is_loading = false;
                     }
                 }
                 return new LoadMoreItemsResult() { Count = 0 };

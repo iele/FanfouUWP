@@ -8,7 +8,94 @@ namespace FanfouWP2.Utils
 {
     public class StatusesReform
     {
-        public static void reform(ObservableCollection<Status> statuses, List<Status> list)
+        public static void append(ObservableCollection<Status> statuses, List<Status> list)
+        {
+            if (statuses != null && list != null)
+            {
+                foreach (var item in list)
+                {
+                    if ((from s in statuses where s.id == item.id select s).Count() == 0)
+                        statuses.Add(item);
+                }
+            }
+        }
+
+        public static void insertFirst(ObservableCollection<Status> statuses, List<Status> list)
+        {
+            if (statuses != null && list != null)
+            {
+                list.Reverse();
+                if (list.Count >= 20)
+                {
+                    statuses.Insert(0, new Status { is_refresh = true });
+                }
+
+                foreach (Status i in list)
+                {
+                    if ((from s in statuses where s.id == i.id select s).Count() == 0)
+                        statuses.Insert(0, i);
+                }
+            }
+
+            if (statuses.Count > 0)
+            {
+                if (statuses[0].is_refresh == true)
+                    statuses.Remove(statuses[0]);
+                if (statuses[statuses.Count - 1].is_refresh == true)
+                    statuses.Remove(statuses[statuses.Count - 1]);
+                for (int i = 0; i < statuses.Count - 1; i++)
+                {
+                    if (statuses[i].is_refresh == true && statuses[i + 1].is_refresh == true)
+                    {
+                        statuses.Remove(statuses[i + 1]);
+                        i += 1;
+                    }
+                }
+            }
+        }
+
+        public static void insertBetween(ObservableCollection<Status> statuses, List<Status> list, string id_prev)
+        {
+            if (statuses != null && list != null)
+            {
+                list.Reverse();
+
+                var item = from s in statuses where s.id == id_prev select s;
+                if (item.Count() != 0)
+                {
+                    int index = statuses.IndexOf(item.First());
+
+                    if (list.Count >= 20)
+                    {
+                        statuses.Insert(index, new Status { is_refresh = true });
+                    }
+
+                    foreach (Status i in list)
+                    {
+                        if ((from s in statuses where s.id == i.id select s).Count() == 0)
+                            statuses.Insert(index, i);
+                    }
+                }               
+            }
+
+            if (statuses.Count > 0)
+            {
+                if (statuses[0].is_refresh == true)
+                    statuses.Remove(statuses[0]);
+                if (statuses[statuses.Count - 1].is_refresh == true)
+                    statuses.Remove(statuses[statuses.Count - 1]);
+                for (int i = 0; i < statuses.Count - 1; i++)
+                {
+                    if (statuses[i].is_refresh == true && statuses[i + 1].is_refresh == true)
+                    {
+                        statuses.Remove(statuses[i + 1]);
+                        i += 1;
+                    }
+                }
+            }
+        }
+
+        public static void reform1(ObservableCollection<Status> statuses, List<Status> list)
         {
             lock (new Object())
             {
@@ -66,7 +153,7 @@ namespace FanfouWP2.Utils
 
                     equal:
                         ;
-                    } 
+                    }
                     if (list.Count >= 20)
                     {
                         int k = 0;

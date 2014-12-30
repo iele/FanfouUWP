@@ -38,13 +38,12 @@ namespace FanfouWP2
             {
                 if (mentions.Count > 0)
                 {
-                    mentions.is_loading = true;
                     loading.Visibility = Visibility.Visible;
                     try
                     {
                         var result =
                             await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(c, max_id: mentions.Last().id);
-                        if (result.Count == 0) 
+                        if (result.Count == 0)
                             mentions.HasMoreItems = false;
                         Utils.StatusesReform.reform(mentions, result);
                         return result.Count;
@@ -56,16 +55,14 @@ namespace FanfouWP2
                     finally
                     {
                         loading.Visibility = Visibility.Collapsed;
-                        mentions.is_loading = false;
                     }
-                } 
+                }
                 return 0;
             };
             statuses.load = async (c) =>
             {
                 if (statuses.Count > 0)
                 {
-                    statuses.is_loading = true;
                     loading.Visibility = Visibility.Visible;
                     try
                     {
@@ -83,9 +80,8 @@ namespace FanfouWP2
                     finally
                     {
                         loading.Visibility = Visibility.Collapsed;
-                        statuses.is_loading = false;                        
                     }
-                } 
+                }
                 return 0;
             };
 
@@ -184,8 +180,6 @@ namespace FanfouWP2
         {
             loading.Visibility = Visibility.Collapsed;
 
-            mentions.is_loading = false;
-
             Utils.ToastShow.ShowInformation("时间线更新失败");
         }
 
@@ -197,16 +191,12 @@ namespace FanfouWP2
 
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
 
-            mentions.is_loading = false;
-
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
         private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
         {
             loading.Visibility = Visibility.Collapsed;
-
-            statuses.is_loading = false;
 
             Utils.ToastShow.ShowInformation("时间线更新失败");
         }
@@ -218,8 +208,7 @@ namespace FanfouWP2
             StatusesReform.reform(statuses, ss);
 
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
-            statuses.is_loading = false;
-
+ 
             defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
