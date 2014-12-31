@@ -50,7 +50,7 @@ namespace FanfouWP2.UserPages
             {
                 var ss = await FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 60);       
                 statuses.Clear();
-                StatusesReform.reform(statuses, ss);
+                StatusesReform.append(statuses, ss);
                 defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)
@@ -73,7 +73,7 @@ namespace FanfouWP2.UserPages
             {
                 var ss = await FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 60);
                 statuses.Clear();
-                StatusesReform.reform(statuses, ss);
+                StatusesReform.append(statuses, ss);
                 defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)

@@ -75,7 +75,7 @@ namespace FanfouWP2.Utils
                         if ((from s in statuses where s.id == i.id select s).Count() == 0)
                             statuses.Insert(index, i);
                     }
-                }               
+                }
             }
 
             if (statuses.Count > 0)
@@ -156,8 +156,7 @@ namespace FanfouWP2.Utils
                     }
                     if (list.Count >= 20)
                     {
-                        int k = 0;
-                        for (k = 0; k < statuses.Count; k++)
+                        for (int k = 0; k < statuses.Count; k++)
                         {
                             if (list.Last().rawid > statuses[k].rawid)
                             {

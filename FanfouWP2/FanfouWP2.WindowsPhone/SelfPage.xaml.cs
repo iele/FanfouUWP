@@ -24,6 +24,7 @@ namespace FanfouWP2
         private readonly NavigationHelper navigationHelper;
 
         private User user;
+        private ObservableCollection<string> tags = new ObservableCollection<string>();
 
         public SelfPage()
         {
@@ -64,10 +65,17 @@ namespace FanfouWP2
         ///     此页在以前会话期间保留的状态的
         ///     字典。 首次访问页面时，该状态将为 null。
         /// </param>
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             user = e.NavigationParameter as User;
             defaultViewModel["user"] = user;
+            defaultViewModel["tags"] = tags;
+      
+            var list = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
+            tags.Clear();
+            foreach (var item in list)
+                tags.Add(item);
+
         }
 
         /// <summary>

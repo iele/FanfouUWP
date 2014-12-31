@@ -41,7 +41,7 @@
 
         <DataTemplate x:Key="StatusesGridView">
             <Grid>
-                <ListView ShowsScrollingPlaceholders="False" x:Name="statusesGridView"
+                <ListView x:Name="statusesGridView"
                                   ItemsSource="{Binding statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
                                   Margin="0,-20,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" >
                 </ListView>
@@ -49,7 +49,7 @@
         </DataTemplate>
         <DataTemplate  x:Key="MentionsGridView">
             <Grid>
-                <ListView ShowsScrollingPlaceholders="True" x:Name="mentionsGridView"
+                <ListView x:Name="mentionsGridView"
                                   ItemsSource="{Binding mentions}" ItemTemplateSelector="{StaticResource MentionsSelector}" 
                                   Margin="0,-20,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True"  />
             </Grid>
@@ -58,8 +58,6 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="SelfItem" Label="个人资料" Click="SelfItem_Click"/>
-                <AppBarButton Label="好友请求" />
                 <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click" />
                 <AppBarButton Label="设置" />
             </CommandBar.SecondaryCommands>
@@ -168,7 +166,7 @@
                                     </Grid>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                    <Grid Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid x:Name="SelfGrid" Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Tapped="SelfGrid_Tapped">
                                         <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
                                         <TextBlock TextWrapping="Wrap" Text="个人标签" FontFamily="Global User Interface"
                                                    Foreground="White" VerticalAlignment="Bottom"

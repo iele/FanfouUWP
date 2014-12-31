@@ -43,7 +43,7 @@ namespace FanfouWP2.UserPages
             loading.Visibility = Visibility.Collapsed;
             var ss = sender as List<Status>;
             statuses.Clear();
-            StatusesReform.reform(statuses, ss);
+            StatusesReform.append(statuses, ss);
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
@@ -89,7 +89,7 @@ namespace FanfouWP2.UserPages
 
             loading.Visibility = Visibility.Collapsed;
             statuses.Clear();
-            StatusesReform.reform(statuses, ss);
+            StatusesReform.append(statuses, ss);
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
 

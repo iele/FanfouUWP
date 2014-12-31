@@ -45,7 +45,7 @@ namespace FanfouWP2
                             await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(c, max_id: mentions.Last().id);
                         if (result.Count == 0)
                             mentions.HasMoreItems = false;
-                        Utils.StatusesReform.reform(mentions, result);
+                        Utils.StatusesReform.append(mentions, result);
                         return result.Count;
                     }
                     catch (Exception)
@@ -70,7 +70,7 @@ namespace FanfouWP2
                             await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(c, max_id: statuses.Last().id);
                         if (result.Count == 0)
                             statuses.HasMoreItems = false;
-                        Utils.StatusesReform.reform(statuses, result);
+                        Utils.StatusesReform.append(statuses, result);
                         return result.Count;
                     }
                     catch (Exception)
@@ -109,21 +109,21 @@ namespace FanfouWP2
             {
                 var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
                 if (s1 != null)
-                    StatusesReform.reform(this.statuses, s1.ToList());
+                    StatusesReform.append(this.statuses, s1.ToList());
             }
             else
             {
-                StatusesReform.reform(this.statuses, new List<Status>());
+                StatusesReform.append(this.statuses, new List<Status>());
             }
             if (this.mentions.Count == 0)
             {
                 var s20 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
                 if (s20 != null)
-                    StatusesReform.reform(this.mentions, s20.ToList());
+                    StatusesReform.append(this.mentions, s20.ToList());
             }
             else
             {
-                StatusesReform.reform(this.mentions, new List<Status>());
+                StatusesReform.append(this.mentions, new List<Status>());
             }
 
             defaultViewModel["statuses"] = statuses;
@@ -136,12 +136,12 @@ namespace FanfouWP2
                 {
                     var result =
                         await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
-                    Utils.StatusesReform.reform(statuses, result);
+                    Utils.StatusesReform.insertFirst(statuses, result);
                 }
                 else
                 {
                     var result = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
-                    Utils.StatusesReform.reform(statuses, result);
+                    Utils.StatusesReform.append(statuses, result);
                 }
             }
             catch (Exception)
@@ -155,12 +155,12 @@ namespace FanfouWP2
                     var result =
                         await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
 
-                    Utils.StatusesReform.reform(mentions, result);
+                    Utils.StatusesReform.insertFirst(mentions, result);
                 }
                 else
                 {
                     var result = await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
-                    Utils.StatusesReform.reform(mentions, result);
+                    Utils.StatusesReform.append(mentions, result);
                 }
             }
             catch (Exception)
@@ -174,42 +174,6 @@ namespace FanfouWP2
         {
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
             storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
-        }
-
-        private void Instance_MentionTimelineFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-
-            Utils.ToastShow.ShowInformation("时间线更新失败");
-        }
-
-        private void Instance_MentionTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            StatusesReform.reform(mentions, ss);
-
-            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
-
-            defaultViewModel["date"] = "更新时间 " + DateTime.Now;
-        }
-
-        private void Instance_HomeTimelineFailed(object sender, FailedEventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-
-            Utils.ToastShow.ShowInformation("时间线更新失败");
-        }
-
-        private void Instance_HomeTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            StatusesReform.reform(statuses, ss);
-
-            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
- 
-            defaultViewModel["date"] = "更新时间 " + DateTime.Now;
         }
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
@@ -226,12 +190,12 @@ namespace FanfouWP2
                 {
                     var result =
                         await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
-                    Utils.StatusesReform.reform(statuses, result);
+                    Utils.StatusesReform.insertFirst(statuses, result);
                 }
                 else
                 {
                     var result = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
-                    Utils.StatusesReform.reform(statuses, result);
+                    Utils.StatusesReform.append(statuses, result);
                 }
             }
             catch (Exception)
@@ -244,13 +208,12 @@ namespace FanfouWP2
                 {
                     var result =
                         await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
-
-                    Utils.StatusesReform.reform(mentions, result);
+                    Utils.StatusesReform.insertFirst(mentions, result);
                 }
                 else
                 {
                     var result = await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
-                    Utils.StatusesReform.reform(mentions, result);
+                    Utils.StatusesReform.append(mentions, result);
                 }
             }
             catch (Exception)
@@ -308,7 +271,6 @@ namespace FanfouWP2
                 {
                     var prev = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) - 1];
                     var next = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) + 1];
-                    this.statuses.Remove(e.ClickedItem as Status);
                     if (prev.id != null && next.id != null)
                     {
                         try
@@ -318,7 +280,8 @@ namespace FanfouWP2
                                 await
                                     FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: next.id,
                                         max_id: prev.id);
-                            Utils.StatusesReform.reform(statuses, result);
+                            Utils.StatusesReform.insertBetween(statuses, result, prev.id);
+                            this.statuses.Remove(e.ClickedItem as Status);
                         }
                         catch (Exception)
                         {
@@ -345,7 +308,6 @@ namespace FanfouWP2
                 {
                     var prev = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) - 1];
                     var next = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) + 1];
-                    this.mentions.Remove(e.ClickedItem as Status);
                     if (prev.id != null && next.id != null)
                     {
                         try
@@ -355,7 +317,8 @@ namespace FanfouWP2
                                 await
                                     FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: next.id,
                                         max_id: prev.id);
-                            Utils.StatusesReform.reform(mentions, result);
+                            Utils.StatusesReform.insertBetween(mentions, result, prev.id);
+                            this.mentions.Remove(e.ClickedItem as Status);
                         }
                         catch (Exception)
                         {
@@ -413,7 +376,7 @@ namespace FanfouWP2
             Frame.Navigate(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
         }
 
-        private void SelfItem_Click(object sender, RoutedEventArgs e)
+        private void SelfGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(SelfPage), currentUser);
         }

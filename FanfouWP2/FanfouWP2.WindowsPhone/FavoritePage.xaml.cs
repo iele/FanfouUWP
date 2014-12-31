@@ -78,7 +78,7 @@ namespace FanfouWP2
                     if (ss.Count() != 0)
                     {
                         statuses.Clear();
-                        StatusesReform.reform(statuses, ss);
+                        StatusesReform.append(statuses, ss);
                         defaultViewModel["page"] = "第" + page + "页";
                         changeMenu(false);
                     }
@@ -121,7 +121,7 @@ namespace FanfouWP2
                     if (ss.Count() != 0)
                     {
                         statuses.Clear();
-                        StatusesReform.reform(statuses, ss);
+                        StatusesReform.append(statuses, ss);
                         defaultViewModel["page"] = "第" + page + "页";
                         changeMenu(false);
                     }
@@ -152,7 +152,7 @@ namespace FanfouWP2
                 if (ss.Count() != 0)
                 {
                     statuses.Clear();
-                    StatusesReform.reform(statuses, ss);
+                    StatusesReform.append(statuses, ss);
                     defaultViewModel["page"] = "第" + page + "页";
                     changeMenu(false);
                 }

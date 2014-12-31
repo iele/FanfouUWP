@@ -5,6 +5,9 @@ using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.FanfouAPI.Items;
 using FanfouWP2.Utils;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
+using System.IO;
+using System.Text;
 
 namespace FanfouWP2.FanfouAPI
 {
@@ -147,7 +150,7 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public async Task<List<Status>> StatusUserTimeline(string id, int count, int page = 0, string since_id = "",
+        public async Task<List<Status>> StatusUserTimeline(string id, int count, int page = 1, string since_id = "",
             string max_id = "")
         {
             RestClient client = GetClient();
@@ -166,7 +169,7 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public async Task<List<Status>> StatusHomeTimeline(int count, int page = 0, string id = "", string since_id = "",
+        public async Task<List<Status>> StatusHomeTimeline(int count, int page = 1, string id = "", string since_id = "",
             string max_id = "")
         {
 
@@ -187,7 +190,7 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public async Task<List<Status>> StatusPublicTimeline(int count = 20, int page = 0, string since_id = "", string max_id = "")
+        public async Task<List<Status>> StatusPublicTimeline(int count = 20, int page = 1, string since_id = "", string max_id = "")
         {
             RestClient client = GetClient();
             var parameters = new Parameters();
@@ -204,7 +207,7 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public async Task<List<Status>> StatusMentionTimeline(int count, int page = 0, string since_id = "", string max_id = "")
+        public async Task<List<Status>> StatusMentionTimeline(int count, int page = 1, string since_id = "", string max_id = "")
         {
             RestClient client = GetClient();
             var parameters = new Parameters();
@@ -225,7 +228,7 @@ namespace FanfouWP2.FanfouAPI
 
         #region favorite
 
-        public async Task<List<Status>> FavoritesId(string id, int count, int page = 0)
+        public async Task<List<Status>> FavoritesId(string id, int count, int page = 1)
         {
             RestClient client = GetClient();
             var parameters = new Parameters();
@@ -315,12 +318,30 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public void TaggedList(string id)
+        public async Task<List<string>> TaggedList(string id)
         {
+            RestClient client = GetClient();
+            var parameters = new Parameters();
+            parameters.Add("id", id);
+        
+            var ds = new DataContractJsonSerializer(typeof(List<string>));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await client.GetRequest(FanfouConsts.USERS_TAG_LIST, parameters))))
+            {
+                var obj = ds.ReadObject(ms) as List<string>;
+                return obj;
+            } 
         }
 
-        public void Tagged(string tag)
+        public async Task<List<User>> Tagged(string tag, int count = 100, int page = 1)
         {
+            RestClient client = GetClient();
+            var parameters = new Parameters();
+            parameters.Add("tag", tag);
+            parameters.Add("count", count.ToString());
+            if (page > 0)
+                parameters.Add("page", page.ToString());
+            List<User> result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_TAGGED, parameters);
+            return result;
         }
 
         public void SavedSearchList()
@@ -340,7 +361,7 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public async Task<List<User>> UsersFollowers(string id, int count = 60, int page = 0)
+        public async Task<List<User>> UsersFollowers(string id, int count = 60, int page = 1)
         {
             RestClient client = GetClient();
             var parameters = new Parameters();
@@ -353,7 +374,7 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public async Task<List<User>> UsersFriends(string id, int count = 60, int page = 0)
+        public async Task<List<User>> UsersFriends(string id, int count = 60, int page = 1)
         {
             RestClient client = GetClient();
             var parameters = new Parameters();
@@ -378,7 +399,7 @@ namespace FanfouWP2.FanfouAPI
         {
         }
 
-        public void FriendshipRequests(int page = 0)
+        public void FriendshipRequests(int page = 1)
         {
         }
 
@@ -398,7 +419,7 @@ namespace FanfouWP2.FanfouAPI
 
         #region photo
 
-        public async Task<List<Status>> PhotosUserTimeline(string id, int count, int page = 0, string since_id = "",
+        public async Task<List<Status>> PhotosUserTimeline(string id, int count, int page = 1, string since_id = "",
             string max_id = "")
         {
             RestClient client = GetClient();
@@ -434,7 +455,7 @@ namespace FanfouWP2.FanfouAPI
 
         #region direct
 
-        public async Task<List<DirectMessageItem>> DirectMessagesConversationList(int page = 0, int count = 20)
+        public async Task<List<DirectMessageItem>> DirectMessagesConversationList(int page = 1, int count = 20)
         {
             RestClient client = GetClient();
             var parameters = new Parameters();
@@ -449,7 +470,7 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public async Task<List<DirectMessage>> DirectMessagesConversation(string id, int count = 60, int page = 0)
+        public async Task<List<DirectMessage>> DirectMessagesConversation(string id, int count = 60, int page = 1)
         {
             RestClient client = GetClient();
             var parameters = new Parameters();

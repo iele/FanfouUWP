@@ -30,7 +30,9 @@ namespace FanfouWP2
                     loading.Visibility = Visibility.Visible;
                     var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, c, max_id: this.statuses.Last().id);
                     loading.Visibility = Visibility.Collapsed;
-                    Utils.StatusesReform.reform(statuses, list);
+                    if (list.Count == 0)
+                        statuses.HasMoreItems = false;
+                    Utils.StatusesReform.append(statuses, list);
                     return list.Count;
                 }
                 return 0;
@@ -49,18 +51,6 @@ namespace FanfouWP2
         public ObservableDictionary DefaultViewModel
         {
             get { return defaultViewModel; }
-        }
-
-        private void Instance_SearchTimelineFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_SearchTimelineSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<Status>;
-            StatusesReform.reform(statuses, ss);
-            defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -88,7 +78,7 @@ namespace FanfouWP2
                 loading.Visibility = Visibility.Visible;
                 var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text,60);
                 loading.Visibility = Visibility.Collapsed;
-                Utils.StatusesReform.reform(statuses, list);
+                Utils.StatusesReform.append(statuses, list);
             }
         }
 
@@ -103,7 +93,7 @@ namespace FanfouWP2
             loading.Visibility = Visibility.Visible;
             var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text,60);
             loading.Visibility = Visibility.Collapsed;
-            Utils.StatusesReform.reform(statuses, list);
+            Utils.StatusesReform.append(statuses, list);
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
