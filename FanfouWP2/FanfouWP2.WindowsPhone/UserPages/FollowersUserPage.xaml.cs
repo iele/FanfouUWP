@@ -38,22 +38,6 @@ namespace FanfouWP2.UserPages
             get { return defaultViewModel; }
         }
 
-        private void Instance_UsersFollowersFailed(object sender, FailedEventArgs e)
-        {
-        }
-
-        private void Instance_UsersFollowersSuccess(object sender, EventArgs e)
-        {
-            loading.Visibility = Visibility.Collapsed;
-            var ss = sender as List<User>;
-            users.Clear();
-            foreach (User i in ss)
-            {
-                users.Add(i);
-            }
-            defaultViewModel["date"] = DateTime.Now.ToString();
-        }
-
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["users"] = users;

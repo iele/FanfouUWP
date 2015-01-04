@@ -8,15 +8,16 @@ namespace FanfouWP2.ItemControl.ValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var cultureInfo = new CultureInfo("en-US");
-            string format = "ddd MMM d HH:mm:ss zz00 yyyy";
-            string stringValue = DateTime.Now.ToString(format, cultureInfo);
-            DateTime datetime = DateTime.ParseExact(value as string, format, cultureInfo);
-            DateTime currenttime = DateTime.Now;
-
-            string dateDiff = "";
             try
             {
+                var cultureInfo = new CultureInfo("en-US");
+                string format = "ddd MMM d HH:mm:ss zz00 yyyy";
+                string stringValue = DateTime.Now.ToString(format, cultureInfo);
+                DateTime datetime = DateTime.ParseExact(value as string, format, cultureInfo);
+                DateTime currenttime = DateTime.Now;
+
+                string dateDiff = "";
+
                 var ts1 = new TimeSpan(currenttime.Ticks);
                 var ts2 = new TimeSpan(datetime.Ticks);
                 TimeSpan ts = ts1.Subtract(ts2).Duration();
@@ -38,11 +39,12 @@ namespace FanfouWP2.ItemControl.ValueConverter
                     return ts.Minutes + "分钟";
                 if (ts.Seconds != 0)
                     return ts.Seconds + "秒";
+                return dateDiff;
             }
             catch
             {
+                return "未知";
             }
-            return dateDiff;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -7,19 +7,18 @@ using Windows.UI.Xaml.Navigation;
 using FanfouWP2.Common;
 using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.Utils;
 
 namespace FanfouWP2.UserPages
 {
-    public sealed partial class TimelineUserPage : Page
+    public sealed partial class TagUserPage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
-        private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
-        private User user;
+        private readonly ObservableCollection<User> users = new ObservableCollection<User>();
+        private string tag;
 
-        public TimelineUserPage()
+        public TagUserPage()
         {
             InitializeComponent();
 
@@ -37,19 +36,22 @@ namespace FanfouWP2.UserPages
         {
             get { return defaultViewModel; }
         }
-     
+
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            defaultViewModel["statuses"] = statuses;
-            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
+            defaultViewModel["users"] = users;
+            tag = e.NavigationParameter as string;
 
-            title.Text = user.screen_name + "的时间线";
-          
+            title.Text = tag;
             loading.Visibility = Visibility.Visible;
-            var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, id: user.id);
+            var ss = await FanfouAPI.FanfouAPI.Instance.Tagged(tag);
             loading.Visibility = Visibility.Collapsed;
-            statuses.Clear();
-            StatusesReform.append(statuses, ss);
+
+            users.Clear();
+            foreach (User i in ss)
+            {
+                users.Add(i);
+            }
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
@@ -60,16 +62,20 @@ namespace FanfouWP2.UserPages
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, id: user.id);
+            var ss = await FanfouAPI.FanfouAPI.Instance.Tagged(tag);
             loading.Visibility = Visibility.Collapsed;
-            statuses.Clear();
-            StatusesReform.append(statuses, ss);
+
+            users.Clear();
+            foreach (User i in ss)
+            {
+                users.Add(i);
+            }
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
 
-        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert((e.ClickedItem as User)));    
         }
 
         #region NavigationHelper 注册

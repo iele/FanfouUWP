@@ -114,8 +114,8 @@ namespace FanfouWP2
 
             if (e.NavigationParameter != null)
             {
-                dynamic param = e.NavigationParameter;
-                mode = (SendMode)param.Item2;
+                var param = e.NavigationParameter as string;
+                mode = (SendMode)Enum.ToObject(typeof(SendMode), int.Parse(param[0].ToString()));
                 switch (mode)
                 {
                     case SendMode.Normal:
@@ -132,17 +132,17 @@ namespace FanfouWP2
                         openPicker.PickSingleFileAndContinue();
                         break;
                     case SendMode.Reply:
-                        status = (Status)param.Item1;
+                        status = DataConverter<Status>.Convert(param.Substring(1));
                         title.Text = "回复" + status.user.screen_name;
                         send.Text = "@" + status.user.screen_name;
                         break;
                     case SendMode.ReplyUser:
-                        user = (User)param.Item1;
+                        user = DataConverter<User>.Convert(param.Substring(1));
                         title.Text = "提及" + user.screen_name;
                         send.Text = "@" + user.screen_name;
                         break;
                     case SendMode.Repost:
-                        status = (Status)param.Item1;
+                        status = DataConverter<Status>.Convert(param.Substring(1));
                         title.Text = "转发" + status.user.screen_name;
                         send.Text = "转@" + status.user.screen_name + " " + status.text;
                         break;

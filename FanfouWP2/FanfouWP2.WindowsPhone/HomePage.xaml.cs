@@ -373,7 +373,7 @@ namespace FanfouWP2
 
         private void CameraItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
+            Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Photo).ToString());
         }
 
         private void SelfGrid_Tapped(object sender, TappedRoutedEventArgs e)

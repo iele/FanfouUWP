@@ -81,7 +81,7 @@
         					Text="{Binding user.friends_count}" VerticalAlignment="Top" FontSize="26.667" />
         			</StackPanel>
         		</GridView>
-        		<GridView x:Name="taglist" Margin="0" ItemsSource="{Binding tags}" VerticalAlignment="Top">
+        		<GridView x:Name="taglist" Margin="0" ItemsSource="{Binding tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
         			<GridView.ItemTemplate>
         				<DataTemplate>
         					<TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>

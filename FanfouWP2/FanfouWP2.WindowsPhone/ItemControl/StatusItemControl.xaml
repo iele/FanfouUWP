@@ -40,7 +40,7 @@
             <TextBlock Margin="0" Text="{Binding user.screen_name}" VerticalAlignment="Top" FontSize="20" />
             <StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Top">
                 <TextBlock Padding="0,5,0,0"
-                           Text="{Binding created_at, Converter={StaticResource DateToTextConverter}}"
+                           Text="{Binding created_at, Converter={StaticResource DateToTextConverter}, FallbackValue=未知}"
                            VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0"
                            HorizontalAlignment="Left" />
                 <TextBlock Padding="5,5,0,0" Text="{Binding source, Converter={StaticResource SourceToTextConverter}}"

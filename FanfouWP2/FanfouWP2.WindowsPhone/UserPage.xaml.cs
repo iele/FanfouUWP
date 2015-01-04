@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -159,5 +160,10 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof (TagUserPage), e.ClickedItem as string);
+        }
     }
 }

@@ -133,7 +133,7 @@ namespace FanfouWP2
 
         private void RepostItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
+            Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Repost).ToString() + Utils.DataConverter<Status>.Convert(status));
         }
 
         private void UserItem_Click(object sender, RoutedEventArgs e)
@@ -178,7 +178,7 @@ namespace FanfouWP2
 
         private void ReplyItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
+            Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Reply).ToString() + Utils.DataConverter<Status>.Convert(status));
         }
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)

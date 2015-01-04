@@ -99,6 +99,9 @@
     <Compile Include="UserPages\FollowersUserPage.xaml.cs">
       <DependentUpon>FollowersUserPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserPages\TagUserPage.xaml.cs">
+      <DependentUpon>TagUserPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserPages\FriendsUserPage.xaml.cs">
       <DependentUpon>FriendsUserPage.xaml</DependentUpon>
     </Compile>
@@ -279,6 +282,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserPages\FollowersUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\TagUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -72,7 +72,7 @@ namespace FanfouWP2.Utils
 
                     foreach (Status i in list)
                     {
-                        if ((from s in statuses where s.id == i.id select s).Count() == 0)
+                        if ((from s in statuses where s.id == i.id select s).Any())
                             statuses.Insert(index, i);
                     }
                 }
