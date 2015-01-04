@@ -2,7 +2,7 @@
 
 namespace FanfouWP2.Utils
 {
-    public class EvilTransform
+    public static class EvilTransform
     {
         private const double pi = 3.14159265358979324;
 

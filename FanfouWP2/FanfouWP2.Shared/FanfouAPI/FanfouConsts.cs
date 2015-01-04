@@ -1,6 +1,6 @@
 ﻿namespace FanfouWP2.FanfouAPI
 {
-    public sealed class FanfouConsts
+    public static class FanfouConsts
     {
 #if WINDOWS_APP
         public const string CONSUMER_KEY = "5ac166bc080d3a4b2d76683e4f503b81";

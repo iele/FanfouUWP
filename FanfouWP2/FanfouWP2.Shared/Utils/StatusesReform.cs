@@ -6,7 +6,7 @@ using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.Utils
 {
-    public class StatusesReform
+    public static  class StatusesReform
     {
         public static void append(ObservableCollection<Status> statuses, List<Status> list)
         {

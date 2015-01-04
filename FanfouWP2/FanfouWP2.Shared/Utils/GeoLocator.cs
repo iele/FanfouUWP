@@ -4,7 +4,7 @@ using Windows.Devices.Geolocation;
 
 namespace FanfouWP2.Utils
 {
-    public class GeoLocator
+    public static class GeoLocator
     {
         public static async Task<string> getGeolocator()
         {

@@ -6,7 +6,7 @@ using Windows.Storage.Streams;
 
 namespace FanfouWP2.FanfouAPI
 {
-    public class XAuthHelper
+    public static class XAuthHelper
     {
         public static Random RndSeed = new Random();
         public static DateTime UnixTimestamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

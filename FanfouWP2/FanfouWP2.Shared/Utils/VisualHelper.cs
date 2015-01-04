@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Media;
 
 namespace FanfouWP2.Utils
 {
-    public class VisualHelper
+    public static class VisualHelper
     {
         public static T FindVisualChildByName<T>(DependencyObject parent, string name) where T : DependencyObject
         {

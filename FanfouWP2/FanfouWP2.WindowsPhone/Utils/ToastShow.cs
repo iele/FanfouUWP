@@ -5,7 +5,7 @@ using Windows.UI.Notifications;
 
 namespace FanfouWP2.Utils
 {
-    public class ToastShow
+    public static class ToastShow
     {
         public static void ShowToast(string title, string content)
         {

@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace FanfouWP2.Utils
 {
-    public class NavigationControl
+    public static class NavigationControl
     {
         public static void ClearStack(Frame frame)
         {
