@@ -58,7 +58,7 @@ namespace FanfouWP2
         /// </param>
         /// <param name="e">
         ///     事件数据，其中既提供在最初请求此页时传递给
-        ///     <see cref=" Frame.Navigate(Type, Object)" /> 的导航参数，又提供
+        ///     <see cref=" Frame.Navigate1(Type, Object)" /> 的导航参数，又提供
         ///     此页在以前会话期间保留的状态的
         ///     字典。 首次访问页面时，该状态将为 null。
         /// </param>
@@ -133,12 +133,12 @@ namespace FanfouWP2
 
         private void RepostItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
+            Frame.Navigate1(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
         }
 
         private void UserItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage), status.user);
+            Frame.Navigate1(typeof(UserPage), status.user);
         }
 
         private async void FavItem_Click(object sender, RoutedEventArgs e)
@@ -178,17 +178,17 @@ namespace FanfouWP2
 
         private void ReplyItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
+            Frame.Navigate1(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
         }
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ImagePage), status.photo.largeurl);
+            Frame.Navigate1(typeof(ImagePage), status.photo.largeurl);
         }
 
         private void Profile_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage), status.user);
+            Frame.Navigate1(typeof(UserPage), status.user);
         }
 
         #region NavigationHelper 注册

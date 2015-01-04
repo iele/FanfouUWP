@@ -55,7 +55,7 @@ namespace FanfouWP2
         /// </param>
         /// <param name="e">
         ///     事件数据，其中既提供在最初请求此页时传递给
-        ///     <see cref=" Frame.Navigate(Type, Object)" /> 的导航参数，又提供
+        ///     <see cref=" Frame.Navigate1(Type, Object)" /> 的导航参数，又提供
         ///     此页在以前会话期间保留的状态的
         ///     的字典。 首次访问页面时，该状态将为 null。
         /// </param>
@@ -105,7 +105,7 @@ namespace FanfouWP2
                     ToastShow.ShowToast("登陆失败", "登录用户名或密码有误");
                     return;
                 }
-                Frame.Navigate(typeof (HomePage));
+                Frame.Navigate1(typeof (HomePage));
             }
         }
 

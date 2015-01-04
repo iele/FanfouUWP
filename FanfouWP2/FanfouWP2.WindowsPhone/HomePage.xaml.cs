@@ -178,7 +178,7 @@ namespace FanfouWP2
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(PublicPage));
+            Frame.Navigate1(typeof(PublicPage));
         }
 
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
@@ -225,7 +225,7 @@ namespace FanfouWP2
 
         private void FavoriteGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FavoritePage), currentUser);
+            Frame.Navigate(typeof(FavoritePage), Utils.DataConverter<User>.Convert(currentUser));
         }
 
         private void SearchGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -297,7 +297,7 @@ namespace FanfouWP2
                 }
             }
             else
-                Frame.Navigate(typeof(StatusPage), e.ClickedItem);
+                Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         private async void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -334,7 +334,7 @@ namespace FanfouWP2
                 }
             }
             else
-                Frame.Navigate(typeof(StatusPage), e.ClickedItem);
+                Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         private void InformationButton_Click(object sender, RoutedEventArgs e)
@@ -373,12 +373,12 @@ namespace FanfouWP2
 
         private void CameraItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
+            Frame.Navigate1(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
         }
 
         private void SelfGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SelfPage), currentUser);
+            Frame.Navigate(typeof(SelfPage), Utils.DataConverter<User>.Convert(currentUser));
         }
     }
 }

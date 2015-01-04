@@ -39,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Items\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Parameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\XAuthHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ItemDataConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NavigationControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TimelineCache.cs" />

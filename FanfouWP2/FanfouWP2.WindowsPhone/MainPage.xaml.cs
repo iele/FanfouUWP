@@ -38,13 +38,13 @@ namespace FanfouWP2
             if (SettingStorage.Instance.currentUser== null)
             {
                 NavigationControl.ClearStack(Frame);
-                Frame.Navigate(typeof (LoginPage));
+                Frame.Navigate1(typeof (LoginPage));
             }
             else
             {
                 FanfouAPI.FanfouAPI.Instance.setUser(SettingStorage.Instance.currentUser);
                 NavigationControl.ClearStack(Frame);
-                Frame.Navigate(typeof(HomePage));
+                Frame.Navigate1(typeof(HomePage));
             }
         }
     }

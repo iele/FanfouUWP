@@ -169,10 +169,10 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                                     <Grid x:Name="SelfGrid" Width="140" Height="140" HorizontalAlignment="Left" VerticalAlignment="Top" Tapped="SelfGrid_Tapped">
                                         <Rectangle Fill="SkyBlue" Stroke="SkyBlue" Margin="0" />
-                                        <TextBlock TextWrapping="Wrap" Text="个人标签" FontFamily="Global User Interface"
+                                        <TextBlock TextWrapping="Wrap" Text="我的主页" FontFamily="Global User Interface"
                                                    Foreground="White" VerticalAlignment="Bottom"
                                                    HorizontalAlignment="Left" Margin="8,0,0,8" FontSize="16" />
-                                        <Image Height="64" Source="Assets/tag-512.png" Stretch="Fill" Width="64"
+                                        <Image Height="64" Source="Assets/user-512.png" Stretch="Fill" Width="64"
                                                Margin="0,0,0,12" HorizontalAlignment="Center"
                                                VerticalAlignment="Center" />
                                     </Grid>

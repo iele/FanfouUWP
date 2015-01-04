@@ -76,7 +76,7 @@ namespace FanfouWP2
             if (trendsGridView.SelectedIndex != -1)
             {
                 var t = trendsGridView.SelectedItem as Trends;
-                Frame.Navigate(typeof (SearchPage), t);
+                Frame.Navigate1(typeof (SearchPage), t);
             }
         }
 

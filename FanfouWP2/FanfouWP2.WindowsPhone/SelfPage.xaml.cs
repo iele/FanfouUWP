@@ -61,7 +61,7 @@ namespace FanfouWP2
         /// </param>
         /// <param name="e">
         ///     事件数据，其中既提供在最初请求此页时传递给
-        ///     <see cref=" Frame.Navigate(Type, Object)" /> 的导航参数，又提供
+        ///     <see cref=" Frame.Navigate1(Type, Object)" /> 的导航参数，又提供
         ///     此页在以前会话期间保留的状态的
         ///     字典。 首次访问页面时，该状态将为 null。
         /// </param>
@@ -94,37 +94,37 @@ namespace FanfouWP2
 
         private void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SearchUserPage), user);
+            Frame.Navigate1(typeof(SearchUserPage), user);
         }
 
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(StatusUserPage), user);
+            Frame.Navigate1(typeof(StatusUserPage), user);
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FavoriteUserPage), user);
+            Frame.Navigate1(typeof(FavoriteUserPage), user);
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FollowersUserPage), user);
+            Frame.Navigate1(typeof(FollowersUserPage), user);
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FriendsUserPage), user);
+            Frame.Navigate1(typeof(FriendsUserPage), user);
         }
 
         private void StatusItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(TimelineUserPage), user);
+            Frame.Navigate1(typeof(TimelineUserPage), user);
         }
 
         private void ImageItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ImageUserPage), user);
+            Frame.Navigate1(typeof(ImageUserPage), user);
         }
 
         #region NavigationHelper 注册

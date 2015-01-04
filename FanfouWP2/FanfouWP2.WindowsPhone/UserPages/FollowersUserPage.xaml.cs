@@ -90,7 +90,7 @@ namespace FanfouWP2.UserPages
 
         private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage), e.ClickedItem);
+            Frame.Navigate1(typeof(UserPage), e.ClickedItem);
         }
 
         #region NavigationHelper 注册
