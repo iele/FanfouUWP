@@ -11,7 +11,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light" Width="Auto" Height="Auto"
     IsTextScaleFactorEnabled="True"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}" NavigationCacheMode="Required">
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}" NavigationCacheMode="Required"
+    >
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}"
