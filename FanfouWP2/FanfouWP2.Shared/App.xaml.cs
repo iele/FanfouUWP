@@ -151,8 +151,8 @@ namespace FanfouWP2
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             Debug.WriteLine("OnSuspending");
-            await SuspensionManager.SaveAsync();
             SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
+            await SuspensionManager.SaveAsync();
 #if WINDOWS_PHONE_APP
             ContinuationManager.MarkAsStale();
 #endif

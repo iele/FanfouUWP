@@ -56,7 +56,7 @@ namespace FanfouWP2.UserPages
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["users"] = users;
-            user = e.NavigationParameter as User;
+            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
 
             title.Text = user.screen_name + "的朋友";
             loading.Visibility = Visibility.Visible;
@@ -91,7 +91,7 @@ namespace FanfouWP2.UserPages
 
         private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate1(typeof(UserPage), e.ClickedItem);
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert((e.ClickedItem as User)));    
         }
 
         #region NavigationHelper 注册

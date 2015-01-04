@@ -67,7 +67,7 @@ namespace FanfouWP2
         /// </param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            user = e.NavigationParameter as User;
+            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
             defaultViewModel["user"] = user;
             defaultViewModel["tags"] = tags;
       
@@ -94,37 +94,37 @@ namespace FanfouWP2
 
         private void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(SearchUserPage), user);
+            Frame.Navigate(typeof(SearchUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(StatusUserPage), user);
+            Frame.Navigate(typeof(StatusUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(FavoriteUserPage), user);
+            Frame.Navigate(typeof(FavoriteUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(FollowersUserPage), user);
+            Frame.Navigate(typeof(FollowersUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(FriendsUserPage), user);
+            Frame.Navigate(typeof(FriendsUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void StatusItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(TimelineUserPage), user);
+            Frame.Navigate(typeof(TimelineUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void ImageItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(ImageUserPage), user);
+            Frame.Navigate(typeof(ImageUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         #region NavigationHelper 注册

@@ -8,7 +8,7 @@
     x:Class="FanfouWP2.SendPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Light"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}" NavigationCacheMode="Required">
     <Page.Resources>
         <ValueConverter:TextToLeftCountTextConverter x:Key="TextToLeftCountTextConverter" />
     </Page.Resources>

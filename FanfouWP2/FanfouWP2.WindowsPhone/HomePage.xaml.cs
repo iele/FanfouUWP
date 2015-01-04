@@ -170,15 +170,15 @@ namespace FanfouWP2
             loading.Visibility = Visibility.Collapsed;
         }
 
-        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
-            storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
+            await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
+            await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
         }
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(PublicPage));
+            Frame.Navigate(typeof(PublicPage));
         }
 
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
@@ -373,7 +373,7 @@ namespace FanfouWP2
 
         private void CameraItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
+            Frame.Navigate(typeof(SendPage), new Tuple<object, SendPage.SendMode>(null, SendPage.SendMode.Photo));
         }
 
         private void SelfGrid_Tapped(object sender, TappedRoutedEventArgs e)

@@ -95,7 +95,7 @@ namespace Coding4Fun.Toolkit.Controls
 			var rootFrame = ApplicationSpace.RootFrame;
 
 			if (rootFrame != null)
-				rootFrame.Navigate1d -= FrameNavigated;
+				rootFrame.Navigated -= FrameNavigated;
 
 			//_imageCurrentLocation.Clear();
 			//_imagesBeingShown.Clear();
@@ -116,8 +116,8 @@ namespace Coding4Fun.Toolkit.Controls
 			if (rootFrame == null)
 				return;
 
-			rootFrame.Navigate1d -= FrameNavigated;
-			rootFrame.Navigate1d += FrameNavigated;
+			rootFrame.Navigated -= FrameNavigated;
+			rootFrame.Navigated += FrameNavigated;
 
 			FinishLoadAndTemplateApply();
 		}

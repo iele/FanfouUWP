@@ -42,7 +42,7 @@ namespace FanfouWP2
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            user = e.NavigationParameter as User;
+            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
 
             if (e.PageState != null)
             {

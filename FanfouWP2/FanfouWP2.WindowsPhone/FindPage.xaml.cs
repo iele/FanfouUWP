@@ -75,7 +75,7 @@ namespace FanfouWP2
 
         private void userGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate1(typeof(UserPage), e.ClickedItem);
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert((e.ClickedItem as User)));
         }
 
         #region NavigationHelper 注册

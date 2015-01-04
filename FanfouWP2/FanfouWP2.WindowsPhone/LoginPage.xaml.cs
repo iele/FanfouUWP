@@ -105,7 +105,7 @@ namespace FanfouWP2
                     ToastShow.ShowToast("登陆失败", "登录用户名或密码有误");
                     return;
                 }
-                Frame.Navigate1(typeof (HomePage));
+                Frame.Navigate(typeof (HomePage));
             }
         }
 

@@ -64,7 +64,7 @@ namespace FanfouWP2
         /// </param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            status = e.NavigationParameter as Status;
+            status = Utils.DataConverter<Status>.Convert(e.NavigationParameter as string);
             defaultViewModel["status"] = status;
 
             loading.Visibility = Visibility.Collapsed;
@@ -133,12 +133,12 @@ namespace FanfouWP2
 
         private void RepostItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
+            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Repost));
         }
 
         private void UserItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(UserPage), status.user);
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(status.user));
         }
 
         private async void FavItem_Click(object sender, RoutedEventArgs e)
@@ -178,17 +178,17 @@ namespace FanfouWP2
 
         private void ReplyItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
+            Frame.Navigate(typeof(SendPage), new Tuple<Status, SendPage.SendMode>(status, SendPage.SendMode.Reply));
         }
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(ImagePage), status.photo.largeurl);
+            Frame.Navigate(typeof(ImagePage), status.photo.largeurl);
         }
 
         private void Profile_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate1(typeof(UserPage), status.user);
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(status.user));
         }
 
         #region NavigationHelper 注册

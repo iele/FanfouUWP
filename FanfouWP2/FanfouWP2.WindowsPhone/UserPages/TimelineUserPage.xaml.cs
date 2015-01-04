@@ -54,7 +54,7 @@ namespace FanfouWP2.UserPages
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["statuses"] = statuses;
-            user = e.NavigationParameter as User;
+            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
 
             title.Text = user.screen_name + "的时间线";
             loading.Visibility = Visibility.Visible;
@@ -73,7 +73,7 @@ namespace FanfouWP2.UserPages
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate1(typeof (StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof (StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         #region NavigationHelper 注册

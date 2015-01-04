@@ -70,8 +70,7 @@ namespace FanfouWP2.UserPages
                     user = e.PageState["user"] as User;
             }
 
-            var t = e.NavigationParameter as User;
-            user = t;
+            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
             title.Text = "搜索 " + user.screen_name + " 的时间线";
         }
 
@@ -95,7 +94,7 @@ namespace FanfouWP2.UserPages
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate1(typeof(StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         #region NavigationHelper 注册

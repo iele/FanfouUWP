@@ -91,7 +91,7 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate1(typeof(StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         #region NavigationHelper 注册

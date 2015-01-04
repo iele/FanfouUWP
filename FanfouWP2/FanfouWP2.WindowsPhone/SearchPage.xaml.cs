@@ -73,7 +73,7 @@ namespace FanfouWP2
 
             if (e.NavigationParameter != null)
             {
-                var t = e.NavigationParameter as Trends;
+                var t = Utils.DataConverter<Trends>.Convert(e.NavigationParameter as string);
                 search.Text = t.query;
                 loading.Visibility = Visibility.Visible;
                 var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text,60);
@@ -98,7 +98,7 @@ namespace FanfouWP2
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate1(typeof(StatusPage), e.ClickedItem);
+            Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         #region NavigationHelper 注册
