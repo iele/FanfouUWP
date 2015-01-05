@@ -155,5 +155,10 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);
+        }
     }
 }

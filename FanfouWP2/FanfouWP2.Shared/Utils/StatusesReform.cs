@@ -6,7 +6,7 @@ using FanfouWP2.FanfouAPI.Items;
 
 namespace FanfouWP2.Utils
 {
-    public static  class StatusesReform
+    public static class StatusesReform
     {
         public static void append(ObservableCollection<Status> statuses, List<Status> list)
         {
@@ -58,22 +58,20 @@ namespace FanfouWP2.Utils
         {
             if (statuses != null && list != null)
             {
-                list.Reverse();
-
                 var item = from s in statuses where s.id == id_prev select s;
                 if (item.Count() != 0)
                 {
                     int index = statuses.IndexOf(item.First());
 
-                    if (list.Count >= 20)
-                    {
-                        statuses.Insert(index, new Status { is_refresh = true });
-                    }
-
                     foreach (Status i in list)
                     {
                         if ((from s in statuses where s.id == i.id select s).Any())
-                            statuses.Insert(index, i);
+                            statuses.Insert(index++, i);
+                    }
+
+                    if (list.Count >= 20)
+                    {
+                        statuses.Insert(index, new Status { is_refresh = true });
                     }
                 }
             }
@@ -95,7 +93,8 @@ namespace FanfouWP2.Utils
             }
         }
 
-        public static void reform1(ObservableCollection<Status> statuses, List<Status> list)
+        [System.Obsolete("use other methods",true)]
+        public static void reform(ObservableCollection<Status> statuses, List<Status> list)
         {
             lock (new Object())
             {
