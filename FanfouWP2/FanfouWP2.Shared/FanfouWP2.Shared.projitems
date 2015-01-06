@@ -42,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DataConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NavigationControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\TileUpdater.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TimelineCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TimelineStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\EvilTransform.cs" />

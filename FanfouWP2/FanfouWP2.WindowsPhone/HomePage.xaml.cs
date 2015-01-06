@@ -10,6 +10,8 @@ using FanfouWP2.Common;
 using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.FanfouAPI.Items;
 using FanfouWP2.Utils;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 
 namespace FanfouWP2
 {
@@ -168,6 +170,45 @@ namespace FanfouWP2
             }
 
             loading.Visibility = Visibility.Collapsed;
+
+            setTiles();
+        }
+
+        private async void setTiles()
+        {
+            Utils.TileUpdater.Clear();
+
+            var images = from s in statuses where s.user != null select s.user.profile_image_url;
+            List<string> list = new List<string>();
+            foreach (var i in images)
+            {
+                try
+                {
+                    var u = await WebDataCache.GetLocalUriAsync(new Uri(i));
+                    if (!list.Contains(u.ToString()))
+                        list.Add(u.ToString());
+                }
+                catch (Exception)
+                {
+                }
+            }
+            if (list.Count() > 6)
+                list = list.GetRange(0, 6);
+
+            if (statuses.Count() < 5)
+            {
+                foreach (var i in statuses)
+                {
+                    Utils.TileUpdater.SetTile(i.user.screen_name, i.text, list.ToArray());
+                }
+            }
+            else
+            {
+                for (var i = 0; i < 5; i++)
+                {
+                    Utils.TileUpdater.SetTile(statuses[i].user.screen_name, statuses[i].text, list.ToArray());
+                }
+            }
         }
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
