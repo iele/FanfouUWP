@@ -32,11 +32,7 @@ namespace FanfouWP2.Utils
                 tileTextAttributes[1].AppendChild(tileXml.CreateTextNode(msg));
 
                 XmlDocument squareTileXml =
-                    TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText02);
-
-                XmlNodeList squareTileImageAttributes = tileXml.GetElementsByTagName("image");
-                ((XmlElement)squareTileImageAttributes[0]).SetAttribute("src", "ms-appx:///Assets/login.png");
-                ((XmlElement)squareTileImageAttributes[0]).SetAttribute("alt", "alt text");
+                    TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150Text02);
 
                 XmlNodeList squareTileTextAttributes = squareTileXml.GetElementsByTagName("text");
                 squareTileTextAttributes[0].AppendChild(squareTileXml.CreateTextNode(title));
