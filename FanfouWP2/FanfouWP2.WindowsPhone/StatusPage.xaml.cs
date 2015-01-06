@@ -8,6 +8,7 @@ using FanfouWP2.Common;
 using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.FanfouAPI.Items;
 using FanfouWP2.ItemControl;
+using FanfouWP2.CustomControl;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -237,6 +238,13 @@ namespace FanfouWP2
             {
                 loading.Visibility = Visibility.Collapsed;
             }
+        }
+
+        private async void CopyItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            var msg = new CopyDialog();
+            msg.SetText(this.status.text);
+            await msg.ShowAsync();
         }
     }
 }

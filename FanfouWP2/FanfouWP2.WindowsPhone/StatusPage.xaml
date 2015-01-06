@@ -29,6 +29,7 @@
         <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="删除消息" x:Name="DeleteItem" IsEnabled="False" Click="DeleteItem_Click"/>
+                <AppBarButton x:Name="CopyItem" Label="复制此消息" Click="CopyItem_OnClick"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton Icon="List" Label="个人资料" x:Name="UserItem" Click="UserItem_Click" />
             <AppBarButton Label="转发" Icon="ReShare" x:Name="RepostItem" Click="RepostItem_Click" />
