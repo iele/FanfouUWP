@@ -12,6 +12,7 @@ using FanfouWP2.FanfouAPI.Items;
 using FanfouWP2.Utils;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace FanfouWP2
 {
@@ -281,7 +282,7 @@ namespace FanfouWP2
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            hub.ScrollToSection(hub.Sections.First());
+            hideMenuStoryboard.Begin();
         }
 
         private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -420,6 +421,29 @@ namespace FanfouWP2
         private void SelfGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(SelfPage), Utils.DataConverter<User>.Convert(currentUser));
+        }
+
+        private void menu_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            showMenuStoryboard.Begin();
+        }
+
+        private void UpItem_Click(object sender, RoutedEventArgs e)
+        {
+            switch (pivot.SelectedIndex)
+            {
+                case 0:
+                    if (statuses.Count != 0)
+                        this.statusesGridView.ScrollIntoView(this.statuses.First());
+                    break;
+                case 1:
+                    if (mentions.Count != 0)
+                        this.mentionsGridView.ScrollIntoView(this.mentions.First());
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }

@@ -13,6 +13,7 @@
 	<ProgressBar x:Name="progressBar" Visibility="Collapsed" Margin="0" IsIndeterminate="True" Height="64" FontFamily="Portable User Interface"/>
 		<Grid Margin="0" Height="64">
 			<TextBlock x:Name="TextBlock" TextWrapping="Wrap" Text="点击此处加载未读消息" FontSize="24" TextAlignment="Center" FontFamily="Portable User Interface" LineHeight="16" Margin="0,0,0,-1" VerticalAlignment="Center" Foreground="{StaticResource PhoneAccentBrush}" Tapped="TextBlock_Tapped"/>
+			<ProgressRing x:Name="ring" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" IsActive="True" Visibility="Collapsed"/>
 		</Grid>
     </Grid>
 </UserControl>

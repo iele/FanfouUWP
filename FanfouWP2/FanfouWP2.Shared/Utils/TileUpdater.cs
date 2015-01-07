@@ -47,12 +47,9 @@ namespace FanfouWP2.Utils
                 TileNotification tileNotification = new TileNotification(tileXml);
                 TileUpdateManager.CreateTileUpdaterForApplication().EnableNotificationQueue(true);
                 TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotification);
-
-                System.Diagnostics.Debug.WriteLine(text);
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
             }
         }
     }

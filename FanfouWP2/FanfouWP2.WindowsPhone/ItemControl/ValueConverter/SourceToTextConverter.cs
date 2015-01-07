@@ -8,6 +8,8 @@ namespace FanfouWP2.ItemControl.ValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if (value == null)
+                return "";
             return Regex.Replace((string) value, "<[^>]*>", "");
         }
 

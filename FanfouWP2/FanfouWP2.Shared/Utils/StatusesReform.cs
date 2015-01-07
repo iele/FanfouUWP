@@ -27,7 +27,7 @@ namespace FanfouWP2.Utils
                 list.Reverse();
                 if (list.Count >= 20)
                 {
-                    statuses.Insert(0, new Status { is_refresh = true });
+                    statuses.Insert(0, new Status { id = Guid.NewGuid().ToString(), is_refresh = true });
                 }
 
                 foreach (Status i in list)
@@ -58,21 +58,23 @@ namespace FanfouWP2.Utils
         {
             if (statuses != null && list != null)
             {
-                var item = from s in statuses where s.id == id_prev select s;
-                if (item.Count() != 0)
+                int index = 0;
+
+                for (int i = 0; i < statuses.Count; i++)
                 {
-                    int index = statuses.IndexOf(item.First());
+                    if (statuses[i].id == id_prev)
+                        index = i;
+                }
+                index++;
 
-                    foreach (Status i in list)
-                    {
-                        if ((from s in statuses where s.id == i.id select s).Any())
-                            statuses.Insert(index++, i);
-                    }
+                foreach (Status i in list)
+                {
+                    statuses.Insert(index++, i);
+                }
 
-                    if (list.Count >= 20)
-                    {
-                        statuses.Insert(index, new Status { is_refresh = true });
-                    }
+                if (list.Count >= 20)
+                {
+                    statuses.Insert(index, new Status { id = Guid.NewGuid().ToString(), is_refresh = true });
                 }
             }
 
@@ -93,7 +95,7 @@ namespace FanfouWP2.Utils
             }
         }
 
-        [System.Obsolete("use other methods",true)]
+        [System.Obsolete("use other methods", true)]
         public static void reform(ObservableCollection<Status> statuses, List<Status> list)
         {
             lock (new Object())
