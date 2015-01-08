@@ -30,6 +30,8 @@ namespace FanfouWP2
 
         private TimelineStorage<Status> storage = new TimelineStorage<Status>();
 
+        private bool is_menu_open = false;
+
         public HomePage()
         {
             InitializeComponent();
@@ -422,12 +424,7 @@ namespace FanfouWP2
         {
             Frame.Navigate(typeof(SelfPage), Utils.DataConverter<User>.Convert(currentUser));
         }
-
-        private void menu_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            showMenuStoryboard.Begin();
-        }
-
+ 
         private void UpItem_Click(object sender, RoutedEventArgs e)
         {
             switch (pivot.SelectedIndex)
@@ -444,6 +441,24 @@ namespace FanfouWP2
                     break;
             }
 
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this.is_menu_open)
+                showMenuStoryboard.Begin();
+            else
+                hideMenuStoryboard.Begin();
+        }
+
+        private void showMenuStoryboard_Completed(object sender, object e)
+        {
+            is_menu_open = true;
+        }
+
+        private void hideMenuStoryboard_Completed(object sender, object e)
+        {
+            is_menu_open = false;
         }
     }
 }
