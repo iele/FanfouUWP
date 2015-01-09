@@ -452,7 +452,6 @@ namespace FanfouWP2
                 default:
                     break;
             }
-
         }
 
         private void showMenuStoryboard_Completed(object sender, object e)

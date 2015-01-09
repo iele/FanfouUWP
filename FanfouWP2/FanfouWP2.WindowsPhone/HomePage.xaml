@@ -93,7 +93,7 @@
         <Grid  Grid.Row="1" Background="White" Margin="0" Canvas.ZIndex="10" RenderTransformOrigin="0,0.5">
         	<Grid.RowDefinitions>
         		<RowDefinition/>
-        		<RowDefinition Height="4*"/>
+        		<RowDefinition Height="5*"/>
         	</Grid.RowDefinitions>
         	<Grid.RenderTransform>
                 <CompositeTransform x:Name="CompositeTransform" TranslateX="-500"/>
@@ -104,7 +104,7 @@
                 <ColumnDefinition Width="100*" />
             </Grid.ColumnDefinitions>
             <Viewbox HorizontalAlignment="Left" Grid.Row="1">
-                <ListView IsSwipeEnabled="True" Margin="12,12,0,12">
+                <ListView x:Name="menu" IsSwipeEnabled="True" Margin="12,0,0,12" IsItemClickEnabled="True">
                     <Grid Margin="12,6" Height="70"
         				VerticalAlignment="Top" Width="250">
                         <TextBlock TextWrapping="Wrap" Text="私信" FontFamily="Global User Interface"
@@ -183,19 +183,19 @@
             				<ColumnDefinition/>
             				<ColumnDefinition Width="Auto"/>
             			</Grid.ColumnDefinitions>
-            			<Image Height="64" VerticalAlignment="Center" Width="64" utils:ImageExtensions.CacheUri="{Binding currentUser.profile_image_url}" HorizontalAlignment="Left" Margin="18,30,0,31" />
-            			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding currentUser.screen_name}" VerticalAlignment="Center" Grid.Column="1" Margin="17.75,43,0,43" FontSize="32"/>
-            			<Image Margin="0" Source="Assets/forward-50.png" Stretch="None" Grid.Column="2" VerticalAlignment="Center"/>
+                        <Image Height="64" VerticalAlignment="Center" Width="64" utils:ImageExtensions.CacheUri="{Binding currentUser.profile_image_url_large}" HorizontalAlignment="Left" Margin="18,0,0,0" />
+            			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding currentUser.screen_name}" VerticalAlignment="Center" Grid.Column="1" Margin="17.75,0,0,0" FontSize="32"/>
+            			<Image Margin="0,0,6,0" Source="Assets/forward-50.png" Stretch="Fill" Grid.Column="2" VerticalAlignment="Center" Width="24" Height="24"/>
             		</Grid>
             	</FlipViewItem>
             	<FlipViewItem Height="125" Width="445">
                     <Grid>
                     	<Grid.ColumnDefinitions>
                     		<ColumnDefinition Width="Auto"/>
-                    		<ColumnDefinition Width="Auto"/>
+                    		<ColumnDefinition Width="1*"/>
                     	</Grid.ColumnDefinitions>
-            			<Image Margin="0" Source="Assets/back-50.png" Stretch="None" HorizontalAlignment="Left"/>
-            			<GridView Margin="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+            			<Image Margin="6,0,0,0" Source="Assets/back-50.png" Stretch="Fill" HorizontalAlignment="Left" Width="24" Height="24"/>
+            			<GridView Margin="0,0,6,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             				<StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" MinWidth="40">
             					<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
             						FontSize="20" Foreground="Gray" />
