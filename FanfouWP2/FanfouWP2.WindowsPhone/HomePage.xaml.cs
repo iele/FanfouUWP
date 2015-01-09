@@ -13,6 +13,7 @@ using FanfouWP2.Utils;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.Phone.UI.Input;
 
 namespace FanfouWP2
 {
@@ -35,6 +36,8 @@ namespace FanfouWP2
         public HomePage()
         {
             InitializeComponent();
+
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
             statuses = cache.statuses;
             mentions = cache.mentions;
@@ -95,6 +98,15 @@ namespace FanfouWP2
             navigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
+        void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            if (this.is_menu_open)
+            {
+                this.hideMenuStoryboard.Begin();
+                e.Handled = true;
+            }
+        }
+
         public NavigationHelper NavigationHelper
         {
             get { return navigationHelper; }
@@ -106,7 +118,7 @@ namespace FanfouWP2
         }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
-        {
+        {      
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["currentUser"] = currentUser;
 
@@ -424,7 +436,7 @@ namespace FanfouWP2
         {
             Frame.Navigate(typeof(SelfPage), Utils.DataConverter<User>.Convert(currentUser));
         }
- 
+
         private void UpItem_Click(object sender, RoutedEventArgs e)
         {
             switch (pivot.SelectedIndex)
@@ -443,14 +455,6 @@ namespace FanfouWP2
 
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (!this.is_menu_open)
-                showMenuStoryboard.Begin();
-            else
-                hideMenuStoryboard.Begin();
-        }
-
         private void showMenuStoryboard_Completed(object sender, object e)
         {
             is_menu_open = true;
@@ -459,6 +463,14 @@ namespace FanfouWP2
         private void hideMenuStoryboard_Completed(object sender, object e)
         {
             is_menu_open = false;
+        }
+
+        private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (!this.is_menu_open)
+                showMenuStoryboard.Begin();
+            else
+                hideMenuStoryboard.Begin();
         }
     }
 }
