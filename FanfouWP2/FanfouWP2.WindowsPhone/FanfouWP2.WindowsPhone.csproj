@@ -84,6 +84,9 @@
     <Compile Include="CustomControl\CopyDialog.xaml.cs">
       <DependentUpon>CopyDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItemControl\MenuControl.xaml.cs">
+      <DependentUpon>MenuControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImagePage.xaml.cs">
       <DependentUpon>ImagePage.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CustomControl\CopyDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemControl\MenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

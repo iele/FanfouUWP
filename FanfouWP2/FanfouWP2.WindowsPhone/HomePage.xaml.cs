@@ -471,5 +471,15 @@ namespace FanfouWP2
             else
                 hideMenuStoryboard.Begin();
         }
+
+        private void SettingButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DirectGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
     }
 }
