@@ -118,7 +118,7 @@ namespace FanfouWP2
         }
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
-        {      
+        {
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["currentUser"] = currentUser;
 
@@ -464,14 +464,6 @@ namespace FanfouWP2
             is_menu_open = false;
         }
 
-        private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (!this.is_menu_open)
-                showMenuStoryboard.Begin();
-            else
-                hideMenuStoryboard.Begin();
-        }
-
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -480,6 +472,14 @@ namespace FanfouWP2
         private void DirectGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
+        }
+
+        private void Menu_Tapped(object sender, TappedRoutedEventArgs e)
+       {
+            if (!this.is_menu_open)
+                showMenuStoryboard.Begin();
+            else
+                hideMenuStoryboard.Begin();   
         }
     }
 }

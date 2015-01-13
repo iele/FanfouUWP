@@ -26,9 +26,9 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid Height="100" Width="400" x:Name="grid">
-            <TextBlock x:Name="text" TextWrapping="Wrap" FontFamily="Global User Interface"
+            <TextBlock x:Name="text" TextWrapping="Wrap"
             				Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Left"
-            				Margin="90,0,0,0" FontSize="24" />
+            				Margin="90,0,0,0" FontSize="32" />
             <Image x:Name="image" Height="64" Stretch="Fill"
             				Width="64" Margin="10,0,0,0" HorizontalAlignment="Left"
             				VerticalAlignment="Center" />
