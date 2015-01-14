@@ -102,6 +102,10 @@
     <Compile Include="AnnouncePage.xaml.cs">
       <DependentUpon>AnnouncePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ItemControl\AnnounceItemControl.xaml.cs">
+      <DependentUpon>AnnounceItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\ValueConverter\DateToStringConverter.cs" />
     <Compile Include="SelfPage.xaml.cs">
       <DependentUpon>SelfPage.xaml</DependentUpon>
     </Compile>
@@ -301,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AnnouncePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\AnnounceItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
