@@ -134,12 +134,12 @@ namespace FanfouWP2
                     case SendMode.Reply:
                         status = DataConverter<Status>.Convert(param.Substring(1));
                         title.Text = "回复" + status.user.screen_name;
-                        send.Text = "@" + status.user.screen_name;
+                        send.Text = "@" + status.user.screen_name + " ";
                         break;
                     case SendMode.ReplyUser:
                         user = DataConverter<User>.Convert(param.Substring(1));
                         title.Text = "提及" + user.screen_name;
-                        send.Text = "@" + user.screen_name;
+                        send.Text = "@" + user.screen_name + " ";
                         break;
                     case SendMode.Repost:
                         status = DataConverter<Status>.Convert(param.Substring(1));
@@ -214,7 +214,7 @@ namespace FanfouWP2
                 catch (Exception)
                 {
                     loading.Visibility = Visibility.Collapsed;
-                    Utils.ToastShow.ShowInformation("图片发送失败");
+                    Utils.ToastShow.ShowInformation("发送失败");
                     return;
                 }
             }
@@ -248,12 +248,12 @@ namespace FanfouWP2
                 catch (Exception)
                 {
                     loading.Visibility = Visibility.Collapsed;
-                    Utils.ToastShow.ShowInformation("图片发送失败");
+                    Utils.ToastShow.ShowInformation("发送失败");
                     return;
                 }
             }
             loading.Visibility = Visibility.Visible;
-            Utils.ToastShow.ShowInformation("图片发送成功");
+            Utils.ToastShow.ShowInformation("发送成功");
             navigationHelper.GoBack();
         }
 

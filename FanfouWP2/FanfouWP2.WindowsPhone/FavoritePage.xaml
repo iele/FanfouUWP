@@ -28,8 +28,8 @@
             <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0"
-                     IsIndeterminate="True" />
+        <ProgressBar IsIndeterminate="True" x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0"
+                    />
         <Grid Margin="0" VerticalAlignment="Top" Grid.RowSpan="2">
             <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0" />
             <StackPanel Margin="12,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">

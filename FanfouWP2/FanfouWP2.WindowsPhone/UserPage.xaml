@@ -40,7 +40,7 @@
         <!-- 标题面板 -->
 
         <!--TODO: 应将内容放入以下网格-->
-        <ProgressBar x:Name="loading" Height="10" VerticalAlignment="Top" IsIndeterminate="True" Margin="0,-28,0,0" />
+        <ProgressBar IsIndeterminate="True" x:Name="loading" Height="10" VerticalAlignment="Top" Margin="0,-28,0,0" />
 
         <!--TODO: 应将内容放入以下网格-->
         <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" />

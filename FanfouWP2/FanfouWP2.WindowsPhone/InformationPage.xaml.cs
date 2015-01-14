@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using FanfouWP2.Common;
+using FanfouWP2.FanfouAPI.Items;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -80,10 +81,12 @@ namespace FanfouWP2
 
         private void NoticeButton_Click(object sender, RoutedEventArgs e)
         {
+            Frame.Navigate(typeof(AnnouncePage));
         }
 
         private void SendMessageButton_Click(object sender, RoutedEventArgs e)
         {
+            Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.ReplyUser).ToString() + Utils.DataConverter<User>.Convert(new User() { id = "fanwp", screen_name = "饭窗" }));
         }
 
         private void MarketButton_Click(object sender, RoutedEventArgs e)

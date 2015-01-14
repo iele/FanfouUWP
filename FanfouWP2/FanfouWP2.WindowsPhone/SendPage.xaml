@@ -61,6 +61,6 @@
                        Foreground="Gray" x:Name="locationText" Visibility="Collapsed"/>
             <Image x:Name="photo" Margin="12" Grid.Row="2" />
         </Grid>
-        <ProgressBar x:Name="loading" Height="10" Margin="0,-28,0,0" VerticalAlignment="Top" IsIndeterminate="True" />
+        <ProgressBar IsIndeterminate="True" x:Name="loading" Height="10" Margin="0,-28,0,0" VerticalAlignment="Top" />
     </Grid>
 </Page>

@@ -71,7 +71,7 @@ namespace FanfouWP2
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
             defaultViewModel["user"] = user;
             defaultViewModel["tags"] = tags;
-      
+
             var list = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
             tags.Clear();
             foreach (var item in list)
@@ -129,7 +129,7 @@ namespace FanfouWP2
 
         private void ReplyItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendPage), new Tuple<User, SendPage.SendMode>(user, SendPage.SendMode.ReplyUser));
+            Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.ReplyUser).ToString() + Utils.DataConverter<User>.Convert(user));
         }
 
         #region NavigationHelper 注册
@@ -163,7 +163,7 @@ namespace FanfouWP2
 
         private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof (TagUserPage), e.ClickedItem as string);
+            Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);
         }
     }
 }

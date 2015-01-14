@@ -9,6 +9,8 @@ using FanfouWP2.FanfouAPI.Events;
 using FanfouWP2.FanfouAPI.Items;
 using FanfouWP2.ItemControl;
 using FanfouWP2.CustomControl;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -245,6 +247,21 @@ namespace FanfouWP2
             var msg = new CopyDialog();
             msg.SetText(this.status.text);
             await msg.ShowAsync();
+        }
+
+        private void ShareItem_Click(object sender, RoutedEventArgs e)
+        {
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager,
+    DataRequestedEventArgs>(this.ShareTextHandler);
+            DataTransferManager.ShowShareUI();
+        }
+
+        private void ShareTextHandler(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            DataRequest request = e.Request;
+            request.Data.Properties.Title = "【来自饭否】";
+            request.Data.SetText(status.user.screen_name + " " + status.text);
         }
     }
 }

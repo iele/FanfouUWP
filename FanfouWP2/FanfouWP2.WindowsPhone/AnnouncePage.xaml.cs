@@ -11,14 +11,14 @@ using FanfouWP2.Utils;
 
 namespace FanfouWP2
 {
-    public sealed partial class PublicPage : Page
+    public sealed partial class AnnouncePage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
         private readonly ObservableCollection<Status> statuses = new ObservableCollection<Status>();
 
-        public PublicPage()
+        public AnnouncePage()
         {
             InitializeComponent();
 
@@ -44,7 +44,7 @@ namespace FanfouWP2
             loading.Visibility = Visibility.Visible;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline("饭窗公告", "fanwp");
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
                 defaultViewModel["date"] = DateTime.Now.ToString();
@@ -61,31 +61,6 @@ namespace FanfouWP2
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
-
-        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
-        {
-            loading.Visibility = Visibility.Visible;
-            try
-            {
-                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
-                statuses.Clear();
-                StatusesReform.append(statuses, ss);
-                defaultViewModel["date"] = DateTime.Now.ToString();
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                loading.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
-        }
-
         #region NavigationHelper 注册
 
         /// <summary>
