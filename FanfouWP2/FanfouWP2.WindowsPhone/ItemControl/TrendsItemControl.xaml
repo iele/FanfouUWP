@@ -23,8 +23,8 @@
             <TextBlock Margin="12,0,-0.083,0" Text="{Binding query}" VerticalAlignment="Center" FontSize="18.667"
                        Foreground="Gray" />
         </StackPanel>
-        <Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Height="30" Margin="10,10,0,10" Stroke="DeepSkyBlue"
-                   VerticalAlignment="Top" Width="15" />
+        <Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Height="30" Margin="10,0,0,0" Stroke="DeepSkyBlue"
+                   VerticalAlignment="Center" Width="15" />
 
     </Grid>
 </UserControl>

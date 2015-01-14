@@ -31,13 +31,9 @@ namespace FanfouWP2
 
         private TimelineStorage<Status> storage = new TimelineStorage<Status>();
 
-        private bool is_menu_open = false;
-
         public HomePage()
         {
             InitializeComponent();
-
-            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
             statuses = cache.statuses;
             mentions = cache.mentions;
@@ -96,15 +92,6 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-        }
-
-        void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
-        {
-            if (this.is_menu_open)
-            {
-                this.hideMenuStoryboard.Begin();
-                e.Handled = true;
-            }
         }
 
         public NavigationHelper NavigationHelper
@@ -294,11 +281,6 @@ namespace FanfouWP2
             Frame.Navigate(typeof(FindPage));
         }
 
-        private void NextButton_Click(object sender, RoutedEventArgs e)
-        {
-            hideMenuStoryboard.Begin();
-        }
-
         private void TrendsGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(TrendsPage));
@@ -454,16 +436,6 @@ namespace FanfouWP2
             }
         }
 
-        private void showMenuStoryboard_Completed(object sender, object e)
-        {
-            is_menu_open = true;
-        }
-
-        private void hideMenuStoryboard_Completed(object sender, object e)
-        {
-            is_menu_open = false;
-        }
-
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -471,15 +443,6 @@ namespace FanfouWP2
 
         private void DirectGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
-        }
-
-        private void Menu_Tapped(object sender, TappedRoutedEventArgs e)
-       {
-            if (!this.is_menu_open)
-                showMenuStoryboard.Begin();
-            else
-                hideMenuStoryboard.Begin();   
         }
     }
 }

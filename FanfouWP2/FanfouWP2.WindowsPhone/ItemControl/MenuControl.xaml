@@ -9,29 +9,27 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Viewbox Margin="0">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="TapStates">
-                <VisualState x:Name="Normal" />
-                <VisualState x:Name="PointerDown">
-                    <Storyboard>
-                        <PointerDownThemeAnimation TargetName="grid" />
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="PointerUp">
-                    <Storyboard>
-                        <PointerUpThemeAnimation TargetName="grid" />
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <Grid Height="100" Width="400" x:Name="grid">
-            <TextBlock x:Name="text" TextWrapping="Wrap"
-            				Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Left"
-            				Margin="90,0,0,0" FontSize="32" />
-            <Image x:Name="image" Height="64" Stretch="Fill"
-            				Width="64" Margin="10,0,0,0" HorizontalAlignment="Left"
-            				VerticalAlignment="Center" />
-        </Grid>
-    </Viewbox>
+    <Grid Margin="0,10" x:Name="grid">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="TapStates">
+				<VisualState x:Name="Normal"/>
+				<VisualState x:Name="PointerDown">
+					<Storyboard>
+						<PointerDownThemeAnimation TargetName="grid"/>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="PointerUp">
+					<Storyboard>
+						<PointerUpThemeAnimation TargetName="grid"/>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<TextBlock x:Name="text" TextWrapping="Wrap"
+			Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Left"
+			Margin="90,0,0,0" FontSize="24" />
+		<Image x:Name="image" Height="48" Stretch="Fill"
+			Width="48" Margin="10,0,0,0" HorizontalAlignment="Left"
+			VerticalAlignment="Center" />
+	</Grid>
 </UserControl>

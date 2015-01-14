@@ -240,9 +240,6 @@
     <Content Include="Assets\Logo.scale-140.png" />
     <Content Include="Assets\Logo.scale-180.png" />
     <Content Include="Assets\Logo.scale-240.png" />
-    <Content Include="Assets\menu-48.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\message_outline-512.png" />
     <Content Include="Assets\newspaper-512.png" />
     <Content Include="Assets\search-512.png" />
