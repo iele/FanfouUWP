@@ -106,7 +106,6 @@ namespace FanfouWP2.Utils
             bool contains = await folder.ContainsFileAsync(key).ConfigureAwait(false);
             if (!contains)
             {
-                //else, load the data
                 await SetAsync(uri).ConfigureAwait(false);
             }
 

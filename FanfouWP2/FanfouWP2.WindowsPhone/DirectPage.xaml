@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="FanfouWP2.DirectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ItemControl="using:FanfouWP2.ItemControl"
+    xmlns:selector="using:FanfouWP2.ItemControl.TemplateSelector"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d" RequestedTheme="Light">
+
+    <Page.Resources>
+        <DataTemplate x:Key="DirectItemControl">
+            <ItemControl:DirectItemControl DataContext="{Binding}"
+                                           Width="{Binding ActualWidth, ElementName=messagesGridView}"
+                                           Margin="0,3" />
+        </DataTemplate>
+        <DataTemplate x:Key="DirectOtherItemControl">
+            <ItemControl:DirectOtherItemControl DataContext="{Binding}"
+                                           Width="{Binding ActualWidth, ElementName=messagesGridView}"
+                                           Margin="0,3" />
+        </DataTemplate>
+        <selector:ConversationItemTemplateSelector x:Key="ConversationItemTemplateSelector" ConversationSelfTemplate="{StaticResource DirectItemControl}" ConversationOtherTemplate="{StaticResource DirectOtherItemControl}"/>
+    </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar IsOpen="False" ClosedDisplayMode="Compact">
+            <AppBarButton x:Name="PrevItem" Icon="Previous" Label="前页" Click="PrevItem_Click" />
+            <AppBarButton x:Name="NextItem" Icon="Next" Label="后页" Click="NextItem_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ProgressBar IsIndeterminate="True" x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10" Margin="0,-28,0,0"
+                    />
+        <Grid Margin="0" VerticalAlignment="Top" Grid.RowSpan="2">
+            <Rectangle Fill="DeepSkyBlue" Height="76" Stroke="DeepSkyBlue" VerticalAlignment="Top" Margin="0,-28,0,0" />
+            <StackPanel Margin="12,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock TextWrapping="Wrap" Text="{Binding title}" Margin="0" VerticalAlignment="Center"
+                           FontSize="18.667" Foreground="White" HorizontalAlignment="Left" />
+                <TextBlock TextWrapping="Wrap" Text="{Binding page}" Margin="12,0,0,0" VerticalAlignment="Center"
+                           FontSize="18.667" Foreground="White" HorizontalAlignment="Left" />
+            </StackPanel>
+        </Grid>
+        <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="messagesGridView"
+                  ItemsSource="{Binding messages}" 
+                  ItemTemplateSelector="{StaticResource ConversationItemTemplateSelector}"
+                  Grid.Row="1"
+                  IsItemClickEnabled="True" ItemClick="messagesGridView_ItemClick" />
+    </Grid>
+</Page>

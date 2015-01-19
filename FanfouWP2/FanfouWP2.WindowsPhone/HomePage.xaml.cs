@@ -180,35 +180,18 @@ namespace FanfouWP2
         {
             Utils.TileUpdater.Clear();
 
-            var images = from s in statuses where s.user != null select s.user.profile_image_url;
-            List<string> list = new List<string>();
-            foreach (var i in images)
-            {
-                try
-                {
-                    var u = await WebDataCache.GetLocalUriAsync(new Uri(i));
-                    if (!list.Contains(u.ToString()))
-                        list.Add(u.ToString());
-                }
-                catch (Exception)
-                {
-                }
-            }
-            if (list.Count() > 6)
-                list = list.GetRange(0, 6);
-
             if (statuses.Count() < 5)
             {
                 foreach (var i in statuses)
                 {
-                    Utils.TileUpdater.SetTile(i.user.screen_name, i.text, list.ToArray());
+                    Utils.TileUpdater.SetTile(i.user.screen_name, i.text);
                 }
             }
             else
             {
                 for (var i = 0; i < 5; i++)
                 {
-                    Utils.TileUpdater.SetTile(statuses[i].user.screen_name, statuses[i].text, list.ToArray());
+                    Utils.TileUpdater.SetTile(statuses[i].user.screen_name, statuses[i].text);
                 }
             }
         }
@@ -443,6 +426,7 @@ namespace FanfouWP2
 
         private void DirectGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Frame.Navigate(typeof(DirectPage));
         }
     }
 }

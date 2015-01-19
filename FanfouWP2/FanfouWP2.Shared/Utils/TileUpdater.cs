@@ -15,17 +15,11 @@ namespace FanfouWP2.Utils
             TileUpdateManager.CreateTileUpdaterForApplication().Clear();
         }
 
-        public static void SetTile(string title, string msg, string[] imageUrls)
+        public static void SetTile(string title, string msg)
         {
             try
             {
-                XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150PeekImageCollection05);
-
-                XmlNodeList tileImageAttributes = tileXml.GetElementsByTagName("image");
-                for (var i = 0; i < imageUrls.Length; i++)
-                {
-                    ((XmlElement)tileImageAttributes[i]).SetAttribute("src", imageUrls[i]);
-                }
+                XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Text09);
 
                 XmlNodeList tileTextAttributes = tileXml.GetElementsByTagName("text");
                 tileTextAttributes[0].AppendChild(tileXml.CreateTextNode(title));
