@@ -11,6 +11,7 @@ using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
 using FanfouWP2.FanfouAPI.Items;
 using Buffer = Windows.Storage.Streams.Buffer;
+using System.IO.Compression;
 
 namespace FanfouWP2.FanfouAPI
 {
@@ -130,6 +131,7 @@ namespace FanfouWP2.FanfouAPI
 
                 string oauth = generateOAuthHeader(parameters, url, "GET");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new HttpContentCodingWithQualityHeaderValue("GZip"));
 
                 str = str.Substring(0, str.Length - 1);
                 using (HttpResponseMessage response = await client.GetAsync(new Uri(urlStr + str)))
@@ -170,6 +172,7 @@ namespace FanfouWP2.FanfouAPI
 
                 string oauth = generateOAuthHeader(parameters, url, "POST");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new HttpContentCodingWithQualityHeaderValue("GZip"));
 
                 var content = new HttpFormUrlEncodedContent(parameters.Items);
                 using (HttpResponseMessage response = await client.PostAsync(new Uri(urlStr), content))
@@ -211,6 +214,7 @@ namespace FanfouWP2.FanfouAPI
 
                 string oauth = generateOAuthHeader(new Parameters(), url, "POST");
                 client.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("OAuth", oauth);
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new HttpContentCodingWithQualityHeaderValue("GZip"));
                 var buff = new Buffer(1024);
                 var content = new HttpMultipartFormDataContent();
                 foreach (var item in parameters.Items)

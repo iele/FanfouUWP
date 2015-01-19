@@ -10,8 +10,8 @@
     mc:Ignorable="d" RequestedTheme="Light">
 
     <Page.Resources>
-        <DataTemplate x:Key="StatusItemControl">
-            <ItemControl:StatusItemControl DataContext="{Binding}"
+        <DataTemplate x:Key="AnnounceItemControl">
+            <ItemControl:AnnounceItemControl DataContext="{Binding}"
                                            Width="{Binding ActualWidth, ElementName=statusesGridView}"
                                            Margin="0,3" />
         </DataTemplate>
@@ -35,6 +35,6 @@
             </StackPanel>
         </Grid>
         <ListView ShowsScrollingPlaceholders="True" Margin="12,0" x:Name="statusesGridView"
-                  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1" />
+                  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource AnnounceItemControl}" Grid.Row="1" />
     </Grid>
 </Page>
