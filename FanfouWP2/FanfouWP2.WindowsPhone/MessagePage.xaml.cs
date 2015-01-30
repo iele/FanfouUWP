@@ -50,11 +50,14 @@ namespace FanfouWP2
             try
             {
                 var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesConversation(direct.otherid);
+                ss.Reverse();
                 messages.Clear();
                 foreach (var item in ss)
                 {
                     messages.Add(item);
                 }
+                if (messages.Count != 0)
+                    messagesGridView.ScrollIntoView(messages.Last());
             }
             catch (Exception)
             {
@@ -62,7 +65,6 @@ namespace FanfouWP2
             finally
             {
                 loading.Visibility = Visibility.Collapsed;
-
             }
         }
 
@@ -98,5 +100,25 @@ namespace FanfouWP2
         }
 
         #endregion
+
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                loading.Visibility = Visibility.Visible;
+                var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesNew(direct.otherid, text.Text);
+                messages.Add(ss);
+                if (messages.Count != 0)
+                    messagesGridView.ScrollIntoView(messages.Last());
+                this.text.Text = "";
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }
