@@ -191,7 +191,7 @@ namespace FanfouWP2
 
         private void messagesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+          Frame.Navigate(typeof(MessagePage), Utils.DataConverter<DirectMessageItem>.Convert(e.ClickedItem as DirectMessageItem));
         }
     }
 }

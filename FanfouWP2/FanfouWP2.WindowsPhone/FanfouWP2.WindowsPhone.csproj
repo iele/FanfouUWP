@@ -84,6 +84,9 @@
     <Compile Include="CustomControl\CopyDialog.xaml.cs">
       <DependentUpon>CopyDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MessagePage.xaml.cs">
+      <DependentUpon>MessagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DirectPage.xaml.cs">
       <DependentUpon>DirectPage.xaml</DependentUpon>
     </Compile>
@@ -286,6 +289,10 @@
     <Page Include="CustomControl\CopyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="DirectPage.xaml">
       <Generator>MSBuild:Compile</Generator>
