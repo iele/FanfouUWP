@@ -165,5 +165,10 @@ namespace FanfouWP2
         {
             Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);
         }
+
+        private void DirectItem_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MessagePage), user.id);
+        }
     }
 }

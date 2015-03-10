@@ -19,7 +19,7 @@ namespace FanfouWP2
 
         private ObservableCollection<DirectMessage> messages = new ObservableCollection<DirectMessage>();
 
-        private DirectMessageItem direct;
+        private string id;
 
         public MessagePage()
         {
@@ -42,14 +42,13 @@ namespace FanfouWP2
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            direct = Utils.DataConverter<DirectMessageItem>.Convert(e.NavigationParameter as string);
-
+            id = e.NavigationParameter as string;
             defaultViewModel["messages"] = messages;
 
             loading.Visibility = Visibility.Visible;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesConversation(direct.otherid);
+                var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesConversation(id);
                 ss.Reverse();
                 messages.Clear();
                 foreach (var item in ss)
@@ -106,7 +105,7 @@ namespace FanfouWP2
             try
             {
                 loading.Visibility = Visibility.Visible;
-                var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesNew(direct.otherid, text.Text);
+                var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesNew(id, text.Text);
                 messages.Add(ss);
                 if (messages.Count != 0)
                     messagesGridView.ScrollIntoView(messages.Last());
