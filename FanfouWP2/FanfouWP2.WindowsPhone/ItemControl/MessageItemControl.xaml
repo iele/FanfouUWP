@@ -31,7 +31,7 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}"
                        Margin="10" FontSize="18.667" />
             <TextBlock Text="{Binding created_at, Converter={StaticResource DateToTextConverter}}" Margin="10,0,10,10"
-                       Foreground="#DE676767" FontSize="16" />
+                       Foreground="#DE676767" FontSize="16" HorizontalAlignment="Left" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -7,6 +7,7 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
     x:Class="FanfouWP2.ItemControl.DirectOtherItemControl"
+    xmlns:utils="using:FanfouWP2.Utils"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" FontFamily="Microsoft YaHei">
@@ -32,12 +33,9 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Rectangle Height="64" StrokeThickness="0" Width="64" RadiusY="5" Canvas.ZIndex="2" Margin="20,10,10,10"
-                   Tapped="Rectangle_Tapped" RadiusX="5">
-            <Rectangle.Fill>
-                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding dm.sender.profile_image_url}" />
-            </Rectangle.Fill>
-        </Rectangle>
+        <Image Height="64" Width="64" Canvas.ZIndex="2" Margin="20,10,10,10"
+                   Tapped="Rectangle_Tapped" 
+            utils:ImageExtensions.CacheUri="{Binding dm.recipient.profile_image_url}" />
         <StackPanel Orientation="Horizontal" Margin="10,0,10,12" Grid.Column="1" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding dm.created_at, Converter={StaticResource DateToTextConverter}}"
                        VerticalAlignment="Top" Foreground="#DE676767" HorizontalAlignment="Left" FontSize="16" />
@@ -47,8 +45,8 @@
         </StackPanel>
         <TextBlock TextWrapping="Wrap" Text="{Binding dm.text}" FontSize="16" Grid.ColumnSpan="2" Margin="10"
                    Grid.Row="1" />
-        <Rectangle Stroke="DeepSkyBlue" StrokeThickness="3" Margin="0" Grid.RowSpan="2" Grid.ColumnSpan="2" />
-        <Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Margin="0" Stroke="DeepSkyBlue" Width="10"
+        <Rectangle Stroke="DeepSkyBlue" StrokeThickness="2" Margin="0" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+        <Rectangle Fill="DeepSkyBlue" HorizontalAlignment="Left" Margin="0" Stroke="DeepSkyBlue" Width="5"
                    StrokeThickness="2" />
         <TextBlock Margin="11,12,10,0" Text="{Binding dm.sender.screen_name}" VerticalAlignment="Top" FontSize="21.333"
                    Grid.Column="1" />
