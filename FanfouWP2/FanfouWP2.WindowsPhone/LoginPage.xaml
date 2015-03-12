@@ -11,6 +11,7 @@
     mc:Ignorable="d">
 
     <Grid Background="DeepSkyBlue">
+        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" Height="76" VerticalAlignment="Top" />
         <Grid Margin="12,0" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
@@ -42,7 +43,8 @@
                          PlaceholderText="账户名或注册邮箱" />
                 <PasswordBox x:Name="password" Margin="0,20,0,0" VerticalAlignment="Top" PlaceholderText="密码"
                              IsPasswordRevealButtonEnabled="True" />
-
+                <TextBlock Margin="0,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                 Text="警告：本产品与饭窗WP8版相比暂时没有任何惊喜" FontSize="16" Foreground="White" />
             </StackPanel>
         </StackPanel>
 
