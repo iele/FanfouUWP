@@ -8,7 +8,7 @@
     xmlns:utils="using:FanfouWP2.Utils"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     x:Class="FanfouWP2.ItemControl.UserItemControl"
-    mc:Ignorable="d"
+    mc:Ignorable="d" 
     d:DesignHeight="300"
     d:DesignWidth="400" FontFamily="Microsoft YaHei">
     <UserControl.Resources>

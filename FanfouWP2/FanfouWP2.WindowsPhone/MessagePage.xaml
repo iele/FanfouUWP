@@ -8,7 +8,7 @@
     xmlns:ItemControl="using:FanfouWP2.ItemControl"
     xmlns:selector="using:FanfouWP2.ItemControl.TemplateSelector"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    mc:Ignorable="d" RequestedTheme="Light" Background="White">
+    mc:Ignorable="d" NavigationCacheMode="Enabled" RequestedTheme="Light" Background="White">
 
     <Page.Resources>
         <DataTemplate x:Key="MessageItemControl">

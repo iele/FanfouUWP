@@ -29,60 +29,46 @@ namespace FanfouWP2.Utils
 
         public async Task<bool> SaveDataToIsolatedStorage(string name, string user, object data)
         {
-            try
-            {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
-                StorageFolder dataFolder =
-                    await localFolder.CreateFolderAsync("storage-" + user, CreationCollisionOption.OpenIfExists);
-                using (
-                    Stream writeStream =
-                        await
-                            dataFolder.OpenStreamForWriteAsync(name.Replace("/", "").Replace(".json", "") + ".store",
-                                CreationCollisionOption.ReplaceExisting))
-                {
-                    var serializer = new DataContractJsonSerializer(data.GetType());
-                    serializer.WriteObject(writeStream, data);
-                    return true;
-                }
-            }
-            catch (Exception exception)
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            StorageFolder dataFolder =
+                await localFolder.CreateFolderAsync("storage-" + user, CreationCollisionOption.OpenIfExists);
+            using (
+                Stream writeStream =
+                    await
+                        dataFolder.OpenStreamForWriteAsync(name.Replace("/", "").Replace(".json", "") + ".store",
+                            CreationCollisionOption.ReplaceExisting))
             {
-                Debug.WriteLine(exception.Message);
-                return false;
+                var serializer = new DataContractJsonSerializer(data.GetType());
+                serializer.WriteObject(writeStream, data);
+                return true;
             }
         }
 
 
         public async Task<ObservableCollection<T>> ReadDataFromIsolatedStorage(string name, string user)
         {
-            try
-            {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFolder dataFolder =
-                    await localFolder.CreateFolderAsync("storage-" + user, CreationCollisionOption.OpenIfExists);
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder dataFolder =
+                await localFolder.CreateFolderAsync("storage-" + user, CreationCollisionOption.OpenIfExists);
 
-                using (
-                    Stream readStream =
-                        await dataFolder.OpenStreamForReadAsync(name.Replace("/", "").Replace(".json", "") + ".store"))
-                {
-                    var buff = new byte[readStream.Length];
-                    await readStream.ReadAsync(buff, 0, buff.Length);
-                    var stream = new MemoryStream();
-                    await stream.WriteAsync(buff, 0, buff.Length);
-                    var c = new ObservableCollection<T>();
-                    var serializer = new DataContractJsonSerializer(c.GetType());
-                    c = serializer.ReadObject(stream) as ObservableCollection<T>;
-                    if (c != null)
-                        return c;
-                    return new ObservableCollection<T>();
-                }
-            }
-            catch (Exception exception)
+            using (
+                Stream readStream =
+                    await dataFolder.OpenStreamForReadAsync(name.Replace("/", "").Replace(".json", "") + ".store"))
             {
-                Debug.WriteLine(exception.Message);
-                return null;
+                var buff = new byte[readStream.Length];
+                await readStream.ReadAsync(buff, 0, buff.Length);
+                var stream = new MemoryStream();
+                await stream.WriteAsync(buff, 0, buff.Length);
+                var c = new ObservableCollection<T>();
+                var serializer = new DataContractJsonSerializer(c.GetType());
+                c = serializer.ReadObject(stream) as ObservableCollection<T>;
+                if (c != null)
+                    return c;
+                return new ObservableCollection<T>();
             }
+
         }
     }
 }
