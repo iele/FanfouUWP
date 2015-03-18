@@ -151,28 +151,28 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Margin="6,0,0,0" Source="Assets/back-50.png" Stretch="Fill" HorizontalAlignment="Left" Width="24" Height="24"/>
                                 <GridView Margin="0,0,12,0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" MinWidth="40">
+                                    <StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" MinWidth="40" Tapped="timeline_Tapped">
                                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
 											FontSize="20" Foreground="Gray" />
                                         <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
 											Text="{Binding currentUser.statuses_count}" VerticalAlignment="Top" FontSize="26.667" />
                                     </StackPanel>
                                     <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
-										MinWidth="40">
+										MinWidth="40" Tapped="favorite_Tapped">
                                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
 											FontSize="20" Foreground="Gray" />
                                         <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
 											Text="{Binding currentUser.favourites_count}" VerticalAlignment="Top" FontSize="26.667" />
                                     </StackPanel>
                                     <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
-										MinWidth="40">
+										MinWidth="40" Tapped="follower_Tapped">
                                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
 											FontSize="20" Foreground="Gray" />
                                         <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
 											Text="{Binding currentUser.followers_count}" VerticalAlignment="Top" FontSize="26.667" />
                                     </StackPanel>
                                     <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
-										MinWidth="40">
+										MinWidth="40" Tapped="friend_Tapped">
                                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
 											FontSize="20" Foreground="Gray" />
                                         <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"

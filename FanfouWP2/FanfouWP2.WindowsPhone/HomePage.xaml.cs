@@ -14,6 +14,7 @@ using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.Phone.UI.Input;
+using FanfouWP2.UserPages;
 
 namespace FanfouWP2
 {
@@ -427,6 +428,26 @@ namespace FanfouWP2
         private void DirectGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(DirectPage));
+        }
+
+        private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(StatusUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
+        }
+
+        private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(FavoriteUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
+        }
+
+        private void follower_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(FollowersUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
+        }
+
+        private void friend_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(FriendsUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
         }
     }
 }

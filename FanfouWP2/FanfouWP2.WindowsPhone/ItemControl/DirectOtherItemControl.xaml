@@ -35,7 +35,7 @@
         </Grid.ColumnDefinitions>
         <Image Height="64" Width="64" Canvas.ZIndex="2" Margin="20,10,10,10"
                    Tapped="Rectangle_Tapped" 
-            utils:ImageExtensions.CacheUri="{Binding dm.recipient.profile_image_url}" />
+            utils:ImageExtensions.CacheUri="{Binding dm.sender.profile_image_url}" />
         <StackPanel Orientation="Horizontal" Margin="10,0,10,12" Grid.Column="1" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding dm.created_at, Converter={StaticResource DateToTextConverter}}"
                        VerticalAlignment="Top" Foreground="#DE676767" HorizontalAlignment="Left" FontSize="16" />
