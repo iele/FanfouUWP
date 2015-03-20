@@ -43,7 +43,7 @@
 
         <DataTemplate x:Key="HeaderDataTemplate">
             <Grid>
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="21.333" Text="{Binding}"/>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding}" Foreground="White" FontSize="24"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -62,30 +62,14 @@
 
     <Grid Margin="0,0,0,0" x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-
-        <Rectangle Fill="DeepSkyBlue" Height="88" Stroke="DeepSkyBlue" StrokeThickness="2" VerticalAlignment="Top"
-			Margin="0,-28,0,0" Canvas.ZIndex="-10" />
-        <Grid Margin="0" Background="DeepSkyBlue">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Image Margin="12,0,0,0" Source="Assets/fanfou_beta.png" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Fill" Width="150" Grid.Column="1" />
-            <AppBarButton Icon="Zoom" Label="" x:Name="SearchItem" Click="SearchItem_Click" RequestedTheme="Dark" HorizontalAlignment="Stretch" Margin="6,0,0,0" Grid.Column="2" VerticalAlignment="Stretch" Canvas.ZIndex="10" Height="60" />
-        </Grid>
-        <ProgressBar IsIndeterminate="True" x:Name="loading" Height="10" VerticalAlignment="Top" Canvas.ZIndex="10"
-			Margin="0,-28,0,0"/>
-        <Pivot Title="" Grid.Row="1" Margin="0" HeaderTemplate="{StaticResource HeaderDataTemplate}" x:Name="pivot">
+        <Pivot Title="" Grid.Row="0" Margin="0" HeaderTemplate="{StaticResource HeaderDataTemplate}" x:Name="pivot">
             <PivotItem Header="我的消息" Margin="0">
                 <Grid>
                     <ListView x:Name="statusesGridView"
-						ItemsSource="{Binding statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
-						Margin="10,0,14,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" />
+                        ItemsSource="{Binding statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
+						Margin="12,0,12,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True" />
                 </Grid>
             </PivotItem>
             <PivotItem Header="提及我的" Margin="0">
@@ -185,5 +169,7 @@
                 </Grid>
             </PivotItem>
         </Pivot>
+        <Rectangle Fill="DeepSkyBlue" Margin="0,-28,0,0" Stroke="DeepSkyBlue" StrokeThickness="2" Height="70" VerticalAlignment="Top" Canvas.ZIndex="-10"/>
+        <ProgressBar x:Name="loading" Height="10" Margin="0,-28,0,0" VerticalAlignment="Top" IsIndeterminate="True"/>
     </Grid>
 </Page>

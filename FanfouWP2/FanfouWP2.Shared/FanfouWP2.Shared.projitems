@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\Parameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FanfouAPI\XAuthHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DataConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\HtmlParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NavigationControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\TileUpdater.cs" />

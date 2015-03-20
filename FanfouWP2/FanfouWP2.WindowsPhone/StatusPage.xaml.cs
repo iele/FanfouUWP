@@ -11,6 +11,9 @@ using FanfouWP2.ItemControl;
 using FanfouWP2.CustomControl;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
+using Windows.UI.Xaml.Documents;
+using System.Text.RegularExpressions;
+using FanfouWP2.Utils;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -69,7 +72,14 @@ namespace FanfouWP2
         {
             status = Utils.DataConverter<Status>.Convert(e.NavigationParameter as string);
             defaultViewModel["status"] = status;
-
+            
+            {
+                text.Inlines.Clear();                
+                string s = status.text;
+                var ss = s.ParseUsername().ParseURL().ParseHashtag();
+                text.Inlines.Add(new Run() { Text = ss });
+            }
+            
             loading.Visibility = Visibility.Collapsed;
 
             if (this.status.favorited)
