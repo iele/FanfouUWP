@@ -60,15 +60,7 @@ namespace FanfouWP2
         ///     的字典。 首次访问页面时，该状态将为 null。
         /// </param>
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
-        {
-            if (e.PageState != null)
-            {
-                if (e.PageState["username"] != null)
-                    username.Text = e.PageState["username"].ToString();
-                if (e.PageState["username"] != null)
-                    password.Password = e.PageState["password"].ToString();
-            }
-        }
+        {        }
 
         /// <summary>
         ///     保留与此页关联的状态，以防挂起应用程序或
@@ -82,8 +74,6 @@ namespace FanfouWP2
         /// </param>
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["username"] = username;
-            e.PageState["password"] = password;
         }
 
         private async void SinginButton_Click(object sender, RoutedEventArgs e)
@@ -105,6 +95,7 @@ namespace FanfouWP2
                     ToastShow.ShowToast("登陆失败", "登录用户名或密码有误");
                     return;
                 }
+                Utils.NavigationControl.ClearStack(this.Frame);
                 Frame.Navigate(typeof (HomePage));
             }
         }

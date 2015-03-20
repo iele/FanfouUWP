@@ -24,7 +24,7 @@ namespace FanfouWP2.Utils
 
         public static string Link(this string s, string url)
         {
-            return string.Format("<a href=\"{0}\" target=\"_blank\">{1}</a>", url, s);
+            return string.Format("<HyperLink href=\"{0}\" target=\"_blank\">{1}</a>", url, s);
         }
 
         private static string Hashtag(Match m)

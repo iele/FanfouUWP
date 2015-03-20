@@ -72,8 +72,8 @@ namespace FanfouWP2
             defaultViewModel["user"] = user;
             defaultViewModel["tags"] = tags;
 
-            var list = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
             tags.Clear();
+            var list = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
             foreach (var item in list)
                 tags.Add(item);
         }

@@ -72,14 +72,16 @@ namespace FanfouWP2
         {
             status = Utils.DataConverter<Status>.Convert(e.NavigationParameter as string);
             defaultViewModel["status"] = status;
-            
+
             {
-                text.Inlines.Clear();                
+                text.Inlines.Clear();
                 string s = status.text;
                 var ss = s.ParseUsername().ParseURL().ParseHashtag();
-                text.Inlines.Add(new Run() { Text = ss });
+                text
             }
-            
+
+            context.Children.Clear();
+
             loading.Visibility = Visibility.Collapsed;
 
             if (this.status.favorited)
