@@ -77,7 +77,7 @@ namespace FanfouWP2
                 text.Inlines.Clear();
                 string s = status.text;
                 var ss = s.ParseUsername().ParseURL().ParseHashtag();
-                text
+                this.text.Text = ss;
             }
 
             context.Children.Clear();

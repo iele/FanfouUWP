@@ -24,25 +24,23 @@ namespace FanfouWP2.Utils
 
         public static string Link(this string s, string url)
         {
-            return string.Format("<HyperLink href=\"{0}\" target=\"_blank\">{1}</a>", url, s);
+            return string.Format("<<{0}{1}>>", url, s);
         }
 
         private static string Hashtag(Match m)
         {
             string x = m.ToString();
-            string tag = x.Replace("#", "%23");
-            return x.Link("http://search.twitter.com/search?q=" + tag);
+            return x.Link("1");
         }
         private static string Username(Match m)
         {
             string x = m.ToString();
-            string username = x.Replace("@", "");
-            return x.Link("http://twitter.com/" + username);
+            return x.Link("2");
         }
         private static string URL(Match m)
         {
             string x = m.ToString();
-            return x.Link(x);
+            return x.Link("3");
         }
     }
 }
