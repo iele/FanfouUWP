@@ -65,12 +65,13 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <WebView x:Name="web" VerticalAlignment="Top" Margin="12,12,12,0"/>
-                <TextBlock Margin="12,12,12,0" TextWrapping="Wrap" x:Name="text" VerticalAlignment="Top"
+                <TextBlock Margin="12,12,12,0" TextWrapping="Wrap" x:Name="text" 
+                          Text="{Binding status.text}" VerticalAlignment="Top"
                            FontSize="18.667" IsTextSelectionEnabled="True" />
-                <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1">
+                <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Grid.RowSpan="2">
                     <TextBlock Padding="0,5,0,0"
                                Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}"
                                VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0"
@@ -91,9 +92,10 @@
                                VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
                                Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}" />
                 </StackPanel>
-                <Image Tapped="Image_Tapped" Margin="12,6,12,0" Grid.Row="2" VerticalAlignment="Top"
-                       utils:ImageExtensions.CacheUri="{Binding status.photo.largeurl}" />
-                <StackPanel x:Name="context" Margin="12,6,12,0" VerticalAlignment="Top" Grid.Row="3"
+                <StackPanel x:Name="links" Margin="12,0" VerticalAlignment="Top" Grid.Row="5"/>
+                <Image Tapped="Image_Tapped" Margin="0,0,24,0" VerticalAlignment="Top"
+                	utils:ImageExtensions.CacheUri="{Binding status.photo.largeurl}" />
+                <StackPanel x:Name="context" Margin="12,3.896,12,0" VerticalAlignment="Top" Grid.Row="6"
                             Visibility="Collapsed">
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="此消息包含的上下文" VerticalAlignment="Top"
                                Margin="0,6,0,0" FontSize="16" Foreground="Gray" />

@@ -73,10 +73,34 @@ namespace FanfouWP2
             status = Utils.DataConverter<Status>.Convert(e.NavigationParameter as string);
             defaultViewModel["status"] = status;
 
-            text.Inlines.Clear();
             string s = status.text;
-            var ts = s.ParseUsername().ParseURL().ParseHashtag();
-            StringToInline(ts, text);
+            var us = s.ParseUsername();
+            var ts = s.ParseURL();
+            var hs = s.ParseHashtag();
+
+            links.Children.Clear();
+            foreach (var i in ts)
+            {
+                Button b = new Button();
+                b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                b.Content = "访问链接 " + i.ToString();
+                links.Children.Add(b);
+            }
+            foreach (var i in hs)
+            {
+                Button b = new Button();
+                b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                b.Content = "搜索话题 " + i.ToString();
+                links.Children.Add(b);
+            }
+            foreach (var i in us)
+            {
+                Button b = new Button();
+                b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                b.Content = "查看用户 " + i.ToString();
+                links.Children.Add(b);
+            }
+
 
             context.Children.Clear();
 
@@ -142,36 +166,6 @@ namespace FanfouWP2
         /// </param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-        }
-
-        private void StringToInline(String s, TextBlock block)
-        {
-            int status = 0;
-            string c = "";
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (s[i] == '<' && s[i + 1] == '[')
-                {
-                    status = int.Parse(s[i + 2].ToString());
-                    block.Inlines.Add(new Run() { Text = c });
-                    c = "";
-                    i += 2;
-                }
-                else if (s[i] == '>' && s[i + 1] == ']')
-                {
-                    status = 0;
-                    var h = new Hyperlink();
-                    h.Inlines.Add(new Run() { Text = c });
-                    block.Inlines.Add(h);
-                    c = "";
-                    i += 2;
-                }
-                else
-                {
-                    c += s[i];
-                }
-            }
-            block.Inlines.Add(new Run() { Text = c });
         }
 
         private void RepostItem_Click(object sender, RoutedEventArgs e)
