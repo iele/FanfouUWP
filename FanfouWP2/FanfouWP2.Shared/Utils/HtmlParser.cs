@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Windows.UI.Xaml.Controls;
 
 namespace FanfouWP2.Utils
 {
@@ -24,7 +25,7 @@ namespace FanfouWP2.Utils
 
         public static string Link(this string s, string url)
         {
-            return string.Format("<<{0}{1}>>", url, s);
+            return string.Format("<[{0}{1}>]", url, s);
         }
 
         private static string Hashtag(Match m)
