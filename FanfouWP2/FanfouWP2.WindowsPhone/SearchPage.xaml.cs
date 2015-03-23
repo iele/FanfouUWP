@@ -41,7 +41,7 @@ namespace FanfouWP2
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-    }
+        }
 
         public NavigationHelper NavigationHelper
         {
@@ -58,25 +58,19 @@ namespace FanfouWP2
             defaultViewModel["statuses"] = statuses;
             loading.Visibility = Visibility.Collapsed;
 
-            if (e.PageState != null)
-            {
-                if (e.PageState.ContainsKey("search"))
-                    search.Text = e.PageState["search"].ToString();
-                if (e.PageState.ContainsKey("statuses"))
-                {
-                    statuses = e.PageState["statuses"] as PaginatedCollection<Status>;
-                    defaultViewModel["statuses"] = statuses;
-                }
-                return;
-            }
-
-
             if (e.NavigationParameter != null)
             {
-                var t = Utils.DataConverter<Trends>.Convert(e.NavigationParameter as string);
-                search.Text = t.query;
+                try
+                {
+                    var t = Utils.DataConverter<Trends>.Convert(e.NavigationParameter as string);
+                    search.Text = t.query;
+                }
+                catch (Exception)
+                {
+                    search.Text = e.NavigationParameter as string;
+                }
                 loading.Visibility = Visibility.Visible;
-                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text,60);
+                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
                 loading.Visibility = Visibility.Collapsed;
                 Utils.StatusesReform.append(statuses, list);
             }
@@ -84,14 +78,12 @@ namespace FanfouWP2
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["search"] = search.Text;
-            e.PageState["statuses"] = statuses;
         }
 
         private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
             loading.Visibility = Visibility.Visible;
-            var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text,60);
+            var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
             loading.Visibility = Visibility.Collapsed;
             Utils.StatusesReform.append(statuses, list);
         }

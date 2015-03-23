@@ -14,6 +14,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Documents;
 using System.Text.RegularExpressions;
 using FanfouWP2.Utils;
+using Windows.System;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -73,34 +74,50 @@ namespace FanfouWP2
             status = Utils.DataConverter<Status>.Convert(e.NavigationParameter as string);
             defaultViewModel["status"] = status;
 
-            string s = status.text;
-            var us = s.ParseUsername();
-            var ts = s.ParseURL();
-            var hs = s.ParseHashtag();
+            string text = status.text;
+            var us = text.ParseUsername();
+            var ts = text.ParseURL();
+            var hs = text.ParseHashtag();
+
+            flip.SelectedIndex = 0;
 
             links.Children.Clear();
             foreach (var i in ts)
             {
-                Button b = new Button();
-                b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
-                b.Content = "访问链接 " + i.ToString();
-                links.Children.Add(b);
+                try
+                {
+                    Button b = new Button();
+                    b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                    b.Content = "访问链接 " + i.ToString();
+                    b.Click += async (s, a) => await Launcher.LaunchUriAsync(new Uri(i.ToString()));
+                    links.Children.Add(b);
+                }
+                finally { }
             }
             foreach (var i in hs)
             {
-                Button b = new Button();
-                b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
-                b.Content = "搜索话题 " + i.ToString();
-                links.Children.Add(b);
+                try
+                {
+                    Button b = new Button();
+                    b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                    b.Content = "搜索话题 " + i.ToString();
+                    b.Click += (s, a) => Frame.Navigate(typeof(SearchPage), i.ToString().Substring(1, i.ToString().Length - 2));
+                    links.Children.Add(b);
+                }
+                finally { }
             }
             foreach (var i in us)
             {
-                Button b = new Button();
-                b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
-                b.Content = "查看用户 " + i.ToString();
-                links.Children.Add(b);
+                try
+                {
+                    Button b = new Button();
+                    b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                    b.Content = "查看用户 " + i.ToString();
+                    b.Click += (s, a) => { };
+                    links.Children.Add(b);
+                }
+                finally { }
             }
-
 
             context.Children.Clear();
 
@@ -137,6 +154,8 @@ namespace FanfouWP2
                     foreach (Status item in ss)
                     {
                         var sic = new StatusItemControl();
+                        sic.Tapped += (s, a) => Frame.Navigate(typeof(UserPage),
+                           Utils.DataConverter<User>.Convert(item.user));
                         sic.DataContext = item;
                         sic.Margin = new Thickness(0, 6, 0, 0);
                         context.Children.Add(sic);
