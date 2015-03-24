@@ -15,6 +15,9 @@ using Windows.UI.Xaml.Documents;
 using System.Text.RegularExpressions;
 using FanfouWP2.Utils;
 using Windows.System;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
+using System.Linq;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -74,50 +77,7 @@ namespace FanfouWP2
             status = Utils.DataConverter<Status>.Convert(e.NavigationParameter as string);
             defaultViewModel["status"] = status;
 
-            string text = status.text;
-            var us = text.ParseUsername();
-            var ts = text.ParseURL();
-            var hs = text.ParseHashtag();
-
-            flip.SelectedIndex = 0;
-
-            links.Children.Clear();
-            foreach (var i in ts)
-            {
-                try
-                {
-                    Button b = new Button();
-                    b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
-                    b.Content = "访问链接 " + i.ToString();
-                    b.Click += async (s, a) => await Launcher.LaunchUriAsync(new Uri(i.ToString()));
-                    links.Children.Add(b);
-                }
-                finally { }
-            }
-            foreach (var i in hs)
-            {
-                try
-                {
-                    Button b = new Button();
-                    b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
-                    b.Content = "搜索话题 " + i.ToString();
-                    b.Click += (s, a) => Frame.Navigate(typeof(SearchPage), i.ToString().Substring(1, i.ToString().Length - 2));
-                    links.Children.Add(b);
-                }
-                finally { }
-            }
-            foreach (var i in us)
-            {
-                try
-                {
-                    Button b = new Button();
-                    b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
-                    b.Content = "查看用户 " + i.ToString();
-                    b.Click += (s, a) => { };
-                    links.Children.Add(b);
-                }
-                finally { }
-            }
+            TextToLinks(status.text);
 
             context.Children.Clear();
 
@@ -169,6 +129,92 @@ namespace FanfouWP2
                 finally
                 {
                     loading.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void TextToLinks(string text){
+            var us = text.ParseUsername();
+            var ts = text.ParseURL();
+            var hs = text.ParseHashtag();
+
+            flip.SelectedIndex = 0;
+
+            links.Children.Clear();
+
+            if (ts.Count != 0)
+            {
+                TextBlock t = new TextBlock()
+                {
+                    Text = "访问链接",
+                    FontSize = 16,
+                    Foreground = new SolidColorBrush(Colors.Gray),
+                    Margin = new Thickness(0, 6, 0, 0)
+                };
+                links.Children.Add(t);
+                foreach (var i in ts)
+                {
+                    try
+                    {
+                        Button b = new Button();
+                        b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                        b.Content = i.ToString();
+                        b.Click += async (s, a) => await Launcher.LaunchUriAsync(new Uri(i.ToString()));
+                        links.Children.Add(b);
+                    }
+                    finally { }
+                }
+            }
+            if (hs.Count != 0)
+            {
+                TextBlock t = new TextBlock()
+                {
+                    Text = "搜索话题",
+                    FontSize = 16,
+                    Foreground = new SolidColorBrush(Colors.Gray),
+                    Margin = new Thickness(0, 6, 0, 0)
+                };
+                links.Children.Add(t); 
+                foreach (var i in hs)
+                {
+                    if (!i.ToString().Equals("##"))
+                    {
+                        try
+                        {
+                            Button b = new Button();
+                            b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                            b.Content = i.ToString();
+                            b.Click += (s, a) => Frame.Navigate(typeof(SearchPage), i.ToString().Substring(1, i.ToString().Length - 2));
+                            links.Children.Add(b);
+                        }
+                        finally { }
+                    }
+                }
+            }
+            if (us.Count != 0)
+            {
+                TextBlock t = new TextBlock()
+                {
+                    Text = "查看用户",
+                    FontSize = 16,
+                    Foreground = new SolidColorBrush(Colors.Gray),
+                    Margin = new Thickness(0, 6, 0, 0)
+                };
+                links.Children.Add(t);
+                foreach (var i in us)
+                {
+                    if (!i.ToString().Equals("@"))
+                    {
+                        try
+                        {
+                            Button b = new Button();
+                            b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                            b.Content = i.ToString();
+                            b.Click += (s, a) => { };
+                            links.Children.Add(b);
+                        }
+                        finally { }
+                    }
                 }
             }
         }
