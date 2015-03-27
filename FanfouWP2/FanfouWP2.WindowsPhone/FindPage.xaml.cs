@@ -38,25 +38,11 @@ namespace FanfouWP2
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["users"] = users;
-
-            loading.Visibility = Visibility.Collapsed;
-
-            if (e.PageState != null)
-            {
-                if (e.PageState.ContainsKey("search"))
-                    search.Text = e.PageState["search"].ToString();
-                if (e.PageState.ContainsKey("users"))
-                {
-                    users = e.PageState["users"] as ObservableCollection<User>;
-                    defaultViewModel["users"] = users;
-                }
-            }
+            loading.Visibility = Visibility.Collapsed;        
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["search"] = search.Text;
-            e.PageState["users"] = users;
         }
 
         private async void SearchItem_Click(object sender, RoutedEventArgs e)

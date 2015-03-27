@@ -112,9 +112,15 @@ namespace FanfouWP2
 
             if (this.statuses.Count == 0)
             {
-                var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
-                if (s1 != null)
-                    StatusesReform.append(this.statuses, s1.ToList());
+                try
+                {
+                    var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
+                    if (s1 != null)
+                        StatusesReform.append(this.statuses, s1.ToList());
+                }
+                catch
+                {
+                }
             }
             else
             {
@@ -122,9 +128,14 @@ namespace FanfouWP2
             }
             if (this.mentions.Count == 0)
             {
-                var s20 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
-                if (s20 != null)
-                    StatusesReform.append(this.mentions, s20.ToList());
+                try
+                {
+                    var s20 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
+                    if (s20 != null)
+                        StatusesReform.append(this.mentions, s20.ToList());
+                }
+                catch { 
+                }
             }
             else
             {
@@ -199,8 +210,14 @@ namespace FanfouWP2
 
         private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
-            await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
+            try
+            {
+                await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
+                await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)

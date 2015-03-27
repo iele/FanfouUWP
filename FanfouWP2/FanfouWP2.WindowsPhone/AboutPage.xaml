@@ -27,15 +27,15 @@
         <!--TODO: 应将内容放入以下网格-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="0">
             <StackPanel>
-                <TextBlock Text="关于饭否" VerticalAlignment="Center" FontSize="21.333" Margin="12,12,0,0" />
+                <TextBlock Text="关于饭否" VerticalAlignment="Center" FontSize="21.333" Margin="12,12,12,0" />
                 <TextBlock FontSize="18.667" TextWrapping="Wrap"
                            Text="饭否是一个 140 字的迷你博客。在这里，你可以告诉大家你在做什么，可以随便看看大家都在做什么，也可以关注一些有趣的人。" Margin="12,12,0,0" Foreground="Gray" />
-                <TextBlock FontSize="18.667" Text="桌面访问 http://fanfou.com了解更多" TextWrapping="Wrap" Margin="12,12,0,0" Foreground="Gray" />
+                <TextBlock FontSize="18.667" TextWrapping="Wrap" Margin="12,12,0,0" Foreground="Gray" >桌面访问 <Hyperlink FontSize="18.667" Foreground="Gray" NavigateUri="http://fanfou.com">http://m.fanfou.com</Hyperlink> 了解更多</TextBlock>
                 <TextBlock Text="关于本应用" VerticalAlignment="Center" FontSize="21.333" Margin="12,12,0,0" />
                 <TextBlock FontSize="18.667" Text="饭窗 for Windows Phone 8.1" Margin="12,12,0,0" Foreground="Gray" />
                 <TextBlock FontSize="18.667" TextWrapping="Wrap" Text="采用Windows XAML框架全新开发" Margin="12,0,0,0" Foreground="Gray" />
                 <TextBlock FontSize="18.667" TextWrapping="Wrap" Text="开发者 iEle 饭否主页 @iEle" Margin="12,12,0,0" Foreground="Gray" />
-                <TextBlock FontSize="18.667" TextWrapping="Wrap" Text="邮箱 melephas@outlook.com" Margin="12,0,0,0" Foreground="Gray" />
+                <TextBlock FontSize="18.667" TextWrapping="Wrap" Margin="12,0,0,0" Foreground="Gray" Text="邮箱 melephas@outlook.com" />
                 <TextBlock FontSize="18.667" Margin="12,12,0,0" Foreground="Gray">
                     <Run Text="感谢您对该应用的使用和支持。" />
                 </TextBlock>

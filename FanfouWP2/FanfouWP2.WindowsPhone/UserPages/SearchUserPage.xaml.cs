@@ -57,28 +57,12 @@ namespace FanfouWP2.UserPages
             defaultViewModel["statuses"] = statuses;
             loading.Visibility = Visibility.Collapsed;
 
-            if (e.PageState != null)
-            {
-                if (e.PageState.ContainsKey("search"))
-                    search.Text = e.PageState["search"].ToString();
-                if (e.PageState.ContainsKey("statuses"))
-                {
-                    statuses = e.PageState["statuses"] as ObservableCollection<Status>;
-                    defaultViewModel["statuses"] = statuses;
-                }
-                if (e.PageState.ContainsKey("user"))
-                    user = e.PageState["user"] as User;
-            }
-
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
             title.Text = "搜索 " + user.screen_name + " 的时间线";
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["search"] = search.Text;
-            e.PageState["statuses"] = statuses;
-            e.PageState["user"] = user;
         }
 
         private async void SearchItem_Click(object sender, RoutedEventArgs e)

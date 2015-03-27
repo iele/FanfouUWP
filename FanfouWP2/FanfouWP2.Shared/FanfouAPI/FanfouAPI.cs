@@ -14,7 +14,24 @@ namespace FanfouWP2.FanfouAPI
     public class FanfouAPI
     {
         private static FanfouAPI instance;
-        public User currentUser;
+        private User _currentUser;
+        public User currentUser
+        {
+            get
+            {
+                if (_currentUser != null)
+                    return _currentUser;
+                else if (SettingStorage.Instance.currentUser != null)
+                {
+                    setUser(SettingStorage.Instance.currentUser);
+                    return _currentUser;
+                }
+                else {
+                    return null;
+                }
+            }
+            private set { this._currentUser = value; }
+        }
 
         public string oauthSecret;
         public string oauthToken;
@@ -323,13 +340,13 @@ namespace FanfouWP2.FanfouAPI
             RestClient client = GetClient();
             var parameters = new Parameters();
             parameters.Add("id", id);
-        
+
             var ds = new DataContractJsonSerializer(typeof(List<string>));
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(await client.GetRequest(FanfouConsts.USERS_TAG_LIST, parameters))))
             {
                 var obj = ds.ReadObject(ms) as List<string>;
                 return obj;
-            } 
+            }
         }
 
         public async Task<List<User>> Tagged(string tag, int count = 100, int page = 1)

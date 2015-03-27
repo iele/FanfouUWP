@@ -43,21 +43,7 @@ namespace FanfouWP2
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
-
-            if (e.PageState != null)
-            {
-                if (e.PageState["page"] != null)
-                    page = (int)e.PageState["page"];
-                if (e.PageState["user"] != null)
-                    user = e.PageState["user"] as User;
-                if (e.PageState["statuses"] != null)
-                    statuses = e.PageState["statuses"] as ObservableCollection<Status>;
-                if (e.PageState["PrevItem.IsEnabled"] != null)
-                    PrevItem.IsEnabled = (bool)e.PageState["PrevItem.IsEnabled"];
-                if (e.PageState["NextItem.IsEnabled"] != null)
-                    NextItem.IsEnabled = (bool)e.PageState["NextItem.IsEnabled"];
-            }
-
+           
             defaultViewModel["statuses"] = statuses;
 
             if (user.id == FanfouAPI.FanfouAPI.Instance.currentUser.id)
@@ -99,11 +85,6 @@ namespace FanfouWP2
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["page"] = page;
-            e.PageState["user"] = user;
-            e.PageState["statuses"] = statuses;
-            e.PageState["PrevItem.IsEnabled"] = PrevItem.IsEnabled;
-            e.PageState["NextItem.IsEnabled"] = NextItem.IsEnabled;
         }
 
         private async void PrevItem_Click(object sender, RoutedEventArgs e)

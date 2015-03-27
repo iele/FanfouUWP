@@ -40,14 +40,6 @@ namespace FanfouWP2
             defaultViewModel["trends"] = trends;
             loading.Visibility = Visibility.Visible;
 
-            if (e.PageState != null && e.PageState["trends"] != null)
-            {
-                loading.Visibility = Visibility.Collapsed;
-                trends = e.PageState["trends"] as ObservableCollection<Trends>;
-                defaultViewModel["trends"] = trends;
-                return;
-            }
-
             try
             {
                 var ss = await FanfouAPI.FanfouAPI.Instance.TrendsList();
@@ -68,7 +60,6 @@ namespace FanfouWP2
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["trends"] = trends;
         }
 
         private void trendsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)

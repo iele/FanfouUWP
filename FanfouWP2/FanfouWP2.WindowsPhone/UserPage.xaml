@@ -52,52 +52,56 @@
         </StackPanel>
         <ScrollViewer Margin="0" Grid.Row="1" HorizontalContentAlignment="Center">
             <StackPanel Margin="12,12,12,0">
-        		<GridView>
-        			<StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" Tapped="timeline_Tapped" MinWidth="40">
-        				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
+                <GridView>
+                    <StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" Tapped="timeline_Tapped" MinWidth="40">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-        				<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding user.statuses_count}" VerticalAlignment="Top" FontSize="26.667" />
-        			</StackPanel>
-        			<StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
+                    </StackPanel>
+                    <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
         				Tapped="favorite_Tapped" MinWidth="40">
-        				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-        				<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding user.favourites_count}" VerticalAlignment="Top" FontSize="26.667" />
-        			</StackPanel>
-        			<StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
+                    </StackPanel>
+                    <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
         				Tapped="follower_Tapped" MinWidth="40">
-        				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-        				<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding user.followers_count}" VerticalAlignment="Top" FontSize="26.667" />
-        			</StackPanel>
-        			<StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
+                    </StackPanel>
+                    <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
         				Tapped="friend_Tapped" MinWidth="40">
-        				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-        				<TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding user.friends_count}" VerticalAlignment="Top" FontSize="26.667" />
-        			</StackPanel>
-        		</GridView>
-        		<GridView x:Name="taglist" Margin="0" ItemsSource="{Binding tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
-        			<GridView.ItemTemplate>
-        				<DataTemplate>
-        					<TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>
-        				</DataTemplate>
-        			</GridView.ItemTemplate>
-        		</GridView>
-        		<TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="18" Margin="0,12,0,0" Foreground="#FF333333" />
-        		<TextBlock TextWrapping="Wrap" Text="{Binding user.url}" FontSize="16" Margin="0,12,0,0" Foreground="#FF666666" />
-        		<StackPanel Orientation="Horizontal" Margin="0,12,0,0">
-        			<TextBlock TextWrapping="Wrap" Text="{Binding user.location}" Margin="0,0,-0.167,0" FontSize="16"
+                    </StackPanel>
+                </GridView>
+                <GridView x:Name="taglist" Margin="0" ItemsSource="{Binding tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <TextBlock TextWrapping="Wrap" Text="{Binding user.description}" FontSize="18" Margin="0,12,0,0" Foreground="#FF333333" IsTextSelectionEnabled="True" />
+                <TextBlock TextWrapping="Wrap"  FontSize="16" Margin="0,12,0,0" Foreground="#FF666666" >
+                    <Hyperlink NavigateUri="{Binding user.url}" FontSize="16" Foreground="#FF666666">
+                        <Run Text="{Binding user.url}" />
+                    </Hyperlink>
+                </TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding user.location}" Margin="0,0,0,0" FontSize="16"
         				HorizontalAlignment="Left" Foreground="#FF999999" />
-        			<TextBlock TextWrapping="Wrap" Text="{Binding user.gender}" FontSize="16" Margin="6,0,-0.167,0"
-        				HorizontalAlignment="Left" Foreground="#FF999999" />
-        		</StackPanel>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding user.gender}" FontSize="16"
+        				HorizontalAlignment="Left" Foreground="#FF999999" Margin="6,0,0,0" />
+                </StackPanel>
 
-        	</StackPanel>
+            </StackPanel>
         </ScrollViewer>
 
         <!--TODO: 应将内容放入以下网格-->
