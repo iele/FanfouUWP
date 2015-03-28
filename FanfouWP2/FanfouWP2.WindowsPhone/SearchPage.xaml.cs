@@ -60,8 +60,15 @@ namespace FanfouWP2
 
             if (e.NavigationParameter != null)
             {
-                var t = Utils.DataConverter<Trends>.Convert(e.NavigationParameter as string);
-                search.Text = t.query;
+                try
+                {
+                    var t = Utils.DataConverter<Trends>.Convert(e.NavigationParameter as string);
+                    search.Text = t.query;
+                }
+                catch (Exception)
+                {
+                    search.Text = e.NavigationParameter as string;
+                }
                 loading.Visibility = Visibility.Visible;
                 var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
                 loading.Visibility = Visibility.Collapsed;
