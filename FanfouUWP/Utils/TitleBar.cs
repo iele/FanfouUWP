@@ -21,10 +21,13 @@ namespace FanfouWP2.Utils
             titleBar.BackgroundColor = Colors.DeepSkyBlue;
             titleBar.ForegroundColor = Colors.White;
 
+            titleBar.InactiveBackgroundColor = Colors.DeepSkyBlue;
+            titleBar.InactiveForegroundColor = Colors.White;
+
             titleBar.ButtonInactiveBackgroundColor = Colors.DeepSkyBlue;
             titleBar.ButtonInactiveForegroundColor = Colors.White;
 
-            titleBar.ButtonPressedBackgroundColor = Colors.DeepSkyBlue;
+            titleBar.ButtonPressedBackgroundColor = Colors.SkyBlue;
             titleBar.ButtonPressedForegroundColor = Colors.White;
 
             titleBar.ButtonBackgroundColor = Colors.DeepSkyBlue;

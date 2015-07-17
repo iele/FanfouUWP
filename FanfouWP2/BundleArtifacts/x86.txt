@@ -1,1 +1,0 @@
-MainPackage=C:\Users\Elephas\Desktop\FanfouWP2\FanfouWP2\bin\x86\Debug\FanfouWP2_1.0.10.0_x86_Debug.appx

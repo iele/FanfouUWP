@@ -25,9 +25,7 @@ namespace FanfouWP2
         public readonly PaginatedCollection<Status> statuses;
 
         private User currentUser = new User();
-
-        private TimelineStorage<Status> storage = new TimelineStorage<Status>();
-
+        
         public HomePage()
         {
             InitializeComponent();
@@ -89,45 +87,11 @@ namespace FanfouWP2
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
-            if (this.statuses.Count == 0)
-            {
-                try
-                {
-                    var s1 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, currentUser.id);
-                    if (s1 != null)
-                        StatusesReform.append(this.statuses, s1.ToList());
-                }
-                catch
-                {
-                }
-            }
-
-            if (this.mentions.Count == 0)
-            {
-                try
-                {
-                    var s2 = await storage.ReadDataFromIsolatedStorage(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id);
-                    if (s2 != null)
-                        StatusesReform.append(this.mentions, s2.ToList());
-                }
-                catch
-                {
-                }
-            }
 
             try
             {
-                if (this.statuses.Count != 0)
-                {
-                    var result =
-                        await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: this.statuses.First().id);
-                    Utils.StatusesReform.insertFirst(statuses, result);
-                }
-                else
-                {
-                    var result = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
-                    Utils.StatusesReform.append(statuses, result);
-                }
+                var result = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
+                Utils.StatusesReform.append(statuses, result);
             }
             catch (Exception)
             {
@@ -135,18 +99,8 @@ namespace FanfouWP2
 
             try
             {
-                if (this.mentions.Count != 0)
-                {
-                    var result =
-                        await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: this.mentions.First().id);
-
-                    Utils.StatusesReform.insertFirst(mentions, result);
-                }
-                else
-                {
-                    var result = await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
-                    Utils.StatusesReform.append(mentions, result);
-                }
+                var result = await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
+                Utils.StatusesReform.append(mentions, result);
             }
             catch (Exception)
             {
@@ -180,16 +134,8 @@ namespace FanfouWP2
             }
         }
 
-        private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            try
-            {
-                await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_MENTION_TIMELINE, this.currentUser.id, mentions, 100);
-                await storage.SaveDataToIsolatedStorageWithLimit(FanfouAPI.FanfouConsts.STATUS_HOME_TIMELINE, this.currentUser.id, statuses, 100);
-            }
-            catch (Exception)
-            {
-            }
         }
 
         private void PublicItem_Click(object sender, RoutedEventArgs e)
@@ -252,68 +198,14 @@ namespace FanfouWP2
             Frame.Navigate(typeof(SendPage));
         }
 
-        private async void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if ((e.ClickedItem as Status).is_refresh)
-            {
-                try
-                {
-                    var prev = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) - 1];
-                    var next = this.statuses[this.statuses.IndexOf(e.ClickedItem as Status) + 1];
-                    if (prev.id != null && next.id != null)
-                    {
-                        try
-                        {
-                            var result =
-                                await
-                                    FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1, since_id: next.id,
-                                        max_id: prev.id);
-                            Utils.StatusesReform.insertBetween(statuses, result, prev.id, 20);
-                            this.statuses.Remove(e.ClickedItem as Status);
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                }
-            }
-            else
-                Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
+            Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
-        private async void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void mentionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if ((e.ClickedItem as Status).is_refresh)
-            {
-                try
-                {
-                    var prev = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) - 1];
-                    var next = this.mentions[this.mentions.IndexOf(e.ClickedItem as Status) + 1];
-                    if (prev.id != null && next.id != null)
-                    {
-                        try
-                        {
-                            var result =
-                                await
-                                    FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1, since_id: next.id,
-                                        max_id: prev.id);
-                            Utils.StatusesReform.insertBetween(mentions, result, prev.id, 20);
-                            this.mentions.Remove(e.ClickedItem as Status);
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                }
-            }
-            else
-                Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
+            Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
 

@@ -8,8 +8,8 @@
     <ProjectGuid>{73DD8DB4-7275-4D8B-9777-143D8E52A20A}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FanfouWP2</RootNamespace>
-    <AssemblyName>FanfouWP2</AssemblyName>
+    <RootNamespace>FanfouUWP</RootNamespace>
+    <AssemblyName>FanfouUWP</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformVersion>10.0.10166.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10166.0</TargetPlatformMinVersion>
@@ -20,7 +20,7 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>A8CE7814773645F1BD0C5C0D86500B1E21C99127</PackageCertificateThumbprint>
-    <PackageCertificateKeyFile>FanfouWP2_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>FanfouUWP_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxBundle>Auto</AppxBundle>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
   </PropertyGroup>
@@ -521,7 +521,7 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FanfouWP2_TemporaryKey.pfx" />
+    <None Include="FanfouUWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsDesktop, Version=10.0.10166.0">

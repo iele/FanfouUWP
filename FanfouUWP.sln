@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FanfouWP2", "FanfouWP2", "{66C733D5-5DF1-4D80-AEC1-BCFBC8407237}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FanfouUWP", "FanfouUWP", "{66C733D5-5DF1-4D80-AEC1-BCFBC8407237}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanfouWP2", "FanfouWP2\FanfouWP2.csproj", "{73DD8DB4-7275-4D8B-9777-143D8E52A20A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanfouUWP", "FanfouUWP\FanfouUWP.csproj", "{73DD8DB4-7275-4D8B-9777-143D8E52A20A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
