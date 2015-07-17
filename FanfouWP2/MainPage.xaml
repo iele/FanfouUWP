@@ -1,0 +1,164 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ItemControl="using:FanfouWP2.ItemControl"
+    xmlns:utils="using:FanfouWP2.Utils"
+    xmlns:ValueConverter="using:FanfouWP2.ItemControl.ValueConverter"
+    x:Class="FanfouWP2.MainPage"
+    NavigationCacheMode="Required">
+
+    <Page.Resources>
+        <ValueConverter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <ValueConverter:BoolReverseToVisibilityConverter x:Key="BoolReverseToVisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="wideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="641" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Value="CompactOverlay" Target="Splitter.DisplayMode" >
+                        </Setter>
+                        <Setter Value="48" Target="GridRow1.Height" >
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="narrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Value="Overlay" Target="Splitter.DisplayMode">
+                        </Setter>
+                        <Setter Value="32" Target="GridRow1.Height" >
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"  x:Name="GridRow1"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ToggleButton Click="Button_Click" VerticalAlignment="Stretch" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" Background="Gray" Width="48" Canvas.ZIndex="100">
+                <FontIcon x:Name="Hamburger1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0"/>
+            </ToggleButton>
+            <SplitView x:Name="Splitter" DisplayMode="CompactOverlay" Grid.Row="1" Grid.RowSpan="1" OpenPaneLength="315" CompactPaneLength="48" Grid.ColumnSpan="2">
+                <SplitView.Pane>
+                    <ListView Canvas.ZIndex="10" x:Name="menu" Margin="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto">
+                        <ListViewItem Tapped="SelfGrid_Tapped">
+                            <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
+                                <Ellipse Margin="0,0,0,0" Stroke="White" Width="32" Height="32">
+                                    <Ellipse.Fill>
+                                        <ImageBrush Stretch="Fill" ImageSource="{x:Bind currentUser.profile_image_url}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock x:Name="textBlock" Text="{x:Bind currentUser.screen_name, Mode=OneWay}" FontSize="24" VerticalAlignment="Center" Margin="12,8,0,8" HorizontalAlignment="Left" Grid.Column="2" Foreground="White"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem  Tapped="MessageGrid_Tapped">
+                            <StackPanel Orientation="Horizontal" >
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Message" 
+									VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="消息" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Tapped="DirectGrid_Tapped">
+                            <StackPanel Orientation="Horizontal" >
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Mail" 
+									VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="私信" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Tapped="FavoriteGrid_Tapped">
+                            <StackPanel Orientation="Horizontal"  >
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Favorite"
+									VerticalAlignment="Center" />
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="收藏" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Tapped="TrendsGrid_Tapped">
+                            <StackPanel Orientation="Horizontal" >
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="List"
+									VerticalAlignment="Center"  />
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="热门话题" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem  Tapped="FindGrid_Tapped">
+                            <StackPanel Orientation="Horizontal"  >
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Filter"
+									VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="找人" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Tapped="SettingButton_Click" >
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Setting"
+									VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="设置" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Tapped="InformationButton_Click">
+                            <StackPanel Orientation="Horizontal"  >
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Caption"
+									VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="支持与反馈" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem Tapped="AboutButton_Click" >
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Help"
+									VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="关于应用" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem IsEnabled="False">
+                        </ListViewItem>
+                    </ListView>
+                </SplitView.Pane>
+                <Frame x:Name="ScenarioFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Background="White"/>
+            </SplitView>
+            <Grid Margin="0" Background="DeepSkyBlue" Grid.Column="1" Grid.ColumnSpan="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button  x:Name="Back" Click="Back_Click" VerticalAlignment="Stretch" Width="48" Grid.Column="0" >
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0D5;" Margin="0" HorizontalAlignment="Stretch"
+            		VerticalAlignment="Center"/>
+                </Button>
+                <ProgressRing x:Name="loading" Grid.Column="3" Margin="6,3" Foreground="White"></ProgressRing>
+
+                <Button Click="SearchGrid_Click"  VerticalAlignment="Stretch" Width="48" Margin="0,0,0,0" Grid.Column="5">
+                    <SymbolIcon HorizontalAlignment="Stretch" Symbol="Find"
+            		VerticalAlignment="Center"  />
+                </Button>
+                <Button Click="SendGrid_Click"  VerticalAlignment="Stretch" Width="48" Margin="0,0,0,0" Grid.Column="6">
+                    <SymbolIcon HorizontalAlignment="Stretch" Symbol="Edit"
+            		VerticalAlignment="Center"  />
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

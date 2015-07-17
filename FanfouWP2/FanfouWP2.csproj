@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <ProjectGuid>{73DD8DB4-7275-4D8B-9777-143D8E52A20A}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FanfouWP2</RootNamespace>
+    <AssemblyName>FanfouWP2</AssemblyName>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <TargetPlatformVersion>10.0.10166.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10166.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>A8CE7814773645F1BD0C5C0D86500B1E21C99127</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>FanfouWP2_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxBundle>Auto</AppxBundle>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UAP;CODE_ANALYSIS</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ContinuationManager.cs" />
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\PaginatedCollection.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="CustomControl\TitleBarControl.xaml.cs">
+      <DependentUpon>TitleBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FanfouAPI\FanfouAPI.cs" />
+    <Compile Include="FanfouAPI\FanfouConsts.cs" />
+    <Compile Include="FanfouAPI\Items\DirectMessage.cs" />
+    <Compile Include="FanfouAPI\Items\Error.cs" />
+    <Compile Include="FanfouAPI\Items\Item.cs" />
+    <Compile Include="FanfouAPI\Items\Notifications.cs" />
+    <Compile Include="FanfouAPI\Items\Photo.cs" />
+    <Compile Include="FanfouAPI\Items\Search.cs" />
+    <Compile Include="FanfouAPI\Items\Status.cs" />
+    <Compile Include="FanfouAPI\Items\Trends.cs" />
+    <Compile Include="FanfouAPI\Items\User.cs" />
+    <Compile Include="FanfouAPI\Parameters.cs" />
+    <Compile Include="FanfouAPI\RestClient.cs" />
+    <Compile Include="FanfouAPI\XAuthHelper.cs" />
+    <Compile Include="FramePage.xaml.cs">
+      <DependentUpon>FramePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BlockPage.xaml.cs">
+      <DependentUpon>BlockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\ReplyItemControl.xaml.cs">
+      <DependentUpon>ReplyItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\ValueConverter\BoolReverseToVisibilityConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\WidthToStackCountConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\BoolToVisibilityConverter.cs" />
+    <Compile Include="MessagePage.xaml.cs">
+      <DependentUpon>MessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DirectPage.xaml.cs">
+      <DependentUpon>DirectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImagePage.xaml.cs">
+      <DependentUpon>ImagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InformationPage.xaml.cs">
+      <DependentUpon>InformationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\FooterControl.xaml.cs">
+      <DependentUpon>FooterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\RefreshItemControl.xaml.cs">
+      <DependentUpon>RefreshItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnnouncePage.xaml.cs">
+      <DependentUpon>AnnouncePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\AnnounceItemControl.xaml.cs">
+      <DependentUpon>AnnounceItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\ValueConverter\DateToStringConverter.cs" />
+    <Compile Include="ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelfPage.xaml.cs">
+      <DependentUpon>SelfPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\FollowersUserPage.xaml.cs">
+      <DependentUpon>FollowersUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\TagUserPage.xaml.cs">
+      <DependentUpon>TagUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\FriendsUserPage.xaml.cs">
+      <DependentUpon>FriendsUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\ImageUserPage.xaml.cs">
+      <DependentUpon>ImageUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\FavoriteUserPage.xaml.cs">
+      <DependentUpon>FavoriteUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\TimelineUserPage.xaml.cs">
+      <DependentUpon>TimelineUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\StatusUserPage.xaml.cs">
+      <DependentUpon>StatusUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPages\SearchUserPage.xaml.cs">
+      <DependentUpon>SearchUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatusPage.xaml.cs">
+      <DependentUpon>StatusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControl\TagDialog.xaml.cs">
+      <DependentUpon>TagDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SendPage.xaml.cs">
+      <DependentUpon>SendPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\DirectItemControl.xaml.cs">
+      <DependentUpon>DirectItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\DirectOtherItemControl.xaml.cs">
+      <DependentUpon>DirectOtherItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\MessageItemControl.xaml.cs">
+      <DependentUpon>MessageItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\MessageOtherItemControl.xaml.cs">
+      <DependentUpon>MessageOtherItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\StatusItemControl.xaml.cs">
+      <DependentUpon>StatusItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\TemplateSelector\ConversationItemTemplateSelector.cs" />
+    <Compile Include="ItemControl\TemplateSelector\MessageItemTemplateSelector.cs" />
+    <Compile Include="ItemControl\TemplateSelector\TimelineTemplateSelector.cs" />
+    <Compile Include="ItemControl\TrendsItemControl.xaml.cs">
+      <DependentUpon>TrendsItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\UserItemControl.xaml.cs">
+      <DependentUpon>UserItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemControl\ValueConverter\BoolToFavoritedConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\CountToVisibilityConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\DateToTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\DisplayImageToVisibilityConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\HtmlToTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\ImageSourceToCacheConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\ImageSourceToCacheWithWifiConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\IntToMsgCountStringConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\NullToVisibilityConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\ReplyToNameConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\RetweetToNameConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\SexToIconConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\SourceToTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\StatusesToTimeStringConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\StatusToFillColorConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\TextToLeftCountTextConverter.cs" />
+    <Compile Include="ItemControl\ValueConverter\TextToReplyTextConverter.cs" />
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FavoritePage.xaml.cs">
+      <DependentUpon>FavoritePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FindPage.xaml.cs">
+      <DependentUpon>FindPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TrendsPage.xaml.cs">
+      <DependentUpon>TrendsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PublicPage.xaml.cs">
+      <DependentUpon>PublicPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\DataConverter.cs" />
+    <Compile Include="Utils\EvilTransform.cs" />
+    <Compile Include="Utils\GeoLocator.cs" />
+    <Compile Include="Utils\HtmlParser.cs" />
+    <Compile Include="Utils\MenuRect.cs" />
+    <Compile Include="Utils\NavigationControl.cs" />
+    <Compile Include="Utils\SettingStorage.cs" />
+    <Compile Include="Utils\StatusesReform.cs" />
+    <Compile Include="Utils\TileUpdater.cs" />
+    <Compile Include="Utils\TimelineCache.cs" />
+    <Compile Include="Utils\TimelineStorage.cs" />
+    <Compile Include="Utils\TitleBar.cs" />
+    <Compile Include="Utils\ToastShow.cs" />
+    <Compile Include="Utils\VisualHelper.cs" />
+    <Compile Include="Utils\WebDataCache.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\10.png" />
+    <Content Include="Assets\back-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\blank.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\bookmark-512.png" />
+    <Content Include="Assets\email-512.png" />
+    <Content Include="Assets\fanfou_beta.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\find_user-512.png" />
+    <Content Include="Assets\forward-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\login.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\Logo.scale-140.png" />
+    <Content Include="Assets\Logo.scale-180.png" />
+    <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\message_outline-512.png" />
+    <Content Include="Assets\newspaper-512.png" />
+    <Content Include="Assets\search-512.png" />
+    <Content Include="Assets\services-512.png" />
+    <Content Include="Assets\SmallLogo.scale-100.png" />
+    <Content Include="Assets\SmallLogo.scale-140.png" />
+    <Content Include="Assets\SmallLogo.scale-240.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-140.png" />
+    <Content Include="Assets\SplashScreen.scale-180.png" />
+    <Content Include="Assets\SplashScreen.scale-240.png" />
+    <Content Include="Assets\Square70x70Logo.scale-100.png" />
+    <Content Include="Assets\Square70x70Logo.scale-140.png" />
+    <Content Include="Assets\Square70x70Logo.scale-180.png" />
+    <Content Include="Assets\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Square71x71Logo.scale-140.png" />
+    <Content Include="Assets\Square71x71Logo.scale-240.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-140.png" />
+    <Content Include="Assets\StoreLogo.scale-240.png" />
+    <Content Include="Assets\tag-512.png" />
+    <Content Include="Assets\user-512.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-140.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-180.png" />
+    <Content Include="Assets\WideLogo.scale-100.png" />
+    <Content Include="Assets\WideLogo.scale-140.png" />
+    <Content Include="Assets\WideLogo.scale-240.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="CustomControl\TitleBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FramePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BlockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\ReplyItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MessagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DirectPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ImagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InformationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemControl\FooterControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\RefreshItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnnouncePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\AnnounceItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProfilePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SelfPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\FollowersUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\TagUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\FriendsUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\ImageUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\FavoriteUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\TimelineUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\StatusUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPages\SearchUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StatusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomControl\TagDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SendPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemControl\DirectItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\DirectOtherItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\MessageItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\MessageOtherItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\StatusItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemControl\TrendsItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemControl\UserItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FavoritePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FindPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TrendsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PublicPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FanfouWP2_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.10166.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsMobile, Version=10.0.10166.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

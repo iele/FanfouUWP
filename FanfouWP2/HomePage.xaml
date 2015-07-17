@@ -1,0 +1,74 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ItemControl="using:FanfouWP2.ItemControl"
+    xmlns:CustomControl="using:FanfouWP2.CustomControl"
+    xmlns:selector="using:FanfouWP2.ItemControl.TemplateSelector"
+    xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
+    xmlns:utils="using:FanfouWP2.Utils"
+    x:Class="FanfouWP2.HomePage"
+    mc:Ignorable="d" RequestedTheme="Light" Width="Auto" Height="Auto"
+    NavigationCacheMode="Required"  >
+    <Page.Resources>
+        <DataTemplate x:Key="StatusItemControl">
+            <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="Refresh1ItemControl">
+            <ItemControl:RefreshItemControl DataContext="{Binding}" Margin="0,3"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MentionsItemControl">
+            <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="MentionsItemControl_RightTapped" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="Refresh2ItemControl">
+            <ItemControl:RefreshItemControl DataContext="{Binding}" Margin="0,3"/>
+        </DataTemplate>
+
+        <selector:TimelineTemplateSelector x:Key="StatusSelector" StatusTemplate="{StaticResource StatusItemControl}" RefreshTemplate="{StaticResource Refresh1ItemControl}"/>
+        <selector:TimelineTemplateSelector x:Key="MentionsSelector" StatusTemplate="{StaticResource MentionsItemControl}" RefreshTemplate="{StaticResource Refresh2ItemControl}"/>
+        <converter:WidthToStackCountConverter x:Key="WidthToStackCountConverter" />
+    </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click" />
+                <AppBarButton Label="设置" />
+            </CommandBar.SecondaryCommands>
+            <AppBarButton Label="刷新" Icon="Refresh" x:Name="RefreshItem" Click="RefreshItem_Click" />
+            <AppBarButton Label="回到最前" Icon="Up" x:Name="UpItem" Click="UpItem_Click" />
+            <AppBarButton Label="照片" Icon="Camera" x:Name="CameraItem" Click="CameraItem_Click"/>
+            <AppBarButton Icon="Edit" Label="新饭" x:Name="SendItem" Click="SendItem_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Margin="0,0,0,0" x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Pivot Grid.Row="0" Margin="0" x:Name="pivot">
+            <PivotItem Header="我的消息" Margin="0">
+                <Grid>
+                    <ListView x:Name="statusesGridView" 
+                        ItemsSource="{x:Bind statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
+						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
+                    </ListView>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="提及我的" Margin="0">
+                <Grid>
+                    <ListView x:Name="mentionsGridView"
+						ItemsSource="{x:Bind mentions}" ItemTemplateSelector="{StaticResource MentionsSelector}" 
+						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
+
+                    </ListView>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

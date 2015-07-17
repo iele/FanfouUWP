@@ -1,0 +1,148 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:utils="using:FanfouWP2.Utils"
+    x:Class="FanfouWP2.StatusPage"
+    mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <converter:HtmlToTextConverter x:Key="HtmlToTextConverter" />
+            <converter:SourceToTextConverter x:Key="SourceToTextConverter" />
+            <converter:DateToTextConverter x:Key="DateToTextConverter" />
+            <converter:StatusToFillColorConverter x:Key="StatusToFillColorConverter" />
+            <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <converter:ReplyToNameConverter x:Key="ReplyToNameConverter" />
+            <converter:RetweetToNameConverter x:Key="RetweetToNameConverter" />
+            <converter:ImageSourceToCacheConverter x:Key="ImageSourceToCacheConverter" />
+            <converter:BoolToFavoritedConverter x:Key="BoolToFavoritedConverter" />
+            <converter:DisplayImageToVisibilityConverter x:Key="DisplayImageToVisibilityConverter" />
+        </ResourceDictionary>
+    </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="删除" x:Name="DeleteItem" IsEnabled="False" Click="DeleteItem_Click"/>
+                <AppBarButton Label="共享到..." x:Name="ShareItem" Click="ShareItem_Click"/>
+                <AppBarButton x:Name="CopyItem" Label="复制此消息" Click="CopyItem_OnClick"/>
+            </CommandBar.SecondaryCommands>
+            <AppBarButton Icon="List" Label="个人资料" x:Name="UserItem" Click="UserItem_Click" />
+            <AppBarButton Label="转发" Icon="ReShare" x:Name="RepostItem" Click="RepostItem_Click" />
+            <AppBarButton Icon="Favorite" Label="收藏" x:Name="FavItem" Click="FavItem_Click" />
+            <AppBarButton Icon="Redo" Label="回复" x:Name="ReplyItem" Click="ReplyItem_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="wideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="641" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Value="Left" Target="line.HorizontalAlignment" >
+                        </Setter>
+                        <Setter Value="Left" Target="more.HorizontalAlignment" >
+                        </Setter>
+                        <Setter Value="641" Target="line.Width" >
+                        </Setter>
+                        <Setter Value="641" Target="line.X2" >
+                        </Setter>
+                        <Setter Value="640" Target="more.Width" >
+                        </Setter>
+                        <Setter Value="Left" Target="image.HorizontalAlignment" >
+                        </Setter>
+                        <Setter Value="None" Target="image.Stretch" >
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="narrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Value="Stretch" Target="line.HorizontalAlignment">
+                        </Setter>
+                        <Setter Value="Stretch" Target="more.HorizontalAlignment">
+                        </Setter>
+                        <Setter Value="Stretch" Target="image.HorizontalAlignment" >
+                        </Setter>
+                        <Setter Value="UniformToFill" Target="image.Stretch" >
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="12,12,0,12" Orientation="Vertical">
+            <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                <Image Tapped="Profile_Tapped" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40"
+        		Source="{Binding  status.user.profile_image_url}" />
+                <TextBlock Text="{Binding  status.user.screen_name}" FontSize="21.333"
+        		VerticalAlignment="Center" Foreground="Black" Margin="12,0,0,0"/>
+            </StackPanel>
+            <Line x:Name="line" Stroke="Gray" StrokeThickness="1" Margin="0,12,12,0" Width="641" X2="641" Height="1" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel >
+                <Grid x:Name="ContentRoot" d:LayoutOverrides="Width" Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="12,6,12,0" TextWrapping="Wrap" x:Name="text" 
+        					Text="{Binding status.text, Converter={StaticResource HtmlToTextConverter}}" VerticalAlignment="Top"
+        					FontSize="16.667" IsTextSelectionEnabled="True" />
+                    <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1">
+                        <TextBlock Padding="0,5,0,0"
+        						Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}"
+        						VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0"
+        						HorizontalAlignment="Left" />
+                        <TextBlock Padding="5,5,0,0"
+        						Text="{Binding status.Source, Converter={StaticResource SourceToTextConverter}}"
+        						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" />
+                        <TextBlock Padding="5,5,0,0"
+        						Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}"
+        						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
+        						Visibility="{Binding in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+                        <TextBlock Padding="5,5,0,0"
+        						Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}"
+        						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
+        						Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+                        <TextBlock Padding="5,5,0,0"
+        						Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}"
+        						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
+        						Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}" />
+                    </StackPanel>
+                    <Image x:Name="image" Tapped="Image_Tapped" Margin="12,6,12,12" VerticalAlignment="Top"
+        					Source="{Binding status.photo.largeurl}" Grid.Row="2" Stretch="Uniform"  HorizontalAlignment="Left"/>
+
+                </Grid>
+                <StackPanel x:Name="context" Margin="12,0,12,12" VerticalAlignment="Top" Background="White"
+        					Visibility="Collapsed" RelativePanel.RightOf="ContentRoot">
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="此消息包含的上下文" VerticalAlignment="Top"
+        						Margin="0,0,0,0" FontSize="17.667" Foreground="Black" />
+                    <StackPanel x:Name="contextMessage" Margin="0,6,0,0"></StackPanel>
+                </StackPanel>
+                <StackPanel x:Name="more" Grid.Row="1" Margin="0,0,0,0" RelativePanel.RightOf="context">
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="更多操作" VerticalAlignment="Top" Margin="12,0,0,0" FontSize="17.667"/>
+                    <StackPanel x:Name="links" VerticalAlignment="Top" Margin="12,0"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

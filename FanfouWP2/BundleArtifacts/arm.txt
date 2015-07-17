@@ -1,0 +1,4 @@
+MainPackage=C:\Users\Elephas\Desktop\FanfouWP2\FanfouWP2\bin\ARM\Debug\FanfouWP2_1.0.10.0_ARM_Debug.appx
+ResourcePack=C:\Users\Elephas\Desktop\FanfouWP2\FanfouWP2\bin\ARM\Debug\FanfouWP2_1.0.10.0_scale-140.appx
+ResourcePack=C:\Users\Elephas\Desktop\FanfouWP2\FanfouWP2\bin\ARM\Debug\FanfouWP2_1.0.10.0_scale-180.appx
+ResourcePack=C:\Users\Elephas\Desktop\FanfouWP2\FanfouWP2\bin\ARM\Debug\FanfouWP2_1.0.10.0_scale-240.appx

@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="FanfouWP2.ImagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:utils="using:FanfouWP2.Utils"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled" DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="SaveLocal" Label="保存" x:Name="SaveItem" Click="SaveItem_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    <Page.Background>
+        <SolidColorBrush Color="Black" />
+    </Page.Background>
+
+    <Grid x:Name="LayoutRoot" Background="Black">
+        <!-- 标题面板 -->
+
+        <!--TODO: 应将内容放入以下网格-->
+        <Image x:Name="image" Margin="0" CacheMode="BitmapCache" Source="{Binding  photo}"
+               HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="TranslateTransform" />
+                    <RotateTransform x:Name="RotateTransform" />
+                    <ScaleTransform x:Name="ScaleTransform" />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Rectangle x:Name="touch" Fill="#00F4F4F5" Margin="0" Stroke="#00000000" Canvas.ZIndex="10"
+                   ManipulationDelta="Rectangle_ManipulationDelta" PointerWheelChanged="touch_PointerWheelChanged" DoubleTapped="Rectangle_DoubleTapped" />
+
+        <!--TODO: 应将内容放入以下网格-->
+    </Grid>
+</Page>

@@ -1,1 +1,0 @@
-﻿These controls are for Coding4Fun projects.  Namely our C4F About control which, if included in the Coding4fun.Phone.Control kit, would increase the DLL's size for selfish reasons.

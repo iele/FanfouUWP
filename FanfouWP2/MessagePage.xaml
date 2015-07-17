@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="FanfouWP2.MessagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ItemControl="using:FanfouWP2.ItemControl"
+    xmlns:selector="using:FanfouWP2.ItemControl.TemplateSelector"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"   Background="White">
+
+    <Page.Resources>
+        <DataTemplate x:Key="MessageItemControl">
+            <ItemControl:MessageItemControl DataContext="{Binding}"
+                                           Margin="0,3" />
+        </DataTemplate>
+        <DataTemplate x:Key="MessageOtherItemControl">
+            <ItemControl:MessageOtherItemControl DataContext="{Binding}"
+                                           Margin="0,3" />
+        </DataTemplate>
+        <selector:MessageItemTemplateSelector x:Key="MessageItemTemplateSelector" MessageSelfTemplate="{StaticResource MessageItemControl}" MessageOtherTemplate="{StaticResource MessageItemControl}"/>
+    </Page.Resources>
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView ShowsScrollingPlaceholders="True" Margin="0" x:Name="messagesGridView"
+                  ItemsSource="{Binding  messages}" 
+                  ItemTemplateSelector="{StaticResource MessageItemTemplateSelector}" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" />
+        <TextBox Margin="8" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" x:Name="text"/>
+        <AppBarButton HorizontalAlignment="Center" Icon="Send" Label="appbarbutton" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" IsCompact="True" RequestedTheme="Dark" Click="AppBarButton_Click"/>
+    </Grid>
+</Page>

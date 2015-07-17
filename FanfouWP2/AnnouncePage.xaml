@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="FanfouWP2.AnnouncePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FanfouWP2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ItemControl="using:FanfouWP2.ItemControl"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"  >
+
+    <Page.Resources>
+        <DataTemplate x:Key="AnnounceItemControl">
+            <ItemControl:AnnounceItemControl DataContext="{Binding}" Margin="0,3" />
+        </DataTemplate>
+    </Page.Resources>
+    <Page.Background>
+        <SolidColorBrush Color="#FFFFFFFF" />
+    </Page.Background>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,0,0,0" />
+        <StackPanel Margin="12" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock TextWrapping="Wrap" Text="最新公告" Margin="0" VerticalAlignment="Center"
+                           FontSize="18.667" Foreground="White" />
+        </StackPanel>
+        <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="statusesGridView"
+                  ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource AnnounceItemControl}" Grid.Row="1" />
+    </Grid>
+</Page>
