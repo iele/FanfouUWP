@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace FanfouWP2.FanfouAPI
+namespace FanfouUWP.FanfouAPI
 {
     public class Parameters
     {

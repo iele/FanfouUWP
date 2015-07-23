@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     public sealed partial class TrendsPage : Page
     {

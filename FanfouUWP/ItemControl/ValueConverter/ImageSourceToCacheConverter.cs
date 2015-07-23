@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
-using FanfouWP2.Utils;
+using FanfouUWP.Utils;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ItemControl.ValueConverter
 {
     public class ImageSourceToCacheConverter : IValueConverter
     {

@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Input;
 
 // “用户控件”项模板在 http://go.microsoft.com/fwlink/?LinkId=234236 上提供
 
-namespace FanfouWP2.ItemControl
+namespace FanfouUWP.ItemControl
 {
     public sealed partial class ReplyItemControl : UserControl
     {

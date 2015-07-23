@@ -2,7 +2,7 @@
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public static class ToastShow
     {

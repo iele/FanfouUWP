@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Windows.Storage;
 
-using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.Utils;
+using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.Utils;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
 
-namespace FanfouWP2.FanfouAPI
+namespace FanfouUWP.FanfouAPI
 {
     public class FanfouAPI
     {
@@ -446,16 +445,36 @@ namespace FanfouWP2.FanfouAPI
             return result;
         }
 
-        public void FriendshipRequests(int page = 1)
+        public async Task<List<User>> FriendshipRequests(int count = 60, int page = 1)
         {
+            RestClient client = GetClient();
+            var parameters = new Parameters();
+            if (page > 0)
+                parameters.Add("page", page);
+            parameters.Add("count", count.ToString());
+            List<User> result =
+                await client.GetRequestObjectCollection<User>(FanfouConsts.FRIENDSHIPS_REQUESTS, parameters);
+            return result;
         }
 
-        public void FriendshipAccept(string id)
+        public async Task<User> FriendshipAccept(string id)
         {
+            RestClient client = GetClient();
+            var parameters = new Parameters();
+            parameters.Add("id", id);
+            User result =
+               await client.PostRequestObject<User>(FanfouConsts.FRIENDSHIPS_ACCEPT, parameters);
+            return result;
         }
 
-        public void FriendshipDeny(string id)
+        public async Task<User> FriendshipDeny(string id)
         {
+            RestClient client = GetClient();
+            var parameters = new Parameters();
+            parameters.Add("id", id);
+            User result =
+               await client.PostRequestObject<User>(FanfouConsts.FRIENDSHIPS_DENY, parameters);
+            return result;
         }
 
         public void FriendshipExists(string user_a, string user_b)

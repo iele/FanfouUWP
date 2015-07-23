@@ -5,7 +5,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ItemControl.ValueConverter
 {
     public sealed class StatusToFillColorConverter : IValueConverter
     {

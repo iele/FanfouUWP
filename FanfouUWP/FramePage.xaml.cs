@@ -1,5 +1,5 @@
-﻿using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.Utils;
+﻿using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     public sealed partial class FramePage : Page
     {

@@ -8,9 +8,9 @@ using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
 using System.Linq;
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public class TimelineStorage<T> where T : Item
     {

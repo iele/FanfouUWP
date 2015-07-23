@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public static class VisualHelper
     {

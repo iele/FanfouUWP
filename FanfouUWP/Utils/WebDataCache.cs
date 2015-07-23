@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     /// <summary>
     ///     Can cache Uri data

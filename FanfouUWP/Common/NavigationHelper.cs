@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace FanfouWP2.Common
+namespace FanfouUWP.Common
 {
     /// <summary>
     ///     NavigationHelper 协助在页面间进行导航。 它提供一些命令，用于

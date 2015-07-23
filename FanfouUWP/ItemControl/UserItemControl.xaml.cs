@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace FanfouWP2.ItemControl
+namespace FanfouUWP.ItemControl
 {
     public sealed partial class UserItemControl : UserControl
     {

@@ -1,12 +1,12 @@
-﻿using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI.Items;
+﻿using FanfouUWP.Common;
+using FanfouUWP.FanfouAPI.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public class TimelineCache
     {

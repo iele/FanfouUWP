@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 
-using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.Utils;
+using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.Utils;
 
-namespace FanfouWP2.UserPages
+namespace FanfouUWP.UserPages
 {
     public sealed partial class FavoriteUserPage : Page
     {

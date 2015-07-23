@@ -4,23 +4,25 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 
-using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.ItemControl;
-using FanfouWP2.CustomControl;
+using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.ItemControl;
+using FanfouUWP.CustomControl;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.UI.Xaml.Documents;
 using System.Text.RegularExpressions;
-using FanfouWP2.Utils;
+using FanfouUWP.Utils;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using System.Linq;
+using Windows.Devices.Geolocation;
+using Windows.UI.Xaml.Controls.Maps;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     可独立使用或用于导航至 Frame 内部的空白页。
@@ -89,6 +91,65 @@ namespace FanfouWP2
             {
                 this.FavItem.Label = "收藏";
                 this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
+            }
+
+            if (this.status.location != "")
+            {
+                try
+                {
+                    char[] s = { ',' };
+                    string[] l = this.status.location.Split(s);
+                    try
+                    {
+                        this.Map.Center = new Geopoint(new BasicGeoposition()
+                        {
+                            Latitude = double.Parse(l[0]),
+                            Longitude = double.Parse(l[1])
+                        });
+
+                        this.Map.ZoomLevel = 15;
+                        this.Map.MapElements.Clear();
+
+                        MapIcon MapIcon = new MapIcon();
+                        MapIcon.Location = new Geopoint(new BasicGeoposition()
+                        {
+                            Latitude = double.Parse(l[0]),
+                            Longitude = double.Parse(l[1])
+                        });
+                        MapIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
+                        MapIcon.Title = this.status.location;
+                        Map.MapElements.Add(MapIcon);
+
+                        Map.LandmarksVisible = true;
+                        Map.Visibility = Visibility.Visible;
+                    }
+                    catch
+                    {
+                        var location = (await Utils.GeoLocator.Geocode(this.status.location)).Locations[0];
+                        this.Map.Center = location.Point;
+
+                        this.Map.ZoomLevel = 12;
+                        this.Map.MapElements.Clear();
+
+                        MapIcon MapIcon = new MapIcon();
+                        MapIcon.Location = location.Point;
+                        MapIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
+                        MapIcon.Title = location.DisplayName;
+                        Map.MapElements.Add(MapIcon);
+
+                        Map.LandmarksVisible = true;
+                        Map.Visibility = Visibility.Visible;
+                    }
+
+                }
+                catch
+                {
+                    Map.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                Map.Visibility = Visibility.Collapsed;
             }
 
             if (this.status.user.id == FanfouAPI.FanfouAPI.Instance.currentUser.id)

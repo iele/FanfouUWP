@@ -6,15 +6,15 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 
-using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.UserPages;
-using FanfouWP2.Utils;
+using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.UserPages;
+using FanfouUWP.Utils;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     可独立使用或用于导航至 Frame 内部的空白页。
@@ -75,7 +75,7 @@ namespace FanfouWP2
             checkFriendship();
 
             tags.Clear();
-            var list = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
+            var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
             foreach (var item in list)
                 tags.Add(item);
         }
@@ -188,16 +188,16 @@ namespace FanfouWP2
         private async void FriendItem_Click(object sender, RoutedEventArgs e)
         {
             if (user.following)
-                user = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.FriendshipDestroy(this.user.id);
+                user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.FriendshipDestroy(this.user.id);
             else
-                user = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.FriendshipCreate(this.user.id);
+                user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.FriendshipCreate(this.user.id);
             defaultViewModel["user"] = user;
             checkFriendship();
         }
 
         private async void BlackListItem_Click(object sender, RoutedEventArgs e)
         {
-            user = await FanfouWP2.FanfouAPI.FanfouAPI.Instance.BlockCreate(this.user.id);
+            user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.BlockCreate(this.user.id);
             defaultViewModel["user"] = user;
             ToastShow.ShowInformation("已经将@" + user.screen_name + "加入黑名单,若解锁请在个人页面完成");
         }

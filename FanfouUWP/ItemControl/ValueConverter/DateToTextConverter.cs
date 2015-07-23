@@ -2,7 +2,7 @@
 using System.Globalization;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ItemControl.ValueConverter
 {
     public sealed class DateToTextConverter : IValueConverter
     {

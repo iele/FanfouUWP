@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 using System.Linq;
 
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouWP2.UserPages
+namespace FanfouUWP.UserPages
 {
     public sealed partial class FollowersUserPage : Page
     {

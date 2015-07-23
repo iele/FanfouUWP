@@ -1,9 +1,9 @@
 ﻿<UserControl
-    x:Class="FanfouWP2.ItemControl.MessageItemControl"
+    x:Class="FanfouUWP.ItemControl.MessageItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FanfouWP2.ItemControl"
-    xmlns:converter="using:FanfouWP2.ItemControl.ValueConverter"
+    xmlns:local="using:FanfouUWP.ItemControl"
+    xmlns:converter="using:FanfouUWP.ItemControl.ValueConverter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="Light" 

@@ -1,4 +1,4 @@
-﻿using FanfouWP2.CustomControl;
+﻿using FanfouUWP.CustomControl;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +6,7 @@ using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml.Controls;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public static class TileUpdater
     {

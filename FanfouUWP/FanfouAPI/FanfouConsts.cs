@@ -1,4 +1,4 @@
-﻿namespace FanfouWP2.FanfouAPI
+﻿namespace FanfouUWP.FanfouAPI
 {
     public static class FanfouConsts
     {

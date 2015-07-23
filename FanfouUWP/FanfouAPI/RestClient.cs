@@ -9,12 +9,12 @@ using Windows.Storage;
 using Windows.Web.Http;
 using Windows.Web.Http.Filters;
 using Windows.Web.Http.Headers;
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 using Buffer = Windows.Storage.Streams.Buffer;
 using System.IO.Compression;
 using System.ComponentModel;
 
-namespace FanfouWP2.FanfouAPI
+namespace FanfouUWP.FanfouAPI
 {
     public class RestClient
     {

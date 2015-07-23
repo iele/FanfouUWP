@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace FanfouWP2.CustomControl
+namespace FanfouUWP.CustomControl
 {
     public sealed partial class TitleBarControl : UserControl
     {

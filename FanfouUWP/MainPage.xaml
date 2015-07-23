@@ -1,13 +1,13 @@
 ﻿<Page
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FanfouWP2"
+    xmlns:local="using:FanfouUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ItemControl="using:FanfouWP2.ItemControl"
-    xmlns:utils="using:FanfouWP2.Utils"
-    xmlns:ValueConverter="using:FanfouWP2.ItemControl.ValueConverter"
-    x:Class="FanfouWP2.MainPage"
+    xmlns:ItemControl="using:FanfouUWP.ItemControl"
+    xmlns:utils="using:FanfouUWP.Utils"
+    xmlns:ValueConverter="using:FanfouUWP.ItemControl.ValueConverter"
+    x:Class="FanfouUWP.MainPage"
     NavigationCacheMode="Required">
 
     <Page.Resources>
