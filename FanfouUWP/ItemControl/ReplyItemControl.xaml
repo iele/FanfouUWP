@@ -4,7 +4,7 @@
     xmlns:local="using:FanfouUWP.ItemControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converter="using:FanfouUWP.ItemControl.ValueConverter"
+    xmlns:converter="using:FanfouUWP.ValueConverter"
     xmlns:utils="using:FanfouUWP.Utils"
     x:Class="FanfouUWP.ItemControl.ReplyItemControl"
     mc:Ignorable="d" RequestedTheme="Light"

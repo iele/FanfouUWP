@@ -1,15 +1,16 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class RetweetToNameConverter : IValueConverter
+    public sealed class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null || value as string == "")
-                return "";
-            return "转自" + value;
+                return Visibility.Collapsed;
+            return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -1,13 +1,13 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public class ImageSourceToCacheWithWifiConverter : IValueConverter
+    public sealed class WidthToStackCountConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return null;
+            return 2;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

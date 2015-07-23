@@ -1,15 +1,16 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class IntToMsgCountStringConverter : IValueConverter
+    public sealed class DisplayImageToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
-                return "";
-            return value + "个对话";
+//if (SettingManager.GetInstance().displayImage == false)
+//                   return Visibility.Collapsed;
+            return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

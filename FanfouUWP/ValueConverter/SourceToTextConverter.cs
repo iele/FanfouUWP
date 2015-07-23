@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Net;
+using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class HtmlToTextConverter : IValueConverter
+    public sealed class SourceToTextConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null || (value as string).Equals(""))
+            if (value == null)
                 return "";
-            return WebUtility.HtmlDecode(value as string).Replace("<strong>", "").Replace("</strong>", "");
+            return Regex.Replace((string) value, "<[^>]*>", "");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

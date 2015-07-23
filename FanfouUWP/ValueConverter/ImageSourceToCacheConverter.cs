@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 using FanfouUWP.Utils;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
     public class ImageSourceToCacheConverter : IValueConverter
     {

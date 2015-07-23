@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouUWP.ItemControl.TemplateSelector
+namespace FanfouUWP.TemplateSelector
 {
     public class MessageItemTemplateSelector : DataTemplateSelector
     {

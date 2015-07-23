@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class SourceToTextConverter : IValueConverter
+    public sealed class ReplyToNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
+            if (value == null || value as string == "")
                 return "";
-            return Regex.Replace((string) value, "<[^>]*>", "");
+            return "回复" + value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:converter="using:FanfouUWP.ItemControl.ValueConverter"
+    xmlns:converter="using:FanfouUWP.ValueConverter"
     x:Class="FanfouUWP.ItemControl.DirectOtherItemControl"
     xmlns:utils="using:FanfouUWP.Utils"
     mc:Ignorable="d"

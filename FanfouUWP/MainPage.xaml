@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     xmlns:utils="using:FanfouUWP.Utils"
-    xmlns:ValueConverter="using:FanfouUWP.ItemControl.ValueConverter"
+    xmlns:ValueConverter="using:FanfouUWP.ValueConverter"
     x:Class="FanfouUWP.MainPage"
     NavigationCacheMode="Required">
 

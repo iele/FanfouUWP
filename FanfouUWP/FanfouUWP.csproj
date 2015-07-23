@@ -80,6 +80,8 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -120,6 +122,23 @@
     <Compile Include="FanfouAPI\Parameters.cs" />
     <Compile Include="FanfouAPI\RestClient.cs" />
     <Compile Include="FanfouAPI\XAuthHelper.cs" />
+    <Compile Include="ValueConverter\BoolToFavoritedConverter.cs" />
+    <Compile Include="ValueConverter\CountToVisibilityConverter.cs" />
+    <Compile Include="ValueConverter\DateToTextConverter.cs" />
+    <Compile Include="ValueConverter\DisplayImageToVisibilityConverter.cs" />
+    <Compile Include="ValueConverter\HtmlToTextConverter.cs" />
+    <Compile Include="ValueConverter\ImageSourceToCacheConverter.cs" />
+    <Compile Include="ValueConverter\ImageSourceToCacheWithWifiConverter.cs" />
+    <Compile Include="ValueConverter\IntToMsgCountStringConverter.cs" />
+    <Compile Include="ValueConverter\NullToVisibilityConverter.cs" />
+    <Compile Include="ValueConverter\ReplyToNameConverter.cs" />
+    <Compile Include="ValueConverter\RetweetToNameConverter.cs" />
+    <Compile Include="ValueConverter\SexToIconConverter.cs" />
+    <Compile Include="ValueConverter\SourceToTextConverter.cs" />
+    <Compile Include="ValueConverter\StatusesToTimeStringConverter.cs" />
+    <Compile Include="ValueConverter\StatusToFillColorConverter.cs" />
+    <Compile Include="ValueConverter\TextToLeftCountTextConverter.cs" />
+    <Compile Include="ValueConverter\TextToReplyTextConverter.cs" />
     <Compile Include="FramePage.xaml.cs">
       <DependentUpon>FramePage.xaml</DependentUpon>
     </Compile>
@@ -129,9 +148,9 @@
     <Compile Include="ItemControl\ReplyItemControl.xaml.cs">
       <DependentUpon>ReplyItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ItemControl\ValueConverter\BoolReverseToVisibilityConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\WidthToStackCountConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValueConverter\BoolReverseToVisibilityConverter.cs" />
+    <Compile Include="ValueConverter\WidthToStackCountConverter.cs" />
+    <Compile Include="ValueConverter\BoolToVisibilityConverter.cs" />
     <Compile Include="MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
@@ -156,12 +175,9 @@
     <Compile Include="ItemControl\AnnounceItemControl.xaml.cs">
       <DependentUpon>AnnounceItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ItemControl\ValueConverter\DateToStringConverter.cs" />
+    <Compile Include="ValueConverter\DateToStringConverter.cs" />
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RequestPage.xaml.cs">
-      <DependentUpon>RequestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelfPage.xaml.cs">
       <DependentUpon>SelfPage.xaml</DependentUpon>
@@ -226,32 +242,15 @@
     <Compile Include="ItemControl\StatusItemControl.xaml.cs">
       <DependentUpon>StatusItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ItemControl\TemplateSelector\ConversationItemTemplateSelector.cs" />
-    <Compile Include="ItemControl\TemplateSelector\MessageItemTemplateSelector.cs" />
-    <Compile Include="ItemControl\TemplateSelector\TimelineTemplateSelector.cs" />
+    <Compile Include="TemplateSelector\ConversationItemTemplateSelector.cs" />
+    <Compile Include="TemplateSelector\MessageItemTemplateSelector.cs" />
+    <Compile Include="TemplateSelector\TimelineTemplateSelector.cs" />
     <Compile Include="ItemControl\TrendsItemControl.xaml.cs">
       <DependentUpon>TrendsItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ItemControl\UserItemControl.xaml.cs">
       <DependentUpon>UserItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ItemControl\ValueConverter\BoolToFavoritedConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\CountToVisibilityConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\DateToTextConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\DisplayImageToVisibilityConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\HtmlToTextConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\ImageSourceToCacheConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\ImageSourceToCacheWithWifiConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\IntToMsgCountStringConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\NullToVisibilityConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\ReplyToNameConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\RetweetToNameConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\SexToIconConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\SourceToTextConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\StatusesToTimeStringConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\StatusToFillColorConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\TextToLeftCountTextConverter.cs" />
-    <Compile Include="ItemControl\ValueConverter\TextToReplyTextConverter.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -406,10 +405,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="RequestPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SelfPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -527,8 +522,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PublicPage.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

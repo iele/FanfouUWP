@@ -1,13 +1,16 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class TextToReplyTextConverter : IValueConverter
+    public sealed class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return "回复给" + value + "的消息";
+            if (value == null)
+                return Visibility.Collapsed;
+            return (bool)value ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

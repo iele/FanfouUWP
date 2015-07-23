@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
-    xmlns:selector="using:FanfouUWP.ItemControl.TemplateSelector"
+    xmlns:selector="using:FanfouUWP.TemplateSelector"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"  >
 

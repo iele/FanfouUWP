@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Data;
 using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouUWP.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
     public sealed class StatusesToTimeStringConverter : IValueConverter
     {
