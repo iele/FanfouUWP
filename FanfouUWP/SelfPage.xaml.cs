@@ -172,8 +172,8 @@ namespace FanfouUWP
         }
 
         private void RequestItem_Click(object sender, RoutedEventArgs e)
-        { 
-            
+        {
+            Frame.Navigate(typeof(RequestPage));
         }
     }
 }

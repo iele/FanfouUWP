@@ -264,7 +264,7 @@ namespace FanfouUWP
                     Text = "查看用户",
                     FontSize = 16,
                     Foreground = new SolidColorBrush(Colors.Gray),
-                    Margin = new Thickness(0, 6, 0, 6)
+                    Margin = new Thickness(0, 6, 0, 6)                   
                 };
                 links.Children.Add(t);
                 foreach (var i in us)
@@ -274,6 +274,7 @@ namespace FanfouUWP
                         try
                         {
                             Button b = new Button();
+                            b.IsEnabled = false;
                             b.Margin = Margin = new Thickness(0, 6, 0, 6);
                             b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
                             b.Content = i.ToString();

@@ -15,7 +15,7 @@ using FanfouUWP.ItemControl;
 
 namespace FanfouUWP
 {
-    public sealed partial class BlockPage : Page
+    public sealed partial class RequestPage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
@@ -23,7 +23,7 @@ namespace FanfouUWP
         private readonly PaginatedCollection<User> users = new PaginatedCollection<User>();
         private int page = 1;
 
-        public BlockPage()
+        public RequestPage()
         {
             InitializeComponent();
 
@@ -32,7 +32,7 @@ namespace FanfouUWP
                 try
                 {
                     var result =
-                        await FanfouAPI.FanfouAPI.Instance.BlocksBlocking(60, ++page);
+                        await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, ++page);
                     if (result.Count == 0)
                         users.HasMoreItems = false;
 
@@ -68,10 +68,8 @@ namespace FanfouUWP
         {
             defaultViewModel["users"] = users;
 
-            title.Text = "黑名单列表";
-
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.BlocksBlocking(60, page);
+            var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
             users.Clear();
             foreach (User i in ss)
             {
@@ -86,7 +84,7 @@ namespace FanfouUWP
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.BlocksBlocking(60, page);
+            var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
             users.Clear();
             foreach (User i in ss)
             {
@@ -131,9 +129,14 @@ namespace FanfouUWP
         private async void userGridView_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             var menu = new PopupMenu();
-            menu.Commands.Add(new UICommand("取消黑名单", async (command) =>
+            menu.Commands.Add(new UICommand("接受请求", async (command) =>
             {
-                var user = await FanfouAPI.FanfouAPI.Instance.BlockDestroy(((sender as UserItemControl).DataContext as User).id);
+                var user = await FanfouAPI.FanfouAPI.Instance.FriendshipAccept(((sender as UserItemControl).DataContext as User).id);
+                users.Remove((from u in users where u.id == user.id select u).First());
+            }));
+            menu.Commands.Add(new UICommand("拒绝请求", async (command) =>
+            {
+                var user = await FanfouAPI.FanfouAPI.Instance.FriendshipDeny(((sender as UserItemControl).DataContext as User).id);
                 users.Remove((from u in users where u.id == user.id select u).First());
             }));
             var chosenCommand = await menu.ShowForSelectionAsync(Utils.MenuRect.GetElementRect((FrameworkElement)sender));

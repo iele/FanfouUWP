@@ -19,7 +19,7 @@
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="SendItem" Icon="Send" Label="发送" Click="SendItem_Click" />
             <AppBarButton x:Name="PhotoItem" Icon="Camera" Label="照片" Click="PhotoItem_Click" />
-            <AppBarButton x:Name="AtItem" Icon="AddFriend" Label="提及好友" Click="AtItem_Click" />
+            <AppBarButton x:Name="AtItem" Icon="AddFriend" Label="提及好友" Click="AtItem_Click" IsEnabled="False"/>
             <AppBarButton x:Name="TopicItem" Icon="Comment" Label="话题" Click="TopicItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>

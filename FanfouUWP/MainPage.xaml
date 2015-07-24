@@ -100,7 +100,7 @@
                                 <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="热门话题" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem  Tapped="FindGrid_Tapped">
+                        <ListViewItem  Tapped="FindGrid_Tapped" IsEnabled="False">
                             <StackPanel Orientation="Horizontal"  >
                                 <SymbolIcon HorizontalAlignment="Stretch" Symbol="Filter"
 									VerticalAlignment="Center"/>
