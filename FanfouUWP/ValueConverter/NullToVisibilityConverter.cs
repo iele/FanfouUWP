@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class SourceToTextConverter : IValueConverter
+    public sealed class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
-                return "";
-            return Regex.Replace((string) value, "<[^>]*>", "");
+            if (value == null || value as string == "")
+                return Visibility.Collapsed;
+            return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

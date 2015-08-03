@@ -4,7 +4,7 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
-namespace FanfouWP2.FanfouAPI
+namespace FanfouUWP.FanfouAPI
 {
     public static class XAuthHelper
     {

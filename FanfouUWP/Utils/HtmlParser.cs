@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Controls;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
 
     public static class HTMLParser

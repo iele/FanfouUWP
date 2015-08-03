@@ -4,7 +4,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace FanfouWP2.Common
+namespace FanfouUWP.Common
 {
     public class ContinuationManager
     {

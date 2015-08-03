@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 using System.Runtime.Serialization.Json;
 using System.IO;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public static class DataConverter<T>
     {

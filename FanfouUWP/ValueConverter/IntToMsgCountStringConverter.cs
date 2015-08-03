@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Net;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class HtmlToTextConverter : IValueConverter
+    public sealed class IntToMsgCountStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null || (value as string).Equals(""))
+            if (value == null)
                 return "";
-            return WebUtility.HtmlDecode(value as string).Replace("<strong>", "").Replace("</strong>", "");
+            return value + "个对话";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

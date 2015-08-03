@@ -3,22 +3,43 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     public sealed partial class FindPage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
-        private ObservableCollection<User> users = new ObservableCollection<User>();
+        private PaginatedCollection<User> users = new PaginatedCollection<User>();
+        private int page = 1;
 
         public FindPage()
         {
             InitializeComponent();
+
+            users.load = async (c) =>
+            {
+                try
+                {
+                    var result = (await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60, ++page)).users;
+                    if (result.Count == 0)
+                        users.HasMoreItems = false;
+                    foreach (User i in result)
+                    {
+                        users.Add(i);
+                    }
+
+                    return result.Count;
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            };
 
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
@@ -45,6 +66,7 @@ namespace FanfouWP2
                 if (find != "")
                 {
                     search.Text = find;
+                    page = 1;
                     var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
                     users.Clear();
                     if (ss.users != null)
@@ -65,6 +87,7 @@ namespace FanfouWP2
 
         private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
+            page = 1;
             var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
             users.Clear();
             if (ss.users != null)
@@ -106,6 +129,23 @@ namespace FanfouWP2
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
+        }
+
+        private async void search_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                page = 1;
+                var list = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+                users.Clear();
+                if (list.users != null)
+                {
+                    foreach (User i in list.users)
+                    {
+                        users.Add(i);
+                    }
+                }
+            }
         }
 
         #endregion

@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="FanfouWP2.SelfPage"
+    x:Class="FanfouUWP.SelfPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FanfouWP2"
+    xmlns:local="using:FanfouUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:utils="using:FanfouWP2.Utils"
-    xmlns:ItemControl="using:FanfouWP2.ItemControl"
+    xmlns:utils="using:FanfouUWP.Utils"
+    xmlns:ItemControl="using:FanfouUWP.ItemControl"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  
@@ -20,6 +20,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="RequestItem" Label="好友请求管理" Click="RequestItem_Click" />
                 <AppBarButton x:Name="BlackItem" Label="黑名单管理" Click="BlackItem_Click" />
               </CommandBar.SecondaryCommands>
             <AppBarButton  Icon="AllApps" x:Name="StatusItem" Label="消息" Click="StatusItem_Click" />

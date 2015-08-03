@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public static class StatusesReform
     {

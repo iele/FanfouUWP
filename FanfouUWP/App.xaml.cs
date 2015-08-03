@@ -6,11 +6,11 @@ using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     Provides application-specific behavior to supplement the default Application class.

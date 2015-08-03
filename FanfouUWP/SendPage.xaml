@@ -1,11 +1,11 @@
 ﻿<Page
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FanfouWP2"
+    xmlns:local="using:FanfouUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ValueConverter="using:FanfouWP2.ItemControl.ValueConverter"
-    x:Class="FanfouWP2.SendPage"
+    xmlns:ValueConverter="using:FanfouUWP.ValueConverter"
+    x:Class="FanfouUWP.SendPage"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
@@ -19,7 +19,7 @@
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="SendItem" Icon="Send" Label="发送" Click="SendItem_Click" />
             <AppBarButton x:Name="PhotoItem" Icon="Camera" Label="照片" Click="PhotoItem_Click" />
-            <AppBarButton x:Name="AtItem" Icon="AddFriend" Label="提及好友" Click="AtItem_Click" />
+            <AppBarButton x:Name="AtItem" Icon="AddFriend" Label="提及好友" Click="AtItem_Click" IsEnabled="False"/>
             <AppBarButton x:Name="TopicItem" Icon="Comment" Label="话题" Click="TopicItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>

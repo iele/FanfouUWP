@@ -8,16 +8,16 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
-using FanfouWP2.CustomControl;
+using FanfouUWP.Common;
+using FanfouUWP.CustomControl;
 
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 using Windows.UI.StartScreen;
-using FanfouWP2.Utils;
+using FanfouUWP.Utils;
 using Windows.ApplicationModel.DataTransfer;
 using System.Linq;
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     可独立使用或用于导航至 Frame 内部的空白页。

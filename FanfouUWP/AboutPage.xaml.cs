@@ -1,12 +1,12 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 using Windows.System;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     可独立使用或用于导航至 Frame 内部的空白页。

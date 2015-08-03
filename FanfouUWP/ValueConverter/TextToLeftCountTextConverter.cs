@@ -1,16 +1,14 @@
 ﻿using System;
-using Windows.UI.Xaml;
+using System.Linq;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class DisplayImageToVisibilityConverter : IValueConverter
+    public sealed class TextToLeftCountTextConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-//if (SettingManager.GetInstance().displayImage == false)
-//                   return Visibility.Collapsed;
-            return Visibility.Visible;
+            return "还剩" + (140 - (value as String).Count());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

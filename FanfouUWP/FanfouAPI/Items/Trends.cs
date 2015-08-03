@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace FanfouWP2.FanfouAPI.Items
+namespace FanfouUWP.FanfouAPI.Items
 {
     [DataContract]
     public class Trends : Item

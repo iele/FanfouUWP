@@ -13,13 +13,16 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// “用户控件”项模板在 http://go.microsoft.com/fwlink/?LinkId=234236 上提供
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace FanfouUWP.ItemControl
+namespace FanfouUWP
 {
-    public sealed partial class FooterControl : UserControl
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class SettingsPage : Page
     {
-        public FooterControl()
+        public SettingsPage()
         {
             this.InitializeComponent();
         }

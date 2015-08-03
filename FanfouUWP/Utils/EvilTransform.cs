@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public static class EvilTransform
     {

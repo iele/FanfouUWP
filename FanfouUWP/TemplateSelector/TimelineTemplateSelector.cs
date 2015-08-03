@@ -1,8 +1,8 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouWP2.ItemControl.TemplateSelector
+namespace FanfouUWP.TemplateSelector
 {
     public class TimelineTemplateSelector : DataTemplateSelector
     {

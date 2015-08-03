@@ -5,13 +5,13 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
-using FanfouWP2.Utils;
+using FanfouUWP.Common;
+using FanfouUWP.Utils;
 using Windows.UI.Input;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     可独立使用或用于导航至 Frame 内部的空白页。

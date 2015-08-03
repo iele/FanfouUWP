@@ -1,13 +1,15 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class WidthToStackCountConverter : IValueConverter
+    public sealed class RetweetToNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return 2;
+            if (value == null || value as string == "")
+                return "";
+            return "转自" + value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

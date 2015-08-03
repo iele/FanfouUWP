@@ -1,15 +1,13 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class BoolToFavoritedConverter : IValueConverter
+    public class ImageSourceToCacheWithWifiConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
-                return "";
-            return (bool) value ? "已收藏" : "";
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace FanfouWP2.Common
+namespace FanfouUWP.Common
 {
     /// <summary>
     ///     专门用于中继自身功能的命令

@@ -8,7 +8,7 @@ using Windows.Foundation;
 using Windows.System.Threading;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.Common
+namespace FanfouUWP.Common
 {
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {

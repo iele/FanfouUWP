@@ -5,15 +5,15 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.Utils;
-using FanfouWP2.UserPages;
+using FanfouUWP.Common;
+using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.Utils;
+using FanfouUWP.UserPages;
 using System.Threading;
 using Windows.UI.Popups;
-using FanfouWP2.ItemControl;
+using FanfouUWP.ItemControl;
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     public sealed partial class HomePage : Page
     {

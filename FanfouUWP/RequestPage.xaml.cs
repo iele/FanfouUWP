@@ -1,39 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using FanfouUWP.Common;
+using System.Linq;
 
 using FanfouUWP.FanfouAPI.Items;
-using FanfouUWP.Utils;
+using Windows.UI.Popups;
+using Windows.Foundation;
+using Windows.UI.Xaml.Media;
+using FanfouUWP.ItemControl;
 
 namespace FanfouUWP
 {
-    public sealed partial class FavoritePage : Page
+    public sealed partial class RequestPage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
 
+        private readonly PaginatedCollection<User> users = new PaginatedCollection<User>();
         private int page = 1;
-        private PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
-        private User user;
 
-        public FavoritePage()
+        public RequestPage()
         {
             InitializeComponent();
 
-            statuses.load = async (c) =>
+            users.load = async (c) =>
             {
                 try
                 {
                     var result =
-                        await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, ++page);
+                        await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, ++page);
                     if (result.Count == 0)
-                        statuses.HasMoreItems = false;
-                    StatusesReform.append(statuses, result);
+                        users.HasMoreItems = false;
+
+                    foreach (User i in result)
+                    {
+                        users.Add(i);
+                    }
+
                     return result.Count;
                 }
                 catch (Exception)
@@ -41,7 +48,7 @@ namespace FanfouUWP
                     return 0;
                 }
             };
-        
+
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
@@ -59,22 +66,14 @@ namespace FanfouUWP
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            defaultViewModel["statuses"] = statuses;
-            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
+            defaultViewModel["users"] = users;
 
-            try
+            page = 1;
+            var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
+            users.Clear();
+            foreach (User i in ss)
             {
-                page = 1;
-                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
-                statuses.Clear();
-                StatusesReform.append(statuses, ss);
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-
+                users.Add(i);
             }
         }
 
@@ -82,9 +81,20 @@ namespace FanfouUWP
         {
         }
 
-        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(StatusPage), Utils.DataConverter<Status>.Convert(e.ClickedItem as Status));
+            page = 1;
+            var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
+            users.Clear();
+            foreach (User i in ss)
+            {
+                users.Add(i);
+            }
+        }
+
+        private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert((e.ClickedItem as User)));
         }
 
         #region NavigationHelper 注册
@@ -116,12 +126,23 @@ namespace FanfouUWP
 
         #endregion
 
-        private async void RefreshItem_Click(object sender, RoutedEventArgs e)
+        private async void userGridView_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
-            page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
-            statuses.Clear();
-            StatusesReform.append(statuses, ss);
+            var menu = new PopupMenu();
+            menu.Commands.Add(new UICommand("接受请求", async (command) =>
+            {
+                var user = await FanfouAPI.FanfouAPI.Instance.FriendshipAccept(((sender as UserItemControl).DataContext as User).id);
+                users.Remove((from u in users where u.id == user.id select u).First());
+            }));
+            menu.Commands.Add(new UICommand("拒绝请求", async (command) =>
+            {
+                var user = await FanfouAPI.FanfouAPI.Instance.FriendshipDeny(((sender as UserItemControl).DataContext as User).id);
+                users.Remove((from u in users where u.id == user.id select u).First());
+            }));
+            var chosenCommand = await menu.ShowForSelectionAsync(Utils.MenuRect.GetElementRect((FrameworkElement)sender));
+            if (chosenCommand == null)
+            {
+            }
         }
     }
 }

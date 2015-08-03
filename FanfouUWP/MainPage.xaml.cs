@@ -3,14 +3,14 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-using FanfouWP2.Utils;
+using FanfouUWP.Utils;
 using Windows.UI.Xaml.Input;
-using FanfouWP2.FanfouAPI.Items;
-using FanfouWP2.Common;
+using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.Common;
 using Windows.UI.Core;
 using Windows.Foundation.Metadata;
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     public sealed partial class MainPage : Page
     {

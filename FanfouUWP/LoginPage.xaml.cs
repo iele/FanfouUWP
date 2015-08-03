@@ -4,13 +4,13 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 
-using FanfouWP2.Utils;
+using FanfouUWP.Utils;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234237 上有介绍
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     基本页，提供大多数应用程序通用的特性。

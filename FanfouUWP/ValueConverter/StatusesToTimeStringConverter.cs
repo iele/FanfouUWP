@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Data;
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
     public sealed class StatusesToTimeStringConverter : IValueConverter
     {

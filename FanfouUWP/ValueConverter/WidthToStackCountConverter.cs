@@ -1,16 +1,13 @@
 ﻿using System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class CountToVisibilityConverter : IValueConverter
+    public sealed class WidthToStackCountConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
-                return Visibility.Collapsed;
-            return (int.Parse(value as string)) > 0 ? Visibility.Visible : Visibility.Collapsed;
+            return 2;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

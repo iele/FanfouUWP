@@ -1,4 +1,4 @@
-﻿using FanfouWP2.CustomControl;
+﻿using FanfouUWP.CustomControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace FanfouWP2.Utils
+namespace FanfouUWP.Utils
 {
     public static class TitleBar
     {

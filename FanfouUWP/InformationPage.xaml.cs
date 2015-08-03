@@ -3,13 +3,13 @@ using Windows.ApplicationModel.Email;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.Common;
+using FanfouUWP.FanfouAPI.Items;
 using Windows.System;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
-namespace FanfouWP2
+namespace FanfouUWP
 {
     /// <summary>
     ///     可用于自身或导航至 Frame 内部的空白页。

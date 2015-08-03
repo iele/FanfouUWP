@@ -4,16 +4,16 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FanfouWP2.Common;
+using FanfouUWP.Common;
 using System.Linq;
 
-using FanfouWP2.FanfouAPI.Items;
+using FanfouUWP.FanfouAPI.Items;
 using Windows.UI.Popups;
 using Windows.Foundation;
 using Windows.UI.Xaml.Media;
-using FanfouWP2.ItemControl;
+using FanfouUWP.ItemControl;
 
-namespace FanfouWP2.UserPages
+namespace FanfouUWP
 {
     public sealed partial class BlockPage : Page
     {

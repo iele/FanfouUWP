@@ -1,13 +1,15 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace FanfouWP2.ItemControl.ValueConverter
+namespace FanfouUWP.ValueConverter
 {
-    public sealed class TextToReplyTextConverter : IValueConverter
+    public sealed class ReplyToNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return "回复给" + value + "的消息";
+            if (value == null || value as string == "")
+                return "";
+            return "回复" + value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
