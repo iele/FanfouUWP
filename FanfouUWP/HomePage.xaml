@@ -17,21 +17,9 @@
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
         </DataTemplate>
 
-        <DataTemplate x:Key="Refresh1ItemControl">
-            <ItemControl:RefreshItemControl DataContext="{Binding}" Margin="0,3"/>
-        </DataTemplate>
-
         <DataTemplate x:Key="MentionsItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="MentionsItemControl_RightTapped" />
         </DataTemplate>
-
-        <DataTemplate x:Key="Refresh2ItemControl">
-            <ItemControl:RefreshItemControl DataContext="{Binding}" Margin="0,3"/>
-        </DataTemplate>
-
-        <selector:TimelineTemplateSelector x:Key="StatusSelector" StatusTemplate="{StaticResource StatusItemControl}" RefreshTemplate="{StaticResource Refresh1ItemControl}"/>
-        <selector:TimelineTemplateSelector x:Key="MentionsSelector" StatusTemplate="{StaticResource MentionsItemControl}" RefreshTemplate="{StaticResource Refresh2ItemControl}"/>
-        <converter:WidthToStackCountConverter x:Key="WidthToStackCountConverter" />
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
@@ -55,15 +43,15 @@
             <PivotItem Header="我的消息" Margin="0">
                 <Grid>
                     <ListView x:Name="statusesGridView" 
-                        ItemsSource="{x:Bind statuses}" ItemTemplateSelector="{StaticResource StatusSelector}"
+                        ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}"
 						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
                     </ListView>
                 </Grid>
             </PivotItem>
             <PivotItem Header="提及我的" Margin="0">
                 <Grid>
-                    <ListView x:Name="mentionsGridView"
-						ItemsSource="{x:Bind mentions}" ItemTemplateSelector="{StaticResource MentionsSelector}" 
+                    <ListView x:Name="mentionsGridView" ItemTemplate="{StaticResource MentionsItemControl}"
+						ItemsSource="{x:Bind mentions}"
 						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
 
                     </ListView>

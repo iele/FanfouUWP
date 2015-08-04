@@ -386,12 +386,12 @@ namespace FanfouUWP.FanfouAPI
 
         #region user
 
-        public async Task<List<User>> UsersShow(string id)
+        public async Task<User> UsersShow(string id)
         {
             RestClient client = GetClient();
             var parameters = new Parameters();
             parameters.Add("id", id);
-            List<User> result = await client.GetRequestObjectCollection<User>(FanfouConsts.USERS_SHOW, parameters);
+            User result = await client.GetRequestObject<User>(FanfouConsts.USERS_SHOW, parameters);
             return result;
         }
 

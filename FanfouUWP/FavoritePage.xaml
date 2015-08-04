@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"  >
+    mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled" >
 
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
@@ -32,7 +32,7 @@
                            FontSize="18.667" Foreground="White" HorizontalAlignment="Left" />
            </StackPanel>
         <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="statusesGridView"
-                  ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
                   IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
     </Grid>
 </Page>

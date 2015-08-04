@@ -125,7 +125,7 @@ namespace FanfouUWP
                     }
                     catch
                     {
-                        var location = (await Utils.GeoLocator.Geocode(this.status.location)).Locations[0];
+                        var location = (await Utils.GeoLocator.geocode(this.status.location)).Locations[0];
                         this.Map.Center = location.Point;
 
                         this.Map.ZoomLevel = 12;
@@ -138,7 +138,7 @@ namespace FanfouUWP
                         Map.MapElements.Add(MapIcon);
 
                         Map.LandmarksVisible = true;
-                        Map.Visibility = Visibility.Visible;
+                        Map.Visibility = Visibility.Collapsed;
                     }
 
                 }
@@ -197,7 +197,7 @@ namespace FanfouUWP
 
             links.Children.Clear();
 
-            if (ts.Count == 0 && us.Count == 0 && hs.Count == 0)
+            if (ts.Count == 0 && hs.Count == 0) //&& us.Count == 0)
             {
                 more.Visibility = Visibility.Collapsed;
             }
@@ -257,54 +257,55 @@ namespace FanfouUWP
                     }
                 }
             }
-            if (us.Count != 0)
-            {
-                TextBlock t = new TextBlock()
-                {
-                    Text = "查看用户",
-                    FontSize = 16,
-                    Foreground = new SolidColorBrush(Colors.Gray),
-                    Margin = new Thickness(0, 6, 0, 6)                   
-                };
-                links.Children.Add(t);
-                foreach (var i in us)
-                {
-                    if (!i.ToString().Equals("@"))
-                    {
-                        try
-                        {
-                            Button b = new Button();
-                            b.IsEnabled = false;
-                            b.Margin = Margin = new Thickness(0, 6, 0, 6);
-                            b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
-                            b.Content = i.ToString();
-                            b.Click += async (s, a) =>
-                            {
-                                try
-                                {
-                                    var name = i.ToString();
-                                    var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(name.Substring(1, name.Length - 1), 2);
-                                    switch (ss.users.Count)
-                                    {
-                                        case 0:
-                                            Utils.ToastShow.ShowInformation("没有找到这个用户");
-                                            break;
-                                        case 1:
-                                            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(ss.users[0]));
-                                            break;
-                                        default:
-                                            Frame.Navigate(typeof(FindPage), name.Substring(1, name.Length - 1));
-                                            break;
-                                    }
-                                }
-                                catch { }
-                            };
-                            links.Children.Add(b);
-                        }
-                        finally { }
-                    }
-                }
-            }
+
+            //if (us.Count != 0)
+            //{
+            //    TextBlock t = new TextBlock()
+            //    {
+            //        Text = "查看用户",
+            //        FontSize = 16,
+            //        Foreground = new SolidColorBrush(Colors.Gray),
+            //        Margin = new Thickness(0, 6, 0, 6)
+            //    };
+            //    links.Children.Add(t);
+            //    foreach (var i in us)
+            //    {
+            //        if (!i.ToString().Equals("@"))
+            //        {
+            //            try
+            //            {
+            //                Button b = new Button();
+            //                b.IsEnabled = false;
+            //                b.Margin = Margin = new Thickness(0, 6, 0, 6);
+            //                b.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+            //                b.Content = i.ToString();
+            //                b.Click += async (s, a) =>
+            //                {
+            //                    try
+            //                    {
+            //                        var name = i.ToString();
+            //                        var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(name.Substring(1, name.Length - 1), 2);
+            //                        switch (ss.users.Count)
+            //                        {
+            //                            case 0:
+            //                                Utils.ToastShow.ShowInformation("没有找到这个用户");
+            //                                break;
+            //                            case 1:
+            //                                Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(ss.users[0]));
+            //                                break;
+            //                            default:
+            //                                Frame.Navigate(typeof(FindPage), name.Substring(1, name.Length - 1));
+            //                                break;
+            //                        }
+            //                    }
+            //                    catch { }
+            //                };
+            //                links.Children.Add(b);
+            //            }
+            //            finally { }
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>
@@ -439,6 +440,34 @@ namespace FanfouUWP
             DataRequest request = e.Request;
             request.Data.Properties.Title = "【来自饭否】";
             request.Data.SetText("@" + status.user.screen_name + ": " + status.text);
+        }
+
+        private async void Reply_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (status.in_reply_to_user_id != null && status.in_reply_to_user_id != "")
+            {
+                try
+                {
+                    Frame.Navigate(typeof(UserPage),
+                        Utils.DataConverter<User>.Convert(
+                            await FanfouAPI.FanfouAPI.Instance.UsersShow(status.in_reply_to_user_id)));
+                }
+                catch { }
+            }
+        }
+
+        private async void Repost_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (status.repost_user_id != null && status.repost_user_id != "")
+            {
+                try
+                {
+                    Frame.Navigate(typeof(UserPage),
+                        Utils.DataConverter<User>.Convert(
+                         await FanfouAPI.FanfouAPI.Instance.UsersShow(status.repost_user_id)));
+                }
+                catch { }
+            }
         }
     }
 }

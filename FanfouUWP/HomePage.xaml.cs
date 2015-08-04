@@ -25,7 +25,7 @@ namespace FanfouUWP
         public readonly PaginatedCollection<Status> statuses;
 
         private User currentUser = new User();
-        
+
         public HomePage()
         {
             InitializeComponent();
@@ -300,7 +300,8 @@ namespace FanfouUWP
             {
                 Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Reply).ToString() + Utils.DataConverter<Status>.Convert(status));
             }));
-            var chosenCommand = await menu.ShowForSelectionAsync(Utils.MenuRect.GetElementRect((FrameworkElement)sender));
+            var chosenCommand = await menu.ShowForSelectionAsync
+                (Utils.MenuRect.GetElementRect(e.GetPosition(App.RootFrame)));
             if (chosenCommand == null)
             {
             }
@@ -323,7 +324,8 @@ namespace FanfouUWP
             {
                 Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Reply).ToString() + Utils.DataConverter<Status>.Convert(status));
             }));
-            var chosenCommand = await menu.ShowForSelectionAsync(Utils.MenuRect.GetElementRect((FrameworkElement)sender));
+            var chosenCommand = await menu.ShowForSelectionAsync
+                 (Utils.MenuRect.GetElementRect(e.GetPosition(App.RootFrame)));
             if (chosenCommand == null)
             {
             }

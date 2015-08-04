@@ -18,5 +18,10 @@ namespace FanfouUWP.Utils
             Point point = buttonTransform.TransformPoint(new Point());
             return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
         }
+
+        public static Rect GetElementRect(Point p)
+        {
+            return new Rect(p, new Size(0, 0));
+        }
     }
 }

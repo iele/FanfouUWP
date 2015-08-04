@@ -12,7 +12,7 @@ namespace FanfouUWP.Utils
     {
         public static MatchCollection ParseURL(this string s)
         {
-            return Regex.Matches(s, @"(http(s)?://){1}([\w-]+\.)+[\w-]+(/\S\w[\w- ;,./?%&=]\S*)?");
+            return Regex.Matches(s, @"(http(s)?://){1}([\w-]+\.)+[\w-]+(/\w[\w- ;,./?%&=]*)?");
         }
         public static MatchCollection ParseUsername(this string s)
         {

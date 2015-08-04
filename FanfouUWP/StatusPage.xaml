@@ -118,16 +118,16 @@
         						VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0"
         						HorizontalAlignment="Left" />
                         <TextBlock Padding="5,5,0,0"
-        						Text="{Binding status.Source, Converter={StaticResource SourceToTextConverter}}"
+        						Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" />
                         <TextBlock Padding="5,5,0,0"
         						Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
-        						Visibility="{Binding in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+        						Visibility="{Binding in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}" Tapped="Reply_Tapped"/>
                         <TextBlock Padding="5,5,0,0"
         						Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
-        						Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" />
+        						Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" Tapped="Repost_Tapped"/>
                         <TextBlock Padding="5,5,0,0"
         						Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"

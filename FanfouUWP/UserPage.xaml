@@ -12,9 +12,7 @@
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
-            <ItemControl:StatusItemControl DataContext="{Binding}"
-                                          
-                                           Margin="0,3" />
+            <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
@@ -37,7 +35,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-         <Rectangle Fill="DeepSkyBlue" Margin="0,0,0,0" Stroke="DeepSkyBlue" />
+        <Rectangle Fill="DeepSkyBlue" Margin="0,0,0,0" Stroke="DeepSkyBlue" />
         <StackPanel Orientation="Horizontal" Margin="12,12,12,12">
             <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
                   Source="{Binding  user.profile_image_url}" Margin="0" />

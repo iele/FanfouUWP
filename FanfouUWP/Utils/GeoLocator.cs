@@ -28,7 +28,7 @@ namespace FanfouUWP.Utils
             }
         }
 
-        public static async Task<string> getGeolocator()
+        public static async Task<string> geolocator()
         {
             var loc = await locator();
             if (loc != null)
@@ -37,7 +37,7 @@ namespace FanfouUWP.Utils
                 return "";
         }
 
-        public static async Task<MapLocationFinderResult> Geocode(string location)
+        public static async Task<MapLocationFinderResult> geocode(string location)
         {
             BasicGeoposition queryHint = new BasicGeoposition();
             var loc = await locator();

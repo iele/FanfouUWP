@@ -121,7 +121,7 @@ namespace FanfouUWP
 
         private async void getLocation()
         {
-            location = await Utils.GeoLocator.getGeolocator();
+            location = await Utils.GeoLocator.geolocator();
             if (location == "")
             {
                 this.locationText.Visibility = Visibility.Collapsed;

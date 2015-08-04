@@ -22,27 +22,15 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="RequestItem" Label="好友请求管理" Click="RequestItem_Click" />
                 <AppBarButton x:Name="BlackItem" Label="黑名单管理" Click="BlackItem_Click" />
-              </CommandBar.SecondaryCommands>
+            </CommandBar.SecondaryCommands>
             <AppBarButton  Icon="AllApps" x:Name="StatusItem" Label="消息" Click="StatusItem_Click" />
             <AppBarButton Label="搜索" Icon="Zoom" x:Name="SearchItem" Click="SearchItem_Click" />
-                   <AppBarButton x:Name="ImageItem" Icon="Pictures" Label="查看图片流" Click="ImageItem_Click" />
-         <AppBarButton x:Name="ProfileItem" Icon="Edit" Label="更新简介" Click="ProfileItem_Click" />
+            <AppBarButton x:Name="ImageItem" Icon="Pictures" Label="查看图片流" Click="ImageItem_Click" />
+            <AppBarButton x:Name="ProfileItem" Icon="Edit" Label="更新简介" Click="ProfileItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid x:Name="LayoutRoot" Background="white">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <Rectangle Fill="DeepSkyBlue" Margin="0,0,0,0" Stroke="DeepSkyBlue" />
-        <StackPanel Orientation="Horizontal" Margin="12,12,12,12">
-            <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
-                  Source="{Binding  user.profile_image_url}" Margin="0" />
-            <TextBlock Text="{Binding  user.screen_name}" FontSize="21.333" VerticalAlignment="Center"
-                       Foreground="White" Margin="12,0,0,0" HorizontalAlignment="Center" />
-        </StackPanel>
         <ScrollViewer Margin="0" Grid.Row="1" HorizontalContentAlignment="Center">
             <StackPanel Margin="12,12,12,0">
                 <GridView>
