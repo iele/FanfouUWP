@@ -31,7 +31,7 @@
         <StackPanel Margin="12,0" Orientation="Vertical">
             <TextBlock x:Name="title" TextWrapping="Wrap" Foreground="White" FontSize="18.667" Margin="0,12,0,0" />
             <TextBox x:Name="search" Margin="0,6,-0.167,12" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
-                         InputScope="Search" PlaceholderText="键入以搜索消息" />
+                         InputScope="Search" PlaceholderText="键入以搜索消息" KeyDown="search_KeyDown" />
         </StackPanel>
         <ListView ShowsScrollingPlaceholders="True" Margin="0,0,0,0" x:Name="statusesGridView"
                   ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"

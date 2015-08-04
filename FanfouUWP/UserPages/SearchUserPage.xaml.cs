@@ -9,6 +9,7 @@ using System.Linq;
 
 using FanfouUWP.FanfouAPI.Items;
 using FanfouUWP.Utils;
+using Windows.System;
 
 namespace FanfouUWP.UserPages
 {
@@ -58,7 +59,6 @@ namespace FanfouUWP.UserPages
         {
             defaultViewModel["statuses"] = statuses;
 
-
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
             title.Text = "搜索 " + user.screen_name + " 的时间线";
         }
@@ -69,10 +69,7 @@ namespace FanfouUWP.UserPages
 
         private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-
             var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
-
-
             statuses.Clear();
             StatusesReform.append(statuses, ss);
             defaultViewModel["date"] = DateTime.Now.ToString();
@@ -108,6 +105,17 @@ namespace FanfouUWP.UserPages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
+        }
+
+        private async void search_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
+                statuses.Clear();
+                StatusesReform.append(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
         }
 
         #endregion

@@ -22,9 +22,18 @@ namespace FanfouUWP
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        private string username { get; set; } = FanfouAPI.FanfouAPI.Instance.currentUser.screen_name;
+
         public SettingsPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Utils.SettingStorage.Instance.currentUser = null;
+            Utils.NavigationControl.ClearStack(App.RootFrame);
+            App.RootFrame.Navigate(typeof(LoginPage));
         }
     }
 }

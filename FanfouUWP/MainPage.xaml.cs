@@ -158,5 +158,10 @@ namespace FanfouUWP
         {
             ScenarioFrame.Navigate(typeof(SelfPage));
         }
+
+        private void SettingButton_Click(object sender, TappedRoutedEventArgs e)
+        {
+            ScenarioFrame.Navigate(typeof(SettingsPage));
+        }
     }
 }
