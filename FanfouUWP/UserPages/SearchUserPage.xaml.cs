@@ -19,7 +19,7 @@ namespace FanfouUWP.UserPages
         private readonly NavigationHelper navigationHelper;
 
         private PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
-        private User user;
+        private FanfouAPI.Items.User user;
 
         public SearchUserPage()
         {
@@ -59,7 +59,7 @@ namespace FanfouUWP.UserPages
         {
             defaultViewModel["statuses"] = statuses;
 
-            user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
+            user = Utils.DataConverter<FanfouAPI.Items.User>.Convert(e.NavigationParameter as string);
             title.Text = "搜索 " + user.screen_name + " 的时间线";
         }
 
