@@ -25,7 +25,6 @@ namespace FanfouUWP
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
 
-            // If on a phone device that has hardware buttons then we hide the app's back button.
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, e) =>
@@ -41,6 +40,7 @@ namespace FanfouUWP
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
                 this.Back.Visibility = Visibility.Collapsed;
+                this.Title.Visibility = Visibility.Visible;
             }
 
             isLoading.PropertyChanged += IsLoading_PropertyChanged;
@@ -162,6 +162,11 @@ namespace FanfouUWP
         private void SettingButton_Click(object sender, TappedRoutedEventArgs e)
         {
             ScenarioFrame.Navigate(typeof(SettingsPage));
+        }
+
+        private void menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Splitter.IsPaneOpen = false;
         }
     }
 }

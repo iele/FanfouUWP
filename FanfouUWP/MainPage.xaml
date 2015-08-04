@@ -61,7 +61,7 @@
             </ToggleButton>
             <SplitView x:Name="Splitter" DisplayMode="CompactOverlay" Grid.Row="1" Grid.RowSpan="1" OpenPaneLength="315" CompactPaneLength="48" Grid.ColumnSpan="2">
                 <SplitView.Pane>
-                    <ListView Canvas.ZIndex="10" x:Name="menu" Margin="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto">
+                    <ListView Canvas.ZIndex="10" x:Name="menu" Margin="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="menu_SelectionChanged">
                         <ListViewItem Tapped="SelfGrid_Tapped">
                             <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
                                 <Ellipse Margin="0,0,0,0" Stroke="White" Width="32" Height="32">
@@ -148,6 +148,7 @@
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0D5;" Margin="0" HorizontalAlignment="Stretch"
             		VerticalAlignment="Center"/>
                 </Button>
+                <TextBlock x:Name="Title" Text="饭窗UWP" Grid.Column="0" Visibility="Collapsed" VerticalAlignment="Center" Margin="6,0,0,0"/>
                 <ProgressRing x:Name="loading" Grid.Column="3" Margin="6,3" Foreground="White"></ProgressRing>
 
                 <Button Click="SearchGrid_Click"  VerticalAlignment="Stretch" Width="48" Margin="0,0,0,0" Grid.Column="5">
