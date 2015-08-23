@@ -40,8 +40,7 @@ namespace FanfouUWP
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             defaultViewModel["statuses"] = statuses;
-
-            
+                        
             try
             {
                 var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline("饭窗公告", "fanwp");
@@ -51,10 +50,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-            }
-            finally
-            {
-                
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
 

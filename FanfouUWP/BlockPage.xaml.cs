@@ -45,6 +45,7 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                     return 0;
                 }
             };
@@ -71,12 +72,20 @@ namespace FanfouUWP
             title.Text = "黑名单列表";
 
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.BlocksBlocking(60, page);
-            users.Clear();
-            foreach (User i in ss)
+            try
             {
-                users.Add(i);
+                var ss = await FanfouAPI.FanfouAPI.Instance.BlocksBlocking(60, page);
+                users.Clear();
+                foreach (User i in ss)
+                {
+                    users.Add(i);
+                }
             }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
+
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -86,11 +95,18 @@ namespace FanfouUWP
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.BlocksBlocking(60, page);
-            users.Clear();
-            foreach (User i in ss)
+            try
             {
-                users.Add(i);
+                var ss = await FanfouAPI.FanfouAPI.Instance.BlocksBlocking(60, page);
+                users.Clear();
+                foreach (User i in ss)
+                {
+                    users.Add(i);
+                }
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
 
@@ -133,8 +149,15 @@ namespace FanfouUWP
             var menu = new PopupMenu();
             menu.Commands.Add(new UICommand("取消黑名单", async (command) =>
             {
-                var user = await FanfouAPI.FanfouAPI.Instance.BlockDestroy(((sender as UserItemControl).DataContext as User).id);
-                users.Remove((from u in users where u.id == user.id select u).First());
+                try
+                {
+                    var user = await FanfouAPI.FanfouAPI.Instance.BlockDestroy(((sender as UserItemControl).DataContext as User).id);
+                    users.Remove((from u in users where u.id == user.id select u).First());
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }));
             var chosenCommand = await menu.ShowForSelectionAsync(Utils.MenuRect.GetElementRect((FrameworkElement)sender));
             if (chosenCommand == null)

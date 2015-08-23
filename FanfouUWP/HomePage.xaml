@@ -11,7 +11,7 @@
     xmlns:utils="using:FanfouUWP.Utils"
     x:Class="FanfouUWP.HomePage"
     mc:Ignorable="d" RequestedTheme="Light" Width="Auto" Height="Auto"
-    NavigationCacheMode="Required"  >
+    NavigationCacheMode="Required">
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
@@ -25,7 +25,6 @@
         <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click" />
-                <AppBarButton Label="设置" />
             </CommandBar.SecondaryCommands>
             <AppBarButton Label="刷新" Icon="Refresh" x:Name="RefreshItem" Click="RefreshItem_Click" />
             <AppBarButton Label="回到最前" Icon="Up" x:Name="UpItem" Click="UpItem_Click" />

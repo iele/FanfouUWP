@@ -28,11 +28,18 @@ namespace FanfouUWP
             {
                 if (statuses.Count > 0)
                 {
-                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, c, max_id: this.statuses.Last().id);
-                    if (list.Count == 0)
-                        statuses.HasMoreItems = false;
-                    Utils.StatusesReform.append(statuses, list);
-                    return list.Count;
+                    try
+                    {
+                        var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, c, max_id: this.statuses.Last().id);
+                        if (list.Count == 0)
+                            statuses.HasMoreItems = false;
+                        Utils.StatusesReform.append(statuses, list);
+                        return list.Count;
+                    }
+                    catch (Exception)
+                    {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                    }
                 }
                 return 0;
             };
@@ -67,9 +74,16 @@ namespace FanfouUWP
                 {
                     search.Text = e.NavigationParameter as string;
                 }
-                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
-                statuses.Clear();
-                Utils.StatusesReform.append(statuses, list);
+                try
+                {
+                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+                    statuses.Clear();
+                    Utils.StatusesReform.append(statuses, list);
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }
         }
 
@@ -79,9 +93,16 @@ namespace FanfouUWP
 
         private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
-            statuses.Clear();
-            Utils.StatusesReform.append(statuses, list);
+            try
+            {
+                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+                statuses.Clear();
+                Utils.StatusesReform.append(statuses, list);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -120,10 +141,19 @@ namespace FanfouUWP
 
         private async void search_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if (e.Key == VirtualKey.Enter) {
-                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
-                statuses.Clear();
-                Utils.StatusesReform.append(statuses, list);
+            if (e.Key == VirtualKey.Enter)
+            {
+                try
+                {
+                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+                    statuses.Clear();
+                    Utils.StatusesReform.append(statuses, list);
+                }
+
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }
         }
     }

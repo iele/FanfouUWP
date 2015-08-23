@@ -28,13 +28,20 @@ namespace FanfouUWP.UserPages
             {
                 if (statuses.Count > 0)
                 {
-                    
-                    var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, c, max_id: statuses.Last().id);
-                    
-                    if (list.Count == 0)
-                        statuses.HasMoreItems = false; 
-                    Utils.StatusesReform.append(statuses, list);
-                    return list.Count;
+                    try
+                    {
+                        var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, c, max_id: statuses.Last().id);
+
+                        if (list.Count == 0)
+                            statuses.HasMoreItems = false;
+                        Utils.StatusesReform.append(statuses, list);
+                        return list.Count;
+                    }
+                    catch (Exception)
+                    {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                        return 0;
+                    }
                 }
                 return 0;
             };
@@ -60,10 +67,16 @@ namespace FanfouUWP.UserPages
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
 
             title.Text = user.screen_name + "的图片";
-            
-            var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
-            
-            Utils.StatusesReform.append(statuses, list);
+            try
+            {
+                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+
+                Utils.StatusesReform.append(statuses, list);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -72,10 +85,16 @@ namespace FanfouUWP.UserPages
 
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
-            
-            var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
-            
-            Utils.StatusesReform.append(statuses, list);
+            try
+            {
+                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+
+                Utils.StatusesReform.append(statuses, list);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)

@@ -135,7 +135,7 @@
                     </StackPanel>
                     <Image x:Name="image" Tapped="Image_Tapped" Margin="12,6,12,12" VerticalAlignment="Top"
         					Source="{Binding status.photo.largeurl}" Grid.Row="2" Stretch="Uniform"  HorizontalAlignment="Left"/>
-                    <Maps:MapControl x:Name="Map" Margin="12,6,12,12" Grid.Row="3" Height="600" Visibility="Collapsed" HorizontalAlignment="Left" MapServiceToken="P3dltpg7K4yR4K64mKwt~HwVbcy7A-QIlutVLg1_6Fw~AqciCGUFhoLbX2byK6zpUfYz5oo6TFoXndQMZ_KPYIy73Dw20SR8gdO_QXGcSwdD
+                    <Maps:MapControl x:Name="Map" Style="Aerial3DWithRoads" Margin="12,6,12,12" Grid.Row="3" Height="600" Visibility="Collapsed" HorizontalAlignment="Left" MapServiceToken="P3dltpg7K4yR4K64mKwt~HwVbcy7A-QIlutVLg1_6Fw~AqciCGUFhoLbX2byK6zpUfYz5oo6TFoXndQMZ_KPYIy73Dw20SR8gdO_QXGcSwdD
 "/>
                 </Grid>
                 <StackPanel x:Name="context" Margin="12,0,12,12" VerticalAlignment="Top" Background="White"

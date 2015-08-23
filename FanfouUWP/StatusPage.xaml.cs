@@ -181,6 +181,7 @@ namespace FanfouUWP
                 catch (Exception)
                 {
 
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                 }
             }
             else
@@ -308,16 +309,6 @@ namespace FanfouUWP
             //}
         }
 
-        /// <summary>
-        ///     保留与此页关联的状态，以防挂起应用程序或
-        ///     从导航缓存中放弃此页。值必须符合
-        ///     <see cref="SuspensionManager.SessionState" /> 的序列化要求。
-        /// </summary>
-        /// <param name="sender">事件的来源；通常为 <see cref="NavigationHelper" /></param>
-        /// <param name="e">
-        ///     提供要使用可序列化状态填充的空字典
-        ///     的事件数据。
-        /// </param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
@@ -452,7 +443,11 @@ namespace FanfouUWP
                         Utils.DataConverter<User>.Convert(
                             await FanfouAPI.FanfouAPI.Instance.UsersShow(status.in_reply_to_user_id)));
                 }
-                catch { }
+
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }
         }
 
@@ -466,7 +461,11 @@ namespace FanfouUWP
                         Utils.DataConverter<User>.Convert(
                          await FanfouAPI.FanfouAPI.Instance.UsersShow(status.repost_user_id)));
                 }
-                catch { }
+
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }
         }
     }

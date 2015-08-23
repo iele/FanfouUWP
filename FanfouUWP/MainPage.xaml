@@ -13,6 +13,13 @@
     <Page.Resources>
         <ValueConverter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <ValueConverter:BoolReverseToVisibilityConverter x:Key="BoolReverseToVisibilityConverter"/>
+
+        <Storyboard x:Name="InfromationShowStoryBoard" Completed="InfromationStoryBoard_Completed">
+            <DoubleAnimation Storyboard.TargetName="InformationTransform" Storyboard.TargetProperty="ScaleY" From="0"  To="1" Duration="0:0:0.5"/>
+        </Storyboard>
+        <Storyboard x:Name="InfromationDisappearStoryBoard" Completed="InfromationDisappearStoryBoard_Completed">
+            <DoubleAnimation Storyboard.TargetName="InformationTransform" Storyboard.TargetProperty="ScaleY" To="0" BeginTime="0:0:3" Duration="0:0:0.5"/>
+        </Storyboard>
     </Page.Resources>
 
     <Grid>
@@ -25,8 +32,6 @@
                     <VisualState.Setters>
                         <Setter Value="CompactOverlay" Target="Splitter.DisplayMode" >
                         </Setter>
-                        <Setter Value="48" Target="GridRow1.Height" >
-                        </Setter>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="narrowState">
@@ -35,8 +40,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Value="Overlay" Target="Splitter.DisplayMode">
-                        </Setter>
-                        <Setter Value="32" Target="GridRow1.Height" >
                         </Setter>
                     </VisualState.Setters>
                 </VisualState>
@@ -52,7 +55,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="32"  x:Name="GridRow1"/>
+                <RowDefinition Height="48" x:Name="GridRow1"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
@@ -107,13 +110,6 @@
                                 <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="找人" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem Tapped="SettingButton_Click" >
-                            <StackPanel Orientation="Horizontal">
-                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Setting"
-									VerticalAlignment="Center"/>
-                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="设置" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </ListViewItem>
                         <ListViewItem Tapped="InformationButton_Click">
                             <StackPanel Orientation="Horizontal"  >
                                 <SymbolIcon HorizontalAlignment="Stretch" Symbol="Caption"
@@ -132,14 +128,53 @@
                         </ListViewItem>
                     </ListView>
                 </SplitView.Pane>
-                <Frame x:Name="ScenarioFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Background="White"/>
+                <SplitView x:Name="MenuSplitter" DisplayMode="Overlay" PanePlacement="Right">
+                    <SplitView.Pane>
+                        <ScrollViewer RequestedTheme="Light" Width="641"  Background="LightGray" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <StackPanel Grid.Row="0" Margin="12,0,12,0">
+                                <StackPanel Grid.Row="0" Margin="0,12,0,12">
+                                    <TextBlock FontSize="18">
+                                            <Run>当前用户</Run>
+                                            <Run Text="{x:Bind currentUser.screen_name}" />
+                                    </TextBlock>
+                                    <Button Content="注销" Margin="0,6,0,0" Click="Logout_Click"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Margin="0,12,0,12">
+                                    <TextBlock Text="加载消息数量" FontSize="18"/>
+                                    <ComboBox Margin="0,8,0,8">
+                                        <ComboBoxItem Content="20" />
+                                        <ComboBoxItem Content="30" />
+                                        <ComboBoxItem Content="40" />
+                                        <ComboBoxItem Content="50" />
+                                        <ComboBoxItem Content="60" />
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Margin="0,12,0,12">
+                                    <TextBlock Text="消息列表显示图片" FontSize="18"/>
+                                    <ToggleSwitch />
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Margin="0,12,0,12">
+                                    <TextBlock Text="发送消息时加入地理坐标" FontSize="18"/>
+                                    <ToggleSwitch />
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Margin="0,12,0,12">
+                                    <TextBlock Text="是否显示地图" FontSize="18"/>
+                                    <ToggleSwitch />
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Height="64">
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </SplitView.Pane>
+                    <Frame x:Name="ScenarioFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Background="White">
+                    </Frame>
+                </SplitView>
             </SplitView>
             <Grid Margin="0" Background="DeepSkyBlue" Grid.Column="1" Grid.ColumnSpan="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -148,17 +183,22 @@
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0D5;" Margin="0" HorizontalAlignment="Stretch"
             		VerticalAlignment="Center"/>
                 </Button>
-                <TextBlock x:Name="Title" Text="饭窗UWP" Grid.Column="0" Visibility="Collapsed" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                <StackPanel x:Name="InformationStackPanel" Background="DeepSkyBlue" Grid.Column="1" Grid.ColumnSpan="5" Canvas.ZIndex="100" VerticalAlignment="Center">
+                    <StackPanel.RenderTransform>
+                        <CompositeTransform x:Name="InformationTransform" ScaleY="0"></CompositeTransform>
+                    </StackPanel.RenderTransform>
+                    <TextBlock x:Name="Information" Text="" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="6,0,12,0" FontSize="18"/>
+                </StackPanel>
                 <ProgressRing x:Name="loading" Grid.Column="3" Margin="6,3" Foreground="White"></ProgressRing>
-
-                <Button Click="SearchGrid_Click"  VerticalAlignment="Stretch" Width="48" Margin="0,0,0,0" Grid.Column="5">
-                    <SymbolIcon HorizontalAlignment="Stretch" Symbol="Find"
-            		VerticalAlignment="Center"  />
-                </Button>
-                <Button Click="SendGrid_Click"  VerticalAlignment="Stretch" Width="48" Margin="3,0,0,0" Grid.Column="6">
-                    <SymbolIcon HorizontalAlignment="Stretch" Symbol="Edit"
-            		VerticalAlignment="Center"  />
-                </Button>
+                <CommandBar  Grid.Column="4" Background="DeepSkyBlue" >
+                    <AppBarButton Click="SearchGrid_Click" Icon="Find">
+                    </AppBarButton>
+                    <AppBarButton Click="SendGrid_Click" Icon="Edit">
+                    </AppBarButton>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Click="SettingButton_Click" Label="设置" />
+                    </CommandBar.SecondaryCommands>
+                </CommandBar>
             </Grid>
         </Grid>
     </Grid>

@@ -8,7 +8,7 @@
     xmlns:utils="using:FanfouUWP.Utils"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"  >
+    mc:Ignorable="d" RequestedTheme="Light"  >
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}"

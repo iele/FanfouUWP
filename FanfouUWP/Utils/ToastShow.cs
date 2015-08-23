@@ -6,6 +6,8 @@ namespace FanfouUWP.Utils
 {
     public static class ToastShow
     {
+        public static MainPage currentMainPage { set; get; }
+
         public static void ShowToast(string title, string content)
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
@@ -18,17 +20,17 @@ namespace FanfouUWP.Utils
             ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
 
-        public static void ShowInformation(string content, Action end)
-        {
-            ShowToast("饭窗UWP", content);
-            end();
-        }
-
         public static void ShowInformation(string content)
         {
-            ShowInformation(content, () => { });
+            if (currentMainPage != null)
+            {
+                currentMainPage.showInformation(content);
+            }
+            else
+            {
+                ShowToast("饭窗UWP", content);
+            }
         }
-
     }
 }
 

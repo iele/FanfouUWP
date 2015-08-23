@@ -74,13 +74,20 @@ namespace FanfouUWP
 
             checkFriendship();
 
-            tags.Clear();
-            var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
-            foreach (var item in list)
-                tags.Add(item);
+            try
+            {
+                tags.Clear();
+                var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
+                foreach (var item in list)
+                    tags.Add(item);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
-        private async void checkFriendship()
+        private void checkFriendship()
         {
             if (user.following)
             {
@@ -187,19 +194,34 @@ namespace FanfouUWP
 
         private async void FriendItem_Click(object sender, RoutedEventArgs e)
         {
-            if (user.following)
-                user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.FriendshipDestroy(this.user.id);
-            else
-                user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.FriendshipCreate(this.user.id);
-            defaultViewModel["user"] = user;
-            checkFriendship();
+            try
+            {
+                if (user.following)
+                    user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.FriendshipDestroy(this.user.id);
+                else
+                    user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.FriendshipCreate(this.user.id);
+                defaultViewModel["user"] = user;
+                checkFriendship();
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private async void BlackListItem_Click(object sender, RoutedEventArgs e)
         {
-            user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.BlockCreate(this.user.id);
-            defaultViewModel["user"] = user;
-            ToastShow.ShowInformation("已经将@" + user.screen_name + "加入黑名单,若解锁请在个人页面完成");
+            try
+            {
+                user = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.BlockCreate(this.user.id);
+                defaultViewModel["user"] = user;
+                ToastShow.ShowInformation("已经将@" + user.screen_name + "加入黑名单,若解锁请在个人页面完成");
+
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
     }
 }

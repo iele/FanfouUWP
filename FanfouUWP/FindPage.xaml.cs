@@ -37,6 +37,7 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                     return 0;
                 }
             };
@@ -78,7 +79,10 @@ namespace FanfouUWP
                     }
                 }
             }
-            catch { }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
@@ -88,15 +92,23 @@ namespace FanfouUWP
         private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
-            users.Clear();
-            if (ss.users != null)
+            try
             {
-                foreach (User i in ss.users)
+                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+                users.Clear();
+                if (ss.users != null)
                 {
-                    users.Add(i);
+                    foreach (User i in ss.users)
+                    {
+                        users.Add(i);
+                    }
                 }
             }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
+
         }
 
         private void userGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -136,14 +148,21 @@ namespace FanfouUWP
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 page = 1;
-                var list = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
-                users.Clear();
-                if (list.users != null)
+                try
                 {
-                    foreach (User i in list.users)
+                    var list = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+                    users.Clear();
+                    if (list.users != null)
                     {
-                        users.Add(i);
+                        foreach (User i in list.users)
+                        {
+                            users.Add(i);
+                        }
                     }
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                 }
             }
         }

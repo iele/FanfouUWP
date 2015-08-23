@@ -45,8 +45,9 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
-                    return 0;
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                 }
+                return 0;
             };
 
             navigationHelper = new NavigationHelper(this);
@@ -69,11 +70,19 @@ namespace FanfouUWP
             defaultViewModel["users"] = users;
 
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
-            users.Clear();
-            foreach (User i in ss)
+
+            try
             {
-                users.Add(i);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
+                users.Clear();
+                foreach (User i in ss)
+                {
+                    users.Add(i);
+                }
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
 
@@ -84,11 +93,18 @@ namespace FanfouUWP
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
-            users.Clear();
-            foreach (User i in ss)
+            try
             {
-                users.Add(i);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
+                users.Clear();
+                foreach (User i in ss)
+                {
+                    users.Add(i);
+                }
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
 
@@ -131,13 +147,27 @@ namespace FanfouUWP
             var menu = new PopupMenu();
             menu.Commands.Add(new UICommand("接受请求", async (command) =>
             {
-                var user = await FanfouAPI.FanfouAPI.Instance.FriendshipAccept(((sender as UserItemControl).DataContext as User).id);
-                users.Remove((from u in users where u.id == user.id select u).First());
+                try
+                {
+                    var user = await FanfouAPI.FanfouAPI.Instance.FriendshipAccept(((sender as UserItemControl).DataContext as User).id);
+                    users.Remove((from u in users where u.id == user.id select u).First());
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }));
             menu.Commands.Add(new UICommand("拒绝请求", async (command) =>
             {
-                var user = await FanfouAPI.FanfouAPI.Instance.FriendshipDeny(((sender as UserItemControl).DataContext as User).id);
-                users.Remove((from u in users where u.id == user.id select u).First());
+                try
+                {
+                    var user = await FanfouAPI.FanfouAPI.Instance.FriendshipDeny(((sender as UserItemControl).DataContext as User).id);
+                    users.Remove((from u in users where u.id == user.id select u).First());
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }));
             var chosenCommand = await menu.ShowForSelectionAsync(Utils.MenuRect.GetElementRect((FrameworkElement)sender));
             if (chosenCommand == null)

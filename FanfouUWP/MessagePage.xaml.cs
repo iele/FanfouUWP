@@ -45,7 +45,7 @@ namespace FanfouUWP
             id = e.NavigationParameter as string;
             defaultViewModel["messages"] = messages;
 
-            
+
             try
             {
                 var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesConversation(id);
@@ -60,10 +60,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-            }
-            finally
-            {
-                
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
 
@@ -104,7 +101,7 @@ namespace FanfouUWP
         {
             try
             {
-                
+
                 var ss = await FanfouAPI.FanfouAPI.Instance.DirectMessagesNew(id, text.Text);
                 messages.Add(ss);
                 if (messages.Count != 0)
@@ -113,10 +110,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-            }
-            finally
-            {
-                
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
     }

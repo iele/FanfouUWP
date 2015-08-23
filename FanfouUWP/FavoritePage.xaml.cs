@@ -38,10 +38,11 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                     return 0;
                 }
             };
-        
+
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
@@ -71,10 +72,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-            }
-            finally
-            {
-
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
 
@@ -119,9 +117,16 @@ namespace FanfouUWP
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
-            statuses.Clear();
-            StatusesReform.append(statuses, ss);
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
+                statuses.Clear();
+                StatusesReform.append(statuses, ss);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
     }
 }

@@ -43,6 +43,7 @@ namespace FanfouUWP.UserPages
                 }
                 catch (Exception)
                 {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                     return 0;
                 }
             };
@@ -71,12 +72,18 @@ namespace FanfouUWP.UserPages
             title.Text = user.screen_name + "的听众";
 
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, page);
+            try {
+                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, page);
 
-            users.Clear();
-            foreach (User i in ss)
+                users.Clear();
+                foreach (User i in ss)
+                {
+                    users.Add(i);
+                }
+            }
+            catch (Exception)
             {
-                users.Add(i);
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
             defaultViewModel["date"] = DateTime.Now.ToString();
         }
@@ -88,14 +95,21 @@ namespace FanfouUWP.UserPages
         private async void RefreshItem_Click(object sender, RoutedEventArgs e)
         {
             page = 1;
-            var ss = await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, page);
-
-            users.Clear();
-            foreach (User i in ss)
+            try
             {
-                users.Add(i);
+                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, page);
+
+                users.Clear();
+                foreach (User i in ss)
+                {
+                    users.Add(i);
+                }
+                defaultViewModel["date"] = DateTime.Now.ToString();
             }
-            defaultViewModel["date"] = DateTime.Now.ToString();
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private void usersGridView_ItemClick(object sender, ItemClickEventArgs e)

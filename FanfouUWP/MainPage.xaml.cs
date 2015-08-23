@@ -40,12 +40,24 @@ namespace FanfouUWP
             if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
                 this.Back.Visibility = Visibility.Collapsed;
-                this.Title.Visibility = Visibility.Visible;
             }
+
+            ToastShow.currentMainPage = this;
 
             isLoading.PropertyChanged += IsLoading_PropertyChanged;
 
             Loaded += MainPage_Loaded;
+        }
+
+        public async void showInformation(string msg)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                this.Information.Text = msg;
+                this.InformationTransform.ScaleY = 0;
+                this.InformationStackPanel.Visibility = Visibility.Visible;
+                this.InfromationShowStoryBoard.Begin();
+            });
         }
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
@@ -87,11 +99,9 @@ namespace FanfouUWP
             ScenarioFrame.Navigate(typeof(SelfPage), Utils.DataConverter<User>.Convert(currentUser));
         }
 
-
-
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MenuSplitter.IsPaneOpen = true;
         }
 
         private void DirectGrid_Tapped(object sender, RoutedEventArgs e)
@@ -102,14 +112,6 @@ namespace FanfouUWP
         private void ScenarioFrame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
         }
-
-        /// <summary>
-        ///     Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">
-        ///     Event data that describes how this page was reached.  The Parameter
-        ///     property is typically used to configure the page.
-        /// </param>
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -159,14 +161,26 @@ namespace FanfouUWP
             ScenarioFrame.Navigate(typeof(SelfPage));
         }
 
-        private void SettingButton_Click(object sender, TappedRoutedEventArgs e)
-        {
-            ScenarioFrame.Navigate(typeof(SettingsPage));
-        }
-
         private void menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Splitter.IsPaneOpen = false;
+        }
+
+        private void InfromationStoryBoard_Completed(object sender, object e)
+        {
+            InfromationDisappearStoryBoard.Begin();
+        }
+
+        private void InfromationDisappearStoryBoard_Completed(object sender, object e)
+        {
+            this.InformationStackPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            Utils.SettingStorage.Instance.currentUser = null;
+            Utils.NavigationControl.ClearStack(App.RootFrame);
+            App.RootFrame.Navigate(typeof(LoginPage));
         }
     }
 }

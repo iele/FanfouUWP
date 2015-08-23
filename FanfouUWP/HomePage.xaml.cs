@@ -48,6 +48,7 @@ namespace FanfouUWP
                     }
                     catch (Exception)
                     {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                         return 0;
                     }
                 }
@@ -68,6 +69,7 @@ namespace FanfouUWP
                     }
                     catch (Exception)
                     {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                         return 0;
                     }
                 }
@@ -95,6 +97,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
 
             try
@@ -104,6 +107,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
 
             var t = new Timer((p) =>
@@ -161,7 +165,9 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
+
 
             try
             {
@@ -179,7 +185,9 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
+
         }
 
         private void RefreshItem_Click(object sender, RoutedEventArgs e)

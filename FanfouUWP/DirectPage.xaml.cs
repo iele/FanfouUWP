@@ -19,7 +19,6 @@ namespace FanfouUWP
 
         private int page = 1;
         private PaginatedCollection<DirectMessageItem> messages = new PaginatedCollection<DirectMessageItem>();
-        private string title;
 
         public DirectPage()
         {
@@ -42,6 +41,7 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
                     return 0;
                 }
             };
@@ -81,13 +81,15 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
+
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
-        
+
         #region NavigationHelper 注册
 
         /// <summary>
@@ -139,6 +141,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
         }
     }

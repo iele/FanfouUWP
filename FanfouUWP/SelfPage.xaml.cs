@@ -72,10 +72,17 @@ namespace FanfouUWP
             defaultViewModel["user"] = user;
             defaultViewModel["tags"] = tags;
 
-            tags.Clear();
-            var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
-            foreach (var item in list)
-                tags.Add(item);
+            try
+            {
+                tags.Clear();
+                var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
+                foreach (var item in list)
+                    tags.Add(item);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         /// <summary>

@@ -29,13 +29,20 @@ namespace FanfouUWP.UserPages
             {
                 if (statuses.Count > 0)
                 {
+                    try
+                    {
+                        var list = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, c, max_id: statuses.Last().id);
 
-                    var list = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, c, max_id: statuses.Last().id);
-
-                    if (list.Count == 0)
-                        statuses.HasMoreItems = false;
-                    Utils.StatusesReform.append(statuses, list);
-                    return list.Count;
+                        if (list.Count == 0)
+                            statuses.HasMoreItems = false;
+                        Utils.StatusesReform.append(statuses, list);
+                        return list.Count;
+                    }
+                    catch (Exception)
+                    {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                        return 0;
+                    }
                 }
                 return 0;
             };
@@ -69,10 +76,17 @@ namespace FanfouUWP.UserPages
 
         private async void SearchItem_Click(object sender, RoutedEventArgs e)
         {
-            var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
-            statuses.Clear();
-            StatusesReform.append(statuses, ss);
-            defaultViewModel["date"] = DateTime.Now.ToString();
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
+                statuses.Clear();
+                StatusesReform.append(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -111,10 +125,17 @@ namespace FanfouUWP.UserPages
         {
             if (e.Key == VirtualKey.Enter)
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
-                statuses.Clear();
-                StatusesReform.append(statuses, ss);
-                defaultViewModel["date"] = DateTime.Now.ToString();
+                try
+                {
+                    var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
+                    statuses.Clear();
+                    StatusesReform.append(statuses, ss);
+                    defaultViewModel["date"] = DateTime.Now.ToString();
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
             }
         }
 

@@ -95,7 +95,7 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
-                    ToastShow.ShowToast("登陆失败", "登录用户名或密码有误");
+                    ToastShow.ShowInformation("登陆失败，登录用户名或密码有误");
                     return;
                 }
             }

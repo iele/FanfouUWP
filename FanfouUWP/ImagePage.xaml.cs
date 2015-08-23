@@ -130,6 +130,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
+                Utils.ToastShow.ShowInformation("图片加载失败");
             }
         }
 

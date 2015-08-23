@@ -49,7 +49,9 @@ namespace FanfouUWP
                 }
             }
             catch (Exception)
-            { }
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
         }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)

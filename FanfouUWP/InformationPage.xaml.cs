@@ -81,7 +81,9 @@ namespace FanfouUWP
             try {
                 await FanfouAPI.FanfouAPI.Instance.FriendshipCreate("fanwp");
             }
-            catch {
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("操作失败，可能是已经关注了该账号");
             }
         }
 

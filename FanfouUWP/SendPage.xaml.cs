@@ -180,7 +180,6 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
-
                     Utils.ToastShow.ShowInformation("发送失败");
                     return;
                 }
@@ -317,7 +316,7 @@ namespace FanfouUWP
                                                             "FanfouWP_SendPage",
                                                             square150x150Logo,
                                                             TileSize.Square150x150);
-            secondaryTile.VisualElements.Square30x30Logo = new Uri("ms-appx:///Assets/SmallLogo.png");
+            secondaryTile.VisualElements.Square71x71Logo = new Uri("ms-appx:///Assets/SmallLogo.png");
             secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
             secondaryTile.VisualElements.ForegroundText = ForegroundText.Dark;
             await secondaryTile.RequestCreateAsync();
