@@ -51,13 +51,6 @@ namespace FanfouUWP
 
         public async void showInformation(string msg)
         {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                this.Information.Text = msg;
-                this.InformationTransform.ScaleY = 0;
-                this.InformationStackPanel.Visibility = Visibility.Visible;
-                this.InfromationShowStoryBoard.Begin();
-            });
         }
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)

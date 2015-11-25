@@ -44,6 +44,18 @@
                     <ListView x:Name="statusesGridView" 
                         ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}"
 						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <CustomControl:MyPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <ScrollViewer>
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
                     </ListView>
                 </Grid>
             </PivotItem>
@@ -52,7 +64,18 @@
                     <ListView x:Name="mentionsGridView" ItemTemplate="{StaticResource MentionsItemControl}"
 						ItemsSource="{x:Bind mentions}"
 						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
-
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <CustomControl:MyPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Template>
+                            <ControlTemplate>
+                                <ScrollViewer>
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
                     </ListView>
                 </Grid>
             </PivotItem>

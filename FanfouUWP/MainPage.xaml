@@ -166,8 +166,7 @@
                             </StackPanel>
                         </ScrollViewer>
                     </SplitView.Pane>
-                    <Frame x:Name="ScenarioFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Background="White">
-                    </Frame>
+                    <Frame x:Name="ScenarioFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Background="White"/>
                 </SplitView>
             </SplitView>
             <Grid Margin="0" Background="DeepSkyBlue" Grid.Column="1" Grid.ColumnSpan="1">

@@ -111,6 +111,7 @@
     <Compile Include="Common\PaginatedCollection.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="CustomControl\MyPanel.cs" />
     <Compile Include="CustomControl\TitleBarControl.xaml.cs">
       <DependentUpon>TitleBarControl.xaml</DependentUpon>
     </Compile>

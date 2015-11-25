@@ -1,4 +1,5 @@
-﻿using FanfouUWP.FanfouAPI.Items;
+﻿using FanfouUWP.CustomControl;
+using FanfouUWP.FanfouAPI.Items;
 using FanfouUWP.Utils;
 using System;
 using System.Collections.Generic;
@@ -28,9 +29,23 @@ namespace FanfouUWP
         {
             this.InitializeComponent();
 
+            App.RootFrame.SizeChanged += RootFrame_SizeChanged;
+
             TitleBar.setTitleBar();
 
             Loaded += FramePage_Loaded;
+        }
+
+        private void RootFrame_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width < 640)
+            {
+                MyPanel.ColumnCount = 1;
+            }
+            if (e.NewSize.Width >= 640)
+            {
+                MyPanel.ColumnCount = (int)(e.NewSize.Width / 400);
+            }
         }
 
         private void FramePage_Loaded(object sender, RoutedEventArgs e)
