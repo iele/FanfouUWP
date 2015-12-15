@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
@@ -33,8 +34,7 @@ namespace FanfouUWP.Utils
             titleBar.ButtonBackgroundColor = Colors.DeepSkyBlue;
             titleBar.ButtonForegroundColor = Colors.White;
 
-            //CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            //Window.Current.SetTitleBar(new TitleBarControl());
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
     }
 }

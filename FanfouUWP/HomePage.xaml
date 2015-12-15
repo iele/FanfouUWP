@@ -12,6 +12,28 @@
     x:Class="FanfouUWP.HomePage"
     mc:Ignorable="d" RequestedTheme="Light" Width="Auto" Height="Auto"
     NavigationCacheMode="Required">
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="wideState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="641" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Center" Target="pivot.HorizontalAlignment" >
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="narrowState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="0"/>
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Stretch" Target="pivot.HorizontalAlignment">
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
@@ -38,24 +60,12 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Pivot Grid.Row="0" Margin="0" x:Name="pivot">
+        <Pivot Grid.Row="0" Margin="0" x:Name="pivot" MaxWidth="800" >
             <PivotItem Header="我的消息" Margin="0">
                 <Grid>
                     <ListView x:Name="statusesGridView" 
                         ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}"
 						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <CustomControl:MyPanel />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.Template>
-                            <ControlTemplate>
-                                <ScrollViewer>
-                                    <ItemsPresenter/>
-                                </ScrollViewer>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
                     </ListView>
                 </Grid>
             </PivotItem>
@@ -64,18 +74,6 @@
                     <ListView x:Name="mentionsGridView" ItemTemplate="{StaticResource MentionsItemControl}"
 						ItemsSource="{x:Bind mentions}"
 						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <CustomControl:MyPanel />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.Template>
-                            <ControlTemplate>
-                                <ScrollViewer>
-                                    <ItemsPresenter/>
-                                </ScrollViewer>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
                     </ListView>
                 </Grid>
             </PivotItem>

@@ -30,7 +30,7 @@
                         <AdaptiveTrigger MinWindowWidth="641" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Value="CompactOverlay" Target="Splitter.DisplayMode" >
+                        <Setter Value="CompactInline"  Target="Splitter.DisplayMode" >
                         </Setter>
                     </VisualState.Setters>
                 </VisualState>
@@ -62,9 +62,9 @@
             <ToggleButton Click="Button_Click" VerticalAlignment="Stretch" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" Background="Gray" Width="48" Canvas.ZIndex="100">
                 <FontIcon x:Name="Hamburger1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0"/>
             </ToggleButton>
-            <SplitView x:Name="Splitter" DisplayMode="CompactOverlay" Grid.Row="1" Grid.RowSpan="1" OpenPaneLength="315" CompactPaneLength="48" Grid.ColumnSpan="2">
+            <SplitView x:Name="Splitter" DisplayMode="CompactInline"  Grid.Row="0" Grid.RowSpan="2" OpenPaneLength="205" CompactPaneLength="48" Grid.ColumnSpan="2">
                 <SplitView.Pane>
-                    <ListView Canvas.ZIndex="10" x:Name="menu" Margin="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="menu_SelectionChanged">
+                    <ListView  Canvas.ZIndex="10" x:Name="menu" Margin="0,48,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="menu_SelectionChanged">
                         <ListViewItem Tapped="SelfGrid_Tapped">
                             <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
                                 <Ellipse Margin="0,0,0,0" Stroke="White" Width="32" Height="32">
@@ -169,35 +169,18 @@
                     <Frame x:Name="ScenarioFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Background="White"/>
                 </SplitView>
             </SplitView>
-            <Grid Margin="0" Background="DeepSkyBlue" Grid.Column="1" Grid.ColumnSpan="1">
+            <Grid Margin="0" Background="Transparent" HorizontalAlignment="Right" Grid.Column="1" Grid.ColumnSpan="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="0"/>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button  x:Name="Back" Click="Back_Click" VerticalAlignment="Stretch" Width="48" Grid.Column="0" >
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE0D5;" Margin="0" HorizontalAlignment="Stretch"
-            		VerticalAlignment="Center"/>
-                </Button>
-                <StackPanel x:Name="InformationStackPanel" Background="DeepSkyBlue" Grid.Column="1" Grid.ColumnSpan="5" Canvas.ZIndex="100" VerticalAlignment="Center">
+                <StackPanel x:Name="InformationStackPanel" Background="DeepSkyBlue" Grid.Column="0" Canvas.ZIndex="100" VerticalAlignment="Center">
                     <StackPanel.RenderTransform>
                         <CompositeTransform x:Name="InformationTransform" ScaleY="0"></CompositeTransform>
                     </StackPanel.RenderTransform>
                     <TextBlock x:Name="Information" Text="" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="6,0,12,0" FontSize="18"/>
                 </StackPanel>
-                <ProgressRing x:Name="loading" Grid.Column="3" Margin="6,3" Foreground="White"></ProgressRing>
-                <CommandBar  Grid.Column="4" Background="DeepSkyBlue" >
-                    <AppBarButton Click="SearchGrid_Click" Icon="Find">
-                    </AppBarButton>
-                    <AppBarButton Click="SendGrid_Click" Icon="Edit">
-                    </AppBarButton>
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton Click="SettingButton_Click" Label="设置" />
-                    </CommandBar.SecondaryCommands>
-                </CommandBar>
+                <ProgressRing x:Name="loading" Grid.Column="2" Margin="6,3" Foreground="White"></ProgressRing>
             </Grid>
         </Grid>
     </Grid>

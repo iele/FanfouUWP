@@ -36,12 +36,7 @@ namespace FanfouUWP
                     }
                 };
             }
-
-            if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                this.Back.Visibility = Visibility.Collapsed;
-            }
-
+            
             ToastShow.currentMainPage = this;
 
             isLoading.PropertyChanged += IsLoading_PropertyChanged;
