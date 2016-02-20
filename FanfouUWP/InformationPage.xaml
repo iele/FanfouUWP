@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="Light">
 
-    <Grid  Background="White">
+    <Grid  Background="White" MaxWidth="600">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -49,9 +49,8 @@
                     HorizontalAlignment="Stretch" Margin="12,12" IsEnabled="False"/>
             </StackPanel>
         </ScrollViewer>
-        <Rectangle Fill="DeepSkyBlue" Margin="0,0,0,0" Stroke="DeepSkyBlue"  />
         <StackPanel Grid.Row="0" Margin="12,12,12,12" VerticalAlignment="Center">
-            <TextBlock Text="支持与反馈" Margin="0" FontSize="18.667" VerticalAlignment="Center" Foreground="White" />
+            <TextBlock Text="支持与反馈" Margin="0" FontSize="18.667" VerticalAlignment="Center" />
         </StackPanel>
     </Grid>
 </Page>

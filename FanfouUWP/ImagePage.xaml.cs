@@ -40,10 +40,6 @@ namespace FanfouUWP
             get { return navigationHelper; }
         }
 
-        /// <summary>
-        ///     获取此 <see cref="Page" /> 的视图模型。
-        ///     可将其更改为强类型视图模型。
-        /// </summary>
         public ObservableDictionary DefaultViewModel
         {
             get { return defaultViewModel; }
@@ -172,7 +168,7 @@ namespace FanfouUWP
 
             if (ScaleTransform.ScaleX > 0.75 || point.Properties.MouseWheelDelta > 0)
                 ScaleTransform.ScaleX = ScaleTransform.ScaleY += point.Properties.MouseWheelDelta * 0.001;
-            
+
             e.Handled = true;
         }
     }

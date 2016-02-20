@@ -8,7 +8,28 @@
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light"  >
-
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="wideState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="641" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Center" Target="LayoutRoot.HorizontalAlignment" >
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="narrowState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="0"/>
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Stretch" Target="LayoutRoot.HorizontalAlignment">
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}"
@@ -19,25 +40,25 @@
     <Page.Background>
         <SolidColorBrush Color="#FFFFFFFF" />
     </Page.Background>
-
-    <Grid Background="White">
+    <Page.BottomAppBar>
+        <CommandBar IsOpen="False" ClosedDisplayMode="Compact"  Grid.Row="2">
+            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    <Grid Background="White" x:Name="LayoutRoot" MaxWidth="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue"  Margin="0,0,0,0" />
         <StackPanel Margin="12" Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock TextWrapping="Wrap" Text="随便看看" Margin="0,0,-0.083,0" VerticalAlignment="Center"
-                           FontSize="18.667" Foreground="White" />
+                           FontSize="18.667" />
             <TextBlock TextWrapping="Wrap" Text="{Binding  date}" Margin="12,0,0,0" VerticalAlignment="Center"
-                           FontSize="18.667" Foreground="White" />
+                           FontSize="18.667"/>
         </StackPanel>
         <ListView ShowsScrollingPlaceholders="True" x:Name="statusesGridView"
                   ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
                   IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
-        <CommandBar IsOpen="False" ClosedDisplayMode="Compact"  Grid.Row="2">
-            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click" />
-        </CommandBar>
     </Grid>
 </Page>

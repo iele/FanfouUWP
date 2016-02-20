@@ -8,7 +8,7 @@
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light"  >
-
+       
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" />
@@ -20,12 +20,11 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Background="White">
+    <Grid Background="White" x:Name="LayoutRoot"  MaxWidth="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,0,0,0" />
         <TextBox x:Name="search" Margin="12" TextWrapping="NoWrap" Text=""
                          InputScope="Search" PlaceholderText="键入以搜索消息" VerticalAlignment="Center" KeyDown="search_KeyDown" />
         <ListView ShowsScrollingPlaceholders="True" Margin="0" x:Name="statusesGridView"

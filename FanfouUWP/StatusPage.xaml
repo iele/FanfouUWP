@@ -11,6 +11,54 @@
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}">
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="wideState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="641" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Left" Target="line.HorizontalAlignment" >
+                    </Setter>
+                    <Setter Value="Left" Target="more.HorizontalAlignment" >
+                    </Setter>
+                    <Setter Value="641" Target="line.Width" >
+                    </Setter>
+                    <Setter Value="641" Target="line.X2" >
+                    </Setter>
+                    <Setter Value="640" Target="more.Width" >
+                    </Setter>
+                    <Setter Value="640" Target="Map.Width" >
+                    </Setter>
+                    <Setter Value="Left" Target="image.HorizontalAlignment" >
+                    </Setter>
+                    <Setter Value="None" Target="image.Stretch" >
+                    </Setter>
+                    <Setter Value="Center" Target="LayoutRoot.HorizontalAlignment" >
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="narrowState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="0"/>
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Stretch" Target="line.HorizontalAlignment">
+                    </Setter>
+                    <Setter Value="Stretch" Target="more.HorizontalAlignment">
+                    </Setter>
+                    <Setter Value="Stretch" Target="image.HorizontalAlignment" >
+                    </Setter>
+                    <Setter Value="Stretch" Target="Map.HorizontalAlignment" >
+                    </Setter>
+                    <Setter Value="UniformToFill" Target="image.Stretch" >
+                    </Setter>
+                    <Setter Value="Stretch" Target="LayoutRoot.HorizontalAlignment" >
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
 
     <Page.Resources>
         <ResourceDictionary>
@@ -40,67 +88,23 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid x:Name="LayoutRoot" Background="White">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="wideState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="641" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Value="Left" Target="line.HorizontalAlignment" >
-                        </Setter>
-                        <Setter Value="Left" Target="more.HorizontalAlignment" >
-                        </Setter>
-                        <Setter Value="641" Target="line.Width" >
-                        </Setter>
-                        <Setter Value="641" Target="line.X2" >
-                        </Setter>
-                        <Setter Value="640" Target="more.Width" >
-                        </Setter>
-                        <Setter Value="640" Target="Map.Width" >
-                        </Setter>
-                        <Setter Value="Left" Target="image.HorizontalAlignment" >
-                        </Setter>
-                        <Setter Value="None" Target="image.Stretch" >
-                        </Setter>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="narrowState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Value="Stretch" Target="line.HorizontalAlignment">
-                        </Setter>
-                        <Setter Value="Stretch" Target="more.HorizontalAlignment">
-                        </Setter>
-                        <Setter Value="Stretch" Target="image.HorizontalAlignment" >
-                        </Setter>
-                        <Setter Value="Stretch" Target="Map.HorizontalAlignment" >
-                        </Setter>
-                        <Setter Value="UniformToFill" Target="image.Stretch" >
-                        </Setter>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
+    <Grid x:Name="LayoutRoot" Background="White" MaxWidth="800">
+       
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Margin="12,12,0,12" Orientation="Vertical">
+        <StackPanel Margin="12,12,12,12" Orientation="Vertical">
             <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
                 <Image Tapped="Profile_Tapped" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40"
         		Source="{Binding  status.user.profile_image_url}" />
                 <TextBlock Text="{Binding  status.user.screen_name}" FontSize="21.333"
         		VerticalAlignment="Center" Foreground="Black" Margin="12,0,0,0"/>
             </StackPanel>
-            <Line x:Name="line" Stroke="Gray" StrokeThickness="1" Margin="0,12,12,0" Width="641" X2="641" Height="1" HorizontalAlignment="Left"/>
+            <Line x:Name="line" Stroke="Gray" StrokeThickness="1" Margin="0,12,0,0" Width="641" X2="641" Height="1" HorizontalAlignment="Left"/>
         </StackPanel>
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <StackPanel >
                 <Grid x:Name="ContentRoot" d:LayoutOverrides="Width" Background="White">
                     <Grid.RowDefinitions>

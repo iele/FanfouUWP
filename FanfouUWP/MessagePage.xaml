@@ -22,7 +22,7 @@
         <selector:MessageItemTemplateSelector x:Key="MessageItemTemplateSelector" MessageSelfTemplate="{StaticResource MessageItemControl}" MessageOtherTemplate="{StaticResource MessageItemControl}"/>
     </Page.Resources>
 
-    <Grid Background="White">
+    <Grid Background="White" MaxWidth="800">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
@@ -34,8 +34,7 @@
         <ListView ShowsScrollingPlaceholders="True" Margin="0" x:Name="messagesGridView"
                   ItemsSource="{Binding  messages}" 
                   ItemTemplateSelector="{StaticResource MessageItemTemplateSelector}" Grid.Row="0" Grid.ColumnSpan="2"/>
-        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" />
-        <TextBox Margin="8" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" x:Name="text"/>
-        <AppBarButton HorizontalAlignment="Center" Icon="Send" Label="appbarbutton" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" IsCompact="True" RequestedTheme="Dark" Click="AppBarButton_Click"/>
+        <TextBox Margin="8" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch" x:Name="text" FontSize="21.333"/>
+        <AppBarButton HorizontalAlignment="Center" Icon="Send" Label="appbarbutton" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" IsCompact="True" Click="AppBarButton_Click"/>
     </Grid>
 </Page>

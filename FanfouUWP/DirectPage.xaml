@@ -25,15 +25,14 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Background="White">
+    <Grid Background="White" MaxWidth="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
-        </Grid.RowDefinitions>    
-        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue"  Margin="0,0,0,0" />
+        </Grid.RowDefinitions>
         <StackPanel Margin="12,12,12,12" Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock TextWrapping="Wrap" Text="{Binding  title}" Margin="0" VerticalAlignment="Center"
-                           FontSize="18.667" Foreground="White" HorizontalAlignment="Left" />
+                           FontSize ="21.333" HorizontalAlignment="Left" />
         </StackPanel>
         <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="messagesGridView"
                   ItemsSource="{Binding  messages}" 

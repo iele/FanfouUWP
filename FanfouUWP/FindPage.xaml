@@ -8,7 +8,29 @@
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled">
-
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="wideState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="641" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Center" Target="pivot.HorizontalAlignment" >
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="narrowState">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="0"/>
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Value="Stretch" Target="pivot.HorizontalAlignment">
+                    </Setter>
+                </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+    
     <Page.Resources>
         <DataTemplate x:Key="UserItemControl">
             <ItemControl:UserItemControl DataContext="{Binding}" Margin="0,3" />
@@ -20,12 +42,11 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Background="White">
+    <Grid Background="White" MaxWidth="800" x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,0,0,0" />
         <TextBox x:Name="search" Margin="12"  TextWrapping="NoWrap" Text=""
                          InputScope="Search" PlaceholderText="键入以寻找用户" />
         <ListView ShowsScrollingPlaceholders="True" Margin="0" x:Name="userGridView"

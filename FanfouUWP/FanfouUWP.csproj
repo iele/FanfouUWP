@@ -11,8 +11,8 @@
     <AssemblyName>FanfouUWP</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -239,15 +239,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserPages\FollowersUserPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UserPages\TagUserPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserPages\FriendsUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -255,15 +247,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserPages\FavoriteUserPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UserPages\TimelineUserPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserPages\StatusUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -373,26 +357,14 @@
     <Compile Include="SelfPage.xaml.cs">
       <DependentUpon>SelfPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserPages\FollowersUserPage.xaml.cs">
-      <DependentUpon>FollowersUserPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserPages\TagUserPage.xaml.cs">
       <DependentUpon>TagUserPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserPages\FriendsUserPage.xaml.cs">
-      <DependentUpon>FriendsUserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserPages\ImageUserPage.xaml.cs">
       <DependentUpon>ImageUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserPages\FavoriteUserPage.xaml.cs">
-      <DependentUpon>FavoriteUserPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserPages\TimelineUserPage.xaml.cs">
       <DependentUpon>TimelineUserPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserPages\StatusUserPage.xaml.cs">
-      <DependentUpon>StatusUserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserPages\SearchUserPage.xaml.cs">
       <DependentUpon>SearchUserPage.xaml</DependentUpon>
@@ -486,6 +458,7 @@
     <Content Include="Assets\back-50.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\background.png" />
     <Content Include="Assets\blank.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -544,10 +517,10 @@
     <SDKReference Include="Microsoft.NET.Native.Runtime.1.1, Version=1.1">
       <Name>Microsoft .NET Core Runtime Package for Windows</Name>
     </SDKReference>
-    <SDKReference Include="WindowsDesktop, Version=10.0.10240.0">
+    <SDKReference Include="WindowsDesktop, Version=10.0.10586.0">
       <Name>Windows Desktop Extensions for the WINDOWS_UWP</Name>
     </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
       <Name>Windows Mobile Extensions for the WINDOWS_UWP</Name>
     </SDKReference>
   </ItemGroup>

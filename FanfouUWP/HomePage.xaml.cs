@@ -12,6 +12,7 @@ using FanfouUWP.UserPages;
 using System.Threading;
 using Windows.UI.Popups;
 using FanfouUWP.ItemControl;
+using System.Collections.ObjectModel;
 
 namespace FanfouUWP
 {
@@ -23,6 +24,10 @@ namespace FanfouUWP
 
         public readonly PaginatedCollection<Status> mentions;
         public readonly PaginatedCollection<Status> statuses;
+
+        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
+
+        private ObservableCollection<Trends> trends = new ObservableCollection<Trends>();
 
         private User currentUser = new User();
 
@@ -81,6 +86,12 @@ namespace FanfouUWP
             navigationHelper.SaveState += NavigationHelper_SaveState;
         }
 
+        public ObservableDictionary DefaultViewModel
+        {
+            get { return defaultViewModel; }
+        }
+
+
         public NavigationHelper NavigationHelper
         {
             get { return navigationHelper; }
@@ -89,6 +100,23 @@ namespace FanfouUWP
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
+            defaultViewModel["user"] = currentUser;
+
+            defaultViewModel["trends"] = trends;
+
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.TrendsList();
+                trends.Clear();
+                foreach (Trends item in ss.trends)
+                {
+                    trends.Add(item);
+                }
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
 
             try
             {
@@ -273,22 +301,27 @@ namespace FanfouUWP
 
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(StatusUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FavoriteUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FollowersUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FriendsUserPage), Utils.DataConverter<User>.Convert(this.currentUser));
+        }
+
+        private void trendsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (trendsGridView.SelectedIndex != -1)
+            {
+                var t = trendsGridView.SelectedItem as Trends;
+                Frame.Navigate(typeof(SearchPage), Utils.DataConverter<Trends>.Convert(t));
+            }
         }
 
         private async void StatusItemControl_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -337,6 +370,11 @@ namespace FanfouUWP
             if (chosenCommand == null)
             {
             }
+        }
+
+        private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

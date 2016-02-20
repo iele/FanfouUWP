@@ -69,7 +69,7 @@ namespace FanfouUWP
 
         private void FindGrid_Tapped(object sender, RoutedEventArgs e)
         {
-            ScenarioFrame.Navigate(typeof(FindPage));
+            ScenarioFrame.Navigate(typeof(SearchPage));
         }
 
         private void SearchGrid_Click(object sender, RoutedEventArgs e)

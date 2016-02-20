@@ -11,6 +11,9 @@ using FanfouUWP.Common;
 using FanfouUWP.FanfouAPI.Items;
 using FanfouUWP.UserPages;
 using FanfouUWP.Utils;
+using FanfouUWP.ItemControl;
+using Windows.UI.Popups;
+using System.Linq;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -27,6 +30,15 @@ namespace FanfouUWP
         private User user;
         private ObservableCollection<string> tags = new ObservableCollection<string>();
 
+        private readonly PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
+        private readonly PaginatedCollection<Status> favorites = new PaginatedCollection<Status>();
+        private readonly PaginatedCollection<User> friends = new PaginatedCollection<User>();
+        private readonly PaginatedCollection<User> followers = new PaginatedCollection<User>();
+
+        private int favoritePage = 1;
+        private int friendsPage = 1;
+        private int followersPage = 1;
+
         public UserPage()
         {
             InitializeComponent();
@@ -34,6 +46,119 @@ namespace FanfouUWP
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
+
+            App.RootFrame.SizeChanged += RootFrame_SizeChanged;
+
+            statuses.load = async (c) =>
+            {
+                if (statuses.Count > 0)
+                {
+                    try
+                    {
+                        var list = await FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, c, max_id: statuses.Last().id);
+
+                        if (list.Count == 0)
+                            statuses.HasMoreItems = false;
+                        Utils.StatusesReform.append(statuses, list);
+                        return list.Count;
+                    }
+                    catch (Exception)
+                    {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                        return 0;
+                    }
+                }
+                return 0;
+            };
+
+            favorites.load = async (c) =>
+            {
+                try
+                {
+                    var result =
+                        await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, ++favoritePage);
+                    if (result.Count == 0)
+                        favorites.HasMoreItems = false;
+                    StatusesReform.append(favorites, result);
+
+                    return result.Count;
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            };
+
+
+            friends.load = async (c) =>
+            {
+                try
+                {
+                    var result =
+                        await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60, ++friendsPage);
+                    if (result.Count == 0)
+                        friends.HasMoreItems = false;
+
+                    foreach (User i in result)
+                    {
+                        friends.Add(i);
+                    }
+
+                    return result.Count;
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                    return 0;
+                }
+            };
+
+            followers.load = async (c) =>
+            {
+                try
+                {
+                    var result =
+                        await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, ++followersPage);
+                    if (result.Count == 0)
+                        followers.HasMoreItems = false;
+
+                    foreach (User i in result)
+                    {
+                        followers.Add(i);
+                    }
+
+                    return result.Count;
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                    return 0;
+                }
+            };
+        }
+
+        private void RootFrame_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            checkUserItem();
+        }
+
+        private void checkUserItem()
+        {
+            var width = App.RootFrame.RenderSize.Width;
+            if (width > 1241)
+            {
+                if (pivot.Items.Contains(userItem))
+                    pivot.Items.Remove(userItem);
+            }
+            else if (width > 841)
+            {
+                if (!pivot.Items.Contains(userItem))
+                    pivot.Items.Add(userItem);
+            }
+            else {
+                if (!pivot.Items.Contains(userItem))
+                    pivot.Items.Add(userItem);
+            }
         }
 
         /// <summary>
@@ -72,7 +197,20 @@ namespace FanfouUWP
             defaultViewModel["user"] = user;
             defaultViewModel["tags"] = tags;
 
+            checkUserItem();
             checkFriendship();
+
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 60);
+                statuses.Clear();
+                StatusesReform.append(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
 
             try
             {
@@ -80,6 +218,52 @@ namespace FanfouUWP
                 var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.user.id);
                 foreach (var item in list)
                     tags.Add(item);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
+
+            favoritePage = 1;
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, favoritePage);
+                favorites.Clear();
+                StatusesReform.append(favorites, ss);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
+
+            friendsPage = 1;
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60, friendsPage);
+
+                friends.Clear();
+                foreach (User i in ss)
+                {
+                    friends.Add(i);
+                }
+                defaultViewModel["date"] = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
+
+            followersPage = 1;
+            try
+            {
+                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, followersPage);
+
+                followers.Clear();
+                foreach (User i in ss)
+                {
+                    followers.Add(i);
+                }
+                defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)
             {
@@ -120,22 +304,18 @@ namespace FanfouUWP
 
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(StatusUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FavoriteUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FollowersUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FriendsUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void StatusItem_Click(object sender, RoutedEventArgs e)
@@ -222,6 +402,50 @@ namespace FanfouUWP
             {
                 Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
+        }
+
+        private async void StatusItemControl_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            var status = (sender as StatusItemControl).DataContext as Status;
+
+            var menu = new PopupMenu();
+            menu.Commands.Add(new UICommand("个人资料", (command) =>
+            {
+                Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(status.user));
+            }));
+            menu.Commands.Add(new UICommand("转发", (command) =>
+            {
+                Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Repost).ToString() + Utils.DataConverter<Status>.Convert(status));
+            }));
+            menu.Commands.Add(new UICommand("回复", (command) =>
+            {
+                Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Reply).ToString() + Utils.DataConverter<Status>.Convert(status));
+            }));
+            var chosenCommand = await menu.ShowForSelectionAsync
+                (Utils.MenuRect.GetElementRect(e.GetPosition(App.RootFrame)));
+            if (chosenCommand == null)
+            {
+            }
+        }
+
+        private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void favoriteGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void friendsidView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void followersGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

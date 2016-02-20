@@ -106,22 +106,18 @@ namespace FanfouUWP
 
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(StatusUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FavoriteUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FollowersUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(FriendsUserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void StatusItem_Click(object sender, RoutedEventArgs e)

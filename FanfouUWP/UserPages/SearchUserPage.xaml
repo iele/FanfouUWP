@@ -22,14 +22,13 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Background="White">
+    <Grid Background="White" MaxWidth="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,0,0,0" />
         <StackPanel Margin="12,0" Orientation="Vertical">
-            <TextBlock x:Name="title" TextWrapping="Wrap" Foreground="White" FontSize="18.667" Margin="0,12,0,0" />
+            <TextBlock x:Name="title" TextWrapping="Wrap" FontSize="21.667" Margin="0,12,0,0" />
             <TextBox x:Name="search" Margin="0,6,-0.167,12" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                          InputScope="Search" PlaceholderText="键入以搜索消息" KeyDown="search_KeyDown" />
         </StackPanel>
