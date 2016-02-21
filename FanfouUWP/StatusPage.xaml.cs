@@ -468,5 +468,30 @@ namespace FanfouUWP
                 }
             }
         }
+
+        private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void follower_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void friend_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }

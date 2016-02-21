@@ -9,6 +9,7 @@ using FanfouUWP.FanfouAPI.Items;
 using FanfouUWP.Common;
 using Windows.UI.Core;
 using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
 
 namespace FanfouUWP
 {
@@ -36,7 +37,14 @@ namespace FanfouUWP
                     }
                 };
             }
-            
+
+
+            if (ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.HideAsync();
+            }
+
             ToastShow.currentMainPage = this;
 
             isLoading.PropertyChanged += IsLoading_PropertyChanged;
