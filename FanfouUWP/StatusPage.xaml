@@ -200,31 +200,31 @@
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  status.user.statuses_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  status.user.statuses_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                             <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
         				Tapped="favorite_Tapped" MinWidth="40">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  status.user.favourites_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  status.user.favourites_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                             <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
         				Tapped="follower_Tapped" MinWidth="40">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  status.user.followers_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  status.user.followers_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                             <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
         				Tapped="friend_Tapped" MinWidth="40">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  status.user.friends_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  status.user.friends_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                         </GridView>
-                        <GridView x:Name="taglist" Margin="0" ItemsSource="{Binding tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
+                        <GridView x:Name="taglist" Margin="0" ItemsSource="{x:Bind tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
                             <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>

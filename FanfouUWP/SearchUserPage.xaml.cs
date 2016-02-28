@@ -11,7 +11,7 @@ using FanfouUWP.FanfouAPI.Items;
 using FanfouUWP.Utils;
 using Windows.System;
 
-namespace FanfouUWP.UserPages
+namespace FanfouUWP
 {
     public sealed partial class SearchUserPage : Page
     {

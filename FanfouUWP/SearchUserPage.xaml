@@ -1,14 +1,14 @@
 ﻿<Page
-    x:Class="FanfouUWP.UserPages.ImageUserPage"
+    x:Class="FanfouUWP.SearchUserPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FanfouUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:utils="using:FanfouUWP.Utils"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light"  >
+
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}"
@@ -16,12 +16,9 @@
                                            Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
-    <Page.Background>
-        <SolidColorBrush Color="#FFFFFFFF" />
-    </Page.Background>
     <Page.BottomAppBar>
         <CommandBar IsOpen="False" ClosedDisplayMode="Compact">
-            <AppBarButton x:Name="RefreshItem" Icon="Refresh" Label="刷新" Click="RefreshItem_Click" />
+            <AppBarButton x:Name="SearchItem" Icon="Zoom" Label="搜索" Click="SearchItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -30,9 +27,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock TextWrapping="Wrap" x:Name="title" Margin="12,12,0,12" VerticalAlignment="Center"
-                           FontSize="21.667" Foreground="White" />
-        <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="statusesGridView"
+        <StackPanel Margin="12,0" Orientation="Vertical">
+            <TextBlock x:Name="title" TextWrapping="Wrap" FontSize="21.667" Margin="0,12,0,0" />
+            <TextBox x:Name="search" Margin="0,6,-0.167,12" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
+                         InputScope="Search" PlaceholderText="键入以搜索消息" KeyDown="search_KeyDown" />
+        </StackPanel>
+        <ListView ShowsScrollingPlaceholders="True" Margin="0,0,0,0" x:Name="statusesGridView"
                   ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
                   IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
     </Grid>

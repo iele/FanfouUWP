@@ -65,13 +65,12 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <ToggleButton Click="Button_Click" VerticalAlignment="Stretch" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" Background="Gray" Width="48" Canvas.ZIndex="100">
+            <ToggleButton Click="Button_Click" VerticalAlignment="Stretch" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" Background="Gray" Width="48" Canvas.ZIndex="100" >
                 <FontIcon x:Name="Hamburger1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0"/>
             </ToggleButton>
             <Rectangle Height="48" Fill="DeepSkyBlue" Grid.ColumnSpan="2"/>
             <TextBlock Height="28" Margin="12,10,0,10" x:Name="name" Text="{x:Bind currentUser.screen_name, Mode=OneWay}" Foreground="White"  Grid.Column="1" Canvas.ZIndex="100" FontSize="18.667" VerticalAlignment="Center" />
-
-            <SplitView x:Name="Splitter" DisplayMode="CompactInline"  Grid.Row="0" Grid.RowSpan="2" OpenPaneLength="205" CompactPaneLength="48" Grid.ColumnSpan="2">
+             <SplitView x:Name="Splitter" DisplayMode="CompactInline"  Grid.Row="0" Grid.RowSpan="2" OpenPaneLength="205" CompactPaneLength="48" Grid.ColumnSpan="2">
                 <SplitView.Pane>
                     <ListView  Canvas.ZIndex="10" x:Name="menu" Margin="0,48,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="menu_SelectionChanged">
                         <ListViewItem Tapped="SelfGrid_Tapped">
@@ -133,6 +132,13 @@
                                 <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="关于应用" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ListViewItem>
+                        <ListViewItem Tapped="SettingButton_Click" >
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Setting"
+									VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="设置" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListViewItem>
                         <ListViewItem IsEnabled="False">
                         </ListViewItem>
                     </ListView>
@@ -183,13 +189,13 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel x:Name="InformationStackPanel" Background="DeepSkyBlue" Grid.Column="0" Canvas.ZIndex="100" VerticalAlignment="Center">
+                <StackPanel x:Name="InformationStackPanel" Background="DeepSkyBlue" Grid.Column="0" Canvas.ZIndex="100" Height="48">
                     <StackPanel.RenderTransform>
                         <CompositeTransform x:Name="InformationTransform" ScaleY="0"></CompositeTransform>
                     </StackPanel.RenderTransform>
-                    <TextBlock x:Name="Information" Text="" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="6,0,12,0" FontSize="18"/>
+                    <TextBlock x:Name="Information" Text="1111" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6,12,6,0" FontSize="18"/>
                 </StackPanel>
-                <ProgressRing x:Name="loading" Grid.Column="2" Margin="6,3" Foreground="White"></ProgressRing>
+                <ProgressRing x:Name="loading" Grid.Column="2" Margin="6,3" Foreground="Wheat"></ProgressRing>
             </Grid>
         </Grid>
     </Grid>

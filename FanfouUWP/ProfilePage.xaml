@@ -16,14 +16,13 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" Background="White" MaxWidth="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="DeepSkyBlue" Margin="0,0,0,0" Stroke="DeepSkyBlue" />
         <StackPanel Grid.Row="0" Margin="0">
-            <TextBlock Text="更新资料" Margin="12" Foreground="White"/>
+            <TextBlock Text="更新资料" Margin="12" FontSize="22.667"/>
         </StackPanel>
         <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <TextBlock TextWrapping="Wrap" Text="姓名" FontSize="16" VerticalAlignment="Top" Margin="0,6,0,0"/>

@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Navigation;
 using FanfouUWP.Common;
 
 using FanfouUWP.Utils;
+using Windows.UI.Popups;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234237 上有介绍
 
@@ -95,8 +96,10 @@ namespace FanfouUWP
                 }
                 catch (Exception)
                 {
-                    ToastShow.ShowInformation("登陆失败，登录用户名或密码有误");
-                    return;
+                    var dialog = new MessageDialog("登录失败，请检查用户名或密码是否输入正确，或网络是否畅通", "登录失败");
+
+                    dialog.Commands.Add(new UICommand("确定", cmd => { }, commandId: 0));
+                    await dialog.ShowAsync();
                 }
             }
         }

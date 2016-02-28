@@ -9,7 +9,6 @@ using Windows.UI.Xaml.Navigation;
 using FanfouUWP.Common;
 
 using FanfouUWP.FanfouAPI.Items;
-using FanfouUWP.UserPages;
 using FanfouUWP.Utils;
 using FanfouUWP.ItemControl;
 using Windows.UI.Popups;

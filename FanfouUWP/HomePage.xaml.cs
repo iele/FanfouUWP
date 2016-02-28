@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Navigation;
 using FanfouUWP.Common;
 using FanfouUWP.FanfouAPI.Items;
 using FanfouUWP.Utils;
-using FanfouUWP.UserPages;
 using System.Threading;
 using Windows.UI.Popups;
 using FanfouUWP.ItemControl;
@@ -21,6 +20,8 @@ namespace FanfouUWP
         private readonly NavigationHelper navigationHelper;
 
         private readonly TimelineCache cache = Utils.TimelineCache.Instance;
+
+        private ObservableCollection<string> tags = new ObservableCollection<string>();
 
         public readonly PaginatedCollection<Status> mentions;
         public readonly PaginatedCollection<Status> statuses;
@@ -84,6 +85,28 @@ namespace FanfouUWP
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
+
+            Window.Current.SizeChanged += Current_SizeChanged;
+            InnerCustomPanel.SizeChanged += InnerCustomPanel_SizeChanged;
+            InnerCustomPanel2.SizeChanged += InnerCustomPanel_SizeChanged2;
+        }
+
+
+        private void InnerCustomPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SV1.ChangeView(null, 100.0, null, true);
+        }
+
+        private void InnerCustomPanel_SizeChanged2(object sender, SizeChangedEventArgs e)
+        {
+            SV12.ChangeView(null, 100.0, null, true);
+        }
+
+
+        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
+            InnerCustomPanel.InvalidateMeasure();
+            InnerCustomPanel2.InvalidateMeasure();
         }
 
         public ObservableDictionary DefaultViewModel
@@ -99,10 +122,25 @@ namespace FanfouUWP
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            SV1.ChangeView(null, 100, null);
+            SV12.ChangeView(null, 100, null);
+
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["user"] = currentUser;
 
             defaultViewModel["trends"] = trends;
+
+            try
+            {
+                tags.Clear();
+                var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(currentUser.id);
+                foreach (var item in list)
+                    tags.Add(item);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
 
             try
             {
@@ -177,6 +215,8 @@ namespace FanfouUWP
 
         private async void loadingStatus()
         {
+            SV1.ChangeView(null, 0, null, true);
+            VisualStateManager.GoToState(this, "PullToRefresh", false);
             try
             {
                 if (this.statuses.Count != 0)
@@ -371,10 +411,43 @@ namespace FanfouUWP
             {
             }
         }
-
         private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);
         }
+
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            ScrollViewer sv = sender as ScrollViewer;
+            if (sv.VerticalOffset == 0)
+            {
+                SV1.DirectManipulationCompleted += SV1_DirectManipulationCompleted;
+                VisualStateManager.GoToState(this, "Refreshing", false);
+            }
+        }
+
+        private void SV1_DirectManipulationCompleted(object sender, object e)
+        {
+            SV1.DirectManipulationCompleted -= SV1_DirectManipulationCompleted;
+            loadingStatus();
+        }
+
+
+        private void ScrollViewer_ViewChanged2(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            ScrollViewer sv = sender as ScrollViewer;
+            if (sv.VerticalOffset == 0)
+            {
+                SV12.DirectManipulationCompleted += SV1_DirectManipulationCompleted2;
+                VisualStateManager.GoToState(this, "Refreshing", false);
+            }
+        }
+
+        private void SV1_DirectManipulationCompleted2(object sender, object e)
+        {
+            SV12.DirectManipulationCompleted -= SV1_DirectManipulationCompleted2;
+            loadingStatus();
+        }
+
     }
 }

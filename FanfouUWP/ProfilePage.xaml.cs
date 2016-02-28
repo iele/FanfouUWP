@@ -11,7 +11,6 @@ using FanfouUWP.Common;
 
 using FanfouUWP.FanfouAPI;
 using FanfouUWP.FanfouAPI.Items;
-using FanfouUWP.UserPages;
 using FanfouUWP.Utils;
 
 namespace FanfouUWP

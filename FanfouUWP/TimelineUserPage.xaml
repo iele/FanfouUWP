@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="FanfouUWP.UserPages.TagUserPage"
+    x:Class="FanfouUWP.TimelineUserPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FanfouUWP"
@@ -10,10 +10,10 @@
     mc:Ignorable="d" RequestedTheme="Light"  >
 
     <Page.Resources>
-        <DataTemplate x:Key="UserItemControl">
-            <ItemControl:UserItemControl DataContext="{Binding}"
-                                         Width="{Binding ActualWidth, ElementName=userGridView}"
-                                         Margin="0,3" />
+        <DataTemplate x:Key="StatusItemControl">
+            <ItemControl:StatusItemControl DataContext="{Binding}"
+                                          
+                                           Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
     <Page.Background>
@@ -31,9 +31,9 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock TextWrapping="Wrap" x:Name="title" Margin="12,12,0,12" VerticalAlignment="Center"
-                           FontSize="21.667" Foreground="White" />
-        <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="userGridView" ItemsSource="{Binding  users}"
-                  ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True"
-                  ItemClick="usersGridView_ItemClick" />
+                           FontSize="22.667" />
+        <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="statusesGridView"
+                  ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
     </Grid>
 </Page>

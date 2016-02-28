@@ -8,7 +8,7 @@ using FanfouUWP.Common;
 
 using FanfouUWP.FanfouAPI.Items;
 
-namespace FanfouUWP.UserPages
+namespace FanfouUWP
 {
     public sealed partial class TagUserPage : Page
     {

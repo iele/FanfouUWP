@@ -73,6 +73,35 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+
+            <VisualStateGroup x:Name="PullToRefreshStates">
+                <VisualState x:Name="PullToRefresh">
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator2"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         To="0"
+                                         Duration="0:0:0.200"/>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator4"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         To="0"
+                                         Duration="0:0:0.200"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Refreshing">
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator2"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         From="0"
+                                         To="360"
+                                         Duration="0:0:0.400" RepeatBehavior="Forever"/>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator4"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         From="0"
+                                         To="360"
+                                         Duration="0:0:0.400" RepeatBehavior="Forever"/>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid x:Name="mainGrid">
             <Grid.RowDefinitions>
@@ -85,18 +114,82 @@
             <Pivot Grid.Row="0" Margin="0" x:Name="pivot" MaxWidth="800">
                 <PivotItem Header="我的消息" Margin="0">
                     <Grid>
-                        <ListView x:Name="statusesGridView" 
+                        <CustomControl:PushToRefreshBorder x:Name="OuterCustomPanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                            <ScrollViewer x:Name="SV1"
+                          ViewChanged="ScrollViewer_ViewChanged" VerticalSnapPointsType="MandatorySingle"  VerticalSnapPointsAlignment="Near"
+                          VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                                <CustomControl:PushToRefreshPanel x:Name="InnerCustomPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border Background="White" Height="100" Width="{Binding ElementName=statusesGridView, Path=ActualWidth}" HorizontalAlignment="Stretch">
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Image x:Name="refreshIndicator"
+                                                Width="25"
+                                                Height="25"
+                                                Margin="5"
+                                                VerticalAlignment="Bottom"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Source="Assets/OuterCircle.png"
+                                                HorizontalAlignment="Center"/>
+                                            <Image x:Name="refreshIndicator2"
+                                                Width="25"
+                                                Height="25"
+                                                Margin="5"
+                                                VerticalAlignment="Bottom"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Source="ms-appx:///Assets/InnerCircle.png"
+                                                HorizontalAlignment="Center">
+                                                <Image.RenderTransform>
+                                                    <RotateTransform/>
+                                                </Image.RenderTransform>
+                                            </Image>
+                                        </Grid>
+                                    </Border>
+                                    <ListView x:Name="statusesGridView" 
                         ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}"
 						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
-                        </ListView>
+                                    </ListView>
+                                </CustomControl:PushToRefreshPanel>
+                            </ScrollViewer>
+                        </CustomControl:PushToRefreshBorder>
                     </Grid>
                 </PivotItem>
                 <PivotItem Header="提及我的" Margin="0">
                     <Grid>
-                        <ListView x:Name="mentionsGridView" ItemTemplate="{StaticResource MentionsItemControl}"
+                        <CustomControl:PushToRefreshBorder x:Name="OuterCustomPanel2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <ScrollViewer x:Name="SV12"
+                          ViewChanged="ScrollViewer_ViewChanged2" VerticalSnapPointsType="MandatorySingle"  VerticalSnapPointsAlignment="Near"
+                          VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                                <CustomControl:PushToRefreshPanel x:Name="InnerCustomPanel2" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch">
+                                    <Border Background="White" Height="100" Width="{Binding ElementName=mentionsGridView, Path=ActualWidth}" HorizontalAlignment="Stretch" >
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Image x:Name="refreshIndicator3"
+                                                Width="25"
+                                                Height="25"
+                                                Margin="5"
+                                                VerticalAlignment="Bottom"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Source="Assets/OuterCircle.png"
+                                                HorizontalAlignment="Center"/>
+                                            <Image x:Name="refreshIndicator4"
+                                                Width="25"
+                                                Height="25"
+                                                Margin="5"
+                                                VerticalAlignment="Bottom"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Source="ms-appx:///Assets/InnerCircle.png"
+                                                HorizontalAlignment="Center">
+                                                <Image.RenderTransform>
+                                                    <RotateTransform/>
+                                                </Image.RenderTransform>
+                                            </Image>
+                                        </Grid>
+                                    </Border>
+                                    <ListView x:Name="mentionsGridView" ItemTemplate="{StaticResource MentionsItemControl}"
 						ItemsSource="{x:Bind mentions}"
 						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
-                        </ListView>
+                                    </ListView>
+                                </CustomControl:PushToRefreshPanel>
+                            </ScrollViewer>
+                        </CustomControl:PushToRefreshBorder>
                     </Grid>
                 </PivotItem>
             </Pivot>
@@ -116,31 +209,31 @@
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  user.statuses_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  user.statuses_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                             <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
         				Tapped="favorite_Tapped" MinWidth="40">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  user.favourites_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  user.favourites_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                             <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
         				Tapped="follower_Tapped" MinWidth="40">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  user.followers_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  user.followers_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                             <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
         				Tapped="friend_Tapped" MinWidth="40">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
-        					Text="{Binding  user.friends_count}" VerticalAlignment="Top" FontSize="26.667" />
+        					Text="{Binding  user.friends_count}" VerticalAlignment="Top" FontSize="22.667" />
                             </StackPanel>
                         </GridView>
-                        <GridView x:Name="taglist" Margin="0" ItemsSource="{Binding  tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
+                        <GridView x:Name="taglist" Margin="0" ItemsSource="{x:Bind tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
                             <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>

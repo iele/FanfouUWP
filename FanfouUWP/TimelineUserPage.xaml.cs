@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using FanfouUWP.Common;
+using System.Linq;
 
 using FanfouUWP.FanfouAPI.Items;
 using FanfouUWP.Utils;
 
-namespace FanfouUWP.UserPages
+namespace FanfouUWP
 {
-    public sealed partial class ImageUserPage : Page
+    public sealed partial class TimelineUserPage : Page
     {
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly NavigationHelper navigationHelper;
@@ -20,7 +20,7 @@ namespace FanfouUWP.UserPages
         private readonly PaginatedCollection<Status> statuses = new PaginatedCollection<Status>();
         private User user;
 
-        public ImageUserPage()
+        public TimelineUserPage()
         {
             InitializeComponent();
 
@@ -30,7 +30,7 @@ namespace FanfouUWP.UserPages
                 {
                     try
                     {
-                        var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, c, max_id: statuses.Last().id);
+                        var list = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(c, id: user.id, max_id: statuses.Last().id);
 
                         if (list.Count == 0)
                             statuses.HasMoreItems = false;
@@ -45,11 +45,11 @@ namespace FanfouUWP.UserPages
                 }
                 return 0;
             };
+
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
         }
-
 
         public NavigationHelper NavigationHelper
         {
@@ -66,12 +66,14 @@ namespace FanfouUWP.UserPages
             defaultViewModel["statuses"] = statuses;
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
 
-            title.Text = user.screen_name + "的图片";
+            title.Text = user.screen_name + "的时间线";
             try
             {
-                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, id: user.id);
 
-                Utils.StatusesReform.append(statuses, list);
+                statuses.Clear();
+                StatusesReform.append(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)
             {
@@ -87,9 +89,11 @@ namespace FanfouUWP.UserPages
         {
             try
             {
-                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, id: user.id);
 
-                Utils.StatusesReform.append(statuses, list);
+                statuses.Clear();
+                StatusesReform.append(statuses, ss);
+                defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)
             {

@@ -19,6 +19,7 @@ using Windows.UI;
 using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
+using System.Collections.ObjectModel;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -33,6 +34,8 @@ namespace FanfouUWP
         private readonly NavigationHelper navigationHelper;
 
         private Status status;
+
+        private ObservableCollection<string> tags = new ObservableCollection<string>();
 
         public StatusPage()
         {
@@ -81,6 +84,18 @@ namespace FanfouUWP
             TextToLinks(status.text);
 
             contextMessage.Children.Clear();
+
+            try
+            {
+                tags.Clear();
+                var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.status.user.id);
+                foreach (var item in list)
+                    tags.Add(item);
+            }
+            catch (Exception)
+            {
+                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+            }
 
             if (this.status.favorited)
             {
@@ -488,10 +503,10 @@ namespace FanfouUWP
         {
 
         }
-
         private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);
         }
+
     }
 }

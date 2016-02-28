@@ -12,9 +12,13 @@
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}">
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
-            <ItemControl:StatusItemControl DataContext="{Binding}"
-                                          
-                                           Margin="0,3" />
+            <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="UserItemControl">
+            <ItemControl:UserItemControl DataContext="{Binding}"
+                                         Width="{Binding ActualWidth, ElementName=userGridView}"
+                                         Margin="0,3" />
         </DataTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
@@ -23,66 +27,202 @@
                 <AppBarButton x:Name="RequestItem" Label="好友请求管理" Click="RequestItem_Click" />
                 <AppBarButton x:Name="BlackItem" Label="黑名单管理" Click="BlackItem_Click" />
             </CommandBar.SecondaryCommands>
-            <AppBarButton  Icon="AllApps" x:Name="StatusItem" Label="消息" Click="StatusItem_Click" />
             <AppBarButton Label="搜索" Icon="Zoom" x:Name="SearchItem" Click="SearchItem_Click" />
             <AppBarButton x:Name="ImageItem" Icon="Pictures" Label="查看图片流" Click="ImageItem_Click" />
             <AppBarButton x:Name="ProfileItem" Icon="Edit" Label="更新简介" Click="ProfileItem_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid x:Name="LayoutRoot" Background="white">
-        <ScrollViewer Margin="0" Grid.Row="1" HorizontalContentAlignment="Center">
-            <StackPanel Margin="12,12,12,0">
-                <GridView>
-                    <StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" Tapped="timeline_Tapped" MinWidth="40">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
+    <Grid Margin="0,0,0,0" x:Name="LayoutRoot" HorizontalAlignment="Center">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="widerState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1241" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Value="Center" Target="mainGrid.HorizontalAlignment"/>
+                        <Setter Value="Center" Target="pivot.HorizontalAlignment"/>
+                        <Setter Value="400" Target="selfUser.Width" />
+                        <Setter Value="Visible" Target="selfUser.Visibility" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="841" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Value="Center" Target="mainGrid.HorizontalAlignment"/>
+                        <Setter Value="Center" Target="pivot.HorizontalAlignment"/>
+                        <Setter Value="0" Target="selfUser.Width" />
+                        <Setter Value="Collapsed" Target="selfUser.Visibility" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="narrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Value="Stretch" Target="mainGrid.HorizontalAlignment"/>
+                        <Setter Value="Stretch" Target="pivot.HorizontalAlignment"/>
+                        <Setter Value="0" Target="selfUser.Width" />
+                        <Setter Value="Collapsed" Target="selfUser.Visibility" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid x:Name="mainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Pivot Grid.Row="0" Margin="0" x:Name="pivot" MaxWidth="800">
+                <PivotItem Margin="0" Header="消息">
+                    <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="statusesGridView"
+                  ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
+                </PivotItem>
+                <PivotItem Margin="0" Header="收藏">
+                    <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="favoriteGridView"
+                  ItemsSource="{x:Bind favorites}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  IsItemClickEnabled="True" ItemClick="favoriteGridView_ItemClick" />
+                </PivotItem>
+                <PivotItem Margin="0" Header="朋友">
+                    <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="friendsGridView" ItemsSource="{x:Bind friends}"
+                  ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True"
+                  ItemClick="friendsidView_ItemClick" />
+                </PivotItem>
+                <PivotItem Margin="0" Header="关注">
+                    <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="followersGridView" ItemsSource="{x:Bind followers}"
+                  ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True"
+                  ItemClick="followersGridView_ItemClick" />
+                </PivotItem>
+                <PivotItem x:Name="userItem" Margin="0" Header="信息">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="12,12,12,12">
+                            <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
+                  Source="{Binding  user.profile_image_url}" Margin="0" />
+                            <TextBlock Text="{Binding  user.screen_name}" FontSize="21.333" VerticalAlignment="Center"
+                      Margin="12,0,0,0" HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Margin="12,12,12,0">
+                            <GridView>
+                                <StackPanel Margin="3,0,3,0" x:Name="timelinepivot" Orientation="Vertical" Tapped="timeline_Tapped" MinWidth="40">
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                    <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding  user.statuses_count}" VerticalAlignment="Top" FontSize="26.667" />
-                    </StackPanel>
-                    <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
+                                </StackPanel>
+                                <StackPanel Margin="3,0,3,0" x:Name="favoritepivot" Orientation="Vertical" Grid.Column="1"
         				Tapped="favorite_Tapped" MinWidth="40">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                    <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding  user.favourites_count}" VerticalAlignment="Top" FontSize="26.667" />
-                    </StackPanel>
-                    <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
+                                </StackPanel>
+                                <StackPanel Margin="3,0,3,0" x:Name="followerpivot" Orientation="Vertical" Grid.Row="1"
         				Tapped="follower_Tapped" MinWidth="40">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                    <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding  user.followers_count}" VerticalAlignment="Top" FontSize="26.667" />
-                    </StackPanel>
-                    <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
+                                </StackPanel>
+                                <StackPanel Margin="3,0,3,0" x:Name="friendpivot" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
         				Tapped="friend_Tapped" MinWidth="40">
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                    <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding  user.friends_count}" VerticalAlignment="Top" FontSize="26.667" />
-                    </StackPanel>
-                </GridView>
-                <GridView x:Name="taglist" Margin="0" ItemsSource="{Binding  tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-                <TextBlock TextWrapping="Wrap" Text="{Binding  user.description}" FontSize="18" Margin="0,12,0,0" Foreground="#FF333333" IsTextSelectionEnabled="True" />
-                <TextBlock TextWrapping="Wrap"  FontSize="16" Margin="0,12,0,0" Foreground="#FF666666" >
+                                </StackPanel>
+                            </GridView>
+                            <GridView x:Name="taglistpivot" Margin="0" ItemsSource="{Binding  tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding  user.description}" FontSize="18" Margin="0,12,0,0" Foreground="#FF333333" IsTextSelectionEnabled="True" />
+                            <TextBlock TextWrapping="Wrap"  FontSize="16" Margin="0,12,0,0" Foreground="#FF666666" >
                     <Hyperlink NavigateUri="{Binding  user.url}" FontSize="16" Foreground="#FF666666">
                         <Run Text="{Binding  user.url}" />
                     </Hyperlink>
-                </TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
-                    <TextBlock TextWrapping="Wrap" Text="{Binding  user.location}" Margin="0,0,0,0" FontSize="16"
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                <TextBlock TextWrapping="Wrap" Text="{Binding  user.location}" Margin="0,0,0,0" FontSize="16"
         				HorizontalAlignment="Left" Foreground="#FF999999" />
-                    <TextBlock TextWrapping="Wrap" Text="{Binding  user.gender}" FontSize="16"
+                                <TextBlock TextWrapping="Wrap" Text="{Binding  user.gender}" FontSize="16"
         				HorizontalAlignment="Left" Foreground="#FF999999" Margin="6,0,0,0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </PivotItem>
+            </Pivot>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" x:Name="selfUser" HorizontalAlignment="Left">
+                <StackPanel>
+                    <TextBlock Text="用户信息" FontSize="21.333" 
+                      Margin="12,12,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="12,12,12,12">
+                        <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
+                  Source="{Binding  user.profile_image_url}" Margin="0" />
+                        <TextBlock Text="{Binding  user.screen_name}" FontSize="21.333" VerticalAlignment="Center"
+                      Margin="12,0,0,0" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Margin="12,12,12,0">
+                        <GridView>
+                            <StackPanel Margin="3,0,3,0" x:Name="timeline" Orientation="Vertical" Tapped="timeline_Tapped" MinWidth="40">
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="消息" VerticalAlignment="Top"
+        					FontSize="20" Foreground="Gray" />
+                                <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+        					Text="{Binding  user.statuses_count}" VerticalAlignment="Top" FontSize="22.667" />
+                            </StackPanel>
+                            <StackPanel Margin="3,0,3,0" x:Name="favorite" Orientation="Vertical" Grid.Column="1"
+        				Tapped="favorite_Tapped" MinWidth="40">
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏" VerticalAlignment="Top"
+        					FontSize="20" Foreground="Gray" />
+                                <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+        					Text="{Binding  user.favourites_count}" VerticalAlignment="Top" FontSize="22.667" />
+                            </StackPanel>
+                            <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
+        				Tapped="follower_Tapped" MinWidth="40">
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
+        					FontSize="20" Foreground="Gray" />
+                                <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+        					Text="{Binding  user.followers_count}" VerticalAlignment="Top" FontSize="22.667" />
+                            </StackPanel>
+                            <StackPanel Margin="3,0,3,0" x:Name="friend" Orientation="Vertical" Grid.Column="1" Grid.Row="1"
+        				Tapped="friend_Tapped" MinWidth="40">
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="朋友" VerticalAlignment="Top"
+        					FontSize="20" Foreground="Gray" />
+                                <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
+        					Text="{Binding  user.friends_count}" VerticalAlignment="Top" FontSize="22.667" />
+                            </StackPanel>
+                        </GridView>
+                        <GridView x:Name="taglist" Margin="0" ItemsSource="{Binding  tags}" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="Taglist_OnItemClick">
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" FontSize="20" Margin="0,6,5,6"/>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding  user.description}" FontSize="18" Margin="0,12,0,0" Foreground="#FF333333" IsTextSelectionEnabled="True" />
+                        <TextBlock TextWrapping="Wrap"  FontSize="16" Margin="0,12,0,0" Foreground="#FF666666" >
+                    <Hyperlink NavigateUri="{Binding  user.url}" FontSize="16" Foreground="#FF666666">
+                        <Run Text="{Binding  user.url}" />
+                    </Hyperlink>
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                            <TextBlock TextWrapping="Wrap" Text="{Binding  user.location}" Margin="0,0,0,0" FontSize="16"
+        				HorizontalAlignment="Left" Foreground="#FF999999" />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding  user.gender}" FontSize="16"
+        				HorizontalAlignment="Left" Foreground="#FF999999" Margin="6,0,0,0" />
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
-
-            </StackPanel>
-        </ScrollViewer>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>

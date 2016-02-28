@@ -111,7 +111,7 @@
     <Compile Include="Common\PaginatedCollection.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="CustomControl\MyPanel.cs" />
+    <Compile Include="CustomControl\PullToRefreshPanel.cs" />
     <Compile Include="CustomControl\TitleBarControl.xaml.cs">
       <DependentUpon>TitleBarControl.xaml</DependentUpon>
     </Compile>
@@ -239,19 +239,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserPages\TagUserPage.xaml">
+    <Page Include="TagUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserPages\ImageUserPage.xaml">
+    <Page Include="ImageUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserPages\TimelineUserPage.xaml">
+    <Page Include="TimelineUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserPages\SearchUserPage.xaml">
+    <Page Include="SearchUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -357,16 +357,16 @@
     <Compile Include="SelfPage.xaml.cs">
       <DependentUpon>SelfPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserPages\TagUserPage.xaml.cs">
+    <Compile Include="TagUserPage.xaml.cs">
       <DependentUpon>TagUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserPages\ImageUserPage.xaml.cs">
+    <Compile Include="ImageUserPage.xaml.cs">
       <DependentUpon>ImageUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserPages\TimelineUserPage.xaml.cs">
+    <Compile Include="TimelineUserPage.xaml.cs">
       <DependentUpon>TimelineUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserPages\SearchUserPage.xaml.cs">
+    <Compile Include="SearchUserPage.xaml.cs">
       <DependentUpon>SearchUserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserPage.xaml.cs">
@@ -471,11 +471,17 @@
     <Content Include="Assets\forward-50.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\InnerCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\login.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\message_outline-512.png" />
     <Content Include="Assets\newspaper-512.png" />
+    <Content Include="Assets\OuterCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\search-512.png" />
     <Content Include="Assets\services-512.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
