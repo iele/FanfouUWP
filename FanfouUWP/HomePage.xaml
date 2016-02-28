@@ -77,6 +77,14 @@
             <VisualStateGroup x:Name="PullToRefreshStates">
                 <VisualState x:Name="PullToRefresh">
                     <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         To="0"
+                                         Duration="0:0:0.200"/>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator3"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         To="0"
+                                         Duration="0:0:0.200"/>
                         <DoubleAnimation Storyboard.TargetName="refreshIndicator2"
                                          Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                          To="0"
@@ -89,16 +97,26 @@
                 </VisualState>
                 <VisualState x:Name="Refreshing">
                     <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         From="0" 
+                                         To="360"
+                                         Duration="0:0:0.8" RepeatBehavior="Forever"/>
+                        <DoubleAnimation Storyboard.TargetName="refreshIndicator3"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                         From="0"
+                                         To="360"
+                                         Duration="0:0:0.8" RepeatBehavior="Forever"/>
                         <DoubleAnimation Storyboard.TargetName="refreshIndicator2"
                                          Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                          From="0"
                                          To="360"
-                                         Duration="0:0:0.400" RepeatBehavior="Forever"/>
+                                         Duration="0:0:0.7" RepeatBehavior="Forever"/>
                         <DoubleAnimation Storyboard.TargetName="refreshIndicator4"
                                          Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                          From="0"
                                          To="360"
-                                         Duration="0:0:0.400" RepeatBehavior="Forever"/>
+                                         Duration="0:0:0.7" RepeatBehavior="Forever"/>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
@@ -127,8 +145,12 @@
                                                 Margin="5"
                                                 VerticalAlignment="Bottom"
                                                 RenderTransformOrigin="0.5,0.5"
-                                                Source="Assets/OuterCircle.png"
-                                                HorizontalAlignment="Center"/>
+                                                Source="ms-appx:///Assets/OuterCircle.png"
+                                                HorizontalAlignment="Center">
+                                                <Image.RenderTransform>
+                                                    <RotateTransform/>
+                                                </Image.RenderTransform>
+                                            </Image>
                                             <Image x:Name="refreshIndicator2"
                                                 Width="25"
                                                 Height="25"
@@ -167,8 +189,12 @@
                                                 Margin="5"
                                                 VerticalAlignment="Bottom"
                                                 RenderTransformOrigin="0.5,0.5"
-                                                Source="Assets/OuterCircle.png"
-                                                HorizontalAlignment="Center"/>
+                                                Source="ms-appx:///Assets/OuterCircle.png"
+                                                HorizontalAlignment="Center">
+                                                <Image.RenderTransform>
+                                                    <RotateTransform/>
+                                                </Image.RenderTransform>
+                                            </Image>
                                             <Image x:Name="refreshIndicator4"
                                                 Width="25"
                                                 Height="25"
