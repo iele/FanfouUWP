@@ -22,7 +22,7 @@ namespace FanfouUWP
         private readonly NavigationHelper navigationHelper;
 
         private string photo;
-
+        
         public ImagePage()
         {
             InitializeComponent();

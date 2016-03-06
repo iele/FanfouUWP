@@ -199,6 +199,12 @@ namespace FanfouUWP
             checkUserItem();
             checkFriendship();
 
+            statuses.Clear();
+            favorites.Clear();
+            followers.Clear();
+            friends.Clear();
+            tags.Clear();
+
             try
             {
                 var ss = await FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 60);
@@ -429,22 +435,22 @@ namespace FanfouUWP
 
         private void statusesGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(StatusPage), DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         private void favoriteGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(StatusPage), DataConverter<Status>.Convert(e.ClickedItem as Status));
         }
 
         private void friendsidView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(e.ClickedItem as User));
         }
 
         private void followersGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(e.ClickedItem as User));
         }
     }
 }
