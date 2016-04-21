@@ -449,5 +449,12 @@ namespace FanfouUWP
             loadingStatus();
         }
 
+        private void search_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                Frame.Navigate(typeof(SearchPage), search.Text);
+            }
+        }
     }
 }

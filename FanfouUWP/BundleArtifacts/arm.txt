@@ -1,0 +1,5 @@
+MainPackage=C:\Users\gordondu\Documents\GitHubVisualStudio\FanfouUWP\FanfouUWP\bin\ARM\Debug\FanfouUWP_1.0.3.0_ARM_Debug.appx
+ResourcePack=C:\Users\gordondu\Documents\GitHubVisualStudio\FanfouUWP\FanfouUWP\bin\ARM\Debug\FanfouUWP_1.0.3.0_scale-100.appx
+ResourcePack=C:\Users\gordondu\Documents\GitHubVisualStudio\FanfouUWP\FanfouUWP\bin\ARM\Debug\FanfouUWP_1.0.3.0_scale-125.appx
+ResourcePack=C:\Users\gordondu\Documents\GitHubVisualStudio\FanfouUWP\FanfouUWP\bin\ARM\Debug\FanfouUWP_1.0.3.0_scale-150.appx
+ResourcePack=C:\Users\gordondu\Documents\GitHubVisualStudio\FanfouUWP\FanfouUWP\bin\ARM\Debug\FanfouUWP_1.0.3.0_scale-400.appx

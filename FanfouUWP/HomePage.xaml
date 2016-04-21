@@ -279,7 +279,11 @@
         				HorizontalAlignment="Left" Foreground="#FF999999" Margin="6,0,0,0" />
                         </StackPanel>
                     </StackPanel>
-                    <TextBlock Text="热门话题" FontSize="21.333"
+                    <TextBlock Text="搜索消息" FontSize="21.333"
+                      Margin="12,12,0,0" />
+                    <TextBox x:Name="search" Margin="12,12,12,0" TextWrapping="NoWrap" Text=""
+                         InputScope="Search" PlaceholderText="键入以搜索消息" VerticalAlignment="Center" KeyDown="search_KeyDown" />
+                    <TextBlock Text="热门话题" FontSize="21.333" 
                       Margin="12,12,0,0"/>
                     <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="trendsGridView"
                   ItemsSource="{Binding  trends}" ItemTemplate="{StaticResource TrendsItemControl}" Grid.Row="1"

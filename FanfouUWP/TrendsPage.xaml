@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    mc:Ignorable="d" RequestedTheme="Light"   >
+    mc:Ignorable="d" RequestedTheme="Light"  >
+
 
     <Page.Resources>
         <DataTemplate x:Key="TrendsItemControl">
@@ -18,7 +19,7 @@
         <SolidColorBrush Color="#FFFFFFFF" />
     </Page.Background>
 
-    <Grid Background="White" MaxHeight="800" HorizontalAlignment="Center">
+    <Grid Background="White" x:Name="LayoutRoot" MaxWidth="800" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />

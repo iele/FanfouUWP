@@ -19,7 +19,8 @@
         public const string STATUS_MENTION_TIMELINE = "statuses/mentions.json";
         public const string STATUS_UPDATE = "statuses/update.json";
         public const string STATUS_DESTROY = "statuses/destroy.json";
-        public const string STATUSES_CONTEXT_TIMELINE = "statuses/context_timeline.json";
+        public const string STATUS_SHOW = "statuses/show.json";
+        public const string STATUS_CONTEXT_TIMELINE = "statuses/context_timeline.json";
 
         public const string FAVORITES_ID = "favorites/id.json";
         public const string FAVORITES_CREATE_ID = "favorites/create/";

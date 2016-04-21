@@ -173,6 +173,18 @@ namespace FanfouUWP.FanfouAPI
             return result;
         }
 
+        public async Task<Status> StatusShow(string id)
+        {
+            RestClient client = GetClient();
+            var parameters = new Parameters();
+            parameters.Add("id", id);
+            parameters.Add("format", "html");
+
+            Status result =
+                await client.GetRequestObject<Status>(FanfouConsts.STATUS_SHOW, parameters);
+            return result;
+        }
+
         public async Task<List<Status>> StatusContextTimeline(string id)
         {
             RestClient client = GetClient();
@@ -180,7 +192,7 @@ namespace FanfouUWP.FanfouAPI
             parameters.Add("id", id);
 
             List<Status> result =
-                await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUSES_CONTEXT_TIMELINE, parameters);
+                await client.GetRequestObjectCollection<Status>(FanfouConsts.STATUS_CONTEXT_TIMELINE, parameters);
             return result;
         }
 

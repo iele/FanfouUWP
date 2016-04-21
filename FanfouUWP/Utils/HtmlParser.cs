@@ -16,7 +16,8 @@ namespace FanfouUWP.Utils
         }
         public static MatchCollection ParseUsername(this string s)
         {
-            return Regex.Matches(s, @"(@)((?:\w*))");
+            //<a href="http://fanfou.com/lakeshore" class="former">lakeshore</a>
+            return Regex.Matches(s, "(@)(<a href=\"http://fanfou.com/([(~)?\\w]+)\" class=\"former\">(([(~)?\\w]+))</a>");
          }
         public static MatchCollection ParseHashtag(this string s)
         {

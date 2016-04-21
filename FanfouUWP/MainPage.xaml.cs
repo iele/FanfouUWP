@@ -124,10 +124,6 @@ namespace FanfouUWP
             Splitter.IsPaneOpen = (Splitter.IsPaneOpen == true) ? false : true;
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            ScenarioFrame.Navigate(typeof(AboutPage));
-        }
         private void InformationButton_Click(object sender, RoutedEventArgs e)
         {
             ScenarioFrame.Navigate(typeof(InformationPage));

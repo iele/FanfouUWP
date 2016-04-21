@@ -144,13 +144,12 @@
                         <Grid x:Name="ContentRoot" d:LayoutOverrides="Width" Background="White">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="1*" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="12,6,12,0" TextWrapping="Wrap" x:Name="text" 
-        					Text="{Binding status.text, Converter={StaticResource HtmlToTextConverter}}" VerticalAlignment="Top"
-        					FontSize="16.667" IsTextSelectionEnabled="True" />
+                            <WebView Margin="6,12,6,0" x:Name="text"  VerticalAlignment="Top" Grid.RowSpan="1" DOMContentLoaded="text_DOMContentLoaded" 
+                                     SizeChanged="text_SizeChanged" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                             <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1">
                                 <TextBlock Padding="0,5,0,0"
         						Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}"

@@ -141,5 +141,10 @@ namespace FanfouUWP
         }
 
         #endregion
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AboutPage));
+        }
     }
 }

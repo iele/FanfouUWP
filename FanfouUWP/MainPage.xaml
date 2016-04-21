@@ -65,9 +65,9 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <ToggleButton Click="Button_Click" VerticalAlignment="Stretch" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" Background="Gray" Width="48" Canvas.ZIndex="100" >
+            <Button Click="Button_Click" VerticalAlignment="Stretch" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" Background="Gray" Width="48" Canvas.ZIndex="100" >
                 <FontIcon x:Name="Hamburger1" FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" Margin="0"/>
-            </ToggleButton>
+            </Button>
             <Rectangle Height="48" Fill="DeepSkyBlue" Grid.ColumnSpan="2"/>
             <TextBlock Height="28" Margin="12,10,0,10" x:Name="name" Text="{x:Bind currentUser.screen_name, Mode=OneWay}" Foreground="White"  Grid.Column="1" Canvas.ZIndex="100" FontSize="18.667" VerticalAlignment="Center" />
              <SplitView x:Name="Splitter" DisplayMode="CompactInline"  Grid.Row="0" Grid.RowSpan="2" OpenPaneLength="205" CompactPaneLength="48" Grid.ColumnSpan="2">
@@ -106,30 +106,23 @@
                         </ListViewItem>
                         <ListViewItem Tapped="TrendsGrid_Tapped">
                             <StackPanel Orientation="Horizontal" >
-                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="List"
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="OpenWith"
 									VerticalAlignment="Center"  />
                                 <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="热门话题" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ListViewItem>
                         <ListViewItem  Tapped="FindGrid_Tapped" IsEnabled="True">
                             <StackPanel Orientation="Horizontal"  >
-                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Filter"
+                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Find"
 									VerticalAlignment="Center"/>
                                 <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="搜索" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ListViewItem>
                         <ListViewItem Tapped="InformationButton_Click">
                             <StackPanel Orientation="Horizontal"  >
-                                <SymbolIcon HorizontalAlignment="Stretch" Symbol="Caption"
-									VerticalAlignment="Center"/>
-                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="支持与反馈" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </ListViewItem>
-                        <ListViewItem Tapped="AboutButton_Click" >
-                            <StackPanel Orientation="Horizontal">
                                 <SymbolIcon HorizontalAlignment="Stretch" Symbol="Help"
 									VerticalAlignment="Center"/>
-                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="关于应用" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Margin="18,0,0,0" TextWrapping="NoWrap" Text="支持与反馈" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ListViewItem>
                         <ListViewItem Tapped="SettingButton_Click" >
