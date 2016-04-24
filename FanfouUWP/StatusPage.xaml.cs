@@ -37,16 +37,29 @@ namespace FanfouUWP
 
         private ObservableCollection<string> tags = new ObservableCollection<string>();
 
-        private string template = @"<html>
+        private string template = @"
+        <html>
             <head>
-               <script type='text/javascript'>
+                <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;' name='viewport' />                
+                <script type='text/javascript'>
+                    window.onload=function() {
+                        var lists = document.querySelectorAll('a');
+                        for (var i = 0; i < lists.length; ++i) {
+                            lists[i].addEventListener('click', function(event) {
+                                window.external.notify(event.target.href);
+                                event.preventDefault();
+                                event.stopPropagation();
+                            });
+                        }
+                    };
+                    
                     function getHeight(){ 
                         return document.getElementById('main').offsetHeight.toString();
                     }
                 </script>
             </head>
             <body>
-                <div id='main' style='font-family:Microsoft YaHei'>{0}</div>
+                <div id='main' style='font-family:Microsoft YaHei;font-size:18px'>{0}</div>
             </body>
         </html>";
 
@@ -410,7 +423,7 @@ namespace FanfouUWP
             {
                 var result = await text.InvokeScriptAsync("getHeight", null);
           
-                text.Height = int.Parse(result) + 24;
+                text.Height = int.Parse(result) + 18;
             }
             catch (Exception) { }
         }
@@ -421,9 +434,14 @@ namespace FanfouUWP
             {
                 var result = await text.InvokeScriptAsync("getHeight", null);
            
-                text.Height = int.Parse(result) + 24;
+                text.Height = int.Parse(result) + 18;
             }
             catch (Exception) { }
+        }
+
+        private void text_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+            
         }
     }
 }

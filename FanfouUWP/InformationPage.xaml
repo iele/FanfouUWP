@@ -48,7 +48,7 @@
                 <Button x:Name="MarketButton" Content="到市场提出意见" VerticalAlignment="Top" Click="MarketButton_Click"
                     HorizontalAlignment="Stretch" Margin="12,12" IsEnabled="False"/>
                 <Button x:Name="AboutButton" Content="关于饭否UWP" VerticalAlignment="Top" Click="AboutButton_Click"
-                    HorizontalAlignment="Stretch" Margin="12,12" IsEnabled="False"/>
+                    HorizontalAlignment="Stretch" Margin="12,12"/>
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="0" Margin="12,12,12,12" VerticalAlignment="Center">

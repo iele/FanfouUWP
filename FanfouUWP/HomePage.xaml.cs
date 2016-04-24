@@ -181,28 +181,28 @@ namespace FanfouUWP
                 loadingStatus();
             }, null, 60000, 60000);
 
-            setTiles();
+            //setTiles();
         }
 
-        private async void setTiles()
-        {
-            Utils.TileUpdater.Clear();
+        //private async void setTiles()
+        //{
+        //    Utils.TileUpdater.Clear();
 
-            if (statuses.Count() < 5)
-            {
-                foreach (var i in statuses)
-                {
-                    Utils.TileUpdater.SetTile(i.user.screen_name, i.text);
-                }
-            }
-            else
-            {
-                for (var i = 0; i < 5; i++)
-                {
-                    Utils.TileUpdater.SetTile(statuses[i].user.screen_name, statuses[i].text);
-                }
-            }
-        }
+        //    if (statuses.Count() < 5)
+        //    {
+        //        foreach (var i in statuses)
+        //        {
+        //            Utils.TileUpdater.SetTile(i.user.screen_name, i.text);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (var i = 0; i < 5; i++)
+        //        {
+        //            Utils.TileUpdater.SetTile(statuses[i].user.screen_name, statuses[i].text);
+        //        }
+        //    }
+        //}
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {

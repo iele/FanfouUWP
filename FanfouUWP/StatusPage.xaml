@@ -147,10 +147,12 @@
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <WebView Margin="6,12,6,0" x:Name="text"  VerticalAlignment="Top" Grid.RowSpan="1" DOMContentLoaded="text_DOMContentLoaded" 
-                                     SizeChanged="text_SizeChanged" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
-                            <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1">
+                            <WebView Margin="6,0,6,0" x:Name="text"  VerticalAlignment="Top" Grid.RowSpan="1" DOMContentLoaded="text_DOMContentLoaded" 
+                                     SizeChanged="text_SizeChanged" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScriptNotify="text_ScriptNotify"/>
+                            <TextBlock Text="{Binding status.text}" TextWrapping="Wrap" Grid.Row="1" IsTextSelectionEnabled="True"/>
+                            <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
                                 <TextBlock Padding="0,5,0,0"
         						Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0"
@@ -172,9 +174,8 @@
         						Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}" />
                             </StackPanel>
                             <Image x:Name="image" Tapped="Image_Tapped" Margin="12,6,12,12" VerticalAlignment="Top"
-        					Source="{Binding status.photo.largeurl}" Grid.Row="2" Stretch="Uniform"  HorizontalAlignment="Left"/>
-                            <Maps:MapControl x:Name="Map" Margin="12,6,12,12" Grid.Row="3" Height="600" Visibility="Collapsed" HorizontalAlignment="Left" MapServiceToken="P3dltpg7K4yR4K64mKwt~HwVbcy7A-QIlutVLg1_6Fw~AqciCGUFhoLbX2byK6zpUfYz5oo6TFoXndQMZ_KPYIy73Dw20SR8gdO_QXGcSwdD
-"/>
+        					Source="{Binding status.photo.largeurl}" Grid.Row="3" Stretch="Uniform"  HorizontalAlignment="Left"/>
+                            <Maps:MapControl x:Name="Map" Margin="12,6,12,12" Grid.Row="4" Height="600" Visibility="Collapsed" HorizontalAlignment="Left" MapServiceToken="P3dltpg7K4yR4K64mKwt~HwVbcy7A-QIlutVLg1_6Fw~AqciCGUFhoLbX2byK6zpUfYz5oo6TFoXndQMZ_KPYIy73Dw20SR8gdO_QXGcSwdD"/>
                         </Grid>
                         <StackPanel x:Name="context" Margin="12,0,12,12" VerticalAlignment="Top" Background="White"
         					Visibility="Collapsed" RelativePanel.RightOf="ContentRoot">
