@@ -34,7 +34,7 @@ namespace FanfouUWP.FanfouAPI.Items
     {
         [DataMember(Name = "id", IsRequired = true)]
         public string id { get; set; }
-
+        
         [DataMember(Name = "name", IsRequired = false)]
         public string name { get; set; }
 

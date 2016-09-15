@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:utils="using:FanfouUWP.Utils"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  
@@ -106,8 +107,8 @@
                 <PivotItem x:Name="userItem" Margin="0" Header="信息">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="12,12,12,12">
-                            <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
-                  Source="{Binding  user.profile_image_url}" Margin="0" />
+                            <controls:ImageEx HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
+                  Source="{Binding  user.profile_image_url}" Margin="0" IsCacheEnabled="True"/>
                             <TextBlock Text="{Binding  user.screen_name}" FontSize="21.333" VerticalAlignment="Center"
                       Margin="12,0,0,0" HorizontalAlignment="Center" />
                         </StackPanel>
@@ -169,8 +170,8 @@
                     <TextBlock Text="用户信息" FontSize="21.333" 
                       Margin="12,12,0,0"/>
                     <StackPanel Orientation="Horizontal" Margin="12,12,12,12">
-                        <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
-                  Source="{Binding  user.profile_image_url}" Margin="0" />
+                        <controls:ImageEx HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="40"
+                  Source="{Binding  user.profile_image_url}" Margin="0" IsCacheEnabled="True" />
                         <TextBlock Text="{Binding  user.screen_name}" FontSize="21.333" VerticalAlignment="Center"
                       Margin="12,0,0,0" HorizontalAlignment="Center" />
                     </StackPanel>

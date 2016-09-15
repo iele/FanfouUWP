@@ -8,6 +8,7 @@
     xmlns:CustomControl="using:FanfouUWP.CustomControl"
     xmlns:selector="using:FanfouUWP.TemplateSelector"
     xmlns:converter="using:FanfouUWP.ValueConverter"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:utils="using:FanfouUWP.Utils"
     x:Class="FanfouUWP.HomePage"
     mc:Ignorable="d" RequestedTheme="Light" Width="Auto" Height="Auto"
@@ -132,90 +133,23 @@
             <Pivot Grid.Row="0" Margin="0" x:Name="pivot" MaxWidth="800">
                 <PivotItem Header="我的消息" Margin="0">
                     <Grid>
-                        <CustomControl:PushToRefreshBorder x:Name="OuterCustomPanel" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
-                            <ScrollViewer x:Name="SV1"
-                          ViewChanged="ScrollViewer_ViewChanged" VerticalSnapPointsType="MandatorySingle"  VerticalSnapPointsAlignment="Near"
-                          VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
-                                <CustomControl:PushToRefreshPanel x:Name="InnerCustomPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                    <Border Background="White" Height="100" Width="{Binding ElementName=statusesGridView, Path=ActualWidth}" HorizontalAlignment="Stretch">
-                                        <Grid HorizontalAlignment="Stretch">
-                                            <Image x:Name="refreshIndicator"
-                                                Width="25"
-                                                Height="25"
-                                                Margin="5"
-                                                VerticalAlignment="Bottom"
-                                                RenderTransformOrigin="0.5,0.5"
-                                                Source="ms-appx:///Assets/OuterCircle.png"
-                                                HorizontalAlignment="Center">
-                                                <Image.RenderTransform>
-                                                    <RotateTransform/>
-                                                </Image.RenderTransform>
-                                            </Image>
-                                            <Image x:Name="refreshIndicator2"
-                                                Width="25"
-                                                Height="25"
-                                                Margin="5"
-                                                VerticalAlignment="Bottom"
-                                                RenderTransformOrigin="0.5,0.5"
-                                                Source="ms-appx:///Assets/InnerCircle.png"
-                                                HorizontalAlignment="Center">
-                                                <Image.RenderTransform>
-                                                    <RotateTransform/>
-                                                </Image.RenderTransform>
-                                            </Image>
-                                        </Grid>
-                                    </Border>
-                                    <ListView x:Name="statusesGridView" 
-                        ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}"
-						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
-                                    </ListView>
-                                </CustomControl:PushToRefreshPanel>
-                            </ScrollViewer>
-                        </CustomControl:PushToRefreshBorder>
+                        <controls:PullToRefreshListView Name="statusesGridView"
+	                        ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}"
+	                        OverscrollLimit="0.4"
+	                        PullThreshold="100"
+	                        PullProgressChanged="statusesGridView_PullProgressChanged"                                                         
+						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True"/>
                     </Grid>
                 </PivotItem>
                 <PivotItem Header="提及我的" Margin="0">
                     <Grid>
-                        <CustomControl:PushToRefreshBorder x:Name="OuterCustomPanel2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <ScrollViewer x:Name="SV12"
-                          ViewChanged="ScrollViewer_ViewChanged2" VerticalSnapPointsType="MandatorySingle"  VerticalSnapPointsAlignment="Near"
-                          VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
-                                <CustomControl:PushToRefreshPanel x:Name="InnerCustomPanel2" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch">
-                                    <Border Background="White" Height="100" Width="{Binding ElementName=mentionsGridView, Path=ActualWidth}" HorizontalAlignment="Stretch" >
-                                        <Grid HorizontalAlignment="Stretch">
-                                            <Image x:Name="refreshIndicator3"
-                                                Width="25"
-                                                Height="25"
-                                                Margin="5"
-                                                VerticalAlignment="Bottom"
-                                                RenderTransformOrigin="0.5,0.5"
-                                                Source="ms-appx:///Assets/OuterCircle.png"
-                                                HorizontalAlignment="Center">
-                                                <Image.RenderTransform>
-                                                    <RotateTransform/>
-                                                </Image.RenderTransform>
-                                            </Image>
-                                            <Image x:Name="refreshIndicator4"
-                                                Width="25"
-                                                Height="25"
-                                                Margin="5"
-                                                VerticalAlignment="Bottom"
-                                                RenderTransformOrigin="0.5,0.5"
-                                                Source="ms-appx:///Assets/InnerCircle.png"
-                                                HorizontalAlignment="Center">
-                                                <Image.RenderTransform>
-                                                    <RotateTransform/>
-                                                </Image.RenderTransform>
-                                            </Image>
-                                        </Grid>
-                                    </Border>
-                                    <ListView x:Name="mentionsGridView" ItemTemplate="{StaticResource MentionsItemControl}"
-						ItemsSource="{x:Bind mentions}"
-						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
-                                    </ListView>
-                                </CustomControl:PushToRefreshPanel>
-                            </ScrollViewer>
-                        </CustomControl:PushToRefreshBorder>
+                        <controls:PullToRefreshListView Name="mentionsGridView"
+	                        ItemsSource="{x:Bind mentions}" ItemTemplate="{StaticResource MentionsItemControl}"
+	                        OverscrollLimit="0.4"
+	                        PullThreshold="100"
+	                        PullProgressChanged="mentionsGridView_PullProgressChanged"                                                         
+						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True"/>
+
                     </Grid>
                 </PivotItem>
             </Pivot>

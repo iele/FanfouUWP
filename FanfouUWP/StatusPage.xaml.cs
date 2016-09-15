@@ -20,6 +20,7 @@ using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
 using System.Collections.ObjectModel;
+using HtmlAgilityPack;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -35,33 +36,9 @@ namespace FanfouUWP
 
         private Status status;
 
-        private ObservableCollection<string> tags = new ObservableCollection<string>();
+        private enum TextMode { Text, Url, At, Search };
 
-        private string template = @"
-        <html>
-            <head>
-                <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;' name='viewport' />                
-                <script type='text/javascript'>
-                    window.onload=function() {
-                        var lists = document.querySelectorAll('a');
-                        for (var i = 0; i < lists.length; ++i) {
-                            lists[i].addEventListener('click', function(event) {
-                                window.external.notify(event.target.href);
-                                event.preventDefault();
-                                event.stopPropagation();
-                            });
-                        }
-                    };
-                    
-                    function getHeight(){ 
-                        return document.getElementById('main').offsetHeight.toString();
-                    }
-                </script>
-            </head>
-            <body>
-                <div id='main' style='font-family:Microsoft YaHei;font-size:18px'>{0}</div>
-            </body>
-        </html>";
+        private ObservableCollection<string> tags = new ObservableCollection<string>();
 
         public StatusPage()
         {
@@ -110,12 +87,57 @@ namespace FanfouUWP
 
                 defaultViewModel["status"] = status;
 
-                var html = template.Replace("{0}", status.text);
-                text.NavigateToString(html);
+                this.richText.Blocks.Clear();
 
                 contextMessage.Children.Clear();
 
                 tags.Clear();
+
+                HtmlDocument doc = new HtmlDocument();
+                doc.LoadHtml(status.text);
+
+                Paragraph myParagraph = new Paragraph();
+                myParagraph.FontSize = 18;
+
+                foreach (var node in doc.DocumentNode.ChildNodes)
+                {
+                    if (node.NodeType == HtmlNodeType.Text)
+                    {
+                        Run run = new Run();
+                        run.FontSize = 18;
+                        run.Text = node.InnerText;
+                        myParagraph.Inlines.Add(run);
+                    }
+                    else if (node.NodeType == HtmlNodeType.Element)
+                    {
+
+                        Hyperlink link = new Hyperlink();
+                        link.Inlines.Add(new Run { FontSize = 18, Text = node.ChildNodes.First().InnerText });
+                        link.Foreground = new SolidColorBrush(Colors.DarkGray);
+                        link.UnderlineStyle = UnderlineStyle.None;
+                        link.FontSize = 18;
+                        link.Click += async (s, et) =>
+                        {
+                            String uri = node.Attributes.First().Value;
+                            if (uri.StartsWith("http://fanfou.com/"))
+                            {
+                                Frame.Navigate(typeof(UserPage),
+                                    Utils.DataConverter<User>.Convert(new User { id = uri.Substring(18) }));
+                            }
+                            else if (uri.StartsWith("/q/"))
+                            {
+                                Frame.Navigate(typeof(SearchPage), uri.Substring(3));
+                            }
+                            else
+                            {
+                                await Windows.System.Launcher.LaunchUriAsync(new Uri(uri));
+                            }
+                        };
+                        myParagraph.Inlines.Add(link);
+                    }
+                }
+                this.richText.Blocks.Add(myParagraph);
+
                 var list = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.TaggedList(this.status.user.id);
                 foreach (var item in list)
                     tags.Add(item);
@@ -282,7 +304,8 @@ namespace FanfouUWP
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ImagePage), status.photo.largeurl);
+            if (status.photo != null && status.photo.largeurl != null)
+                Frame.Navigate(typeof(ImagePage), status.photo.largeurl);
         }
 
         private void Profile_Tapped(object sender, TappedRoutedEventArgs e)
@@ -417,31 +440,5 @@ namespace FanfouUWP
             Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);
         }
 
-        private async void text_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args)
-        {
-            try
-            {
-                var result = await text.InvokeScriptAsync("getHeight", null);
-          
-                text.Height = int.Parse(result) + 18;
-            }
-            catch (Exception) { }
-        }
-
-        private async void text_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            try
-            {
-                var result = await text.InvokeScriptAsync("getHeight", null);
-           
-                text.Height = int.Parse(result) + 18;
-            }
-            catch (Exception) { }
-        }
-
-        private void text_ScriptNotify(object sender, NotifyEventArgs e)
-        {
-            
-        }
     }
 }

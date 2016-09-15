@@ -8,6 +8,7 @@
     xmlns:utils="using:FanfouUWP.Utils"
     x:Class="FanfouUWP.ItemControl.StatusItemControl"
     mc:Ignorable="d" RequestedTheme="Light"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400" FontFamily="Microsoft YaHei" >
     <UserControl.Resources>
@@ -34,8 +35,8 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Image Height="42" Width="42" Canvas.ZIndex="2" Margin="6,7,6,6" Tapped="Profile_Tapped"
-             Source="{Binding  user.profile_image_url}"/>
+        <controls:ImageEx Height="42" Width="42" Canvas.ZIndex="2" Margin="6,7,6,6" Tapped="Profile_Tapped"
+             Source="{Binding  user.profile_image_url}" IsCacheEnabled="True"/>
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,8,10,6" Orientation="Vertical" VerticalAlignment="Center">
             <TextBlock Margin="0" Text="{Binding  user.screen_name}" VerticalAlignment="Top" FontSize="16" Foreground="Black" />
             <StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Top">

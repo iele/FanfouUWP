@@ -85,28 +85,6 @@ namespace FanfouUWP
             navigationHelper = new NavigationHelper(this);
             navigationHelper.LoadState += NavigationHelper_LoadState;
             navigationHelper.SaveState += NavigationHelper_SaveState;
-
-            Window.Current.SizeChanged += Current_SizeChanged;
-            InnerCustomPanel.SizeChanged += InnerCustomPanel_SizeChanged;
-            InnerCustomPanel2.SizeChanged += InnerCustomPanel_SizeChanged2;
-        }
-
-
-        private void InnerCustomPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            SV1.ChangeView(null, 100.0, null, true);
-        }
-
-        private void InnerCustomPanel_SizeChanged2(object sender, SizeChangedEventArgs e)
-        {
-            SV12.ChangeView(null, 100.0, null, true);
-        }
-
-
-        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
-        {
-            InnerCustomPanel.InvalidateMeasure();
-            InnerCustomPanel2.InvalidateMeasure();
         }
 
         public ObservableDictionary DefaultViewModel
@@ -122,9 +100,6 @@ namespace FanfouUWP
 
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            SV1.ChangeView(null, 100, null);
-            SV12.ChangeView(null, 100, null);
-
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["user"] = currentUser;
 
@@ -215,8 +190,6 @@ namespace FanfouUWP
 
         private async void loadingStatus()
         {
-            SV1.ChangeView(null, 0, null, true);
-            VisualStateManager.GoToState(this, "PullToRefresh", false);
             try
             {
                 if (this.statuses.Count != 0)
@@ -416,45 +389,22 @@ namespace FanfouUWP
             Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);
         }
 
-        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            ScrollViewer sv = sender as ScrollViewer;
-            if (sv.VerticalOffset == 0)
-            {
-                SV1.DirectManipulationCompleted += SV1_DirectManipulationCompleted;
-                VisualStateManager.GoToState(this, "Refreshing", false);
-            }
-        }
-
-        private void SV1_DirectManipulationCompleted(object sender, object e)
-        {
-            SV1.DirectManipulationCompleted -= SV1_DirectManipulationCompleted;
-            loadingStatus();
-        }
-
-
-        private void ScrollViewer_ViewChanged2(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            ScrollViewer sv = sender as ScrollViewer;
-            if (sv.VerticalOffset == 0)
-            {
-                SV12.DirectManipulationCompleted += SV1_DirectManipulationCompleted2;
-                VisualStateManager.GoToState(this, "Refreshing", false);
-            }
-        }
-
-        private void SV1_DirectManipulationCompleted2(object sender, object e)
-        {
-            SV12.DirectManipulationCompleted -= SV1_DirectManipulationCompleted2;
-            loadingStatus();
-        }
-
         private void search_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 Frame.Navigate(typeof(SearchPage), search.Text);
             }
+        }
+
+        private void statusesGridView_PullProgressChanged(object sender, Microsoft.Toolkit.Uwp.UI.Controls.RefreshProgressEventArgs e)
+        {
+            loadingStatus();
+        }
+
+        private void mentionsGridView_PullProgressChanged(object sender, Microsoft.Toolkit.Uwp.UI.Controls.RefreshProgressEventArgs e)
+        {
+            loadingStatus();
         }
     }
 }

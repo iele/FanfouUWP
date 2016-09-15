@@ -19,6 +19,7 @@ namespace FanfouUWP
         private User currentUser { get; set; } = SettingStorage.Instance.currentUser;
 
         FanfouAPI.RestClient.LoadingState isLoading = FanfouAPI.RestClient.Loading;
+        private bool isShowing = false;
 
         public MainPage()
         {
@@ -54,11 +55,15 @@ namespace FanfouUWP
 
         public async void showInformation(string msg)
         {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            if (!isShowing)
             {
-                Information.Text = msg;
-                InfromationShowStoryBoard.Begin();
-            });
+                isShowing = true;
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    Information.Text = msg;
+                    InfromationShowStoryBoard.Begin();
+                });
+            }
         }
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
@@ -171,6 +176,7 @@ namespace FanfouUWP
         private void InfromationDisappearStoryBoard_Completed(object sender, object e)
         {
             this.InformationStackPanel.Visibility = Visibility.Collapsed;
+            isShowing = false;
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)

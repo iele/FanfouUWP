@@ -193,6 +193,19 @@ namespace FanfouUWP
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
+
+            if (user.screen_name == null || user.screen_name == "") {
+                try
+                {
+                    user = await FanfouAPI.FanfouAPI.Instance.UsersShow(user.id);
+                    defaultViewModel["user"] = user;
+                }
+                catch (Exception)
+                {
+                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                }
+            }
+
             defaultViewModel["user"] = user;
             defaultViewModel["tags"] = tags;
 
@@ -214,7 +227,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                Utils.ToastShow.ShowInformation("加载失败，可能未公开");
             }
 
             try
@@ -226,7 +239,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                Utils.ToastShow.ShowInformation("加载失败，可能未公开");
             }
 
             favoritePage = 1;
@@ -238,7 +251,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                Utils.ToastShow.ShowInformation("加载失败，可能未公开");
             }
 
             friendsPage = 1;
@@ -255,7 +268,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                Utils.ToastShow.ShowInformation("加载失败，可能未公开");
             }
 
             followersPage = 1;
@@ -272,7 +285,7 @@ namespace FanfouUWP
             }
             catch (Exception)
             {
-                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                Utils.ToastShow.ShowInformation("加载失败，可能未公开");
             }
         }
 
