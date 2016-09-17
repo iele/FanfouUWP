@@ -18,13 +18,25 @@
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
         </DataTemplate>
 
+        <DataTemplate x:Key="StatusItemControlWithImage">
+            <ItemControl:StatusItemControlWithImage DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
+        </DataTemplate>
+
         <DataTemplate x:Key="MentionsItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="MentionsItemControl_RightTapped" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="MentionsItemControlWithImage">
+            <ItemControl:StatusItemControlWithImage DataContext="{Binding}" Margin="0,3" RightTapped="MentionsItemControl_RightTapped" />
         </DataTemplate>
 
         <DataTemplate x:Key="TrendsItemControl">
             <ItemControl:TrendsItemControl DataContext="{Binding}" Margin="0,3" />
         </DataTemplate>
+
+        <selector:TimelineTemplateSelector x:Name="StatusItemControlSelector" StatusTemplate="{StaticResource StatusItemControl}" StatusItemControlWithImage="{StaticResource StatusItemControlWithImage}"/>
+
+        <selector:TimelineTemplateSelector x:Name="MentionsItemControlSelector" StatusTemplate="{StaticResource MentionsItemControl}" StatusItemControlWithImage="{StaticResource MentionsItemControlWithImage}"/>
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
@@ -32,7 +44,6 @@
                 <AppBarButton x:Name="PublicItem" Label="随便看看" Click="PublicItem_Click" />
             </CommandBar.SecondaryCommands>
             <AppBarButton Label="刷新" Icon="Refresh" x:Name="RefreshItem" Click="RefreshItem_Click" />
-            <AppBarButton Label="回到最前" Icon="Up" x:Name="UpItem" Click="UpItem_Click" />
             <AppBarButton Label="照片" Icon="Camera" x:Name="CameraItem" Click="CameraItem_Click"/>
             <AppBarButton Icon="Edit" Label="新饭" x:Name="SendItem" Click="SendItem_Click" />
         </CommandBar>
@@ -74,53 +85,6 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-
-            <VisualStateGroup x:Name="PullToRefreshStates">
-                <VisualState x:Name="PullToRefresh">
-                    <Storyboard>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         To="0"
-                                         Duration="0:0:0.200"/>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator3"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         To="0"
-                                         Duration="0:0:0.200"/>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator2"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         To="0"
-                                         Duration="0:0:0.200"/>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator4"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         To="0"
-                                         Duration="0:0:0.200"/>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="Refreshing">
-                    <Storyboard>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         From="0" 
-                                         To="360"
-                                         Duration="0:0:0.8" RepeatBehavior="Forever"/>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator3"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         From="0"
-                                         To="360"
-                                         Duration="0:0:0.8" RepeatBehavior="Forever"/>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator2"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         From="0"
-                                         To="360"
-                                         Duration="0:0:0.7" RepeatBehavior="Forever"/>
-                        <DoubleAnimation Storyboard.TargetName="refreshIndicator4"
-                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
-                                         From="0"
-                                         To="360"
-                                         Duration="0:0:0.7" RepeatBehavior="Forever"/>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid x:Name="mainGrid">
             <Grid.RowDefinitions>
@@ -133,23 +97,32 @@
             <Pivot Grid.Row="0" Margin="0" x:Name="pivot" MaxWidth="800">
                 <PivotItem Header="我的消息" Margin="0">
                     <Grid>
-                        <controls:PullToRefreshListView Name="statusesGridView"
-	                        ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}"
+                        <controls:PullToRefreshListView x:Name="statusesGridView"
+	                        ItemsSource="{x:Bind statuses}" ItemTemplateSelector="{StaticResource StatusItemControlSelector}"
 	                        OverscrollLimit="0.4"
 	                        PullThreshold="100"
+                            RefreshRequested="statusesGridView_RefreshRequested"
 	                        PullProgressChanged="statusesGridView_PullProgressChanged"                                                         
-						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True"/>
+						Margin="0,0,0,0" ItemClick="statusesGridView_ItemClick" IsItemClickEnabled="True">
+                            <controls:PullToRefreshListView.RefreshIndicatorContent>
+                                <ProgressRing x:Name="statusProgressRing"></ProgressRing>
+                            </controls:PullToRefreshListView.RefreshIndicatorContent>
+                        </controls:PullToRefreshListView>
                     </Grid>
                 </PivotItem>
                 <PivotItem Header="提及我的" Margin="0">
                     <Grid>
-                        <controls:PullToRefreshListView Name="mentionsGridView"
-	                        ItemsSource="{x:Bind mentions}" ItemTemplate="{StaticResource MentionsItemControl}"
+                        <controls:PullToRefreshListView x:Name="mentionsGridView"
+	                        ItemsSource="{x:Bind mentions}" ItemTemplateSelector="{StaticResource MentionsItemControlSelector}"
 	                        OverscrollLimit="0.4"
 	                        PullThreshold="100"
-	                        PullProgressChanged="mentionsGridView_PullProgressChanged"                                                         
-						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True"/>
-
+	                        RefreshRequested="mentionsGridView_RefreshRequested"
+                            PullProgressChanged="mentionsGridView_PullProgressChanged"                                                         
+						Margin="0,0,0,0" ItemClick="mentionsGridView_ItemClick" IsItemClickEnabled="True">
+                            <controls:PullToRefreshListView.RefreshIndicatorContent>
+                                <ProgressRing x:Name="mentionsProgressRing"></ProgressRing>
+                            </controls:PullToRefreshListView.RefreshIndicatorContent>
+                        </controls:PullToRefreshListView>
                     </Grid>
                 </PivotItem>
             </Pivot>
@@ -180,7 +153,7 @@
                             </StackPanel>
                             <StackPanel Margin="3,0,3,0" x:Name="follower" Orientation="Vertical" Grid.Row="1"
         				Tapped="follower_Tapped" MinWidth="40">
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="关注" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                 <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding  user.followers_count}" VerticalAlignment="Top" FontSize="22.667" />

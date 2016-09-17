@@ -11,7 +11,6 @@
     "Microsoft.Toolkit.Uwp.UI": "1.0.0",
     "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0",
     "Microsoft.Toolkit.Uwp.UI.Controls": "1.0.0",
-    "PullToRefresh.UWP": "0.3.4",
     "WindowsAppStudio.Common": "1.4.6",
     "WindowsAppStudio.Uwp": "1.5.3"
   },

@@ -36,8 +36,6 @@ namespace FanfouUWP
 
         private Status status;
 
-        private enum TextMode { Text, Url, At, Search };
-
         private ObservableCollection<string> tags = new ObservableCollection<string>();
 
         public StatusPage()
@@ -86,6 +84,16 @@ namespace FanfouUWP
                 status = await FanfouUWP.FanfouAPI.FanfouAPI.Instance.StatusShow(Utils.DataConverter<Status>.Convert(e.NavigationParameter as string).id);
 
                 defaultViewModel["status"] = status;
+
+                if (status.photo == null)
+                {
+                    this.image.Visibility = Visibility.Collapsed;
+                }
+                else {
+                    this.image.Visibility = Visibility.Visible;
+                }
+
+                context.Visibility = Visibility.Collapsed;
 
                 this.richText.Blocks.Clear();
 
@@ -158,7 +166,7 @@ namespace FanfouUWP
                 this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
             }
 
-            if (this.status.location != "")
+            if (this.status.location != "" || SettingStorage.Instance.showMap)
             {
                 try
                 {
@@ -236,8 +244,8 @@ namespace FanfouUWP
                     foreach (Status item in ss)
                     {
                         var sic = new ReplyItemControl();
-                        sic.Tapped += (s, a) => Frame.Navigate(typeof(UserPage),
-                           Utils.DataConverter<User>.Convert(item.user));
+                        sic.Tapped += (s, a) => Frame.Navigate(typeof(StatusPage),
+                           Utils.DataConverter<Status>.Convert(item));
                         sic.DataContext = item;
                         contextMessage.Children.Add(sic);
                     }
@@ -356,15 +364,6 @@ namespace FanfouUWP
             }
         }
 
-        private void CopyItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            var data = new DataPackage();
-            data.SetText("@" + status.user.screen_name + ": " + status.text);
-            Clipboard.SetContent(data);
-
-            Utils.ToastShow.ShowInformation("该消息已复制到剪贴板");
-        }
-
         private void ShareItem_Click(object sender, RoutedEventArgs e)
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -416,25 +415,34 @@ namespace FanfouUWP
             }
         }
 
+        private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            User user = status.user;
+            user.index = "timeline";
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(user));
+        }
+
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            User user = status.user;
+            user.index = "favorite";
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            User user = status.user;
+            user.index = "follower";
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(user));
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            User user = status.user;
+            user.index = "friend";
+            Frame.Navigate(typeof(UserPage), Utils.DataConverter<User>.Convert(user));
         }
 
-        private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
         private void Taglist_OnItemClick(object sender, ItemClickEventArgs e)
         {
             Frame.Navigate(typeof(TagUserPage), e.ClickedItem as string);

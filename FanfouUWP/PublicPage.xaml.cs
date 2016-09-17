@@ -43,7 +43,7 @@ namespace FanfouUWP
 
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(SettingStorage.Instance.messageSize, 1);
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
                 defaultViewModel["date"] = DateTime.Now.ToString();
@@ -63,7 +63,7 @@ namespace FanfouUWP
         {
            try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(60, 1);
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusPublicTimeline(SettingStorage.Instance.messageSize, 1);
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
                 defaultViewModel["date"] = DateTime.Now.ToString();

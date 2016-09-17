@@ -72,7 +72,7 @@
             <TextBlock Height="28" Margin="12,10,0,10" x:Name="name" Text="{x:Bind currentUser.screen_name, Mode=OneWay}" Foreground="White"  Grid.Column="1" Canvas.ZIndex="100" FontSize="18.667" VerticalAlignment="Center" />
              <SplitView x:Name="Splitter" DisplayMode="CompactInline"  Grid.Row="0" Grid.RowSpan="2" OpenPaneLength="205" CompactPaneLength="48" Grid.ColumnSpan="2">
                 <SplitView.Pane>
-                    <ListView  Canvas.ZIndex="10" x:Name="menu" Margin="0,48,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="menu_SelectionChanged">
+                    <ListView  Canvas.ZIndex="100" x:Name="menu" Margin="0,48,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto" SelectionChanged="menu_SelectionChanged">
                         <ListViewItem Tapped="SelfGrid_Tapped">
                             <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
                                 <Ellipse Margin="0,0,0,0" Stroke="White" Width="32" Height="32">
@@ -149,7 +149,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="0" Margin="0,12,0,12">
                                     <TextBlock Text="加载消息数量" FontSize="18"/>
-                                    <ComboBox Margin="0,8,0,8">
+                                    <ComboBox Margin="0,8,0,8" x:Name="messageSize" SelectionChanged="ComboBox_SelectionChanged">
                                         <ComboBoxItem Content="20" />
                                         <ComboBoxItem Content="30" />
                                         <ComboBoxItem Content="40" />
@@ -159,15 +159,15 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="0" Margin="0,12,0,12">
                                     <TextBlock Text="消息列表显示图片" FontSize="18"/>
-                                    <ToggleSwitch />
+                                    <ToggleSwitch x:Name="showPhoto" Toggled="showPhoto_Toggled"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="0" Margin="0,12,0,12">
-                                    <TextBlock Text="发送消息时加入地理坐标" FontSize="18"/>
-                                    <ToggleSwitch />
+                                    <TextBlock Text="发送消息时加入地理坐标" FontSize="18" />
+                                    <ToggleSwitch x:Name="showLocation" Toggled="showLocation_Toggled"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="0" Margin="0,12,0,12">
                                     <TextBlock Text="是否显示地图" FontSize="18"/>
-                                    <ToggleSwitch />
+                                    <ToggleSwitch x:Name="showMap" Toggled="showMap_Toggled"/>
                                 </StackPanel>
                                 <StackPanel Grid.Row="0" Height="64">
                                 </StackPanel>

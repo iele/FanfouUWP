@@ -12,6 +12,7 @@ using Windows.UI.Popups;
 using Windows.Foundation;
 using Windows.UI.Xaml.Media;
 using FanfouUWP.ItemControl;
+using FanfouUWP.Utils;
 
 namespace FanfouUWP
 {
@@ -32,7 +33,7 @@ namespace FanfouUWP
                 try
                 {
                     var result =
-                        await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, ++page);
+                        await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(SettingStorage.Instance.messageSize, ++page);
                     if (result.Count == 0)
                         users.HasMoreItems = false;
 
@@ -73,7 +74,7 @@ namespace FanfouUWP
 
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(SettingStorage.Instance.messageSize, page);
                 users.Clear();
                 foreach (User i in ss)
                 {
@@ -95,7 +96,7 @@ namespace FanfouUWP
             page = 1;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(60, page);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FriendshipRequests(SettingStorage.Instance.messageSize, page);
                 users.Clear();
                 foreach (User i in ss)
                 {

@@ -62,9 +62,9 @@
                 </StackPanel>
             </StackPanel>
             <TextBlock TextWrapping="Wrap" Foreground="White" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}"
-        	    FontSize="13.333" x:Name="text" HorizontalAlignment="Stretch" Margin="6,0" Grid.ColumnSpan="2" Grid.Row="1"/>
+        	    FontSize="13.333" x:Name="text" HorizontalAlignment="Stretch" Margin="6,0" Grid.ColumnSpan="2" Grid.Row="1" MinWidth="640"/>
         </Grid>
-        <Image x:Name="image" Tapped="Image_Tapped" Stretch="UniformToFill"
-        	Source="{Binding photo.largeurl}" Margin="0,0,0,0"/>
+        <controls:ImageEx x:Name="image" Tapped="Image_Tapped" Stretch="UniformToFill"
+        	Source="{Binding photo.largeurl}" Margin="0,0,0,0" IsCacheEnabled="True" MaxHeight="300" HorizontalAlignment="Stretch" />
     </Grid>
 </UserControl>

@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Navigation;
 using FanfouUWP.Common;
 
 using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.Utils;
 
 namespace FanfouUWP
 {
@@ -25,7 +26,7 @@ namespace FanfouUWP
             {
                 try
                 {
-                    var result = (await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60, ++page)).users;
+                    var result = (await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, SettingStorage.Instance.messageSize, ++page)).users;
                     if (result.Count == 0)
                         users.HasMoreItems = false;
                     foreach (User i in result)
@@ -68,7 +69,7 @@ namespace FanfouUWP
                 {
                     search.Text = find;
                     page = 1;
-                    var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+                    var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, SettingStorage.Instance.messageSize);
                     users.Clear();
                     if (ss.users != null)
                     {
@@ -94,7 +95,7 @@ namespace FanfouUWP
             page = 1;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, SettingStorage.Instance.messageSize);
                 users.Clear();
                 if (ss.users != null)
                 {
@@ -150,7 +151,7 @@ namespace FanfouUWP
                 page = 1;
                 try
                 {
-                    var list = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, 60);
+                    var list = await FanfouAPI.FanfouAPI.Instance.SearchUser(search.Text, SettingStorage.Instance.messageSize);
                     users.Clear();
                     if (list.users != null)
                     {

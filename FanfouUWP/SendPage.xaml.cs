@@ -121,14 +121,20 @@ namespace FanfouUWP
 
         private async void getLocation()
         {
-            location = await Utils.GeoLocator.geolocator();
-            if (location == "")
+            if (SettingStorage.Instance.showLocation)
             {
-                this.locationText.Visibility = Visibility.Collapsed;
+                location = await Utils.GeoLocator.geolocator();
+                if (location == "")
+                {
+                    this.locationText.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    this.locationText.Visibility = Visibility.Visible;
+                }
             }
-            else
-            {
-                this.locationText.Visibility = Visibility.Visible;
+            else {
+                this.locationText.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -307,20 +313,6 @@ namespace FanfouUWP
         }
 
         #endregion
-
-        private async void TileItem_Click(object sender, RoutedEventArgs e)
-        {
-            Uri square150x150Logo = new Uri("ms-appx:///Assets/Logo.png");
-            SecondaryTile secondaryTile = new SecondaryTile("FanfouWP_SendPage",
-                                                            "饭窗 - 发送消息",
-                                                            "FanfouWP_SendPage",
-                                                            square150x150Logo,
-                                                            TileSize.Square150x150);
-            secondaryTile.VisualElements.Square71x71Logo = new Uri("ms-appx:///Assets/SmallLogo.png");
-            secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-            secondaryTile.VisualElements.ForegroundText = ForegroundText.Dark;
-            await secondaryTile.RequestCreateAsync();
-        }
 
         private async void LayoutRoot_Drop(object sender, DragEventArgs e)
         {

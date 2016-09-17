@@ -55,15 +55,15 @@ namespace FanfouUWP
 
         public async void showInformation(string msg)
         {
-            if (!isShowing)
-            {
-                isShowing = true;
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    Information.Text = msg;
-                    InfromationShowStoryBoard.Begin();
-                });
-            }
+            //if (!isShowing)
+            //{
+            //    isShowing = true;
+            //    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            //    {
+            //        Information.Text = msg;
+            //        InfromationShowStoryBoard.Begin();
+            //    });
+            //}
         }
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
@@ -108,6 +108,11 @@ namespace FanfouUWP
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
             MenuSplitter.IsPaneOpen = true;
+
+            showLocation.IsOn = SettingStorage.Instance.showLocation;
+            showPhoto.IsOn = SettingStorage.Instance.showPhoto;
+            showMap.IsOn = SettingStorage.Instance.showMap;
+            messageSize.SelectedIndex = (SettingStorage.Instance.messageSize - 20) / 10;
         }
 
         private void DirectGrid_Tapped(object sender, RoutedEventArgs e)
@@ -184,6 +189,26 @@ namespace FanfouUWP
             Utils.SettingStorage.Instance.currentUser = null;
             Utils.NavigationControl.ClearStack(App.RootFrame);
             App.RootFrame.Navigate(typeof(LoginPage));
+        }
+
+        private void showMap_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingStorage.Instance.showMap = showMap.IsOn;
+        }
+
+        private void showLocation_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingStorage.Instance.showLocation = showLocation.IsOn;
+        }
+
+        private void showPhoto_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingStorage.Instance.showPhoto = showPhoto.IsOn;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SettingStorage.Instance.messageSize = messageSize.SelectedIndex * 10 + 20;
         }
     }
 }

@@ -21,7 +21,7 @@
         <!-- 标题面板 -->
 
         <!--TODO: 应将内容放入以下网格-->
-        <Image x:Name="image" Margin="0" CacheMode="BitmapCache" Source="{Binding  photo}"
+        <Image x:Name="image" Margin="0" CacheMode="BitmapCache" Source="{Binding photo}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None">
             <Image.RenderTransform>
                 <TransformGroup>

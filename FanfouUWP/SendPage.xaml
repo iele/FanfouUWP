@@ -14,9 +14,6 @@
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar>
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="TileItem" Label="将此页面固定为磁贴" Click="TileItem_Click" />
-            </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="SendItem" Icon="Send" Label="发送" Click="SendItem_Click" />
             <AppBarButton x:Name="PhotoItem" Icon="Camera" Label="照片" Click="PhotoItem_Click" />
             <AppBarButton x:Name="AtItem" Icon="AddFriend" Label="提及好友" Click="AtItem_Click" IsEnabled="False"/>
@@ -31,31 +28,30 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Rectangle Fill="DeepSkyBlue" Margin="0,0,0,0" Stroke="DeepSkyBlue" />
-        <Grid VerticalAlignment="Center" Margin="12" Height="25">
+        <Grid VerticalAlignment="Center" Margin="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="AUto"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="title" Text="你在做什么?" Margin="0" FontSize="18.667" VerticalAlignment="Center"
-                        Foreground="White" />
+                        Foreground="Black" />
             <TextBlock x:Name="count"
                        Text="{Binding Text, Converter={StaticResource TextToLeftCountTextConverter}, ElementName=send}"
                        FontSize="18.667" VerticalAlignment="Center" 
-                       Foreground="White" Margin="0" HorizontalAlignment="Right" Grid.Column="1" />
+                       Foreground="Black" Margin="0" HorizontalAlignment="Right" Grid.Column="1" />
         </Grid>
 
-        <Grid x:Name="ContentRoot" Margin="0,0,0,0.083" Grid.Row="1" Grid.RowSpan="2">
+        <Grid x:Name="ContentRoot" Margin="0,0,0,0" Grid.Row="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="270" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox x:Name="send" Margin="12,12,12,11.542" TextWrapping="Wrap" VerticalAlignment="Stretch"
+            <TextBox x:Name="send" Margin="12,6,12,12" TextWrapping="Wrap" VerticalAlignment="Stretch"
                      AcceptsReturn="True" InputScope="Chat"  MaxLength="140"
                      IsSpellCheckEnabled="True" PreventKeyboardDisplayOnProgrammaticFocus="True" />
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="已定位" VerticalAlignment="Top"
-                        FontSize="16" Margin="12,0.458,0,0" Grid.Row="1"
+                        FontSize="16" Margin="12,0,0,0" Grid.Row="1"
                        Foreground="Gray" x:Name="locationText" Visibility="Collapsed"/>
             <Image x:Name="photo" Margin="12" Grid.Row="2" />
         </Grid>

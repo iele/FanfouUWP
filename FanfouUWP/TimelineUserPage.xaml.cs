@@ -69,7 +69,7 @@ namespace FanfouUWP
             title.Text = user.screen_name + "的时间线";
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, id: user.id);
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(SettingStorage.Instance.messageSize, id: user.id);
 
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
@@ -89,7 +89,7 @@ namespace FanfouUWP
         {
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(60, id: user.id);
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(SettingStorage.Instance.messageSize, id: user.id);
 
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);

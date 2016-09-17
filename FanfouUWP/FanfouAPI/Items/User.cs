@@ -115,5 +115,8 @@ namespace FanfouUWP.FanfouAPI.Items
 
         [DataMember(Name = "auth", IsRequired = false)]
         public UserAuth auth { get; set; }
+
+        [DataMember(Name = "index", IsRequired = false)]
+        public string index { get; set; }
     }
 }

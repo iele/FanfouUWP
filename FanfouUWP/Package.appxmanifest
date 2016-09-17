@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="dbfacda8-df64-42ef-a69c-ef082fffc254" Publisher="CN=gordondu" Version="1.0.3.0" />
+  <Identity Name="dbfacda8-df64-42ef-a69c-ef082fffc254" Publisher="CN=gordondu" Version="1.0.9.0" />
   <mp:PhoneIdentity PhoneProductId="dbfacda8-df64-42ef-a69c-ef082fffc254" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>FanfouUWP</DisplayName>

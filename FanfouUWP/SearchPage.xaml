@@ -5,14 +5,21 @@
     xmlns:local="using:FanfouUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:selector="using:FanfouUWP.TemplateSelector"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light"  >
-       
+
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" />
         </DataTemplate>
+
+        <DataTemplate x:Key="StatusItemControlWithImage">
+            <ItemControl:StatusItemControlWithImage DataContext="{Binding}" Margin="0,3"  />
+        </DataTemplate>
+        <selector:TimelineTemplateSelector x:Name="StatusItemControlSelector" StatusTemplate="{StaticResource StatusItemControl}" StatusItemControlWithImage="{StaticResource StatusItemControlWithImage}"/>
+
     </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar IsOpen="False" ClosedDisplayMode="Compact">
@@ -28,7 +35,7 @@
         <TextBox x:Name="search" Margin="12" TextWrapping="NoWrap" Text=""
                          InputScope="Search" PlaceholderText="键入以搜索消息" VerticalAlignment="Center" KeyDown="search_KeyDown" />
         <ListView ShowsScrollingPlaceholders="True" Margin="0" x:Name="statusesGridView"
-                  ItemsSource="{Binding statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  ItemsSource="{Binding statuses}" ItemTemplateSelector="{StaticResource StatusItemControlSelector}" Grid.Row="1"
                   IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
     </Grid>
 </Page>

@@ -13,6 +13,7 @@ using FanfouUWP.Utils;
 using FanfouUWP.ItemControl;
 using Windows.UI.Popups;
 using System.Linq;
+using System.Threading.Tasks;
 
 // “基本页”项模板在 http://go.microsoft.com/fwlink/?LinkID=390556 上有介绍
 
@@ -72,67 +73,79 @@ namespace FanfouUWP
 
             favorites.load = async (c) =>
             {
-                try
+                if (favorites.Count > 0)
                 {
-                    var result =
-                        await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, ++favoritePage);
-                    if (result.Count == 0)
-                        favorites.HasMoreItems = false;
-                    StatusesReform.append(favorites, result);
+                    try
+                    {
+                        var result =
+                            await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, SettingStorage.Instance.messageSize, ++favoritePage);
+                        if (result.Count == 0)
+                            favorites.HasMoreItems = false;
+                        StatusesReform.append(favorites, result);
 
-                    return result.Count;
+                        return result.Count;
+                    }
+                    catch (Exception)
+                    {
+                        return 0;
+                    }
                 }
-                catch (Exception)
-                {
-                    return 0;
-                }
+                return 0;
             };
 
 
             friends.load = async (c) =>
             {
-                try
+                if (friends.Count > 0)
                 {
-                    var result =
-                        await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60, ++friendsPage);
-                    if (result.Count == 0)
-                        friends.HasMoreItems = false;
-
-                    foreach (User i in result)
+                    try
                     {
-                        friends.Add(i);
-                    }
+                        var result =
+                            await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, SettingStorage.Instance.messageSize, ++friendsPage);
+                        if (result.Count == 0)
+                            friends.HasMoreItems = false;
 
-                    return result.Count;
+                        foreach (User i in result)
+                        {
+                            friends.Add(i);
+                        }
+
+                        return result.Count;
+                    }
+                    catch (Exception)
+                    {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                        return 0;
+                    }
                 }
-                catch (Exception)
-                {
-                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
-                    return 0;
-                }
+                return 0;
             };
 
             followers.load = async (c) =>
             {
-                try
+                if (followers.Count > 0)
                 {
-                    var result =
-                        await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, ++followersPage);
-                    if (result.Count == 0)
-                        followers.HasMoreItems = false;
-
-                    foreach (User i in result)
+                    try
                     {
-                        followers.Add(i);
-                    }
+                        var result =
+                            await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, SettingStorage.Instance.messageSize, ++followersPage);
+                        if (result.Count == 0)
+                            followers.HasMoreItems = false;
 
-                    return result.Count;
+                        foreach (User i in result)
+                        {
+                            followers.Add(i);
+                        }
+
+                        return result.Count;
+                    }
+                    catch (Exception)
+                    {
+                        Utils.ToastShow.ShowInformation("加载失败，请检查网络");
+                        return 0;
+                    }
                 }
-                catch (Exception)
-                {
-                    Utils.ToastShow.ShowInformation("加载失败，请检查网络");
-                    return 0;
-                }
+                return 0;
             };
         }
 
@@ -154,7 +167,8 @@ namespace FanfouUWP
                 if (!pivot.Items.Contains(userItem))
                     pivot.Items.Add(userItem);
             }
-            else {
+            else
+            {
                 if (!pivot.Items.Contains(userItem))
                     pivot.Items.Add(userItem);
             }
@@ -194,7 +208,29 @@ namespace FanfouUWP
         {
             user = Utils.DataConverter<User>.Convert(e.NavigationParameter as string);
 
-            if (user.screen_name == null || user.screen_name == "") {
+            if (user.index != null)
+            {
+                switch (user.index as string)
+                {
+                    case "timeline":
+                        pivot.SelectedIndex = 0;
+                        break;
+                    case "favorite":
+                        pivot.SelectedIndex = 1;
+                        break;
+                    case "follower":
+                        pivot.SelectedIndex = 2;
+                        break;
+                    case "friend":
+                        pivot.SelectedIndex = 3;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (user.screen_name == null || user.screen_name == "")
+            {
                 try
                 {
                     user = await FanfouAPI.FanfouAPI.Instance.UsersShow(user.id);
@@ -220,16 +256,14 @@ namespace FanfouUWP
 
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, 60);
+                var ss = await FanfouAPI.FanfouAPI.Instance.StatusUserTimeline(user.id, SettingStorage.Instance.messageSize);
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
-                defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)
             {
                 Utils.ToastShow.ShowInformation("加载失败，可能未公开");
             }
-
             try
             {
                 tags.Clear();
@@ -241,11 +275,12 @@ namespace FanfouUWP
             {
                 Utils.ToastShow.ShowInformation("加载失败，可能未公开");
             }
-
             favoritePage = 1;
+
+
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, favoritePage);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, SettingStorage.Instance.messageSize, favoritePage);
                 favorites.Clear();
                 StatusesReform.append(favorites, ss);
             }
@@ -255,16 +290,16 @@ namespace FanfouUWP
             }
 
             friendsPage = 1;
+
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, 60, friendsPage);
+                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFriends(user.id, SettingStorage.Instance.messageSize, friendsPage);
 
                 friends.Clear();
                 foreach (User i in ss)
                 {
                     friends.Add(i);
                 }
-                defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)
             {
@@ -274,14 +309,13 @@ namespace FanfouUWP
             followersPage = 1;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, 60, followersPage);
+                var ss = await FanfouAPI.FanfouAPI.Instance.UsersFollowers(user.id, SettingStorage.Instance.messageSize, followersPage);
 
                 followers.Clear();
                 foreach (User i in ss)
                 {
                     followers.Add(i);
                 }
-                defaultViewModel["date"] = DateTime.Now.ToString();
             }
             catch (Exception)
             {
@@ -322,18 +356,22 @@ namespace FanfouUWP
 
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            pivot.SelectedIndex = 0;
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            pivot.SelectedIndex = 1;
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            pivot.SelectedIndex = 2;
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            pivot.SelectedIndex = 3;
         }
 
         private void StatusItem_Click(object sender, RoutedEventArgs e)

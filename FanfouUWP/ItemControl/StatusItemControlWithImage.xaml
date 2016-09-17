@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:FanfouUWP.ValueConverter"
     xmlns:utils="using:FanfouUWP.Utils"
-    x:Class="FanfouUWP.ItemControl.StatusItemControl"
+    x:Class="FanfouUWP.ItemControl.StatusItemControlWithImage"
     mc:Ignorable="d" RequestedTheme="Light"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
@@ -29,6 +29,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -61,5 +62,7 @@
         </StackPanel>
         <TextBlock TextWrapping="Wrap" Foreground="Black" Text="{Binding text, Converter={StaticResource HtmlToTextConverter}}"
         	FontSize="13.333" x:Name="text" HorizontalAlignment="Stretch" Margin="6,0" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <controls:ImageEx x:Name="image" Tapped="Image_Tapped" Stretch="UniformToFill"  Visibility="{StaticResource NullToVisibilityConverter}" 
+        	Source="{Binding photo.largeurl}" MaxHeight="100" MaxWidth="200" HorizontalAlignment="Left" Margin="6,6,0,0" Grid.ColumnSpan="2" Grid.Row="2" IsCacheEnabled="True"/>
     </Grid>
 </UserControl>

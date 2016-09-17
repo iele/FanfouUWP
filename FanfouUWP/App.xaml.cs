@@ -24,6 +24,7 @@ namespace FanfouUWP
         public App()
         {
             InitializeComponent();
+
             Suspending += OnSuspending;
         }
 

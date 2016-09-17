@@ -7,6 +7,7 @@
     xmlns:utils="using:FanfouUWP.Utils"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:selector="using:FanfouUWP.TemplateSelector"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  
@@ -15,6 +16,11 @@
         <DataTemplate x:Key="StatusItemControl">
             <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
         </DataTemplate>
+
+        <DataTemplate x:Key="StatusItemControlWithImage">
+            <ItemControl:StatusItemControlWithImage DataContext="{Binding}" Margin="0,3" RightTapped="StatusItemControl_RightTapped" />
+        </DataTemplate>
+        <selector:TimelineTemplateSelector x:Name="StatusItemControlSelector" StatusTemplate="{StaticResource StatusItemControl}" StatusItemControlWithImage="{StaticResource StatusItemControlWithImage}"/>
 
         <DataTemplate x:Key="UserItemControl">
             <ItemControl:UserItemControl DataContext="{Binding}"
@@ -86,23 +92,23 @@
             <Pivot Grid.Row="0" Margin="0" x:Name="pivot" MaxWidth="800">
                 <PivotItem Margin="0" Header="消息">
                     <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="statusesGridView"
-                  ItemsSource="{x:Bind statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  ItemsSource="{x:Bind statuses}" ItemTemplateSelector="{StaticResource StatusItemControlSelector}" Grid.Row="1"
                   IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
                 </PivotItem>
                 <PivotItem Margin="0" Header="收藏">
                     <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="favoriteGridView"
-                  ItemsSource="{x:Bind favorites}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  ItemsSource="{x:Bind favorites}" ItemTemplateSelector="{StaticResource StatusItemControlSelector}" Grid.Row="1"
                   IsItemClickEnabled="True" ItemClick="favoriteGridView_ItemClick" />
-                </PivotItem>
-                <PivotItem Margin="0" Header="朋友">
-                    <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="friendsGridView" ItemsSource="{x:Bind friends}"
-                  ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True"
-                  ItemClick="friendsidView_ItemClick" />
                 </PivotItem>
                 <PivotItem Margin="0" Header="关注">
                     <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="followersGridView" ItemsSource="{x:Bind followers}"
                   ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True"
                   ItemClick="followersGridView_ItemClick" />
+                </PivotItem>
+                <PivotItem Margin="0" Header="朋友">
+                    <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="friendsGridView" ItemsSource="{x:Bind friends}"
+                  ItemTemplate="{StaticResource UserItemControl}" Grid.Row="1" IsItemClickEnabled="True"
+                  ItemClick="friendsidView_ItemClick" />
                 </PivotItem>
                 <PivotItem x:Name="userItem" Margin="0" Header="信息">
                     <StackPanel>
@@ -129,7 +135,7 @@
                                 </StackPanel>
                                 <StackPanel Margin="3,0,3,0" x:Name="followerpivot" Orientation="Vertical" Grid.Row="1"
         				Tapped="follower_Tapped" MinWidth="40">
-                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="听众" VerticalAlignment="Top"
+                                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="关注" VerticalAlignment="Top"
         					FontSize="20" Foreground="Gray" />
                                     <TextBlock Foreground="Gray" HorizontalAlignment="Left" TextWrapping="Wrap"
         					Text="{Binding  user.followers_count}" VerticalAlignment="Top" FontSize="26.667" />

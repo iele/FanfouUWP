@@ -30,7 +30,7 @@ namespace FanfouUWP
                 try
                 {
                     var result =
-                        await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, ++page);
+                        await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, SettingStorage.Instance.messageSize, ++page);
                     if (result.Count == 0)
                         statuses.HasMoreItems = false;
                     StatusesReform.append(statuses, result);
@@ -66,7 +66,7 @@ namespace FanfouUWP
             try
             {
                 page = 1;
-                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, SettingStorage.Instance.messageSize, page);
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
             }
@@ -119,7 +119,7 @@ namespace FanfouUWP
             page = 1;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, 60, page);
+                var ss = await FanfouAPI.FanfouAPI.Instance.FavoritesId(user.id, SettingStorage.Instance.messageSize, page);
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
             }

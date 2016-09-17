@@ -78,7 +78,7 @@ namespace FanfouUWP
         {
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
+                var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, SettingStorage.Instance.messageSize);
                 statuses.Clear();
                 StatusesReform.append(statuses, ss);
                 defaultViewModel["date"] = DateTime.Now.ToString();
@@ -127,7 +127,7 @@ namespace FanfouUWP
             {
                 try
                 {
-                    var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, 60);
+                    var ss = await FanfouAPI.FanfouAPI.Instance.SearchUserTimeline(search.Text, user.id, SettingStorage.Instance.messageSize);
                     statuses.Clear();
                     StatusesReform.append(statuses, ss);
                     defaultViewModel["date"] = DateTime.Now.ToString();

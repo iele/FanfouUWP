@@ -69,7 +69,7 @@ namespace FanfouUWP
             title.Text = user.screen_name + "的图片";
             try
             {
-                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, SettingStorage.Instance.messageSize);
 
                 Utils.StatusesReform.append(statuses, list);
             }
@@ -87,7 +87,7 @@ namespace FanfouUWP
         {
             try
             {
-                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, 60);
+                var list = await FanfouAPI.FanfouAPI.Instance.PhotosUserTimeline(user.id, SettingStorage.Instance.messageSize);
 
                 Utils.StatusesReform.append(statuses, list);
             }

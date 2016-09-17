@@ -32,6 +32,8 @@ namespace FanfouUWP
 
         private User currentUser = new User();
 
+        private DispatcherTimer dispatcherTimer;
+
         public HomePage()
         {
             InitializeComponent();
@@ -102,7 +104,6 @@ namespace FanfouUWP
         {
             currentUser = FanfouAPI.FanfouAPI.Instance.currentUser;
             defaultViewModel["user"] = currentUser;
-
             defaultViewModel["trends"] = trends;
 
             try
@@ -131,53 +132,38 @@ namespace FanfouUWP
                 Utils.ToastShow.ShowInformation("加载失败，请检查网络");
             }
 
-            try
-            {
-                var result = await FanfouAPI.FanfouAPI.Instance.StatusHomeTimeline(20, 1);
-                Utils.StatusesReform.append(statuses, result);
-            }
-            catch (Exception)
-            {
-                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
-            }
+            loadingStatus();
 
-            try
+            if (dispatcherTimer == null)
             {
-                var result = await FanfouAPI.FanfouAPI.Instance.StatusMentionTimeline(20, 1);
-                Utils.StatusesReform.append(mentions, result);
+                dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Tick += (s, ev) => { loadingStatus(); };
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+                dispatcherTimer.Start();
             }
-            catch (Exception)
-            {
-                Utils.ToastShow.ShowInformation("加载失败，请检查网络");
-            }
-
-            var t = new Timer((p) =>
-            {
-                loadingStatus();
-            }, null, 60000, 60000);
 
             //setTiles();
         }
 
-        //private async void setTiles()
-        //{
-        //    Utils.TileUpdater.Clear();
+        private async void setTiles()
+        {
+            Utils.TileUpdater.Clear();
 
-        //    if (statuses.Count() < 5)
-        //    {
-        //        foreach (var i in statuses)
-        //        {
-        //            Utils.TileUpdater.SetTile(i.user.screen_name, i.text);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        for (var i = 0; i < 5; i++)
-        //        {
-        //            Utils.TileUpdater.SetTile(statuses[i].user.screen_name, statuses[i].text);
-        //        }
-        //    }
-        //}
+            if (statuses.Count() < 5)
+            {
+                foreach (var i in statuses)
+                {
+                    Utils.TileUpdater.SetTile(i.user.screen_name, i.text);
+                }
+            }
+            else
+            {
+                for (var i = 0; i < 5; i++)
+                {
+                    Utils.TileUpdater.SetTile(statuses[i].user.screen_name, statuses[i].text);
+                }
+            }
+        }
 
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
@@ -292,40 +278,25 @@ namespace FanfouUWP
         {
             Frame.Navigate(typeof(SendPage), ((int)SendPage.SendMode.Photo).ToString());
         }
-
-
-
-        private void UpItem_Click(object sender, RoutedEventArgs e)
-        {
-            switch (pivot.SelectedIndex)
-            {
-                case 0:
-                    if (statuses.Count != 0)
-                        this.statusesGridView.ScrollIntoView(this.statuses.First());
-                    break;
-                case 1:
-                    if (mentions.Count != 0)
-                        this.mentionsGridView.ScrollIntoView(this.mentions.First());
-                    break;
-                default:
-                    break;
-            }
-        }
-
+       
         private void timeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Frame.Navigate(typeof(SelfPage), "timeline");
         }
 
         private void favorite_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Frame.Navigate(typeof(SelfPage), "favorite");
         }
 
         private void follower_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Frame.Navigate(typeof(SelfPage), "follower");
         }
 
         private void friend_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Frame.Navigate(typeof(SelfPage), "friend");
         }
 
         private void trendsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -399,10 +370,22 @@ namespace FanfouUWP
 
         private void statusesGridView_PullProgressChanged(object sender, Microsoft.Toolkit.Uwp.UI.Controls.RefreshProgressEventArgs e)
         {
-            loadingStatus();
+            statusProgressRing.Opacity = e.PullProgress;
+            statusProgressRing.IsActive = e.PullProgress < 1.0 ? false : true;
         }
 
         private void mentionsGridView_PullProgressChanged(object sender, Microsoft.Toolkit.Uwp.UI.Controls.RefreshProgressEventArgs e)
+        {
+            mentionsProgressRing.Opacity = e.PullProgress;
+            mentionsProgressRing.IsActive = e.PullProgress < 1.0 ? false : true;
+        }
+
+        private void statusesGridView_RefreshRequested(object sender, EventArgs e)
+        {
+            loadingStatus();
+        }
+
+        private void mentionsGridView_RefreshRequested(object sender, EventArgs e)
         {
             loadingStatus();
         }

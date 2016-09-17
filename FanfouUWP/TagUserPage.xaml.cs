@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Navigation;
 using FanfouUWP.Common;
 
 using FanfouUWP.FanfouAPI.Items;
+using FanfouUWP.Utils;
 
 namespace FanfouUWP
 {
@@ -28,7 +29,7 @@ namespace FanfouUWP
                 try
                 {
                     var result =
-                        await FanfouAPI.FanfouAPI.Instance.Tagged(tag, 60, ++page);
+                        await FanfouAPI.FanfouAPI.Instance.Tagged(tag, SettingStorage.Instance.messageSize, ++page);
                     if (result.Count == 0)
                         users.HasMoreItems = false;
 
@@ -71,7 +72,7 @@ namespace FanfouUWP
             page = 1;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.Tagged(tag, 60, page);
+                var ss = await FanfouAPI.FanfouAPI.Instance.Tagged(tag, SettingStorage.Instance.messageSize, page);
 
                 users.Clear();
                 foreach (User i in ss)
@@ -95,7 +96,7 @@ namespace FanfouUWP
             page = 1;
             try
             {
-                var ss = await FanfouAPI.FanfouAPI.Instance.Tagged(tag, 60, page);
+                var ss = await FanfouAPI.FanfouAPI.Instance.Tagged(tag, SettingStorage.Instance.messageSize, page);
 
                 users.Clear();
                 foreach (User i in ss)

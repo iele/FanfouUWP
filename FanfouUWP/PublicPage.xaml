@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ItemControl="using:FanfouUWP.ItemControl"
+    xmlns:selector="using:FanfouUWP.TemplateSelector"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" RequestedTheme="Light"  >
     <VisualStateManager.VisualStateGroups>
@@ -32,10 +33,14 @@
     </VisualStateManager.VisualStateGroups>
     <Page.Resources>
         <DataTemplate x:Key="StatusItemControl">
-            <ItemControl:StatusItemControl DataContext="{Binding}"
-                                          
-                                           Margin="0,3" />
+            <ItemControl:StatusItemControl DataContext="{Binding}" Margin="0,3"  />
         </DataTemplate>
+
+        <DataTemplate x:Key="StatusItemControlWithImage">
+            <ItemControl:StatusItemControlWithImage DataContext="{Binding}" Margin="0,3"  />
+        </DataTemplate>
+        <selector:TimelineTemplateSelector x:Name="StatusItemControlSelector" StatusTemplate="{StaticResource StatusItemControl}" StatusItemControlWithImage="{StaticResource StatusItemControlWithImage}"/>
+
     </Page.Resources>
     <Page.Background>
         <SolidColorBrush Color="#FFFFFFFF" />
@@ -58,7 +63,7 @@
                            FontSize="18.667"/>
         </StackPanel>
         <ListView ShowsScrollingPlaceholders="True" x:Name="statusesGridView"
-                  ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource StatusItemControl}" Grid.Row="1"
+                  ItemsSource="{Binding  statuses}" ItemTemplateSelector="{StaticResource TimelineTemplateSelector}" Grid.Row="1"
                   IsItemClickEnabled="True" ItemClick="statusesGridView_ItemClick" />
     </Grid>
 </Page>

@@ -23,10 +23,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Rectangle Fill="DeepSkyBlue" Stroke="DeepSkyBlue" Margin="0,0,0,0" />
         <StackPanel Margin="12" Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock TextWrapping="Wrap" Text="最新公告" Margin="0" VerticalAlignment="Center"
-                           FontSize="18.667" Foreground="White" />
+                           FontSize="18.667" Foreground="Black" />
         </StackPanel>
         <ListView ShowsScrollingPlaceholders="True" Margin="0,0" x:Name="statusesGridView"
                   ItemsSource="{Binding  statuses}" ItemTemplate="{StaticResource AnnounceItemControl}" Grid.Row="1" />

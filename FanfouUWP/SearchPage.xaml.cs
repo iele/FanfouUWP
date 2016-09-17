@@ -76,7 +76,7 @@ namespace FanfouUWP
                 }
                 try
                 {
-                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, SettingStorage.Instance.messageSize);
                     statuses.Clear();
                     Utils.StatusesReform.append(statuses, list);
                 }
@@ -95,7 +95,7 @@ namespace FanfouUWP
         {
             try
             {
-                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+                var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, SettingStorage.Instance.messageSize);
                 statuses.Clear();
                 Utils.StatusesReform.append(statuses, list);
             }
@@ -145,7 +145,7 @@ namespace FanfouUWP
             {
                 try
                 {
-                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, 60);
+                    var list = await FanfouAPI.FanfouAPI.Instance.SearchTimeline(search.Text, SettingStorage.Instance.messageSize);
                     statuses.Clear();
                     Utils.StatusesReform.append(statuses, list);
                 }
