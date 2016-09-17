@@ -12,12 +12,5 @@ namespace FanfouUWP.ItemControl
             InitializeComponent();
         }
 
-        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-        }
-
-        private void Profile_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-        }
     }
 }

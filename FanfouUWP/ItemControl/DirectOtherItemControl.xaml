@@ -6,7 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:converter="using:FanfouUWP.ValueConverter"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+  
     x:Class="FanfouUWP.ItemControl.DirectOtherItemControl"
     xmlns:utils="using:FanfouUWP.Utils"
     mc:Ignorable="d"
@@ -35,7 +36,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <controls:ImageEx Height="48" Width="48" Canvas.ZIndex="2" Margin="14,8,8,8"
-                   Tapped="Rectangle_Tapped" IsCacheEnabled="True"
+                   Tapped="Rectangle_Tapped"   
                Source="{Binding  dm.sender.profile_image_url}"/>
         <StackPanel Orientation="Horizontal" Margin="8,0,8,8" Grid.Column="1" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding  dm.created_at, Converter={StaticResource DateToTextConverter}}"

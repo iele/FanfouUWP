@@ -6,7 +6,8 @@
     xmlns:converter="using:FanfouUWP.ValueConverter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+  
     mc:Ignorable="d" RequestedTheme="Light" 
     d:DesignHeight="300"
     d:DesignWidth="400" FontFamily="Microsoft YaHei">
@@ -26,7 +27,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <controls:ImageEx Height="32" Width="32" Margin="10" Source="{Binding  sender.profile_image_url}"
-               HorizontalAlignment="Left" VerticalAlignment="Top" IsCacheEnabled="True" />
+               HorizontalAlignment="Left" VerticalAlignment="Top"   />
 
         <StackPanel Orientation="Vertical" Margin="0" Grid.Column="1" Grid.RowSpan="2">
             <TextBlock TextWrapping="Wrap" Text="{Binding  text, Converter={StaticResource HtmlToTextConverter}}"

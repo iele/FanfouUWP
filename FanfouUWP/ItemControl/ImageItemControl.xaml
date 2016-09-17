@@ -37,7 +37,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <controls:ImageEx Height="42" Width="42" Canvas.ZIndex="2" Margin="6,7,6,6" Tapped="Profile_Tapped"
-                 Source="{Binding  user.profile_image_url}" IsCacheEnabled="True"/>
+                 Source="{Binding  user.profile_image_url}" />
             <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,8,10,6" Orientation="Vertical" VerticalAlignment="Center">
                 <TextBlock Margin="0" Text="{Binding  user.screen_name}" VerticalAlignment="Top" FontSize="16" Foreground="White" />
                 <StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Top">
@@ -65,6 +65,6 @@
         	    FontSize="13.333" x:Name="text" HorizontalAlignment="Stretch" Margin="6,0" Grid.ColumnSpan="2" Grid.Row="1" MinWidth="640"/>
         </Grid>
         <controls:ImageEx x:Name="image" Tapped="Image_Tapped" Stretch="UniformToFill"
-        	Source="{Binding photo.largeurl}" Margin="0,0,0,0" IsCacheEnabled="True" MaxHeight="300" HorizontalAlignment="Stretch" />
+        	Source="{Binding photo.largeurl}" Margin="0,0,0,0"  MaxHeight="300" HorizontalAlignment="Stretch" />
     </Grid>
 </UserControl>

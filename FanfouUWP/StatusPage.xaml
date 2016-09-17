@@ -8,8 +8,7 @@
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:utils="using:FanfouUWP.Utils"
     xmlns:customcontrol="using:FanfouUWP.CustomControl"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:was="using:AppStudio.Uwp.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     x:Class="FanfouUWP.StatusPage"
     mc:Ignorable="d" RequestedTheme="Light" NavigationCacheMode="Enabled"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"  
@@ -25,7 +24,7 @@
             <converter:RetweetToNameConverter x:Key="RetweetToNameConverter" />
             <converter:ImageSourceToCacheConverter x:Key="ImageSourceToCacheConverter" />
             <converter:BoolToFavoritedConverter x:Key="BoolToFavoritedConverter" />
-            <converter:DisplayImageToVisibilityConverter x:Key="DisplayImageToVisibilityConverter" /> 
+            <converter:DisplayImageToVisibilityConverter x:Key="DisplayImageToVisibilityConverter" />
         </ResourceDictionary>
     </Page.Resources>
     <Page.BottomAppBar>
@@ -120,63 +119,52 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
-            <StackPanel  x:Name="stack" MaxWidth="800" Orientation="Vertical">
-                <StackPanel Margin="12,12,12,12" Orientation="Vertical">
-                    <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
-                        <controls:ImageEx Tapped="Profile_Tapped" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40" IsCacheEnabled="True"
+            <ScrollViewer Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <StackPanel  x:Name="stack" MaxWidth="800" Orientation="Vertical">
+                    <StackPanel Margin="12,12,12,12" Orientation="Vertical">
+                        <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                            <controls:ImageEx Tapped="Profile_Tapped" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40" 
         		Source="{Binding  status.user.profile_image_url}" />
-                        <TextBlock Text="{Binding  status.user.screen_name}" FontSize="21.333"
+                            <TextBlock Text="{Binding  status.user.screen_name}" FontSize="21.333"
         		VerticalAlignment="Center" Foreground="Black" Margin="12,0,0,0"/>
+                        </StackPanel>
+                        <Line x:Name="line" Stroke="Gray" StrokeThickness="1" Margin="0,12,0,0" Width="641" X2="641" Height="1" HorizontalAlignment="Left"/>
                     </StackPanel>
-                    <Line x:Name="line" Stroke="Gray" StrokeThickness="1" Margin="0,12,0,0" Width="641" X2="641" Height="1" HorizontalAlignment="Left"/>
-                </StackPanel>
-                <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <StackPanel >
-                        <Grid x:Name="ContentRoot" d:LayoutOverrides="Width" Background="White">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <RichTextBlock Margin="12,6,12,0" x:Name="richText" Grid.Row="1" />
-                            <TextBlock Margin="12,6,12,0" Text="{Binding status.user.text}" Grid.Row="2" />
-                            <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
-                                <TextBlock Padding="0,5,0,0"
+                    <StackPanel x:Name="ContentRoot" d:LayoutOverrides="Width" Background="White">
+                        <RichTextBlock Margin="12,6,12,0" x:Name="richText" Grid.Row="1" />
+                        <StackPanel Margin="12,6,12,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2">
+                            <TextBlock Padding="0,5,0,0"
         						Text="{Binding status.created_at, Converter={StaticResource DateToTextConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" Foreground="Gray" Margin="0"
         						HorizontalAlignment="Left" />
-                                <TextBlock Padding="5,5,0,0"
+                            <TextBlock Padding="5,5,0,0"
         						Text="{Binding status.source, Converter={StaticResource SourceToTextConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray" />
-                                <TextBlock Padding="5,5,0,0"
+                            <TextBlock Padding="5,5,0,0"
         						Text="{Binding status.in_reply_to_screen_name, Converter={StaticResource ReplyToNameConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
         						Visibility="{Binding in_reply_to_screen_name, Converter={StaticResource NullToVisibilityConverter}}" Tapped="Reply_Tapped"/>
-                                <TextBlock Padding="5,5,0,0"
+                            <TextBlock Padding="5,5,0,0"
         						Text="{Binding status.repost_screen_name, Converter={StaticResource RetweetToNameConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
         						Visibility="{Binding repost_screen_name, Converter={StaticResource NullToVisibilityConverter}}" Tapped="Repost_Tapped"/>
-                                <TextBlock Padding="5,5,0,0"
+                            <TextBlock Padding="5,5,0,0"
         						Text="{Binding status.favorited, Converter={StaticResource BoolToFavoritedConverter}}"
         						VerticalAlignment="Top" FontSize="13.333" HorizontalAlignment="Left" Foreground="Gray"
         						Visibility="{Binding favorited, Converter={StaticResource NullToVisibilityConverter}}" />
-                            </StackPanel>
-                            <controls:ImageEx x:Name="image" Tapped="Image_Tapped" Margin="12,6,12,12" VerticalAlignment="Top" IsCacheEnabled="True"
+                        </StackPanel>
+                        <controls:ImageEx x:Name="image" Tapped="Image_Tapped" Margin="12,6,12,12" VerticalAlignment="Stretch" 
         					Source="{Binding status.photo.largeurl}" Grid.Row="3" Stretch="Uniform"  HorizontalAlignment="Left"/>
-                            <Maps:MapControl x:Name="Map" Margin="12,6,12,12" Grid.Row="4" Height="600" Visibility="Collapsed" HorizontalAlignment="Left" MapServiceToken="P3dltpg7K4yR4K64mKwt~HwVbcy7A-QIlutVLg1_6Fw~AqciCGUFhoLbX2byK6zpUfYz5oo6TFoXndQMZ_KPYIy73Dw20SR8gdO_QXGcSwdD"/>
-                        </Grid>
+                        <Maps:MapControl x:Name="Map" Margin="12,6,12,12" Grid.Row="4" Height="300" Width="640" Visibility="Collapsed" HorizontalAlignment="Left" MapServiceToken="P3dltpg7K4yR4K64mKwt~HwVbcy7A-QIlutVLg1_6Fw~AqciCGUFhoLbX2byK6zpUfYz5oo6TFoXndQMZ_KPYIy73Dw20SR8gdO_QXGcSwdD"/>
                         <StackPanel x:Name="context" Margin="12,0,12,12" VerticalAlignment="Top" Background="White"
-        					Visibility="Collapsed" RelativePanel.RightOf="ContentRoot">
+        					Visibility="Collapsed" Grid.Row="5" >
                             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="此消息包含的上下文" VerticalAlignment="Top"
         						Margin="0,6,0,0" FontSize="17.667" Foreground="Black" />
                             <StackPanel x:Name="contextMessage" Margin="0,6,0,0"></StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </ScrollViewer>
-            </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" x:Name="selfUser" HorizontalAlignment="Left">
                 <StackPanel>
                     <TextBlock Text="用户信息" FontSize="21.333" 

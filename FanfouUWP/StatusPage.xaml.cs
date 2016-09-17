@@ -94,6 +94,7 @@ namespace FanfouUWP
                 }
 
                 context.Visibility = Visibility.Collapsed;
+                Map.Visibility = Visibility.Collapsed;
 
                 this.richText.Blocks.Clear();
 
@@ -166,7 +167,7 @@ namespace FanfouUWP
                 this.FavItem.Icon = new SymbolIcon(Symbol.Favorite);
             }
 
-            if (this.status.location != "" || SettingStorage.Instance.showMap)
+            if (this.status.location != "" && SettingStorage.Instance.showMap)
             {
                 try
                 {

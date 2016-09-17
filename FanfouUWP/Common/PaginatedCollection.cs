@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System.Threading;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace FanfouUWP.Common
@@ -14,6 +15,8 @@ namespace FanfouUWP.Common
     {
         public bool is_loading = false;
         public Func<int, Task<int?>> load;
+
+        private DispatcherTimer dispatcherTimer;
 
         public PaginatedCollection()
         {
@@ -36,12 +39,23 @@ namespace FanfouUWP.Common
                     }
                     catch (Exception e)
                     {
-                        System.Diagnostics.Debug.WriteLine(e.Message);
-
                         return new LoadMoreItemsResult() { Count = 0 };
                     }
                     finally
                     {
+
+                        if (dispatcherTimer == null)
+                        {
+                            dispatcherTimer = new DispatcherTimer();
+                            dispatcherTimer.Tick += (s, ev) =>
+                            {
+                                is_loading = false;
+                                dispatcherTimer.Stop();
+                            };
+                            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+                            dispatcherTimer.Start();
+                        }
+
                         is_loading = false;
                     }
                 }

@@ -8,7 +8,7 @@
     xmlns:CustomControl="using:FanfouUWP.CustomControl"
     xmlns:selector="using:FanfouUWP.TemplateSelector"
     xmlns:converter="using:FanfouUWP.ValueConverter"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     xmlns:utils="using:FanfouUWP.Utils"
     x:Class="FanfouUWP.HomePage"
     mc:Ignorable="d" RequestedTheme="Light" Width="Auto" Height="Auto"
